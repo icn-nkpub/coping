@@ -4,14 +4,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'constants.dart';
 import 'home.dart';
 
 void main() {
-  runApp(
-    const App(),
-  );
+  runApp(const ProviderScope(child: App()));
 }
 
 class App extends StatefulWidget {
@@ -23,7 +22,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   ThemeMode themeMode = ThemeMode.system;
-  ColorSeed colorSelected = ColorSeed.red;
+  ColorSeed colorSelected = ColorSeed.green;
 
   bool get useLightMode {
     switch (themeMode) {

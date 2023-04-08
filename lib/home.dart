@@ -1,3 +1,4 @@
+import 'package:firstapp/pages/meditation/meditation.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';
 
@@ -53,11 +54,7 @@ class _HomeState extends State<Home> {
           alignment: Alignment.center,
           child: const Text('Page 1'),
         ),
-        Container(
-          color: Colors.green,
-          alignment: Alignment.center,
-          child: const Text('Page 2'),
-        ),
+        const MeditationScreen(),
         Container(
           color: Colors.blue,
           alignment: Alignment.center,
