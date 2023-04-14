@@ -9,48 +9,53 @@ import 'package:funvas/funvas.dart';
 
 class CanvasDrawer extends Funvas {
   CanvasDrawer({
-    this.fullCycleDuration = 6,
-    this.particlesDivider = 15,
-    this.size = 3.4,
-    this.slide = 4,
-    this.rounds = 9,
+    required this.fullCycleDuration,
+    required this.scale,
+    required this.slideDist,
+    required this.rounds,
     required this.color,
   });
 
   final int fullCycleDuration;
-  final int particlesDivider;
-  final double size;
-  final double slide;
+  final double scale;
+  final double slideDist;
   final int rounds;
   final HSLColor color;
 
   @override
   void u(double t) {
-    var w = x.width / 2;
-    var h = x.height / 2;
-    var s = x.width < x.height ? x.width : x.height;
+    double cycle = graph(t);
 
-    var metaClock = (t % fullCycleDuration) / fullCycleDuration;
-    var windup = metaClock;
-    var winddown = (1 / 2) - (metaClock / 2);
-    var cycle = windup < winddown ? windup : winddown;
+    final w = x.width / 2;
+    final h = x.height / 2;
+    final s = x.width < x.height ? x.width : x.height;
+    final pt = (s * scale) / 64;
 
-    cycle = cycle * 3;
+    final slide = slideDist * pt - (cycle * (slideDist * pt));
 
-    for (var round = 0; round < rounds; round++) {
-      var r = (s / size) - ((round + 1) * (s / 50)) + ((s / 10) * cycle);
-      var angleSkew = (t * 5) + (round * (particlesDivider / 2.5));
-      var alpha = round / (rounds / 1.5);
+    for (int round = 0; round < rounds; round++) {
+      final rCycle = round / rounds;
+      final r = (5 * pt) + (((cycle * 2) + 1) * rCycle * 16 * pt) / 3;
 
-      for (var i = 0; i < 360; i += particlesDivider) {
+      final angleSkew = (13 + (t / 30)) * ((round + 1) * 15);
+
+      final alpha = (round / rounds);
+
+      for (double i = 0; i < 360; i += 360 / ((rounds + (round * 4)))) {
+        final iCycle = ((1 + sin((pow(i + 1, 2) * (round + 1)) + t * 2)) / 2);
+        final v = iCycle * pt / 5;
+
         final angle = i + angleSkew;
-        final x1 = r * cos(angle * pi / 180);
-        final y1 = r * sin(angle * pi / 180);
-        final v = (1 + sin(4 * t + (i * i * round))) * (size * size / 2);
+
+        var lr = r + (v * 8);
+
+        var x1 = lr * cos(angle * pi / 180);
+        var y1 = lr * sin(angle * pi / 180);
+        y1 = y1 - slide;
         c.drawCircle(
-          Offset(w + x1, h + -y1 + (cycle * (s / size / slide))),
-          (size / (s / 100)) + (v / particlesDivider),
-          Paint()..color = color.withAlpha(alpha > 1 ? 1 : alpha).toColor(),
+          Offset(w + x1, h - y1),
+          v,
+          Paint()..color = color.withAlpha(alpha).toColor(),
         );
       }
     }
@@ -58,18 +63,36 @@ class CanvasDrawer extends Funvas {
     final paint = Paint();
     paint.color = color.toColor();
     paint.strokeCap = StrokeCap.round;
-    paint.strokeWidth = s / (360 / particlesDivider) / 24;
+    paint.strokeWidth = pt / 4;
 
     c.drawCircle(
-      Offset(w, h + (cycle * (s / size / slide))),
-      s / (360 / particlesDivider) / slide,
+      Offset(w, h + slide),
+      pt,
       paint,
     );
     c.drawLine(
       Offset(w, h),
-      Offset(w, h + (1 * (s / size / slide))),
-      paint..color = paint.color.withAlpha(50),
+      Offset(w, h + (slideDist * pt)),
+      paint..color = paint.color.withAlpha(5),
     );
+  }
+
+  double graph(double t) {
+    final x = 1 - ((t % fullCycleDuration) / fullCycleDuration);
+
+    final fnUp = bezFn(x, 3, 0);
+    final fnDown = bezFn(x, -1.5, -1);
+
+    var cycle = x < 1 / 3 ? fnUp : fnDown;
+    return cycle;
+  }
+
+  double bezFn(double x, double compression, double offset) {
+    final v = compression * (x + offset);
+
+    final y = pow(v, 2) / (2 * (pow(v, 2) - v) + 1);
+
+    return y;
   }
 }
 
@@ -84,6 +107,10 @@ class Canvas extends StatelessWidget {
       child: FunvasContainer(
         funvas: CanvasDrawer(
           color: HSLColor.fromColor(Theme.of(context).colorScheme.primary),
+          fullCycleDuration: 8,
+          scale: 1,
+          rounds: 12,
+          slideDist: 16,
         ),
       ),
     );
@@ -100,6 +127,6 @@ class MeditationScreen extends StatefulWidget {
 class _MeditationScreenState extends State<MeditationScreen> {
   @override
   Widget build(BuildContext context) {
-    return Canvas();
+    return const Canvas();
   }
 }

@@ -22,7 +22,6 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   ThemeMode themeMode = ThemeMode.system;
-  ColorSeed colorSelected = ColorSeed.green;
 
   bool get useLightMode {
     switch (themeMode) {
@@ -42,12 +41,6 @@ class _AppState extends State<App> {
     });
   }
 
-  void handleColorSelect(int value) {
-    setState(() {
-      colorSelected = ColorSeed.values[value];
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -55,20 +48,18 @@ class _AppState extends State<App> {
       title: 'Test',
       themeMode: themeMode,
       theme: ThemeData(
-        colorSchemeSeed: colorSelected.color,
+        colorSchemeSeed: Color(0xFF43B8C0),
         useMaterial3: true,
         brightness: Brightness.light,
       ),
       darkTheme: ThemeData(
-        colorSchemeSeed: colorSelected.color,
+        colorSchemeSeed: Color(0xFF233E56),
         useMaterial3: true,
         brightness: Brightness.dark,
       ),
       home: Home(
         useLightMode: useLightMode,
-        colorSelected: colorSelected,
         handleBrightnessChange: handleBrightnessChange,
-        handleColorSelect: handleColorSelect,
       ),
     );
   }

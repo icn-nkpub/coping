@@ -6,15 +6,11 @@ class Home extends StatefulWidget {
   const Home({
     super.key,
     required this.useLightMode,
-    required this.colorSelected,
     required this.handleBrightnessChange,
-    required this.handleColorSelect,
   });
 
   final bool useLightMode;
-  final ColorSeed colorSelected;
   final void Function(bool useLightMode) handleBrightnessChange;
-  final void Function(int value) handleColorSelect;
 
   @override
   State<Home> createState() => _HomeState();
@@ -50,13 +46,18 @@ class _HomeState extends State<Home> {
       ),
       body: <Widget>[
         Container(
-          color: Colors.red,
           alignment: Alignment.center,
-          child: const Text('Page 1'),
+          child: Column(
+            children: [
+              TextButton(
+                  onPressed: () =>
+                      widget.handleBrightnessChange(!widget.useLightMode),
+                  child: Text("change"))
+            ],
+          ),
         ),
         const MeditationScreen(),
         Container(
-          color: Colors.blue,
           alignment: Alignment.center,
           child: const Text('Page 3'),
         ),
