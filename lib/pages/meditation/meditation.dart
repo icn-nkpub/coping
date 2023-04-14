@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'dart:core';
+import 'package:firstapp/icons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:funvas/funvas.dart';
 
 class CanvasDrawer extends Funvas {
@@ -140,7 +140,7 @@ class MeditationScreen extends StatefulWidget {
 }
 
 class _MeditationScreenState extends State<MeditationScreen> {
-  double _speed = 3;
+  double _speed = 6;
 
   @override
   Widget build(BuildContext context) {
@@ -149,32 +149,35 @@ class _MeditationScreenState extends State<MeditationScreen> {
       fullCycleDuration: _speed,
       scale: 1.3,
       rounds: 12,
-      slideDist: 16,
+      slideDist: 12,
     );
 
-    return Column(
+    return Stack(
+      alignment: Alignment.center,
       children: [
-        Expanded(
-          child: SizedBox(
-            width: double.maxFinite,
-            height: double.maxFinite,
-            child: FunvasContainer(
-              funvas: cd,
-            ),
+        SizedBox(
+          width: double.maxFinite,
+          height: double.maxFinite,
+          child: FunvasContainer(
+            funvas: cd,
           ),
         ),
-        InfoCard(
-          setSpeed: (s) {
-            Future.delayed(const Duration(seconds: 1), () {
-              setState(() {
-                _speed = s;
+        SizedBox(
+          width: double.maxFinite,
+          height: double.maxFinite,
+          child: InfoCard(
+            setSpeed: (s) {
+              Future.delayed(const Duration(seconds: 1), () {
+                setState(() {
+                  _speed = s;
+                });
               });
-            });
-          },
-          changingSpeed: () {
-            cd.windDown = true;
-          },
-        ),
+            },
+            changingSpeed: () {
+              cd.windDown = true;
+            },
+          ),
+        )
       ],
     );
   }
@@ -195,101 +198,95 @@ class InfoCard extends StatefulWidget {
 }
 
 class _InfoCardState extends State<InfoCard> {
-  double _speed = 3;
+  double _speed = 6;
   bool _expandInfo = true;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: _expandInfo
-              ? IconButton(
-                  onPressed: () {
-                    setState(() {
-                      _expandInfo = !_expandInfo;
-                    });
-                  },
-                  icon: const Icon(Icons.info),
-                )
-              : Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "How to follow breathing circle",
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                        ),
-                        ...[
-                          "Lie down on your back and relax",
-                          "Breathe in and out slowly and steadily",
-                          "Put one hand on your abdomen to feel it move up and down as you breathe",
-                          "If you use your chest, you need breath deeper",
-                          "Breathe in so your abdomen goes out",
-                          "Breathe out abdonmen and chest goes down",
-                          "When you breathe out, purse your lips like you are blowing out a candle",
-                          "Breath in for ${(_speed / 3 * 1).round()} seconds "
-                              "and out for ${(_speed / 3 * 2).round()} seconds",
-                          "Follow the circle"
-                        ].map((e) => Container(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 2,
-                                horizontal: 8,
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("+ ",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall),
-                                  Flexible(
-                                    child: Text(e,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall),
-                                  ),
-                                ],
-                              ),
-                            )),
-                        const SizedBox(height: 8),
-                        Slider(
-                          value: _speed,
-                          min: 3,
-                          max: 32,
-                          onChangeEnd: (x) {
-                            setState(() {
-                              _speed = (x * 10).round() / 10;
-                              widget.setSpeed(x);
-                            });
-                          },
-                          onChanged: (x) {
-                            setState(() {
-                              _speed = (x * 10).round() / 10;
-                              widget.changingSpeed();
-                            });
-                          },
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            setState(() {
-                              _expandInfo = !_expandInfo;
-                            });
-                          },
-                          child: const Text("Ok"),
-                        ),
-                      ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                _expandInfo = !_expandInfo;
+              });
+            },
+            icon: _expandInfo
+                ? const SvgIcon(assetName: "help")
+                : const SvgIcon(assetName: "close"),
+          ),
+          AnimatedOpacity(
+            opacity: _expandInfo ? 0 : 1,
+            duration: const Duration(milliseconds: 200),
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "How to follow breathing circle",
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
                     ),
-                  ),
+                    ...[
+                      "Lie down on your back and relax",
+                      "Breathe in and out slowly and steadily",
+                      "Put one hand on your abdomen to feel it move up and down as you breathe",
+                      "If you use your chest, you need breath deeper",
+                      "Breathe in so your abdomen goes out",
+                      "Breathe out abdonmen and chest goes down",
+                      "When you breathe out, purse your lips like you are blowing out a candle",
+                      "Breath in for ${(_speed / 3 * 1).round()} seconds "
+                          "and out for ${(_speed / 3 * 2).round()} seconds",
+                      "Follow the circle"
+                    ].map((e) => Container(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 2,
+                            horizontal: 8,
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("+ ",
+                                  style: Theme.of(context).textTheme.bodySmall),
+                              Flexible(
+                                child: Text(e,
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall),
+                              ),
+                            ],
+                          ),
+                        )),
+                    const SizedBox(height: 8),
+                    Slider(
+                      value: _speed,
+                      min: 3,
+                      max: 32,
+                      onChangeEnd: (x) {
+                        setState(() {
+                          _speed = (x * 10).round() / 10;
+                          widget.setSpeed(x);
+                        });
+                      },
+                      onChanged: (x) {
+                        setState(() {
+                          _speed = (x * 10).round() / 10;
+                          widget.changingSpeed();
+                        });
+                      },
+                    ),
+                  ],
                 ),
-        ),
-      ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

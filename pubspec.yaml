@@ -39,6 +39,7 @@ dependencies:
   google_fonts: ^4.0.3
   flutter_riverpod: ^2.3.4
   funvas: ^0.1.7
+  flutter_svg: ^2.0.5
 
 dev_dependencies:
   flutter_test:
@@ -63,9 +64,15 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/icons/help.svg
+    - assets/icons/close.svg
+    - assets/icons/stickynote.svg
+    - assets/icons/cognition.svg
+    - assets/icons/mindfulness.svg
+    - assets/icons/psychology.svg
+    - assets/icons/relax.svg
+    - assets/icons/stickynote.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

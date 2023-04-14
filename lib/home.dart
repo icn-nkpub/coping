@@ -1,3 +1,4 @@
+import 'package:firstapp/icons.dart';
 import 'package:firstapp/pages/meditation/meditation.dart';
 import 'package:flutter/material.dart';
 
@@ -30,15 +31,15 @@ class _HomeState extends State<Home> {
         },
         destinations: const [
           NavigationDestination(
-            icon: Icon(Icons.book),
+            icon: SvgIcon(assetName: "stickynote"),
             label: 'Diary',
           ),
           NavigationDestination(
-            icon: Icon(Icons.wind_power),
+            icon: SvgIcon(assetName: "relax"),
             label: 'Meditation',
           ),
           NavigationDestination(
-            icon: Icon(Icons.psychology),
+            icon: SvgIcon(assetName: "mindfulness"),
             label: 'Triggers',
           ),
         ],
