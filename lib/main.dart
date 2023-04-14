@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'constants.dart';
 import 'home.dart';
 
 void main() {
@@ -48,12 +47,12 @@ class _AppState extends State<App> {
       title: 'Test',
       themeMode: themeMode,
       theme: ThemeData(
-        colorSchemeSeed: Color(0xFF43B8C0),
+        colorSchemeSeed: const Color(0xFF43B8C0),
         useMaterial3: true,
         brightness: Brightness.light,
       ),
       darkTheme: ThemeData(
-        colorSchemeSeed: Color(0xFF233E56),
+        colorSchemeSeed: const Color(0xFF233E56),
         useMaterial3: true,
         brightness: Brightness.dark,
       ),

@@ -1,6 +1,5 @@
 import 'package:firstapp/pages/meditation/meditation.dart';
 import 'package:flutter/material.dart';
-import 'constants.dart';
 
 class Home extends StatefulWidget {
   const Home({
@@ -52,7 +51,7 @@ class _HomeState extends State<Home> {
               TextButton(
                   onPressed: () =>
                       widget.handleBrightnessChange(!widget.useLightMode),
-                  child: Text("change"))
+                  child: const Text("change"))
             ],
           ),
         ),
