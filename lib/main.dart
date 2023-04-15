@@ -1,14 +1,21 @@
-// Copyright 2021 The Flutter team. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
+import 'package:firstapp/auth/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'home.dart';
 
-void main() {
+void main() async {
+  final db = await Supabase.initialize(
+    url: 'http://Nikolais-MacBook-Air.local:54321',
+    anonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0',
+  );
+
+  final auth = await login("test@sca-6.org", "test");
+  print(auth);
+
   runApp(const ProviderScope(child: App()));
 }
 
