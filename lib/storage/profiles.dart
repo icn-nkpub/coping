@@ -1,9 +1,40 @@
-import 'package:supabase/supabase.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-getProfile(user) async {
-  final supabase = SupabaseClient('supabaseUrl', 'supabaseKey');
+class ProfileRecord {
+  ProfileRecord({
+    required this.id,
+    required this.firstName,
+    required this.secondName,
+    required this.email,
+    required this.breathingTime,
+    required this.createdAt,
+  });
 
-  // Select from table `countries` ordering by `name`
+  int id;
+  String firstName;
+  String secondName;
+  String email;
+  double breathingTime;
+  DateTime createdAt;
+}
+
+Future<ProfileRecord?> getProfile(User user) async {
+  final db = Supabase.instance.client;
   final data =
-      await supabase.from('countries').select().order('name', ascending: true);
+      await db.from('profiles').select<PostgrestList>().eq("user_id", user.id);
+
+  if (data.isEmpty) {
+    return null;
+  }
+
+  final record = data[0];
+
+  return ProfileRecord(
+    id: record["id"],
+    firstName: record["first_name"],
+    secondName: record["second_name"],
+    email: record["email"],
+    breathingTime: double.parse(record["breathing_time"].toString()),
+    createdAt: DateTime.parse(record["created_at"]),
+  );
 }

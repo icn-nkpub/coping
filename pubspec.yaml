@@ -37,11 +37,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   url_launcher: ^6.1.10
   google_fonts: ^4.0.3
-  flutter_riverpod: ^2.3.4
   funvas: ^0.1.7
   flutter_svg: ^2.0.5
   supabase: ^1.6.3
   supabase_flutter: ^1.7.0
+  flutter_bloc: ^8.1.2
 
 dev_dependencies:
   flutter_test:

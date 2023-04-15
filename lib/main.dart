@@ -1,22 +1,19 @@
-import 'package:firstapp/auth/auth.dart';
+import 'package:firstapp/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'home.dart';
 
 void main() async {
-  final db = await Supabase.initialize(
+  await Supabase.initialize(
     url: 'http://localhost:54321',
     anonKey:
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0',
   );
 
-  final auth = await login("test@sca-6.org", "test");
-  print(auth);
-
-  runApp(const ProviderScope(child: App()));
+  runApp(const App());
 }
 
 class App extends StatefulWidget {
@@ -63,9 +60,13 @@ class _AppState extends State<App> {
         useMaterial3: true,
         brightness: Brightness.dark,
       ),
-      home: Home(
-        useLightMode: useLightMode,
-        handleBrightnessChange: handleBrightnessChange,
+      home: BlocProvider(
+        lazy: true,
+        create: (_) => LoginCubit(),
+        child: Home(
+          useLightMode: useLightMode,
+          handleBrightnessChange: handleBrightnessChange,
+        ),
       ),
     );
   }

@@ -1,6 +1,9 @@
 import 'package:firstapp/icons.dart';
 import 'package:firstapp/pages/meditation/meditation.dart';
+import 'package:firstapp/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Home extends StatefulWidget {
   const Home({
@@ -49,6 +52,25 @@ class _HomeState extends State<Home> {
           alignment: Alignment.center,
           child: Column(
             children: [
+              BlocBuilder<LoginCubit, Profile?>(
+                builder: (context, u) {
+                  return u != null
+                      ? Text(
+                          "${u.id}, ${u.email} ${u.profile!.createdAt.toString()}")
+                      : Container(
+                          child: Column(children: [
+                            TextButton(
+                              onPressed: () {
+                                context
+                                    .read<LoginCubit>()
+                                    .signIn("test@sca-6.org", "test");
+                              },
+                              child: const Text("login"),
+                            )
+                          ]),
+                        );
+                },
+              ),
               TextButton(
                   onPressed: () =>
                       widget.handleBrightnessChange(!widget.useLightMode),
