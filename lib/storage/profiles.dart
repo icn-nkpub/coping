@@ -2,26 +2,23 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProfileRecord {
   ProfileRecord({
-    required this.id,
     required this.firstName,
     required this.secondName,
     required this.email,
     required this.breathingTime,
-    required this.createdAt,
   });
 
-  int id;
   String firstName;
   String secondName;
   String email;
   double breathingTime;
-  DateTime createdAt;
 }
 
 Future<ProfileRecord?> getProfile(User user) async {
-  final db = Supabase.instance.client;
-  final data =
-      await db.from('profiles').select<PostgrestList>().eq("user_id", user.id);
+  final data = await query().select<PostgrestList>().eq(
+        "user_id",
+        user.id,
+      );
 
   if (data.isEmpty) {
     return null;
@@ -30,11 +27,38 @@ Future<ProfileRecord?> getProfile(User user) async {
   final record = data[0];
 
   return ProfileRecord(
-    id: record["id"],
     firstName: record["first_name"],
     secondName: record["second_name"],
     email: record["email"],
     breathingTime: double.parse(record["breathing_time"].toString()),
-    createdAt: DateTime.parse(record["created_at"]),
   );
+}
+
+Future<void> syncProfile(User user, ProfileRecord p) async {
+  final data = await query().select<PostgrestList>().eq(
+        "user_id",
+        user.id,
+      );
+
+  if (data.isEmpty) {
+    await query().insert({
+      "user_id": user.id,
+      "first_name": p.firstName,
+      "second_name": p.secondName,
+      "email": p.email,
+      "breathing_time": p.breathingTime,
+    });
+    return;
+  }
+
+  await query().upsert({
+    "first_name": p.firstName,
+    "second_name": p.secondName,
+    "email": p.email,
+    "breathing_time": p.breathingTime,
+  }).eq("user_id", user.id);
+}
+
+SupabaseQueryBuilder query() {
+  return Supabase.instance.client.from("profiles");
 }
