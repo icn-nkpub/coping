@@ -71,6 +71,9 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/icons/help.svg
+    - assets/icons/more.svg
+    - assets/icons/mode_dark.svg
+    - assets/icons/mode_light.svg
     - assets/icons/close.svg
     - assets/icons/stickynote.svg
     - assets/icons/cognition.svg

@@ -1,19 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-enum ColorValue { red, green, blue }
-
-Color themeColor(ColorValue c) {
-  switch (c) {
-    case ColorValue.red:
-      return Colors.red;
-    case ColorValue.green:
-      return Colors.green;
-    case ColorValue.blue:
-      return Colors.blue;
-  }
-}
+import 'package:sca6/provider/theme/colors.dart';
 
 class ThemeState {
   ThemeState({
@@ -24,11 +12,11 @@ class ThemeState {
 
   ThemeMode mode;
   ThemeData data;
-  Color color;
+  ColorValue color;
 
   resetThemeData() {
     data = ThemeData(
-      colorSchemeSeed: color,
+      colorSchemeSeed: themeColor(color),
       useMaterial3: true,
       brightness: isLightMode() ? Brightness.light : Brightness.dark,
     );
@@ -47,16 +35,16 @@ class ThemeState {
   }
 
   @override
-  bool operator ==(Object other) => false;
+  bool operator ==(Object other) => false; // ignore: hash_and_equals
 }
 
 class ThemeCubit extends Cubit<ThemeState> {
   ThemeCubit()
       : super(ThemeState(
           mode: ThemeMode.system,
-          color: Colors.red,
+          color: ColorValue.ocean,
           data: ThemeData(
-            colorSchemeSeed: Colors.red,
+            colorSchemeSeed: themeColor(ColorValue.ocean),
             useMaterial3: true,
             brightness: ThemeMode.system == ThemeMode.light
                 ? Brightness.light
@@ -77,7 +65,7 @@ class ThemeCubit extends Cubit<ThemeState> {
   }
 
   Future<void> setColor(ColorValue c) async {
-    state.color = themeColor(c);
+    state.color = c;
 
     state.resetThemeData();
 
