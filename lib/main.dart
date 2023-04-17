@@ -1,4 +1,4 @@
-import 'package:firstapp/provider.dart';
+import 'package:sca6/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -63,10 +63,11 @@ class _AppState extends State<App> {
       home: BlocProvider(
         lazy: true,
         create: (_) => LoginCubit(),
-        child: Home(
+        child: SafeArea(
+            child: Home(
           useLightMode: useLightMode,
           handleBrightnessChange: handleBrightnessChange,
-        ),
+        )),
       ),
     );
   }

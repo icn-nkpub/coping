@@ -1,5 +1,5 @@
-name: firstapp
-description: A new Flutter project.
+name: sca6
+description: "SCA6"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -107,7 +107,8 @@ flutter:
 
 flutter_icons:
   ios: true
-  image_path_ios: "assets/logosca6.png"
+  image_path_ios: "assets/logosca6-pb.png"
+  remove_alpha_ios: true
   
   android: true
   image_path_android: "assets/opaqring.png"

@@ -1,6 +1,6 @@
-import 'package:firstapp/icons.dart';
-import 'package:firstapp/pages/meditation/meditation.dart';
-import 'package:firstapp/provider.dart';
+import 'package:sca6/icons.dart';
+import 'package:sca6/pages/meditation/meditation.dart';
+import 'package:sca6/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';

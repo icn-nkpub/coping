@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'dart:core';
-import 'package:firstapp/icons.dart';
+import 'package:sca6/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:funvas/funvas.dart';
 

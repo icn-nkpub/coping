@@ -1,5 +1,5 @@
-import 'package:firstapp/auth/auth.dart';
-import 'package:firstapp/storage/profiles.dart';
+import 'package:sca6/auth/auth.dart';
+import 'package:sca6/storage/profiles.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
