@@ -63,11 +63,10 @@ class _AppState extends State<App> {
       home: BlocProvider(
         lazy: true,
         create: (_) => LoginCubit(),
-        child: SafeArea(
-            child: Home(
+        child: Home(
           useLightMode: useLightMode,
           handleBrightnessChange: handleBrightnessChange,
-        )),
+        ),
       ),
     );
   }
