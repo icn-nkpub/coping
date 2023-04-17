@@ -108,7 +108,6 @@ flutter:
 flutter_icons:
   ios: true
   image_path_ios: "assets/logosca6.png"
-  remove_alpha_ios: true
   
   android: true
   image_path_android: "assets/opaqring.png"
