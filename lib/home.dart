@@ -1,4 +1,4 @@
-import 'package:sca6/icons.dart';
+import 'package:sca6/tokens/icons.dart';
 import 'package:sca6/pages/main/main.dart';
 import 'package:sca6/pages/meditation/meditation.dart';
 import 'package:flutter/material.dart';

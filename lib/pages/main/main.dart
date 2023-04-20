@@ -1,9 +1,10 @@
-import 'package:sca6/icons.dart';
+import 'package:sca6/tokens/icons.dart';
 import 'package:sca6/provider/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sca6/provider/theme/colors.dart';
 import 'package:sca6/provider/theme/theme.dart';
+import 'package:sca6/tokens/select.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({
@@ -113,24 +114,21 @@ class _MainScreenState extends State<MainScreen> {
                   assetName: t.isLightMode() ? "mode_light" : "mode_dark"),
             ),
             Flexible(
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton(
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  value: t.color,
-                  items: ColorValue.values
-                      .map((e) => DropdownMenuItem(
-                          value: e,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 16),
-                            child: Text(themeColorName(e)),
-                          )))
-                      .toList(),
-                  onChanged: (value) {
-                    if (value != null) {
-                      context.read<ThemeCubit>().setColor(value);
-                    }
-                  },
-                ),
+              child: Select(
+                value: t.color,
+                items: ColorValue.values
+                    .map((e) => DropdownMenuItem(
+                        value: e,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 16),
+                          child: Text(themeColorName(e)),
+                        )))
+                    .toList(),
+                onChanged: (value) {
+                  if (value != null) {
+                    context.read<ThemeCubit>().setColor(value);
+                  }
+                },
               ),
             ),
           ],
