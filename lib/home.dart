@@ -41,7 +41,7 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      body: <Widget>[
+      body: [
         const MainScreen(),
         const MeditationScreen(),
         Container(
