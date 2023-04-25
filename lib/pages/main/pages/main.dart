@@ -1,10 +1,11 @@
+import 'package:sca6/pages/main/main.dart';
+import 'package:sca6/tokens/cardrope.dart';
 import 'package:sca6/tokens/icons.dart';
 import 'package:sca6/provider/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sca6/provider/theme/colors.dart';
 import 'package:sca6/provider/theme/theme.dart';
-import 'package:sca6/tokens/select.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({
@@ -80,37 +81,34 @@ class _TopBarState extends State<TopBar> {
             );
           }),
           if (expandMenu)
-            Container(
-              width: double.maxFinite,
-              padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 16),
-                        child: Row(
-                          children: [
-                            TextButton(
-                              onPressed: () => widget.setPage(1),
-                              child: const Text("Login"),
-                            ),
-                            TextButton(
-                              onPressed: () => widget.setPage(2),
-                              child: const Text("Logout"),
-                            ),
-                          ],
+            CardRope(cards: [
+              RopedCard(
+                children: [
+                  Column(
+                    children: mainNav.entries.map((MapEntry<int, String> page) {
+                      return Padding(
+                        padding: EdgeInsets.only(
+                          top: page.key == 0 ? 0 : 8.0,
                         ),
-                      ),
-                      _themeSettings(),
-                    ],
+                        child: FilledButton.tonal(
+                          onPressed: () => widget.setPage(page.key),
+                          child: Container(
+                            width: double.maxFinite,
+                            alignment: Alignment.center,
+                            child: Text(page.value),
+                          ),
+                        ),
+                      );
+                    }).toList(),
                   ),
-                ),
+                ],
               ),
-            ),
+              RopedCard(
+                children: [
+                  _themeSettings(),
+                ],
+              ),
+            ]),
         ],
       ),
     );
@@ -120,32 +118,34 @@ class _TopBarState extends State<TopBar> {
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, t) {
         return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            IconButton(
+            FilledButton.tonal(
+              style: Theme.of(context).filledButtonTheme.style,
               onPressed: () {
                 context.read<ThemeCubit>().flipBrightness();
               },
-              icon: SvgIcon(
-                  assetName: t.isLightMode() ? "mode_light" : "mode_dark"),
+              child: SvgIcon(
+                assetName: t.isLightMode() ? "mode_light" : "mode_dark",
+              ),
             ),
             Flexible(
-              child: Select(
-                value: t.color,
-                items: ColorValue.values
-                    .map((e) => DropdownMenuItem(
-                        value: e,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 16),
-                          child: Text(themeColorName(e)),
-                        )))
-                    .toList(),
-                onChanged: (value) {
-                  if (value != null) {
-                    context.read<ThemeCubit>().setColor(value);
-                  }
-                },
+              child: Container(
+                width: double.maxFinite,
+                alignment: Alignment.center,
+                child: Text(
+                  themeColorName(t.color),
+                  style: Theme.of(context).textTheme.labelSmall,
+                ),
               ),
+            ),
+            FilledButton.tonal(
+              onPressed: () {
+                var next = (ColorValue.values.indexOf(t.color) + 1) %
+                    (ColorValue.values.length);
+                var selected = ColorValue.values[next];
+                context.read<ThemeCubit>().setColor(selected);
+              },
+              child: const SvgIcon(assetName: "palette"),
             ),
           ],
         );

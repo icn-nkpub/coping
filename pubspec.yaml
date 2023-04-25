@@ -81,6 +81,9 @@ flutter:
     - assets/icons/psychology.svg
     - assets/icons/relax.svg
     - assets/icons/stickynote.svg
+    - assets/icons/palette.svg
+    - assets/icons/back.svg
+    - assets/icons/cancel.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
