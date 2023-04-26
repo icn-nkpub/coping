@@ -1,3 +1,4 @@
+import 'package:flutter/rendering.dart';
 import 'package:sca6/pages/main/main.dart';
 import 'package:sca6/tokens/cardrope.dart';
 import 'package:sca6/tokens/icons.dart';
@@ -47,41 +48,50 @@ class _TopBarState extends State<TopBar> {
       child: Column(
         children: [
           BlocBuilder<LoginCubit, Profile?>(builder: (context, u) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 8,
-                horizontal: 16,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  RichText(
-                    text: TextSpan(
-                      text: 'Hello, ',
-                      style: DefaultTextStyle.of(context).style,
-                      children: [
-                        TextSpan(text: u?.profile?.firstName ?? 'and'),
-                        const TextSpan(text: " "),
-                        TextSpan(text: u?.profile?.secondName ?? 'welcome'),
-                        const TextSpan(text: "!"),
-                      ],
+            return Card(
+              margin: const EdgeInsets.only(top: 8, left: 8, right: 8),
+              elevation: 2,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: RichText(
+                        text: TextSpan(
+                          text: 'Hello, ',
+                          style: DefaultTextStyle.of(context).style,
+                          children: [
+                            TextSpan(text: u?.profile?.firstName ?? 'and'),
+                            const TextSpan(text: " "),
+                            TextSpan(text: u?.profile?.secondName ?? 'welcome'),
+                            const TextSpan(text: "!"),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        expandMenu = !expandMenu;
-                      });
-                    },
-                    icon: const SvgIcon(assetName: "more"),
-                  )
-                  // context.read<LoginCubit>().signIn("test@sca-6.org", "test");
-                ],
+                    IconButton(
+                      onPressed: () {
+                        setState(() {
+                          expandMenu = !expandMenu;
+                        });
+                      },
+                      icon: const SvgIcon(assetName: "more"),
+                    )
+                    // context.read<LoginCubit>().signIn("test@sca-6.org", "test");
+                  ],
+                ),
               ),
             );
           }),
-          if (expandMenu)
-            CardRope(cards: [
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            alignment: Alignment.bottomRight,
+            height: expandMenu ? 200 : 0,
+            padding: EdgeInsets.symmetric(vertical: expandMenu ? 8 : 0),
+            curve: Curves.ease,
+            child: CardRope(cards: [
               RopedCard(
                 children: [
                   Column(
@@ -91,7 +101,15 @@ class _TopBarState extends State<TopBar> {
                           top: page.key == 0 ? 0 : 8.0,
                         ),
                         child: FilledButton.tonal(
-                          onPressed: () => widget.setPage(page.key),
+                          onPressed: () {
+                            widget.setPage(page.key);
+                            Future.delayed(
+                              const Duration(milliseconds: 300),
+                              () => setState(() {
+                                expandMenu = !expandMenu;
+                              }),
+                            );
+                          },
                           child: Container(
                             width: double.maxFinite,
                             alignment: Alignment.center,
@@ -109,6 +127,8 @@ class _TopBarState extends State<TopBar> {
                 ],
               ),
             ]),
+          ),
+          Text("tist")
         ],
       ),
     );

@@ -17,6 +17,7 @@ class RopedCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      margin: const EdgeInsets.only(bottom: 8),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -35,15 +36,24 @@ class CardRope extends StatelessWidget {
     required this.cards,
   });
 
-  final List<RopedCard> cards;
+  final List<Widget> cards;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.maxFinite,
-      padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
-      child: Column(
-        children: cards,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Container(
+        alignment: Alignment.bottomCenter,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        clipBehavior: Clip.antiAlias,
+        width: double.maxFinite,
+        height: double.maxFinite,
+        child: Column(
+          verticalDirection: VerticalDirection.up,
+          children: cards.reversed.toList(),
+        ),
       ),
     );
   }

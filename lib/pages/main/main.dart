@@ -27,7 +27,7 @@ class MainScreen extends StatelessWidget {
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return FadeTransition(
-              opacity: animation.drive(CurveTween(curve: Curves.ease)),
+              opacity: animation.drive(CurveTween(curve: Curves.easeInOut)),
               child: child,
             );
           },
