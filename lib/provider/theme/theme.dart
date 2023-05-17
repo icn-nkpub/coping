@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sca6/provider/theme/colors.dart';
 
@@ -23,15 +22,7 @@ class ThemeState {
   }
 
   bool isLightMode() {
-    switch (mode) {
-      case ThemeMode.system:
-        return SchedulerBinding.instance.window.platformBrightness ==
-            Brightness.light;
-      case ThemeMode.light:
-        return true;
-      case ThemeMode.dark:
-        return false;
-    }
+    return mode == ThemeMode.light;
   }
 
   @override
@@ -61,6 +52,12 @@ class ThemeCubit extends Cubit<ThemeState> {
 
     state.resetThemeData();
 
+    emit(state);
+  }
+
+  Future<void> setBrightness(ThemeMode mode) async {
+    state.mode = mode;
+    state.resetThemeData();
     emit(state);
   }
 

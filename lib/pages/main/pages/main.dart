@@ -1,4 +1,3 @@
-import 'package:flutter/rendering.dart';
 import 'package:sca6/pages/main/main.dart';
 import 'package:sca6/tokens/cardrope.dart';
 import 'package:sca6/tokens/icons.dart';
@@ -43,6 +42,18 @@ class _TopBarState extends State<TopBar> {
 
   @override
   Widget build(BuildContext context) {
+    goTo(int pageKey) {
+      return () {
+        widget.setPage(pageKey);
+        Future.delayed(
+          const Duration(milliseconds: 300),
+          () => setState(() {
+            expandMenu = !expandMenu;
+          }),
+        );
+      };
+    }
+
     return Container(
       alignment: Alignment.center,
       child: Column(
@@ -88,37 +99,28 @@ class _TopBarState extends State<TopBar> {
           AnimatedContainer(
             duration: const Duration(milliseconds: 300),
             alignment: Alignment.bottomRight,
-            height: expandMenu ? 200 : 0,
+            height: expandMenu ? 600 : 0,
             padding: EdgeInsets.symmetric(vertical: expandMenu ? 8 : 0),
             curve: Curves.ease,
             child: CardRope(cards: [
               RopedCard(
                 children: [
-                  Column(
-                    children: mainNav.entries.map((MapEntry<int, String> page) {
-                      return Padding(
-                        padding: EdgeInsets.only(
-                          top: page.key == 0 ? 0 : 8.0,
-                        ),
-                        child: FilledButton.tonal(
-                          onPressed: () {
-                            widget.setPage(page.key);
-                            Future.delayed(
-                              const Duration(milliseconds: 300),
-                              () => setState(() {
-                                expandMenu = !expandMenu;
-                              }),
-                            );
-                          },
-                          child: Container(
-                            width: double.maxFinite,
-                            alignment: Alignment.center,
-                            child: Text(page.value),
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                  ),
+                  BlocBuilder<LoginCubit, Profile?>(builder: (context, u) {
+                    List<Widget> children = [];
+
+                    if (u == null) {
+                      children.add(NavButton("Login", onPressed: goTo(0)));
+                    } else {
+                      children.add(NavButton("Login", onPressed: goTo(0)));
+                    }
+
+                    children.add(NavButton("Settings", onPressed: goTo(0)));
+
+                    return Wrap(
+                      runSpacing: 8,
+                      children: children,
+                    );
+                  }),
                 ],
               ),
               RopedCard(
@@ -128,7 +130,7 @@ class _TopBarState extends State<TopBar> {
               ),
             ]),
           ),
-          Text("tist")
+          const Text("tist")
         ],
       ),
     );
@@ -170,6 +172,28 @@ class _TopBarState extends State<TopBar> {
           ],
         );
       },
+    );
+  }
+}
+
+class NavButton extends StatelessWidget {
+  const NavButton(
+    this.page, {
+    super.key,
+    required this.onPressed,
+  });
+  final String page;
+  final Function() onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return FilledButton.tonal(
+      onPressed: onPressed,
+      child: Container(
+        width: double.maxFinite,
+        alignment: Alignment.center,
+        child: Text(page),
+      ),
     );
   }
 }

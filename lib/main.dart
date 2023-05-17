@@ -21,9 +21,12 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final tcb = MediaQuery.of(context).platformBrightness == Brightness.light
+        ? ThemeMode.light
+        : ThemeMode.dark;
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => ThemeCubit()),
+        BlocProvider(create: (_) => ThemeCubit()..setBrightness(tcb)),
         BlocProvider(create: (_) => LoginCubit()),
       ],
       child: BlocBuilder<ThemeCubit, ThemeState>(

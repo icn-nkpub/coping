@@ -1,16 +1,7 @@
 import 'package:sca6/pages/main/pages/account.dart';
 import 'package:sca6/pages/main/pages/main.dart';
 import 'package:sca6/tokens/icons.dart';
-import 'package:sca6/provider/login/login.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sca6/provider/theme/colors.dart';
-import 'package:sca6/provider/theme/theme.dart';
-
-var mainNav = {
-  0: "Account",
-  1: "Profile",
-};
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});

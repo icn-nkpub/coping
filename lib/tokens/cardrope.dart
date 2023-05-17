@@ -1,10 +1,4 @@
-import 'package:sca6/pages/main/main.dart';
-import 'package:sca6/tokens/icons.dart';
-import 'package:sca6/provider/login/login.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sca6/provider/theme/colors.dart';
-import 'package:sca6/provider/theme/theme.dart';
 
 class RopedCard extends StatelessWidget {
   const RopedCard({
