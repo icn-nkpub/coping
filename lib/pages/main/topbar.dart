@@ -1,28 +1,10 @@
-import 'package:sca6/tokens/cardrope.dart';
 import 'package:sca6/tokens/icons.dart';
-import 'package:sca6/provider/login/login.dart';
 import 'package:flutter/material.dart';
+import 'package:sca6/tokens/cardrope.dart';
+import 'package:sca6/provider/login/login.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sca6/provider/theme/colors.dart';
 import 'package:sca6/provider/theme/theme.dart';
-
-class MainPage extends StatelessWidget {
-  const MainPage({
-    super.key,
-    required this.setPage,
-  });
-
-  final void Function(int) setPage;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TopBar(setPage: setPage),
-      ],
-    );
-  }
-}
 
 class TopBar extends StatefulWidget {
   const TopBar({
@@ -99,9 +81,7 @@ class _TopBarState extends State<TopBar> {
           AnimatedContainer(
             duration: const Duration(milliseconds: 300),
             alignment: Alignment.bottomRight,
-            height:
-                expandMenu ? 32 + 8 + ((32 + 8) * navButtonsCount) + 8 + 72 : 0,
-            padding: EdgeInsets.symmetric(vertical: expandMenu ? 8 : 0),
+            height: expandMenu ? 32 + ((32 + 8) * navButtonsCount) + 72 : 0,
             curve: Curves.ease,
             child: CardRope(cards: [
               RopedCard(
@@ -131,7 +111,6 @@ class _TopBarState extends State<TopBar> {
               ),
             ]),
           ),
-          const Text("tist")
         ],
       ),
     );

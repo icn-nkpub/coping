@@ -1,8 +1,8 @@
-import 'package:sca6/pages/main/pages/sub/logout.dart';
-import 'package:sca6/pages/main/pages/sub/profile.dart';
-import 'package:sca6/pages/main/pages/sub/login.dart';
-import 'package:sca6/pages/main/pages/sub/register.dart';
-import 'package:sca6/pages/main/pages/main.dart';
+import 'package:sca6/pages/main/page.dart';
+import 'package:sca6/pages/main/pages/logout.dart';
+import 'package:sca6/pages/main/pages/profile.dart';
+import 'package:sca6/pages/main/pages/login.dart';
+import 'package:sca6/pages/main/pages/register.dart';
 import 'package:sca6/tokens/icons.dart';
 import 'package:flutter/material.dart';
 
