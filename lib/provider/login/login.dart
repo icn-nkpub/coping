@@ -36,8 +36,52 @@ class LoginCubit extends Cubit<Profile?> {
     ));
   }
 
+  Future<void> signUp(String email, String password) async {
+    final auth = await suparegister(email, password);
+    if (auth == null) {
+      return;
+    }
+
+    final p = await getProfile(auth);
+
+    emit(Profile(
+      id: auth.id,
+      email: auth.email ?? "",
+      auth: auth,
+      profile: p,
+    ));
+  }
+
   Future<void> signOut() async {
     emit(null);
+  }
+
+  Future<void> setBreathingTime(double breathingTime) async {
+    if (state == null) {
+      return;
+    }
+
+    final auth = state!.auth;
+
+    var p = state?.profile;
+
+    p ??= ProfileRecord(
+      firstName: "",
+      secondName: "",
+      email: "",
+      breathingTime: 0,
+    );
+
+    p.breathingTime = breathingTime;
+
+    syncProfileBreathingTime(auth, breathingTime);
+
+    emit(Profile(
+      id: auth.id,
+      email: auth.email ?? "",
+      auth: auth,
+      profile: p,
+    ));
   }
 
   Future<void> saveProfile(

@@ -51,11 +51,32 @@ Future<void> syncProfile(User user, ProfileRecord p) async {
     return;
   }
 
-  await query().upsert({
+  await query().update({
+    "user_id": user.id,
     "first_name": p.firstName,
     "second_name": p.secondName,
     "email": p.email,
     "breathing_time": p.breathingTime,
+  }).eq("user_id", user.id);
+}
+
+Future<void> syncProfileBreathingTime(User user, double breathingTime) async {
+  final data = await query().select<PostgrestList>().eq(
+        "user_id",
+        user.id,
+      );
+
+  if (data.isEmpty) {
+    await query().insert({
+      "user_id": user.id,
+      "breathing_time": breathingTime,
+    });
+    return;
+  }
+
+  await query().update({
+    "user_id": user.id,
+    "breathing_time": breathingTime,
   }).eq("user_id", user.id);
 }
 

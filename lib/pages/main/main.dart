@@ -1,4 +1,7 @@
-import 'package:sca6/pages/main/pages/account.dart';
+import 'package:sca6/pages/main/pages/sub/logout.dart';
+import 'package:sca6/pages/main/pages/sub/profile.dart';
+import 'package:sca6/pages/main/pages/sub/login.dart';
+import 'package:sca6/pages/main/pages/sub/register.dart';
 import 'package:sca6/pages/main/pages/main.dart';
 import 'package:sca6/tokens/icons.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +16,10 @@ class MainScreen extends StatelessWidget {
         Navigator.of(context).push(PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) {
             return [
-              _withBack(context, const AccountPage()),
+              _withBack(context, const LoginPage()),
+              _withBack(context, const RegisterPage()),
+              _withBack(context, const ProfilePage()),
+              _withBack(context, const LogoutPage()),
             ][page];
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {

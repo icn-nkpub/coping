@@ -54,6 +54,7 @@ class _TopBarState extends State<TopBar> {
       };
     }
 
+    var navButtonsCount = 2;
     return Container(
       alignment: Alignment.center,
       child: Column(
@@ -99,7 +100,8 @@ class _TopBarState extends State<TopBar> {
           AnimatedContainer(
             duration: const Duration(milliseconds: 300),
             alignment: Alignment.bottomRight,
-            height: expandMenu ? 600 : 0,
+            height:
+                expandMenu ? 32 + 8 + ((32 + 8) * navButtonsCount) + 8 + 72 : 0,
             padding: EdgeInsets.symmetric(vertical: expandMenu ? 8 : 0),
             curve: Curves.ease,
             child: CardRope(cards: [
@@ -110,11 +112,11 @@ class _TopBarState extends State<TopBar> {
 
                     if (u == null) {
                       children.add(NavButton("Login", onPressed: goTo(0)));
+                      children.add(NavButton("Register", onPressed: goTo(1)));
                     } else {
-                      children.add(NavButton("Login", onPressed: goTo(0)));
+                      children.add(NavButton("Profile", onPressed: goTo(2)));
+                      children.add(NavButton("Logout", onPressed: goTo(3)));
                     }
-
-                    children.add(NavButton("Settings", onPressed: goTo(0)));
 
                     return Wrap(
                       runSpacing: 8,

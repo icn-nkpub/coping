@@ -13,7 +13,12 @@ CREATE INDEX user_id_idx ON profiles
 
 ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Enable read access for all users" ON "public"."profiles"
-    AS PERMISSIVE FOR ALL TO public
-    USING (auth.uid() = user_id)
+CREATE POLICY "Enable read access for authed users" ON "public"."profiles"
+    FOR SELECT
+    USING (auth.uid() = user_id);
+CREATE POLICY "Enable update access for authed users" ON "public"."profiles"
+    FOR UPDATE
+    USING (auth.uid() = user_id);
+CREATE POLICY "Enable write access for public" ON "public"."profiles"
+    FOR INSERT
     WITH CHECK (auth.uid() = user_id);

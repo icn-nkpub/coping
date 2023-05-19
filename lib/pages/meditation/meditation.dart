@@ -1,5 +1,7 @@
 import 'dart:math';
 import 'dart:core';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sca6/provider/login/login.dart';
 import 'package:sca6/tokens/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:funvas/funvas.dart';
@@ -132,64 +134,61 @@ class CanvasDrawer extends Funvas {
   }
 }
 
-class MeditationScreen extends StatefulWidget {
+class MeditationScreen extends StatelessWidget {
   const MeditationScreen({super.key});
 
   @override
-  State<MeditationScreen> createState() => _MeditationScreenState();
-}
-
-class _MeditationScreenState extends State<MeditationScreen> {
-  double _speed = 6;
-
-  @override
   Widget build(BuildContext context) {
-    var cd = CanvasDrawer(
-      color: HSLColor.fromColor(Theme.of(context).colorScheme.primary),
-      fullCycleDuration: _speed,
-      scale: 1.3,
-      rounds: 12,
-      slideDist: 12,
-    );
+    return BlocBuilder<LoginCubit, Profile?>(builder: (context, u) {
+      final breathingTime = u?.profile?.breathingTime ?? 6.0;
 
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        SizedBox(
-          width: double.maxFinite,
-          height: double.maxFinite,
-          child: FunvasContainer(
-            funvas: cd,
+      var cd = CanvasDrawer(
+        color: HSLColor.fromColor(Theme.of(context).colorScheme.primary),
+        fullCycleDuration: breathingTime,
+        scale: 1.3,
+        rounds: 12,
+        slideDist: 12,
+      );
+      return Stack(
+        alignment: Alignment.center,
+        children: [
+          SizedBox(
+            width: double.maxFinite,
+            height: double.maxFinite,
+            child: FunvasContainer(
+              funvas: cd,
+            ),
           ),
-        ),
-        SizedBox(
-          width: double.maxFinite,
-          height: double.maxFinite,
-          child: InfoCard(
-            setSpeed: (s) {
-              Future.delayed(const Duration(seconds: 1), () {
-                setState(() {
-                  _speed = s;
+          SizedBox(
+            width: double.maxFinite,
+            height: double.maxFinite,
+            child: InfoCard(
+              speed: breathingTime,
+              setSpeed: (s) {
+                Future.delayed(const Duration(seconds: 1), () {
+                  context.read<LoginCubit>().setBreathingTime(s);
                 });
-              });
-            },
-            changingSpeed: () {
-              cd.windDown = true;
-            },
-          ),
-        )
-      ],
-    );
+              },
+              changingSpeed: () {
+                cd.windDown = true;
+              },
+            ),
+          )
+        ],
+      );
+    });
   }
 }
 
 class InfoCard extends StatefulWidget {
   const InfoCard({
     super.key,
+    required this.speed,
     required this.setSpeed,
     required this.changingSpeed,
   });
 
+  final double speed;
   final Function(double) setSpeed;
   final Function() changingSpeed;
 
@@ -200,6 +199,12 @@ class InfoCard extends StatefulWidget {
 class _InfoCardState extends State<InfoCard> {
   double _speed = 6;
   bool _expandInfo = true;
+
+  @override
+  void initState() {
+    _speed = widget.speed;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
