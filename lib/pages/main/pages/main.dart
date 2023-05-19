@@ -1,4 +1,3 @@
-import 'package:sca6/pages/main/main.dart';
 import 'package:sca6/tokens/cardrope.dart';
 import 'package:sca6/tokens/icons.dart';
 import 'package:sca6/provider/login/login.dart';
