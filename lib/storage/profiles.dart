@@ -4,13 +4,11 @@ class ProfileRecord {
   ProfileRecord({
     required this.firstName,
     required this.secondName,
-    required this.email,
     required this.breathingTime,
   });
 
   String firstName;
   String secondName;
-  String email;
   double breathingTime;
 }
 
@@ -29,7 +27,6 @@ Future<ProfileRecord?> getProfile(User user) async {
   return ProfileRecord(
     firstName: record["first_name"],
     secondName: record["second_name"],
-    email: record["email"],
     breathingTime: double.parse(record["breathing_time"].toString()),
   );
 }
@@ -45,7 +42,6 @@ Future<void> syncProfile(User user, ProfileRecord p) async {
       "user_id": user.id,
       "first_name": p.firstName,
       "second_name": p.secondName,
-      "email": p.email,
       "breathing_time": p.breathingTime,
     });
     return;
@@ -55,7 +51,6 @@ Future<void> syncProfile(User user, ProfileRecord p) async {
     "user_id": user.id,
     "first_name": p.firstName,
     "second_name": p.secondName,
-    "email": p.email,
     "breathing_time": p.breathingTime,
   }).eq("user_id", user.id);
 }

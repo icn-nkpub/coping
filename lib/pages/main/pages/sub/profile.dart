@@ -12,7 +12,8 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<LoginCubit, Profile?>(builder: (context, u) {
       var cFirstName = TextEditingController(text: u?.profile?.firstName ?? "");
-      var cLastName = TextEditingController(text: u?.profile?.secondName ?? "");
+      var cSecondName =
+          TextEditingController(text: u?.profile?.secondName ?? "");
 
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -21,15 +22,13 @@ class ProfilePage extends StatelessWidget {
             children: [
               Input(title: "First name", ctrl: cFirstName),
               const SizedBox(height: 8),
-              Input(title: "Last name", ctrl: cLastName),
+              Input(title: "Second name", ctrl: cSecondName),
               const SizedBox(height: 8),
               FilledButton(
                 onPressed: () {
-                  context.read<LoginCubit>().saveProfile(
-                      u!.email,
-                      cFirstName.text,
-                      cLastName.text,
-                      u.profile?.breathingTime ?? 6);
+                  context
+                      .read<LoginCubit>()
+                      .saveProfile(cFirstName.text, cSecondName.text);
                   Navigator.of(context).pop();
                 },
                 child: const Padding(

@@ -3,7 +3,6 @@ CREATE TABLE profiles (
     user_id UUID UNIQUE,
     first_name TEXT,
     second_name TEXT,
-    email TEXT,
     breathing_time REAL,
     created_at TIMESTAMPTZ DEFAULT NOW()
 );

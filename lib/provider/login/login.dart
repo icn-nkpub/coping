@@ -63,14 +63,12 @@ class LoginCubit extends Cubit<Profile?> {
 
     final auth = state!.auth;
 
-    var p = state?.profile;
-
-    p ??= ProfileRecord(
-      firstName: "",
-      secondName: "",
-      email: "",
-      breathingTime: 0,
-    );
+    var p = state?.profile ??
+        ProfileRecord(
+          firstName: "",
+          secondName: "",
+          breathingTime: 0,
+        );
 
     p.breathingTime = breathingTime;
 
@@ -85,10 +83,8 @@ class LoginCubit extends Cubit<Profile?> {
   }
 
   Future<void> saveProfile(
-    String email,
     String firstName,
     String secondName,
-    double breathingTime,
   ) async {
     if (state == null) {
       return;
@@ -96,12 +92,14 @@ class LoginCubit extends Cubit<Profile?> {
 
     final auth = state!.auth;
 
-    final p = ProfileRecord(
-      firstName: firstName,
-      secondName: secondName,
-      email: email,
-      breathingTime: breathingTime,
-    );
+    var p = state?.profile ??
+        ProfileRecord(
+          firstName: "",
+          secondName: "",
+          breathingTime: 0,
+        );
+    p.firstName = firstName;
+    p.secondName = secondName;
 
     syncProfile(auth, p);
 
