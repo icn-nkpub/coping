@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
-enum ColorValue { ocean, cherry, leaves, pine, coffee, night }
+enum ColorValue { ocean, cherry, leaves, pine, night }
 
 Color themeColor(ColorValue c) {
   switch (c) {
     case ColorValue.ocean:
-      return const Color(0xFF36B0DC);
+      return Colors.blue;
     case ColorValue.cherry:
-      return const Color(0xFFFFD9FF);
+      return Colors.pink;
     case ColorValue.leaves:
-      return const Color(0xFF57AD52);
+      return Colors.green;
     case ColorValue.pine:
-      return const Color(0xFF2CB696);
-    case ColorValue.coffee:
-      return const Color(0xFFA54D29);
+      return Color.alphaBlend(
+          Colors.green.withOpacity(.5), Colors.blue.withOpacity(.5));
     case ColorValue.night:
-      return const Color(0xFF3648E2);
+      return Color.alphaBlend(
+          Colors.purple.withOpacity(.3), Colors.blue.withOpacity(.7));
   }
 }
 
@@ -29,8 +29,6 @@ String themeColorName(ColorValue c) {
       return "Leaves";
     case ColorValue.pine:
       return "Forrest";
-    case ColorValue.coffee:
-      return "Coffee";
     case ColorValue.night:
       return "Midnight";
   }
