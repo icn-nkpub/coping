@@ -6,15 +6,16 @@ import 'package:flutter/material.dart';
 class CountdownDisplay extends StatelessWidget {
   const CountdownDisplay({
     super.key,
+    required this.from,
   });
+
+  final DateTime from;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Stopwatch(
-          from: DateTime.fromMillisecondsSinceEpoch(1684521380000),
-        ),
+        Stopwatch(from: from),
         const SizedBox(
           height: 8,
         ),

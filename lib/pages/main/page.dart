@@ -18,22 +18,55 @@ class MainPage extends StatelessWidget {
           setPage: setPage,
           windowHeight: MediaQuery.of(context).size.height / 3 * 2,
         ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: ListView(
-              shrinkWrap: true,
-              scrollDirection: Axis.vertical,
-              children: const [
-                SizedBox(
-                  height: 8 * 6,
+        const Countdown(),
+      ],
+    );
+  }
+}
+
+class Countdown extends StatefulWidget {
+  const Countdown({
+    super.key,
+  });
+
+  @override
+  State<Countdown> createState() => _CountdownState();
+}
+
+class _CountdownState extends State<Countdown> {
+  int lastTimeSmoked = 1684687455000;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: ListView(
+          shrinkWrap: true,
+          scrollDirection: Axis.vertical,
+          children: [
+            const SizedBox(height: 8 * 6),
+            CountdownDisplay(
+                from: DateTime.fromMillisecondsSinceEpoch(lastTimeSmoked)),
+            const SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                FilledButton(
+                  onPressed: () => setState(() =>
+                      lastTimeSmoked += Duration.millisecondsPerMinute * 30),
+                  child: const Text("-30m"),
                 ),
-                CountdownDisplay(),
+                FilledButton(
+                  onPressed: () => setState(() =>
+                      lastTimeSmoked -= Duration.millisecondsPerMinute * 30),
+                  child: const Text("+30m"),
+                ),
               ],
             ),
-          ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

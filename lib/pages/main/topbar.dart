@@ -62,7 +62,7 @@ class _TopBarState extends State<TopBar> {
             accordionContentHeight = h > 0 ? h : accordionContentHeight;
             expandMenu = false;
           });
-          Timer(Duration(milliseconds: 300), () {
+          Timer(const Duration(milliseconds: 300), () {
             setState(() {
               ready = true;
             });
