@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:sca6/tokens/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:sca6/tokens/cardrope.dart';
@@ -10,109 +12,189 @@ class TopBar extends StatefulWidget {
   const TopBar({
     super.key,
     required this.setPage,
+    required this.windowHeight,
   });
 
   final void Function(int) setPage;
+  final double windowHeight;
 
   @override
   State<TopBar> createState() => _TopBarState();
 }
 
 class _TopBarState extends State<TopBar> {
-  bool expandMenu = false;
+  bool ready = false;
+  bool expandMenu = true;
+  double accordionContentHeight = 300.0;
+
+  @override
+  void initState() {
+    accordionContentHeight = widget.windowHeight;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    goTo(int pageKey) {
-      return () {
-        widget.setPage(pageKey);
-        Future.delayed(
-          const Duration(milliseconds: 300),
-          () => setState(() {
-            expandMenu = !expandMenu;
-          }),
-        );
-      };
-    }
+    return AnimatedOpacity(
+      duration: const Duration(seconds: 1),
+      opacity: ready ? 1 : 0,
+      child: Container(
+        alignment: Alignment.center,
+        child: Column(
+          verticalDirection: VerticalDirection.up,
+          children: [
+            body(),
+            head(context),
+          ],
+        ),
+      ),
+    );
+  }
 
-    var navButtonsCount = 2;
-    return Container(
-      alignment: Alignment.center,
-      child: Column(
-        children: [
-          BlocBuilder<LoginCubit, Profile?>(builder: (context, u) {
-            return Card(
-              margin: const EdgeInsets.only(top: 8, left: 8, right: 8),
-              elevation: 2,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: RichText(
-                        text: TextSpan(
-                          text: 'Hello, ',
-                          style: DefaultTextStyle.of(context).style,
-                          children: [
-                            TextSpan(text: u?.profile?.firstName ?? 'and'),
-                            const TextSpan(text: " "),
-                            TextSpan(text: u?.profile?.secondName ?? 'welcome'),
-                            const TextSpan(text: "!"),
-                          ],
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          expandMenu = !expandMenu;
-                        });
-                      },
-                      icon: const SvgIcon(assetName: "more"),
-                    )
-                    // context.read<LoginCubit>().signIn("test@sca-6.org", "test");
-                  ],
+  AnimatedContainer body() {
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
+      alignment: Alignment.bottomRight,
+      height: expandMenu ? accordionContentHeight : 0,
+      curve: Curves.ease,
+      child: AccordionContent(
+        reportHeight: (h) {
+          setState(() {
+            accordionContentHeight = h > 0 ? h : accordionContentHeight;
+            expandMenu = false;
+            ready = true;
+          });
+        },
+        goTo: (int pageKey) {
+          return () {
+            widget.setPage(pageKey);
+            Future.delayed(
+              const Duration(milliseconds: 300),
+              () => setState(() {
+                expandMenu = !expandMenu;
+              }),
+            );
+          };
+        },
+      ),
+    );
+  }
+
+  BlocBuilder<LoginCubit, Profile?> head(BuildContext context) {
+    return BlocBuilder<LoginCubit, Profile?>(builder: (_, u) {
+      return Material(
+        surfaceTintColor: Theme.of(context).primaryColor,
+        elevation: 2,
+        child: Container(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Opacity(
+                opacity: 0,
+                child: IconButton(
+                  onPressed: () {},
+                  icon: const SvgIcon(assetName: "more"),
                 ),
               ),
-            );
-          }),
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
-            alignment: Alignment.bottomRight,
-            height: expandMenu ? 32 + ((32 + 8) * navButtonsCount) + 72 : 0,
-            curve: Curves.ease,
-            child: CardRope(cards: [
-              RopedCard(
-                children: [
-                  BlocBuilder<LoginCubit, Profile?>(builder: (context, u) {
-                    List<Widget> children = [];
-
-                    if (u == null) {
-                      children.add(NavButton("Login", onPressed: goTo(0)));
-                      children.add(NavButton("Register", onPressed: goTo(1)));
-                    } else {
-                      children.add(NavButton("Profile", onPressed: goTo(2)));
-                      children.add(NavButton("Logout", onPressed: goTo(3)));
-                    }
-
-                    return Wrap(
-                      runSpacing: 8,
-                      children: children,
-                    );
-                  }),
-                ],
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: RichText(
+                  text: TextSpan(
+                    text: 'Hello, ',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(fontWeight: FontWeight.bold),
+                    children: [
+                      TextSpan(text: u?.profile?.firstName ?? 'and'),
+                      const TextSpan(text: " "),
+                      TextSpan(text: u?.profile?.secondName ?? 'welcome'),
+                      const TextSpan(text: "!"),
+                    ],
+                  ),
+                ),
               ),
-              RopedCard(
-                children: [
-                  _themeSettings(),
-                ],
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    expandMenu = !expandMenu;
+                  });
+                },
+                icon: const SvgIcon(assetName: "settings"),
               ),
-            ]),
+            ],
           ),
-        ],
-      ),
+        ),
+      );
+    });
+  }
+}
+
+class AccordionContent extends StatefulWidget {
+  const AccordionContent({
+    super.key,
+    required this.goTo,
+    required this.reportHeight,
+  });
+
+  final Function(int) goTo;
+  final Function(double) reportHeight;
+
+  @override
+  State<AccordionContent> createState() => _AccordionContentState();
+}
+
+class _AccordionContentState extends State<AccordionContent> {
+  final GlobalKey _key = GlobalKey();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final rb = _key.currentContext!.findRenderObject()! as RenderBox;
+      widget.reportHeight(rb.size.height);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _content();
+  }
+
+  CardRope _content() {
+    return CardRope(
+      key: _key,
+      cards: [
+        RopedCard(
+          children: [
+            BlocBuilder<LoginCubit, Profile?>(builder: (context, u) {
+              List<Widget> children = [];
+
+              if (u == null) {
+                children.add(NavButton("Login", onPressed: widget.goTo(0)));
+                children.add(NavButton("Register", onPressed: widget.goTo(1)));
+              } else {
+                children.add(NavButton("Profile", onPressed: widget.goTo(2)));
+                children.add(NavButton("Logout", onPressed: widget.goTo(3)));
+              }
+
+              return Wrap(
+                runSpacing: 8,
+                children: children,
+              );
+            }),
+          ],
+        ),
+        RopedCard(
+          children: [
+            _themeSettings(),
+          ],
+        ),
+        const SizedBox(
+          height: 0,
+        ),
+      ],
     );
   }
 
@@ -136,7 +218,7 @@ class _TopBarState extends State<TopBar> {
                 alignment: Alignment.center,
                 child: Text(
                   themeColorName(t.color),
-                  style: Theme.of(context).textTheme.labelSmall,
+                  style: Theme.of(context).textTheme.labelMedium,
                 ),
               ),
             ),

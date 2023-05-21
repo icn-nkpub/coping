@@ -18,7 +18,12 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(toolbarHeight: 0),
+      appBar: AppBar(
+        toolbarHeight: 0,
+        // it's some bug on ios that appear in Flutter 3.10.1, revision d3d8effc68
+        backgroundColor: ElevationOverlay.applySurfaceTint(
+            Theme.of(context).cardColor, Theme.of(context).primaryColor, 2),
+      ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: currentPageIndex,
         onDestinationSelected: (int index) {

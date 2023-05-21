@@ -35,29 +35,19 @@ class CardRope extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> ws = [];
-    for (var card in cards.asMap().entries) {
-      if (card.key != 0) {
-        ws.add(const SizedBox(
-          height: 8,
-        ));
-      }
-      ws.add(card.value);
+    for (var card in cards) {
+      ws.add(const SizedBox(
+        height: 8,
+      ));
+      ws.add(card);
     }
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Container(
-        alignment: Alignment.bottomCenter,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-        ),
-        clipBehavior: Clip.antiAlias,
-        width: double.maxFinite,
-        height: double.maxFinite,
-        child: ListView(
-          reverse: true,
-          children: ws.reversed.toList(),
-        ),
+      child: ListView(
+        shrinkWrap: true,
+        reverse: true,
+        children: ws.reversed.toList(),
       ),
     );
   }

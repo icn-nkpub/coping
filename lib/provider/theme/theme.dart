@@ -23,6 +23,10 @@ class ThemeState {
     data = data.copyWith(
       textTheme: GoogleFonts.latoTextTheme(data.textTheme),
     );
+    data = data.copyWith(
+      scaffoldBackgroundColor: ElevationOverlay.applySurfaceTint(
+          data.cardColor, data.primaryColor, .5),
+    );
   }
 
   bool isLightMode() {

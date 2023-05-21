@@ -12,13 +12,6 @@ class CountdownDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-          "Your resistance",
-          style: Theme.of(context).textTheme.headlineSmall,
-        ),
-        const SizedBox(
-          height: 8,
-        ),
         Stopwatch(
           from: DateTime.fromMillisecondsSinceEpoch(1684521380000),
         ),
@@ -110,7 +103,7 @@ class _SecondsState extends State<Seconds> {
           .toString()
           .padLeft(2, '0'),
       style: GoogleFonts.jetBrainsMonoTextTheme(Theme.of(context).textTheme)
-          .displayLarge,
+          .displayMedium,
     );
   }
 }
@@ -137,7 +130,7 @@ class _MinutesState extends State<Minutes> {
       (DateTime.now().difference(widget.from).inMinutes % 60)
           .toString()
           .padLeft(2, '0'),
-      style: Theme.of(context).textTheme.displayLarge,
+      style: Theme.of(context).textTheme.displayMedium,
       textAlign: TextAlign.center,
     );
   }
@@ -165,7 +158,7 @@ class _HoursState extends State<Hours> {
       (DateTime.now().difference(widget.from).inHours % 24)
           .toString()
           .padLeft(2, '0'),
-      style: Theme.of(context).textTheme.displayLarge,
+      style: Theme.of(context).textTheme.displayMedium,
       textAlign: TextAlign.center,
     );
   }
@@ -191,7 +184,7 @@ class _DaysState extends State<Days> {
     });
     return Text(
       DateTime.now().difference(widget.from).inDays.toString().padLeft(2, "0"),
-      style: Theme.of(context).textTheme.displayLarge,
+      style: Theme.of(context).textTheme.displayMedium,
       textAlign: TextAlign.center,
     );
   }

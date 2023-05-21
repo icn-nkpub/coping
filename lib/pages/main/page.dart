@@ -1,4 +1,3 @@
-
 import 'package:sca6/pages/main/countdown.dart';
 import 'package:sca6/pages/main/topbar.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +14,10 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TopBar(setPage: setPage),
+        TopBar(
+          setPage: setPage,
+          windowHeight: MediaQuery.of(context).size.height / 3 * 2,
+        ),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
