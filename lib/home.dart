@@ -20,9 +20,8 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 0,
-        // it's some bug on ios that appear in Flutter 3.10.1, revision d3d8effc68
-        backgroundColor: ElevationOverlay.applySurfaceTint(
-            Theme.of(context).cardColor, Theme.of(context).primaryColor, 2),
+        surfaceTintColor: Theme.of(context).appBarTheme.backgroundColor,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: currentPageIndex,

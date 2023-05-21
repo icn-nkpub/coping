@@ -35,18 +35,17 @@ class _TopBarState extends State<TopBar> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedOpacity(
-      duration: const Duration(seconds: 1),
-      opacity: ready ? 1 : 0,
-      child: Container(
-        alignment: Alignment.center,
-        child: Column(
-          verticalDirection: VerticalDirection.up,
-          children: [
-            body(),
-            head(context),
-          ],
-        ),
+    return Container(
+      alignment: Alignment.center,
+      child: Column(
+        verticalDirection: VerticalDirection.up,
+        children: [
+          Opacity(
+            opacity: ready ? 1 : 0,
+            child: body(),
+          ),
+          head(context),
+        ],
       ),
     );
   }
@@ -62,7 +61,11 @@ class _TopBarState extends State<TopBar> {
           setState(() {
             accordionContentHeight = h > 0 ? h : accordionContentHeight;
             expandMenu = false;
-            ready = true;
+          });
+          Timer(Duration(milliseconds: 300), () {
+            setState(() {
+              ready = true;
+            });
           });
         },
         goTo: (int pageKey) {
@@ -83,7 +86,7 @@ class _TopBarState extends State<TopBar> {
   BlocBuilder<LoginCubit, Profile?> head(BuildContext context) {
     return BlocBuilder<LoginCubit, Profile?>(builder: (_, u) {
       return Material(
-        surfaceTintColor: Theme.of(context).primaryColor,
+        color: Theme.of(context).appBarTheme.backgroundColor,
         elevation: 2,
         child: Container(
           padding: const EdgeInsets.all(8.0),

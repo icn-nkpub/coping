@@ -20,12 +20,14 @@ class ThemeState {
       useMaterial3: true,
       brightness: isLightMode() ? Brightness.light : Brightness.dark,
     );
+    final bc = data.colorScheme.background;
+    final pc = data.colorScheme.primary;
     data = data.copyWith(
       textTheme: GoogleFonts.latoTextTheme(data.textTheme),
-    );
-    data = data.copyWith(
-      scaffoldBackgroundColor: ElevationOverlay.applySurfaceTint(
-          data.cardColor, data.primaryColor, .5),
+      scaffoldBackgroundColor: ElevationOverlay.applySurfaceTint(bc, pc, .5),
+      appBarTheme: data.appBarTheme.copyWith(
+        color: ElevationOverlay.applySurfaceTint(bc, pc, 2),
+      ),
     );
   }
 
