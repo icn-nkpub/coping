@@ -53,6 +53,16 @@ class _CountdownState extends State<Countdown> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 FilledButton(
+                  onPressed: () => setState(
+                      () => lastTimeSmoked += Duration.millisecondsPerDay),
+                  child: const Text("-1d"),
+                ),
+                FilledButton(
+                  onPressed: () => setState(
+                      () => lastTimeSmoked += Duration.millisecondsPerMinute),
+                  child: const Text("-1m"),
+                ),
+                FilledButton(
                   onPressed: () => setState(() =>
                       lastTimeSmoked += Duration.millisecondsPerMinute * 30),
                   child: const Text("-30m"),
@@ -61,6 +71,11 @@ class _CountdownState extends State<Countdown> {
                   onPressed: () => setState(() =>
                       lastTimeSmoked -= Duration.millisecondsPerMinute * 30),
                   child: const Text("+30m"),
+                ),
+                FilledButton(
+                  onPressed: () => setState(
+                      () => lastTimeSmoked -= Duration.millisecondsPerMinute),
+                  child: const Text("+1m"),
                 ),
               ],
             ),
