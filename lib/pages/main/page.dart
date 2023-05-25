@@ -77,6 +77,11 @@ class _CountdownState extends State<Countdown> {
                       () => lastTimeSmoked -= Duration.millisecondsPerMinute),
                   child: const Text("+1m"),
                 ),
+                FilledButton(
+                  onPressed: () => setState(
+                      () => lastTimeSmoked -= Duration.millisecondsPerDay),
+                  child: const Text("+1d"),
+                ),
               ],
             ),
           ],
