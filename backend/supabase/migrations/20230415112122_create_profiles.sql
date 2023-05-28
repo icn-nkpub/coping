@@ -7,7 +7,7 @@ CREATE TABLE profiles (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE INDEX user_id_idx ON profiles
+CREATE INDEX profile_user_id_idx ON profiles
     USING BRIN (user_id);
 
 ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
