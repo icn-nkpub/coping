@@ -5,6 +5,8 @@ import 'package:sca6/provider/login/login.dart';
 import 'package:sca6/tokens/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:funvas/funvas.dart';
+import 'package:sca6/tokens/measurable.dart';
+import 'package:sca6/tokens/topbar.dart';
 
 class CanvasDrawer extends Funvas {
   CanvasDrawer({
@@ -153,15 +155,15 @@ class MeditationScreen extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           SizedBox(
-            width: double.maxFinite,
-            height: double.maxFinite,
+            width: double.infinity,
+            height: double.infinity,
             child: FunvasContainer(
               funvas: cd,
             ),
           ),
           SizedBox(
-            width: double.maxFinite,
-            height: double.maxFinite,
+            width: double.infinity,
+            height: double.infinity,
             child: InfoCard(
               speed: breathingTime,
               setSpeed: (s) {
@@ -198,7 +200,7 @@ class InfoCard extends StatefulWidget {
 
 class _InfoCardState extends State<InfoCard> {
   double _speed = 6;
-  bool _expandInfo = true;
+  bool _expandInfo = false;
 
   @override
   void initState() {
@@ -208,89 +210,99 @@ class _InfoCardState extends State<InfoCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          IconButton(
+    return Column(
+      verticalDirection: VerticalDirection.up,
+      children: [
+        const Expanded(child: SizedBox()),
+        Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: IconButton.filledTonal(
             onPressed: () {
               setState(() {
                 _expandInfo = !_expandInfo;
               });
             },
             icon: _expandInfo
-                ? const SvgIcon(assetName: "help")
-                : const SvgIcon(assetName: "close"),
+                ? const SvgIcon(assetName: "close")
+                : const SvgIcon(assetName: "expand_more"),
           ),
-          AnimatedOpacity(
-            opacity: _expandInfo ? 0 : 1,
-            duration: const Duration(milliseconds: 200),
-            child: Card(
-              child: Padding(
+        ),
+        Shrinkable(
+          expanded: _expandInfo,
+          child: body(context),
+        ),
+        const NullTopBar(),
+      ],
+    );
+  }
+
+  Widget body(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
+      child: Card(
+        margin: EdgeInsets.zero,
+        elevation: 2,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "How to follow breathing circle",
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                    ),
-                    ...[
-                      "Lie down on your back and relax",
-                      "Breathe in and out slowly and steadily",
-                      "Put one hand on your abdomen to feel it move up and down as you breathe",
-                      "If you use your chest, you need breath deeper",
-                      "Breathe in so your abdomen goes out",
-                      "Breathe out abdonmen and chest goes down",
-                      "When you breathe out, purse your lips like you are blowing out a candle",
-                      "Breath in for ${(_speed / 3 * 1).round()} seconds "
-                          "and out for ${(_speed / 3 * 2).round()} seconds",
-                      "Follow the circle"
-                    ].map((e) => Container(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 2,
-                            horizontal: 8,
-                          ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("+ ",
-                                  style: Theme.of(context).textTheme.bodySmall),
-                              Flexible(
-                                child: Text(e,
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall),
-                              ),
-                            ],
-                          ),
-                        )),
-                    const SizedBox(height: 8),
-                    Slider(
-                      value: _speed,
-                      min: 3,
-                      max: 32,
-                      onChangeEnd: (x) {
-                        setState(() {
-                          _speed = (x * 10).round() / 10;
-                          widget.setSpeed(x);
-                        });
-                      },
-                      onChanged: (x) {
-                        setState(() {
-                          _speed = (x * 10).round() / 10;
-                          widget.changingSpeed();
-                        });
-                      },
-                    ),
-                  ],
+                child: Text(
+                  "How to follow breathing circle",
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-            ),
+              ...[
+                "Lie down on your back and relax",
+                "Breathe in and out slowly and steadily",
+                "Put one hand on your abdomen to feel it move up and down as you breathe",
+                "If you use your chest, you need breath deeper",
+                "Breathe in so your abdomen goes out",
+                "Breathe out abdonmen and chest goes down",
+                "When you breathe out, purse your lips like you are blowing out a candle",
+                "Breath in for ${(_speed / 3 * 1).round()} seconds "
+                    "and out for ${(_speed / 3 * 2).round()} seconds",
+                "Follow the circle"
+              ].map((e) => Container(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 2,
+                      horizontal: 8,
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("+ ",
+                            style: Theme.of(context).textTheme.bodySmall),
+                        Flexible(
+                          child: Text(e,
+                              style: Theme.of(context).textTheme.bodySmall),
+                        ),
+                      ],
+                    ),
+                  )),
+              const SizedBox(height: 8),
+              Slider(
+                value: _speed,
+                min: 3,
+                max: 32,
+                onChangeEnd: (x) {
+                  setState(() {
+                    _speed = (x * 10).round() / 10;
+                    widget.setSpeed(x);
+                  });
+                },
+                onChanged: (x) {
+                  setState(() {
+                    _speed = (x * 10).round() / 10;
+                    widget.changingSpeed();
+                  });
+                },
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

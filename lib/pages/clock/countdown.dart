@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-import 'package:sca6/pages/main/risk.dart';
+import 'package:sca6/pages/clock/risk.dart';
 
 class CountdownDisplay extends StatelessWidget {
   const CountdownDisplay({

@@ -7,31 +7,40 @@ import 'package:sca6/provider/login/login.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sca6/provider/theme/colors.dart';
 import 'package:sca6/provider/theme/theme.dart';
+import 'package:sca6/tokens/measurable.dart';
+
+class NullTopBar extends StatelessWidget {
+  const NullTopBar({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Theme.of(context).appBarTheme.backgroundColor,
+      elevation: 2,
+      child: const SizedBox(
+        width: double.infinity,
+        height: 4,
+      ),
+    );
+  }
+}
 
 class TopBar extends StatefulWidget {
   const TopBar({
     super.key,
     required this.setPage,
-    required this.windowHeight,
   });
 
   final void Function(int) setPage;
-  final double windowHeight;
 
   @override
   State<TopBar> createState() => _TopBarState();
 }
 
 class _TopBarState extends State<TopBar> {
-  bool ready = false;
-  bool expandMenu = true;
-  double accordionContentHeight = 300.0;
-
-  @override
-  void initState() {
-    accordionContentHeight = widget.windowHeight;
-    super.initState();
-  }
+  bool expandMenu = false;
 
   @override
   Widget build(BuildContext context) {
@@ -40,47 +49,23 @@ class _TopBarState extends State<TopBar> {
       child: Column(
         verticalDirection: VerticalDirection.up,
         children: [
-          Opacity(
-            opacity: ready ? 1 : 0,
-            child: body(),
-          ),
+          body(),
           head(context),
         ],
       ),
     );
   }
 
-  AnimatedContainer body() {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
-      alignment: Alignment.bottomRight,
-      height: expandMenu ? accordionContentHeight : 0,
-      curve: Curves.ease,
-      child: AccordionContent(
-        reportHeight: (h) {
-          setState(() {
-            accordionContentHeight = h > 0 ? h : accordionContentHeight;
-            expandMenu = false;
-          });
-          Timer(const Duration(milliseconds: 300), () {
-            setState(() {
-              ready = true;
-            });
-          });
-        },
-        goTo: (int pageKey) {
-          return () {
-            widget.setPage(pageKey);
-            Future.delayed(
-              const Duration(milliseconds: 300),
-              () => setState(() {
-                expandMenu = !expandMenu;
-              }),
-            );
-          };
-        },
-      ),
-    );
+  goTo(int pageKey) {
+    return () {
+      widget.setPage(pageKey);
+      Future.delayed(
+        const Duration(milliseconds: 300),
+        () => setState(() {
+          expandMenu = !expandMenu;
+        }),
+      );
+    };
   }
 
   BlocBuilder<LoginCubit, Profile?> head(BuildContext context) {
@@ -132,72 +117,42 @@ class _TopBarState extends State<TopBar> {
       );
     });
   }
-}
 
-class AccordionContent extends StatefulWidget {
-  const AccordionContent({
-    super.key,
-    required this.goTo,
-    required this.reportHeight,
-  });
+  Widget body() {
+    return Shrinkable(
+      expanded: expandMenu,
+      child: CardRope(
+        cards: [
+          RopedCard(
+            children: [
+              BlocBuilder<LoginCubit, Profile?>(builder: (context, u) {
+                List<Widget> children = [];
 
-  final Function(int) goTo;
-  final Function(double) reportHeight;
+                if (u == null) {
+                  children.add(NavButton("Login", onPressed: goTo(0)));
+                  children.add(NavButton("Register", onPressed: goTo(1)));
+                } else {
+                  children.add(NavButton("Profile", onPressed: goTo(2)));
+                  children.add(NavButton("Logout", onPressed: goTo(3)));
+                }
 
-  @override
-  State<AccordionContent> createState() => _AccordionContentState();
-}
-
-class _AccordionContentState extends State<AccordionContent> {
-  final GlobalKey _key = GlobalKey();
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final rb = _key.currentContext!.findRenderObject()! as RenderBox;
-      widget.reportHeight(rb.size.height);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return _content();
-  }
-
-  CardRope _content() {
-    return CardRope(
-      key: _key,
-      cards: [
-        RopedCard(
-          children: [
-            BlocBuilder<LoginCubit, Profile?>(builder: (context, u) {
-              List<Widget> children = [];
-
-              if (u == null) {
-                children.add(NavButton("Login", onPressed: widget.goTo(0)));
-                children.add(NavButton("Register", onPressed: widget.goTo(1)));
-              } else {
-                children.add(NavButton("Profile", onPressed: widget.goTo(2)));
-                children.add(NavButton("Logout", onPressed: widget.goTo(3)));
-              }
-
-              return Wrap(
-                runSpacing: 8,
-                children: children,
-              );
-            }),
-          ],
-        ),
-        RopedCard(
-          children: [
-            _themeSettings(),
-          ],
-        ),
-        const SizedBox(
-          height: 0,
-        ),
-      ],
+                return Wrap(
+                  runSpacing: 8,
+                  children: children,
+                );
+              }),
+            ],
+          ),
+          RopedCard(
+            children: [
+              _themeSettings(),
+            ],
+          ),
+          const SizedBox(
+            height: 0,
+          ),
+        ],
+      ),
     );
   }
 
@@ -217,7 +172,7 @@ class _AccordionContentState extends State<AccordionContent> {
             ),
             Flexible(
               child: Container(
-                width: double.maxFinite,
+                width: double.infinity,
                 alignment: Alignment.center,
                 child: Text(
                   themeColorName(t.color),
@@ -255,7 +210,7 @@ class NavButton extends StatelessWidget {
     return FilledButton.tonal(
       onPressed: onPressed,
       child: Container(
-        width: double.maxFinite,
+        width: double.infinity,
         alignment: Alignment.center,
         child: Text(page),
       ),

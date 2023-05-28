@@ -1,9 +1,9 @@
-import 'package:sca6/pages/main/countdown.dart';
-import 'package:sca6/pages/main/topbar.dart';
+import 'package:sca6/pages/clock/countdown.dart';
+import 'package:sca6/tokens/topbar.dart';
 import 'package:flutter/material.dart';
 
-class MainPage extends StatelessWidget {
-  const MainPage({
+class MainScreen extends StatelessWidget {
+  const MainScreen({
     super.key,
     required this.setPage,
   });
@@ -14,10 +14,7 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TopBar(
-          setPage: setPage,
-          windowHeight: MediaQuery.of(context).size.height / 3 * 2,
-        ),
+        TopBar(setPage: setPage),
         const Countdown(),
       ],
     );
