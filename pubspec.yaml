@@ -88,6 +88,13 @@ flutter:
     - assets/icons/heart_check.svg
     - assets/icons/cardiology.svg
     - assets/icons/humidity_percentage.svg
+    - assets/icons/timer.svg
+    - assets/icons/home.svg
+    - assets/icons/expand_more.svg
+    - assets/icons/info.svg
+    - assets/icons/assignment_turned_in.svg
+    - assets/icons/verified.svg
+    - assets/icons/done.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

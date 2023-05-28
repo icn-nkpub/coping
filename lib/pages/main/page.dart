@@ -35,6 +35,7 @@ class Countdown extends StatefulWidget {
 
 class _CountdownState extends State<Countdown> {
   int lastTimeSmoked = 1684687455000;
+  bool debug = false;
 
   @override
   Widget build(BuildContext context) {
@@ -45,45 +46,58 @@ class _CountdownState extends State<Countdown> {
           shrinkWrap: true,
           scrollDirection: Axis.vertical,
           children: [
-            const SizedBox(height: 8 * 6),
             CountdownDisplay(
                 from: DateTime.fromMillisecondsSinceEpoch(lastTimeSmoked)),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                FilledButton(
-                  onPressed: () => setState(
-                      () => lastTimeSmoked += Duration.millisecondsPerDay),
-                  child: const Text("-1d"),
-                ),
-                FilledButton(
-                  onPressed: () => setState(
-                      () => lastTimeSmoked += Duration.millisecondsPerMinute),
-                  child: const Text("-1m"),
-                ),
-                FilledButton(
-                  onPressed: () => setState(() =>
-                      lastTimeSmoked += Duration.millisecondsPerMinute * 30),
-                  child: const Text("-30m"),
-                ),
-                FilledButton(
-                  onPressed: () => setState(() =>
-                      lastTimeSmoked -= Duration.millisecondsPerMinute * 30),
-                  child: const Text("+30m"),
-                ),
-                FilledButton(
-                  onPressed: () => setState(
-                      () => lastTimeSmoked -= Duration.millisecondsPerMinute),
-                  child: const Text("+1m"),
-                ),
-                FilledButton(
-                  onPressed: () => setState(
-                      () => lastTimeSmoked -= Duration.millisecondsPerDay),
-                  child: const Text("+1d"),
-                ),
-              ],
+            GestureDetector(
+              // todo: remove it
+              child: Container(
+                color: Colors.transparent,
+                height: 8,
+                width: 8,
+              ),
+              onTap: () => setState(() => debug = !debug),
             ),
+            if (debug)
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Wrap(
+                  direction: Axis.horizontal,
+                  runSpacing: 8,
+                  spacing: 8,
+                  children: [
+                    FilledButton(
+                      onPressed: () => setState(
+                          () => lastTimeSmoked += Duration.millisecondsPerDay),
+                      child: const Text("-1d"),
+                    ),
+                    FilledButton(
+                      onPressed: () => setState(() =>
+                          lastTimeSmoked += Duration.millisecondsPerMinute),
+                      child: const Text("-1m"),
+                    ),
+                    FilledButton(
+                      onPressed: () => setState(() => lastTimeSmoked +=
+                          Duration.millisecondsPerMinute * 30),
+                      child: const Text("-30m"),
+                    ),
+                    FilledButton(
+                      onPressed: () => setState(() => lastTimeSmoked -=
+                          Duration.millisecondsPerMinute * 30),
+                      child: const Text("+30m"),
+                    ),
+                    FilledButton(
+                      onPressed: () => setState(() =>
+                          lastTimeSmoked -= Duration.millisecondsPerMinute),
+                      child: const Text("+1m"),
+                    ),
+                    FilledButton(
+                      onPressed: () => setState(
+                          () => lastTimeSmoked -= Duration.millisecondsPerDay),
+                      child: const Text("+1d"),
+                    ),
+                  ],
+                ),
+              ),
           ],
         ),
       ),

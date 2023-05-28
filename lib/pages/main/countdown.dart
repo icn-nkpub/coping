@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:sca6/pages/main/risk.dart';
-import 'package:sca6/tokens/icons.dart';
 
 class CountdownDisplay extends StatelessWidget {
   const CountdownDisplay({
@@ -17,10 +16,9 @@ class CountdownDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const SizedBox(height: 8 * 6),
         Stopwatch(from: from),
-        const SizedBox(
-          height: 8,
-        ),
+        const SizedBox(height: 8 * 3),
         Risk(
           from: from,
           iconName: "cardiology",

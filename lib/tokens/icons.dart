@@ -6,21 +6,23 @@ class SvgIcon extends StatelessWidget {
     super.key,
     required this.assetName,
     this.size = 24,
+    this.color,
   });
 
   final String assetName;
   final double size;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
-    final t = Theme.of(context).iconTheme;
+    final iconColor = ColorFilter.mode(
+      color ?? Theme.of(context).iconTheme.color!,
+      BlendMode.srcIn,
+    );
 
     return SvgPicture.asset(
       "assets/icons/$assetName.svg",
-      colorFilter: ColorFilter.mode(
-        t.color!,
-        BlendMode.srcIn,
-      ),
+      colorFilter: iconColor,
       width: size,
       height: size,
     );
