@@ -23,10 +23,15 @@ class ThemeState {
     final bc = data.colorScheme.background;
     final pc = data.colorScheme.primary;
     data = data.copyWith(
-      textTheme: GoogleFonts.latoTextTheme(data.textTheme),
+      textTheme: GoogleFonts.quicksandTextTheme(data.textTheme),
       scaffoldBackgroundColor: ElevationOverlay.applySurfaceTint(bc, pc, .5),
       appBarTheme: data.appBarTheme.copyWith(
         color: ElevationOverlay.applySurfaceTint(bc, pc, 2),
+        shadowColor: Colors.transparent,
+      ),
+      shadowColor: Colors.transparent,
+      cardTheme: data.cardTheme.copyWith(
+        shadowColor: Colors.transparent,
       ),
     );
   }

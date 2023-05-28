@@ -16,35 +16,35 @@ class CountdownDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: 8 * 6),
+        const SizedBox(height: 8 * 4),
         Stopwatch(from: from),
         const SizedBox(height: 8 * 3),
         Risk(
           from: from,
-          iconName: "cardiology",
-          title: "Cardiovascular risk",
+          iconName: 'cardiology',
+          title: 'Cardiovascular risk',
           descriptions: {
-            0: "0",
-            0.1: "0.1",
-            0.5: "0.5",
-            0.7: "0.7",
-            0.9: "0.9",
+            0: '0',
+            0.1: '0.1',
+            0.5: '0.5',
+            0.7: '0.7',
+            0.9: '0.9',
           },
           rate: Duration.millisecondsPerDay.toDouble(),
         ),
         Risk(
           from: from,
-          iconName: "humidity_percentage",
-          title: "Carbon monoxide in blood",
+          iconName: 'humidity_percentage',
+          title: 'Carbon monoxide in blood',
           descriptions: {
             0 / 22:
-                "Increased levels of carbon monoxide (CO) caused by smoking can profoundly harm health. CO, a poisonous gas, binds to hemoglobin, significantly diminishing its capacity to efficiently transport oxygen in the bloodstream.",
+                'Increased levels of carbon monoxide (CO) caused by smoking can profoundly harm health. CO, a poisonous gas, binds to hemoglobin, significantly diminishing its capacity to efficiently transport oxygen in the bloodstream.',
             8 / 22:
-                "As blood carbon monoxide (CO) levels decrease, there is a clear and certain improvement in oxygen delivery, leading to a significant enhancement of overall oxygenation of muscles, organs and tissues.",
+                'As blood carbon monoxide (CO) levels decrease, there is a clear and certain improvement in oxygen delivery, leading to a significant enhancement of overall oxygenation of muscles, organs and tissues.',
             15 / 22:
-                "With a high degree of confidence, the carbon monoxide (CO) level in exhaled breath is notably reduced, approximately twice, and decrease in CO levels in the bloodstream. Consequently, there is a discernible improvement in oxygen delivery, contributing to an enhanced oxygenation state.",
+                'With a high degree of confidence, the carbon monoxide (CO) level in exhaled breath is notably reduced, approximately twice, and decrease in CO levels in the bloodstream. Consequently, there is a discernible improvement in oxygen delivery, contributing to an enhanced oxygenation state.',
             22 / 22:
-                "The discernible impact of smoking on carbon monoxide levels in the bloodstream is nearly absent.",
+                'The discernible impact of smoking on carbon monoxide levels in the bloodstream is nearly absent.',
           },
           rate: Duration.millisecondsPerDay.toDouble() * 22,
         ),
@@ -71,11 +71,11 @@ class Stopwatch extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Ticker(child: Days(from: from)),
-          Text(" ", style: Theme.of(context).textTheme.displaySmall),
+          Text(' ', style: textStyle(context)),
           Ticker(child: Hours(from: from)),
-          Text(":", style: Theme.of(context).textTheme.displaySmall),
+          Text(':', style: textStyle(context)),
           Ticker(child: Minutes(from: from)),
-          Text(":", style: Theme.of(context).textTheme.displaySmall),
+          Text(':', style: textStyle(context)),
           Ticker(child: Seconds(from: from)),
         ],
       ),
@@ -124,9 +124,10 @@ class _SecondsState extends State<Seconds> {
     return Text(
       (DateTime.now().difference(widget.from).inSeconds % 60)
           .toString()
-          .padLeft(2, '0'),
-      style: GoogleFonts.jetBrainsMonoTextTheme(Theme.of(context).textTheme)
-          .displayMedium,
+          .padLeft(2, '0')
+          .replaceAll('0', 'O'),
+      style: textStyleMono(context),
+      textAlign: TextAlign.center,
     );
   }
 }
@@ -152,8 +153,9 @@ class _MinutesState extends State<Minutes> {
     return Text(
       (DateTime.now().difference(widget.from).inMinutes % 60)
           .toString()
-          .padLeft(2, '0'),
-      style: Theme.of(context).textTheme.displayMedium,
+          .padLeft(2, '0')
+          .replaceAll('0', 'O'),
+      style: textStyleMono(context),
       textAlign: TextAlign.center,
     );
   }
@@ -180,8 +182,9 @@ class _HoursState extends State<Hours> {
     return Text(
       (DateTime.now().difference(widget.from).inHours % 24)
           .toString()
-          .padLeft(2, '0'),
-      style: Theme.of(context).textTheme.displayMedium,
+          .padLeft(2, '0')
+          .replaceAll('0', 'O'),
+      style: textStyleMono(context),
       textAlign: TextAlign.center,
     );
   }
@@ -206,9 +209,30 @@ class _DaysState extends State<Days> {
       setState(() {});
     });
     return Text(
-      DateTime.now().difference(widget.from).inDays.toString().padLeft(2, "0"),
-      style: Theme.of(context).textTheme.displayMedium,
+      DateTime.now()
+          .difference(widget.from)
+          .inDays
+          .toString()
+          .padLeft(2, '0')
+          .replaceAll('0', 'O'),
+      style: textStyleMono(context),
       textAlign: TextAlign.center,
     );
   }
+}
+
+TextStyle textStyleMono(BuildContext context) {
+  return GoogleFonts.spaceMono(
+    textStyle: Theme.of(context)
+        .textTheme
+        .displaySmall
+        ?.copyWith(fontWeight: FontWeight.w300),
+  );
+}
+
+TextStyle? textStyle(BuildContext context) {
+  return Theme.of(context)
+      .textTheme
+      .displaySmall
+      ?.copyWith(fontWeight: FontWeight.w600);
 }

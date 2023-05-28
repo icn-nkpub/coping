@@ -35,19 +35,19 @@ class _HomeState extends State<Home> {
         },
         destinations: const [
           NavigationDestination(
-            icon: SvgIcon(assetName: "timer"),
+            icon: SvgIcon(assetName: 'timer'),
             label: 'Clock',
           ),
           NavigationDestination(
-            icon: SvgIcon(assetName: "stickynote"),
+            icon: SvgIcon(assetName: 'stickynote'),
             label: 'Diary',
           ),
           NavigationDestination(
-            icon: SvgIcon(assetName: "mindfulness"),
+            icon: SvgIcon(assetName: 'mindfulness'),
             label: 'Triggers',
           ),
           NavigationDestination(
-            icon: SvgIcon(assetName: "relax"),
+            icon: SvgIcon(assetName: 'relax'),
             label: 'Meditation',
           ),
         ],

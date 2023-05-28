@@ -10,8 +10,8 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var cEmail = TextEditingController(text: "");
-    var cPwd = TextEditingController(text: "");
+    var cEmail = TextEditingController(text: '');
+    var cPwd = TextEditingController(text: '');
 
     return BlocBuilder<LoginCubit, Profile?>(builder: (context, u) {
       return Padding(
@@ -19,9 +19,9 @@ class RegisterPage extends StatelessWidget {
         child: Form(
           child: Column(
             children: [
-              Input(title: "Email", ctrl: cEmail),
+              Input(title: 'Email', ctrl: cEmail),
               const SizedBox(height: 8),
-              Input(title: "Password", ctrl: cPwd),
+              Input(title: 'Password', ctrl: cPwd),
               const SizedBox(height: 16),
               FilledButton(
                 onPressed: () {
@@ -30,7 +30,7 @@ class RegisterPage extends StatelessWidget {
                 },
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Text("Register"),
+                  child: Text('Register'),
                 ),
               ),
             ],

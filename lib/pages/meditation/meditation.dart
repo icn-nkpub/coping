@@ -223,8 +223,8 @@ class _InfoCardState extends State<InfoCard> {
               });
             },
             icon: _expandInfo
-                ? const SvgIcon(assetName: "close")
-                : const SvgIcon(assetName: "expand_more"),
+                ? const SvgIcon(assetName: 'close')
+                : const SvgIcon(assetName: 'expand_more'),
           ),
         ),
         Shrinkable(
@@ -241,7 +241,7 @@ class _InfoCardState extends State<InfoCard> {
       padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
       child: Card(
         margin: EdgeInsets.zero,
-        elevation: 2,
+        elevation: 1,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -250,21 +250,21 @@ class _InfoCardState extends State<InfoCard> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  "How to follow breathing circle",
+                  'How to follow breathing circle',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
               ...[
-                "Lie down on your back and relax",
-                "Breathe in and out slowly and steadily",
-                "Put one hand on your abdomen to feel it move up and down as you breathe",
-                "If you use your chest, you need breath deeper",
-                "Breathe in so your abdomen goes out",
-                "Breathe out abdonmen and chest goes down",
-                "When you breathe out, purse your lips like you are blowing out a candle",
-                "Breath in for ${(_speed / 3 * 1).round()} seconds "
-                    "and out for ${(_speed / 3 * 2).round()} seconds",
-                "Follow the circle"
+                'Lie down on your back and relax',
+                'Breathe in and out slowly and steadily',
+                'Put one hand on your abdomen to feel it move up and down as you breathe',
+                'If you use your chest, you need breath deeper',
+                'Breathe in so your abdomen goes out',
+                'Breathe out abdonmen and chest goes down',
+                'When you breathe out, purse your lips like you are blowing out a candle',
+                'Breath in for ${(_speed / 3 * 1).round()} seconds '
+                    'and out for ${(_speed / 3 * 2).round()} seconds',
+                'Follow the circle'
               ].map((e) => Container(
                     padding: const EdgeInsets.symmetric(
                       vertical: 2,
@@ -273,7 +273,7 @@ class _InfoCardState extends State<InfoCard> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("+ ",
+                        Text('+ ',
                             style: Theme.of(context).textTheme.bodySmall),
                         Flexible(
                           child: Text(e,

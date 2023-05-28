@@ -14,10 +14,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String errorText = "";
+  String errorText = '';
 
-  var cEmail = TextEditingController(text: "w@w.c");
-  var cPwd = TextEditingController(text: "12345678");
+  var cEmail = TextEditingController(text: 'w@w.c');
+  var cPwd = TextEditingController(text: '12345678');
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +29,11 @@ class _LoginPageState extends State<LoginPage> {
         child: Form(
           child: Column(
             children: [
-              Input(title: "Email", ctrl: cEmail),
+              Input(title: 'Email', ctrl: cEmail),
               const SizedBox(height: 8),
-              Input(title: "Password", ctrl: cPwd),
-              if (errorText != "") const SizedBox(height: 8),
-              if (errorText != "")
+              Input(title: 'Password', ctrl: cPwd),
+              if (errorText != '') const SizedBox(height: 8),
+              if (errorText != '')
                 Text(
                   errorText,
                   style: Theme.of(context)
@@ -57,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                 },
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Text("Login"),
+                  child: Text('Login'),
                 ),
               ),
             ],

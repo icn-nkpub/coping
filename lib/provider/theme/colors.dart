@@ -22,14 +22,14 @@ Color themeColor(ColorValue c) {
 String themeColorName(ColorValue c) {
   switch (c) {
     case ColorValue.ocean:
-      return "Ocean";
+      return 'Ocean';
     case ColorValue.cherry:
-      return "Cherry";
+      return 'Cherry';
     case ColorValue.leaves:
-      return "Leaves";
+      return 'Leaves';
     case ColorValue.pine:
-      return "Forrest";
+      return 'Forrest';
     case ColorValue.night:
-      return "Midnight";
+      return 'Midnight';
   }
 }

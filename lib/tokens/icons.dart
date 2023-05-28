@@ -21,7 +21,7 @@ class SvgIcon extends StatelessWidget {
     );
 
     return SvgPicture.asset(
-      "assets/icons/$assetName.svg",
+      'assets/icons/$assetName.svg',
       colorFilter: iconColor,
       width: size,
       height: size,

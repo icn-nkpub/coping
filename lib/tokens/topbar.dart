@@ -18,6 +18,7 @@ class NullTopBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: Theme.of(context).appBarTheme.backgroundColor,
+      shadowColor: Theme.of(context).appBarTheme.shadowColor,
       elevation: 2,
       child: const SizedBox(
         width: double.infinity,
@@ -72,6 +73,7 @@ class _TopBarState extends State<TopBar> {
     return BlocBuilder<LoginCubit, Profile?>(builder: (_, u) {
       return Material(
         color: Theme.of(context).appBarTheme.backgroundColor,
+        shadowColor: Theme.of(context).appBarTheme.shadowColor,
         elevation: 2,
         child: Container(
           padding: const EdgeInsets.all(8.0),
@@ -82,7 +84,7 @@ class _TopBarState extends State<TopBar> {
                 opacity: 0,
                 child: IconButton(
                   onPressed: () {},
-                  icon: const SvgIcon(assetName: "more"),
+                  icon: const SvgIcon(assetName: 'more'),
                 ),
               ),
               Padding(
@@ -96,9 +98,9 @@ class _TopBarState extends State<TopBar> {
                         .copyWith(fontWeight: FontWeight.bold),
                     children: [
                       TextSpan(text: u?.profile?.firstName ?? 'and'),
-                      const TextSpan(text: " "),
+                      const TextSpan(text: ' '),
                       TextSpan(text: u?.profile?.secondName ?? 'welcome'),
-                      const TextSpan(text: "!"),
+                      const TextSpan(text: '!'),
                     ],
                   ),
                 ),
@@ -109,7 +111,7 @@ class _TopBarState extends State<TopBar> {
                     expandMenu = !expandMenu;
                   });
                 },
-                icon: const SvgIcon(assetName: "settings"),
+                icon: const SvgIcon(assetName: 'settings'),
               ),
             ],
           ),
@@ -129,11 +131,11 @@ class _TopBarState extends State<TopBar> {
                 List<Widget> children = [];
 
                 if (u == null) {
-                  children.add(NavButton("Login", onPressed: goTo(0)));
-                  children.add(NavButton("Register", onPressed: goTo(1)));
+                  children.add(NavButton('Login', onPressed: goTo(0)));
+                  children.add(NavButton('Register', onPressed: goTo(1)));
                 } else {
-                  children.add(NavButton("Profile", onPressed: goTo(2)));
-                  children.add(NavButton("Logout", onPressed: goTo(3)));
+                  children.add(NavButton('Profile', onPressed: goTo(2)));
+                  children.add(NavButton('Logout', onPressed: goTo(3)));
                 }
 
                 return Wrap(
@@ -167,7 +169,7 @@ class _TopBarState extends State<TopBar> {
                 context.read<ThemeCubit>().flipBrightness();
               },
               child: SvgIcon(
-                assetName: t.isLightMode() ? "mode_light" : "mode_dark",
+                assetName: t.isLightMode() ? 'mode_light' : 'mode_dark',
               ),
             ),
             Flexible(
@@ -187,7 +189,7 @@ class _TopBarState extends State<TopBar> {
                 var selected = ColorValue.values[next];
                 context.read<ThemeCubit>().setColor(selected);
               },
-              child: const SvgIcon(assetName: "palette"),
+              child: const SvgIcon(assetName: 'palette'),
             ),
           ],
         );

@@ -16,7 +16,7 @@ class LogoutPage extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                  "${u?.profile?.firstName ?? 'Please'}, confirm that you want to logout."),
+                  '${u?.profile?.firstName ?? 'Please'}, confirm that you want to logout.'),
               const SizedBox(
                 height: 16,
               ),
@@ -27,7 +27,7 @@ class LogoutPage extends StatelessWidget {
                 },
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Text("Logout"),
+                  child: Text('Logout'),
                 ),
               ),
             ],

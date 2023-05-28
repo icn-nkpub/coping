@@ -14,7 +14,7 @@ class DairyScreen extends StatelessWidget {
     return Column(
       children: [
         TopBar(setPage: setPage),
-        const Text("data"),
+        const Text('data'),
       ],
     );
   }

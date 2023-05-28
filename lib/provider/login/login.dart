@@ -30,7 +30,7 @@ class LoginCubit extends Cubit<Profile?> {
 
     emit(Profile(
       id: auth.id,
-      email: auth.email ?? "",
+      email: auth.email ?? '',
       auth: auth,
       profile: p,
     ));
@@ -46,7 +46,7 @@ class LoginCubit extends Cubit<Profile?> {
 
     emit(Profile(
       id: auth.id,
-      email: auth.email ?? "",
+      email: auth.email ?? '',
       auth: auth,
       profile: p,
     ));
@@ -65,8 +65,8 @@ class LoginCubit extends Cubit<Profile?> {
 
     var p = state?.profile ??
         ProfileRecord(
-          firstName: "",
-          secondName: "",
+          firstName: '',
+          secondName: '',
           breathingTime: 0,
         );
 
@@ -76,7 +76,7 @@ class LoginCubit extends Cubit<Profile?> {
 
     emit(Profile(
       id: auth.id,
-      email: auth.email ?? "",
+      email: auth.email ?? '',
       auth: auth,
       profile: p,
     ));
@@ -94,8 +94,8 @@ class LoginCubit extends Cubit<Profile?> {
 
     var p = state?.profile ??
         ProfileRecord(
-          firstName: "",
-          secondName: "",
+          firstName: '',
+          secondName: '',
           breathingTime: 0,
         );
     p.firstName = firstName;
@@ -105,7 +105,7 @@ class LoginCubit extends Cubit<Profile?> {
 
     emit(Profile(
       id: auth.id,
-      email: auth.email ?? "",
+      email: auth.email ?? '',
       auth: auth,
       profile: p,
     ));

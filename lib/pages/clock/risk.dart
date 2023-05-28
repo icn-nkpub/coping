@@ -124,7 +124,7 @@ class _RiskState extends State<Risk> {
                         color: c,
                       ),
                       child: const SvgIcon(
-                        assetName: "done",
+                        assetName: 'done',
                         size: 24 - (4 * 2),
                       ),
                     ),
@@ -151,7 +151,7 @@ class _RiskState extends State<Risk> {
                       ),
                 ),
                 const Expanded(child: SizedBox()),
-                const SvgIcon(assetName: "expand_more"),
+                const SvgIcon(assetName: 'expand_more'),
               ],
             ),
           ),

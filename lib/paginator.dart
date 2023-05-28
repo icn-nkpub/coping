@@ -43,7 +43,7 @@ Widget _withBack(BuildContext context, Widget w) {
               children: [
                 IconButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  icon: const SvgIcon(assetName: "close"),
+                  icon: const SvgIcon(assetName: 'close'),
                 ),
               ],
             ),
