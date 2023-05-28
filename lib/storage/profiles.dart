@@ -5,11 +5,13 @@ class ProfileRecord {
     required this.firstName,
     required this.secondName,
     required this.breathingTime,
+    required this.noSmokingTime,
   });
 
   String firstName;
   String secondName;
   double breathingTime;
+  DateTime noSmokingTime;
 }
 
 Future<ProfileRecord?> getProfile(User user) async {
@@ -23,11 +25,14 @@ Future<ProfileRecord?> getProfile(User user) async {
   }
 
   final record = data[0];
+  var breathingTime = double.parse(record['breathing_time'].toString());
+  if (breathingTime < 3 || breathingTime > 32) breathingTime = 6;
 
   return ProfileRecord(
     firstName: record['first_name'],
     secondName: record['second_name'],
-    breathingTime: double.parse(record['breathing_time'].toString()),
+    breathingTime: breathingTime,
+    noSmokingTime: DateTime.parse(record['no_smoking_time']),
   );
 }
 

@@ -1,4 +1,6 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sca6/pages/clock/countdown.dart';
+import 'package:sca6/provider/login/login.dart';
 import 'package:sca6/tokens/topbar.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +33,6 @@ class Countdown extends StatefulWidget {
 }
 
 class _CountdownState extends State<Countdown> {
-  int lastTimeSmoked = 1684687455000;
   bool debug = false;
 
   @override
@@ -43,8 +44,11 @@ class _CountdownState extends State<Countdown> {
           shrinkWrap: true,
           scrollDirection: Axis.vertical,
           children: [
-            CountdownDisplay(
-                from: DateTime.fromMillisecondsSinceEpoch(lastTimeSmoked)),
+            BlocBuilder<LoginCubit, Profile?>(
+              builder: (context, u) => CountdownDisplay(
+                from: u?.profile?.noSmokingTime ?? DateTime.now(),
+              ),
+            ),
             GestureDetector(
               // todo: remove it
               child: Container(
@@ -54,47 +58,6 @@ class _CountdownState extends State<Countdown> {
               ),
               onTap: () => setState(() => debug = !debug),
             ),
-            if (debug)
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Wrap(
-                  direction: Axis.horizontal,
-                  runSpacing: 8,
-                  spacing: 8,
-                  children: [
-                    FilledButton(
-                      onPressed: () => setState(
-                          () => lastTimeSmoked += Duration.millisecondsPerDay),
-                      child: const Text('-1d'),
-                    ),
-                    FilledButton(
-                      onPressed: () => setState(() =>
-                          lastTimeSmoked += Duration.millisecondsPerMinute),
-                      child: const Text('-1m'),
-                    ),
-                    FilledButton(
-                      onPressed: () => setState(() => lastTimeSmoked +=
-                          Duration.millisecondsPerMinute * 30),
-                      child: const Text('-30m'),
-                    ),
-                    FilledButton(
-                      onPressed: () => setState(() => lastTimeSmoked -=
-                          Duration.millisecondsPerMinute * 30),
-                      child: const Text('+30m'),
-                    ),
-                    FilledButton(
-                      onPressed: () => setState(() =>
-                          lastTimeSmoked -= Duration.millisecondsPerMinute),
-                      child: const Text('+1m'),
-                    ),
-                    FilledButton(
-                      onPressed: () => setState(
-                          () => lastTimeSmoked -= Duration.millisecondsPerDay),
-                      child: const Text('+1d'),
-                    ),
-                  ],
-                ),
-              ),
           ],
         ),
       ),

@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:sca6/provider/login/login.dart';
 import 'package:sca6/tokens/input.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({
     super.key,
   });
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  DateTime? noSmokingTime;
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +22,8 @@ class ProfilePage extends StatelessWidget {
       var cFirstName = TextEditingController(text: u?.profile?.firstName ?? '');
       var cSecondName =
           TextEditingController(text: u?.profile?.secondName ?? '');
+      DateTime lts = (noSmokingTime ?? u?.profile?.noSmokingTime)!;
+      String day = DateFormat.MMMMEEEEd('en').format(lts);
 
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -24,11 +34,30 @@ class ProfilePage extends StatelessWidget {
               const SizedBox(height: 8),
               Input(title: 'Second name', ctrl: cSecondName),
               const SizedBox(height: 8),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                        "Last time: $day, ${lts.hour}:${lts.minute}:${lts.second}"),
+                    FilledButton.tonal(
+                        onPressed: () =>
+                            setState(() => noSmokingTime = DateTime.now()),
+                        child: const Text("reset"))
+                  ],
+                ),
+              ),
               FilledButton(
                 onPressed: () {
-                  context
-                      .read<LoginCubit>()
-                      .saveProfile(cFirstName.text, cSecondName.text);
+                  context.read<LoginCubit>().saveProfile(
+                        cFirstName.text,
+                        cSecondName.text,
+                        noSmokingTime ??
+                            u?.profile?.noSmokingTime ??
+                            DateTime.now(),
+                      );
                   Navigator.of(context).pop();
                 },
                 child: const Padding(

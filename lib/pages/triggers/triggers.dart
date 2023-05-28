@@ -14,7 +14,10 @@ class TriggersScreen extends StatelessWidget {
     return Column(
       children: [
         TopBar(setPage: setPage),
-        const Text('data'),
+        SizedBox(
+          height: 8,
+        ),
+        const Text('coming soon'),
       ],
     );
   }
