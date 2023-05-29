@@ -17,7 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   String errorText = '';
 
   var cEmail = TextEditingController(text: 'w@w.c');
-  var cPwd = TextEditingController(text: '12345678');
+  var cPwd = TextEditingController(text: 'qwertyui');
 
   @override
   Widget build(BuildContext context) {

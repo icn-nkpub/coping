@@ -22,7 +22,8 @@ class _ProfilePageState extends State<ProfilePage> {
       var cFirstName = TextEditingController(text: u?.profile?.firstName ?? '');
       var cSecondName =
           TextEditingController(text: u?.profile?.secondName ?? '');
-      DateTime lts = (noSmokingTime ?? u?.profile?.noSmokingTime)!;
+      DateTime lts =
+          (noSmokingTime ?? u?.profile?.noSmokingTime ?? DateTime.now())!;
       String day = DateFormat.MMMMEEEEd('en').format(lts);
 
       return Padding(

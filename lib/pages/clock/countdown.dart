@@ -118,7 +118,12 @@ class Seconds extends StatefulWidget {
 class _SecondsState extends State<Seconds> {
   @override
   Widget build(BuildContext context) {
-    Timer(const Duration(seconds: 1), () {
+    Timer? t;
+    t = Timer(const Duration(seconds: 1), () {
+      if (!mounted) {
+        t!.cancel();
+        return;
+      }
       setState(() {});
     });
     return Text(
@@ -147,7 +152,12 @@ class Minutes extends StatefulWidget {
 class _MinutesState extends State<Minutes> {
   @override
   Widget build(BuildContext context) {
-    Timer(const Duration(minutes: 1), () {
+    Timer? t;
+    t = Timer(const Duration(minutes: 1), () {
+      if (!mounted) {
+        t!.cancel();
+        return;
+      }
       setState(() {});
     });
     return Text(
@@ -176,7 +186,12 @@ class Hours extends StatefulWidget {
 class _HoursState extends State<Hours> {
   @override
   Widget build(BuildContext context) {
-    Timer(const Duration(hours: 1), () {
+    Timer? t;
+    t = Timer(const Duration(hours: 1), () {
+      if (!mounted) {
+        t!.cancel();
+        return;
+      }
       setState(() {});
     });
     return Text(
@@ -205,7 +220,12 @@ class Days extends StatefulWidget {
 class _DaysState extends State<Days> {
   @override
   Widget build(BuildContext context) {
-    Timer(const Duration(days: 1), () {
+    Timer? t;
+    t = Timer(const Duration(days: 1), () {
+      if (!mounted) {
+        t!.cancel();
+        return;
+      }
       setState(() {});
     });
     return Text(
