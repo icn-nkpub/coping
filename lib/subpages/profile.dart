@@ -20,10 +20,8 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return BlocBuilder<LoginCubit, Profile?>(builder: (context, u) {
       var cFirstName = TextEditingController(text: u?.profile?.firstName ?? '');
-      var cSecondName =
-          TextEditingController(text: u?.profile?.secondName ?? '');
-      DateTime lts =
-          (noSmokingTime ?? u?.profile?.noSmokingTime ?? DateTime.now())!;
+      var cSecondName = TextEditingController(text: u?.profile?.secondName ?? '');
+      DateTime lts = noSmokingTime ?? u?.profile?.noSmokingTime ?? DateTime.now();
       String day = DateFormat.MMMMEEEEd('en').format(lts);
 
       return Padding(
@@ -41,12 +39,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                        "Last time: $day, ${lts.hour}:${lts.minute}:${lts.second}"),
-                    FilledButton.tonal(
-                        onPressed: () =>
-                            setState(() => noSmokingTime = DateTime.now()),
-                        child: const Text("reset"))
+                    Text("Last time: $day, ${lts.hour}:${lts.minute}:${lts.second}"),
+                    FilledButton.tonal(onPressed: () => setState(() => noSmokingTime = DateTime.now()), child: const Text("reset"))
                   ],
                 ),
               ),
@@ -55,9 +49,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   context.read<LoginCubit>().saveProfile(
                         cFirstName.text,
                         cSecondName.text,
-                        noSmokingTime ??
-                            u?.profile?.noSmokingTime ??
-                            DateTime.now(),
+                        noSmokingTime ?? u?.profile?.noSmokingTime ?? DateTime.now(),
                       );
                   Navigator.of(context).pop();
                 },

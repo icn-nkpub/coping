@@ -1,7 +1,6 @@
 import 'package:sca6/pages/clock/main.dart';
 import 'package:sca6/pages/triggers/triggers.dart';
 import 'package:sca6/paginator.dart';
-import 'package:sca6/pages/diary/diary.dart';
 import 'package:sca6/tokens/icons.dart';
 import 'package:sca6/pages/meditation/meditation.dart';
 import 'package:flutter/material.dart';
@@ -39,10 +38,6 @@ class _HomeState extends State<Home> {
             label: 'Clock',
           ),
           NavigationDestination(
-            icon: SvgIcon(assetName: 'stickynote'),
-            label: 'Diary',
-          ),
-          NavigationDestination(
             icon: SvgIcon(assetName: 'mindfulness'),
             label: 'Triggers',
           ),
@@ -55,7 +50,6 @@ class _HomeState extends State<Home> {
       body: [
         MainScreen(setPage: pagginator(context)),
         TriggersScreen(setPage: pagginator(context)),
-        DairyScreen(setPage: pagginator(context)),
         const MeditationScreen(),
       ][currentPageIndex],
     );

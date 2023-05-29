@@ -57,16 +57,14 @@ class CanvasDrawer extends Funvas {
     _drawParticles(pt, w, h, cycle, t, slide);
   }
 
-  void _drawParticles(
-      double pt, double w, double h, double cycle, double t, double slide) {
+  void _drawParticles(double pt, double w, double h, double cycle, double t, double slide) {
     for (int round = 0; round < rounds; round++) {
       final rCycle = round / rounds;
       final r = (5 * pt) + (((cycle * 2) + 1) * rCycle * 16 * pt) / 3;
 
       final angleSkew = (13.1 + (t / 31)) * ((round + 1) * 14);
 
-      double alpha =
-          min(max((t / fullCycleDuration) - .25, 0), (round / rounds));
+      double alpha = min(max((t / fullCycleDuration) - .25, 0), (round / rounds));
 
       if (windDownTime > -1) {
         alpha = max(0, alpha - (t - windDownTime));
@@ -222,9 +220,7 @@ class _InfoCardState extends State<InfoCard> {
                 _expandInfo = !_expandInfo;
               });
             },
-            icon: _expandInfo
-                ? const SvgIcon(assetName: 'close')
-                : const SvgIcon(assetName: 'expand_more'),
+            icon: _expandInfo ? const SvgIcon(assetName: 'close') : const SvgIcon(assetName: 'expand_more'),
           ),
         ),
         Shrinkable(
@@ -273,11 +269,9 @@ class _InfoCardState extends State<InfoCard> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('+ ',
-                            style: Theme.of(context).textTheme.bodySmall),
+                        Text('+ ', style: Theme.of(context).textTheme.bodySmall),
                         Flexible(
-                          child: Text(e,
-                              style: Theme.of(context).textTheme.bodySmall),
+                          child: Text(e, style: Theme.of(context).textTheme.bodySmall),
                         ),
                       ],
                     ),

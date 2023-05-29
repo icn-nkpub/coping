@@ -52,9 +52,7 @@ class ThemeCubit extends Cubit<ThemeState> {
           data: ThemeData(
             colorSchemeSeed: themeColor(ColorValue.ocean),
             useMaterial3: true,
-            brightness: ThemeMode.system == ThemeMode.light
-                ? Brightness.light
-                : Brightness.dark,
+            brightness: ThemeMode.system == ThemeMode.light ? Brightness.light : Brightness.dark,
           ),
         ));
 

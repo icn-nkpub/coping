@@ -11,11 +11,9 @@ Color themeColor(ColorValue c) {
     case ColorValue.leaves:
       return Colors.green;
     case ColorValue.pine:
-      return Color.alphaBlend(
-          Colors.green.withOpacity(.5), Colors.blue.withOpacity(.5));
+      return Color.alphaBlend(Colors.green.withOpacity(.5), Colors.blue.withOpacity(.5));
     case ColorValue.night:
-      return Color.alphaBlend(
-          Colors.purple.withOpacity(.3), Colors.blue.withOpacity(.7));
+      return Color.alphaBlend(Colors.purple.withOpacity(.3), Colors.blue.withOpacity(.7));
   }
 }
 

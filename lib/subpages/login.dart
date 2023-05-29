@@ -36,18 +36,13 @@ class _LoginPageState extends State<LoginPage> {
               if (errorText != '')
                 Text(
                   errorText,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall
-                      ?.copyWith(color: Theme.of(context).hintColor),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
                 ),
               const SizedBox(height: 16),
               FilledButton(
                 onPressed: () async {
                   try {
-                    await context
-                        .read<LoginCubit>()
-                        .signIn(cEmail.text, cPwd.text);
+                    await context.read<LoginCubit>().signIn(cEmail.text, cPwd.text);
                     navigator.pop();
                   } on AuthException catch (error) {
                     setState(() {

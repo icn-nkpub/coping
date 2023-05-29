@@ -21,9 +21,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tcb = MediaQuery.of(context).platformBrightness == Brightness.light
-        ? ThemeMode.light
-        : ThemeMode.dark;
+    final tcb = MediaQuery.of(context).platformBrightness == Brightness.light ? ThemeMode.light : ThemeMode.dark;
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => ThemeCubit()..setBrightness(tcb)),
@@ -32,12 +30,12 @@ class App extends StatelessWidget {
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) => MaterialApp(
           debugShowCheckedModeBanner: false,
-          localizationsDelegates: [
+          localizationsDelegates: const [
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          supportedLocales: [
+          supportedLocales: const [
             Locale('en'),
           ],
           title: 'SCA-6',

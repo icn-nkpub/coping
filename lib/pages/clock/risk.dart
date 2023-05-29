@@ -27,9 +27,7 @@ class _RiskState extends State<Risk> {
 
   @override
   Widget build(BuildContext context) {
-    final double value =
-        (DateTime.now().difference(widget.from).inMilliseconds.toDouble() /
-            widget.rate);
+    final double value = (DateTime.now().difference(widget.from).inMilliseconds.toDouble() / widget.rate);
     final bool finished = value > 1 ? true : false;
 
     return Card(
@@ -43,13 +41,11 @@ class _RiskState extends State<Risk> {
                   Container(
                     padding: const EdgeInsets.only(top: 8),
                     child: Container(
-                      padding: const EdgeInsets.only(
-                          left: 4, right: 4, top: 8, bottom: 4),
+                      padding: const EdgeInsets.only(left: 4, right: 4, top: 8, bottom: 4),
                       decoration: BoxDecoration(
                         border: Border(
                           top: BorderSide(
-                            color:
-                                Theme.of(context).dividerColor.withOpacity(.2),
+                            color: Theme.of(context).dividerColor.withOpacity(.2),
                           ),
                         ),
                       ),
@@ -66,17 +62,11 @@ class _RiskState extends State<Risk> {
                             child: Container(
                               alignment: Alignment.centerRight,
                               clipBehavior: Clip.antiAlias,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8)),
+                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
                               child: LinearProgressIndicator(
                                 minHeight: 8,
-                                backgroundColor:
-                                    ElevationOverlay.applySurfaceTint(
-                                        Theme.of(context)
-                                            .colorScheme
-                                            .background,
-                                        Theme.of(context).colorScheme.primary,
-                                        50),
+                                backgroundColor: ElevationOverlay.applySurfaceTint(
+                                    Theme.of(context).colorScheme.background, Theme.of(context).colorScheme.primary, 50),
                                 color: Theme.of(context).colorScheme.primary,
                                 value: value,
                               ),

@@ -43,8 +43,7 @@ class CountdownDisplay extends StatelessWidget {
                 'As blood carbon monoxide (CO) levels decrease, there is a clear and certain improvement in oxygen delivery, leading to a significant enhancement of overall oxygenation of muscles, organs and tissues.',
             15 / 22:
                 'With a high degree of confidence, the carbon monoxide (CO) level in exhaled breath is notably reduced, approximately twice, and decrease in CO levels in the bloodstream. Consequently, there is a discernible improvement in oxygen delivery, contributing to an enhanced oxygenation state.',
-            22 / 22:
-                'The discernible impact of smoking on carbon monoxide levels in the bloodstream is nearly absent.',
+            22 / 22: 'The discernible impact of smoking on carbon monoxide levels in the bloodstream is nearly absent.',
           },
           rate: Duration.millisecondsPerDay.toDouble() * 22,
         ),
@@ -127,10 +126,7 @@ class _SecondsState extends State<Seconds> {
       setState(() {});
     });
     return Text(
-      (DateTime.now().difference(widget.from).inSeconds % 60)
-          .toString()
-          .padLeft(2, '0')
-          .replaceAll('0', 'O'),
+      (DateTime.now().difference(widget.from).inSeconds % 60).toString().padLeft(2, '0').replaceAll('0', 'O'),
       style: textStyleMono(context),
       textAlign: TextAlign.center,
     );
@@ -161,10 +157,7 @@ class _MinutesState extends State<Minutes> {
       setState(() {});
     });
     return Text(
-      (DateTime.now().difference(widget.from).inMinutes % 60)
-          .toString()
-          .padLeft(2, '0')
-          .replaceAll('0', 'O'),
+      (DateTime.now().difference(widget.from).inMinutes % 60).toString().padLeft(2, '0').replaceAll('0', 'O'),
       style: textStyleMono(context),
       textAlign: TextAlign.center,
     );
@@ -195,10 +188,7 @@ class _HoursState extends State<Hours> {
       setState(() {});
     });
     return Text(
-      (DateTime.now().difference(widget.from).inHours % 24)
-          .toString()
-          .padLeft(2, '0')
-          .replaceAll('0', 'O'),
+      (DateTime.now().difference(widget.from).inHours % 24).toString().padLeft(2, '0').replaceAll('0', 'O'),
       style: textStyleMono(context),
       textAlign: TextAlign.center,
     );
@@ -229,12 +219,7 @@ class _DaysState extends State<Days> {
       setState(() {});
     });
     return Text(
-      DateTime.now()
-          .difference(widget.from)
-          .inDays
-          .toString()
-          .padLeft(2, '0')
-          .replaceAll('0', 'O'),
+      DateTime.now().difference(widget.from).inDays.toString().padLeft(2, '0').replaceAll('0', 'O'),
       style: textStyleMono(context),
       textAlign: TextAlign.center,
     );
@@ -243,16 +228,10 @@ class _DaysState extends State<Days> {
 
 TextStyle textStyleMono(BuildContext context) {
   return GoogleFonts.spaceMono(
-    textStyle: Theme.of(context)
-        .textTheme
-        .displaySmall
-        ?.copyWith(fontWeight: FontWeight.w300),
+    textStyle: Theme.of(context).textTheme.displaySmall?.copyWith(fontWeight: FontWeight.w300),
   );
 }
 
 TextStyle? textStyle(BuildContext context) {
-  return Theme.of(context)
-      .textTheme
-      .displaySmall
-      ?.copyWith(fontWeight: FontWeight.w600);
+  return Theme.of(context).textTheme.displaySmall?.copyWith(fontWeight: FontWeight.w600);
 }

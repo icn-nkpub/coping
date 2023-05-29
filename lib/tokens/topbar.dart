@@ -92,10 +92,7 @@ class _TopBarState extends State<TopBar> {
                 child: RichText(
                   text: TextSpan(
                     text: 'Hello, ',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium!
-                        .copyWith(fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
                     children: [
                       TextSpan(text: u?.profile?.firstName ?? 'and'),
                       const TextSpan(text: ' '),
@@ -184,8 +181,7 @@ class _TopBarState extends State<TopBar> {
             ),
             FilledButton.tonal(
               onPressed: () {
-                var next = (ColorValue.values.indexOf(t.color) + 1) %
-                    (ColorValue.values.length);
+                var next = (ColorValue.values.indexOf(t.color) + 1) % (ColorValue.values.length);
                 var selected = ColorValue.values[next];
                 context.read<ThemeCubit>().setColor(selected);
               },
