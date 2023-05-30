@@ -1,8 +1,8 @@
-import 'package:sca6/pages/clock/main.dart';
-import 'package:sca6/pages/triggers/triggers.dart';
-import 'package:sca6/paginator.dart';
-import 'package:sca6/tokens/icons.dart';
-import 'package:sca6/pages/meditation/meditation.dart';
+import 'package:cloudcircle/pages/clock/main.dart';
+import 'package:cloudcircle/pages/triggers/triggers.dart';
+import 'package:cloudcircle/paginator.dart';
+import 'package:cloudcircle/tokens/icons.dart';
+import 'package:cloudcircle/pages/meditation/meditation.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sca6/provider/theme/colors.dart';
+import 'package:cloudcircle/provider/theme/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ThemeState {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sca6/tokens/icons.dart';
-import 'package:sca6/tokens/measurable.dart';
+import 'package:cloudcircle/tokens/icons.dart';
+import 'package:cloudcircle/tokens/measurable.dart';
 
 class Risk extends StatefulWidget {
   const Risk({

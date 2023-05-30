@@ -1,8 +1,8 @@
-import 'package:sca6/subpages/logout.dart';
-import 'package:sca6/subpages/profile.dart';
-import 'package:sca6/subpages/login.dart';
-import 'package:sca6/subpages/register.dart';
-import 'package:sca6/tokens/icons.dart';
+import 'package:cloudcircle/subpages/logout.dart';
+import 'package:cloudcircle/subpages/profile.dart';
+import 'package:cloudcircle/subpages/login.dart';
+import 'package:cloudcircle/subpages/register.dart';
+import 'package:cloudcircle/tokens/icons.dart';
 import 'package:flutter/material.dart';
 
 Function(int) pagginator(BuildContext context) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sca6/provider/login/login.dart';
-import 'package:sca6/tokens/input.dart';
+import 'package:cloudcircle/provider/login/login.dart';
+import 'package:cloudcircle/tokens/input.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LoginPage extends StatefulWidget {

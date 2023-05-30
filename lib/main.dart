@@ -1,19 +1,19 @@
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:sca6/provider/login/login.dart';
+import 'package:cloudcircle/provider/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sca6/provider/theme/colors.dart';
-import 'package:sca6/provider/theme/theme.dart';
-import 'package:sca6/storage/local.dart';
-import 'package:sca6/storage/profiles.dart';
+import 'package:cloudcircle/provider/theme/colors.dart';
+import 'package:cloudcircle/provider/theme/theme.dart';
+import 'package:cloudcircle/storage/local.dart';
+import 'package:cloudcircle/storage/profiles.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'home.dart';
 
 void main() async {
   await Supabase.initialize(
-    url: 'http://localhost:54321',
+    url: 'https://tcqkyokyndgebhcybfhx.supabase.co',
     anonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRjcWt5b2t5bmRnZWJoY3liZmh4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODU0NjUxOTMsImV4cCI6MjAwMTA0MTE5M30.Nd9M8OSPkIW2zjj_wJjPCBJi8NEApMise-W8nYso1Tw',
   );
 
   User? u = await restoreAuthInfo();

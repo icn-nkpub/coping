@@ -1,4 +1,4 @@
-import 'package:sca6/tokens/topbar.dart';
+import 'package:cloudcircle/tokens/topbar.dart';
 import 'package:flutter/material.dart';
 
 class TriggersScreen extends StatelessWidget {

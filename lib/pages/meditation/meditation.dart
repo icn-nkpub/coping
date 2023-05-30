@@ -1,12 +1,12 @@
 import 'dart:math';
 import 'dart:core';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sca6/provider/login/login.dart';
-import 'package:sca6/tokens/icons.dart';
+import 'package:cloudcircle/provider/login/login.dart';
+import 'package:cloudcircle/tokens/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:funvas/funvas.dart';
-import 'package:sca6/tokens/measurable.dart';
-import 'package:sca6/tokens/topbar.dart';
+import 'package:cloudcircle/tokens/measurable.dart';
+import 'package:cloudcircle/tokens/topbar.dart';
 
 class CanvasDrawer extends Funvas {
   CanvasDrawer({
@@ -278,7 +278,7 @@ class _InfoCardState extends State<InfoCard> {
                   )),
               const SizedBox(height: 8),
               Slider(
-                value: _speed,
+                value: _speed > 3 || _speed < 32 ? _speed : 6,
                 min: 3,
                 max: 32,
                 onChangeEnd: (x) {

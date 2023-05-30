@@ -1,6 +1,6 @@
-import 'package:sca6/auth/auth.dart';
-import 'package:sca6/storage/local.dart';
-import 'package:sca6/storage/profiles.dart';
+import 'package:cloudcircle/auth/auth.dart';
+import 'package:cloudcircle/storage/local.dart';
+import 'package:cloudcircle/storage/profiles.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
