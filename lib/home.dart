@@ -48,7 +48,7 @@ class _HomeState extends State<Home> {
         ],
       ),
       body: [
-        MainScreen(setPage: pagginator(context)),
+        ClockScreen(setPage: pagginator(context)),
         TriggersScreen(setPage: pagginator(context)),
         const MeditationScreen(),
       ][currentPageIndex],

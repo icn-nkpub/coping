@@ -163,6 +163,8 @@ class _TopBarState extends State<TopBar> {
             FilledButton.tonal(
               style: Theme.of(context).filledButtonTheme.style,
               onPressed: () {
+                // "!" (NOT) because we just fliped but yet refreshed.
+                context.read<LoginCubit>().setTheme(t.color.name, !t.isLightMode());
                 context.read<ThemeCubit>().flipBrightness();
               },
               child: SvgIcon(
@@ -184,6 +186,7 @@ class _TopBarState extends State<TopBar> {
                 var next = (ColorValue.values.indexOf(t.color) + 1) % (ColorValue.values.length);
                 var selected = ColorValue.values[next];
                 context.read<ThemeCubit>().setColor(selected);
+                context.read<LoginCubit>().setTheme(selected.name, t.isLightMode());
               },
               child: const SvgIcon(assetName: 'palette'),
             ),

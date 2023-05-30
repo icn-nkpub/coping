@@ -4,8 +4,8 @@ import 'package:sca6/provider/login/login.dart';
 import 'package:sca6/tokens/topbar.dart';
 import 'package:flutter/material.dart';
 
-class MainScreen extends StatelessWidget {
-  const MainScreen({
+class ClockScreen extends StatelessWidget {
+  const ClockScreen({
     super.key,
     required this.setPage,
   });

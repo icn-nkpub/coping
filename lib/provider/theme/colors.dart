@@ -31,3 +31,20 @@ String themeColorName(ColorValue c) {
       return 'Midnight';
   }
 }
+
+ColorValue findThemeColor(String c) {
+  switch (c) {
+    case 'ocean':
+      return ColorValue.ocean;
+    case 'cherry':
+      return ColorValue.cherry;
+    case 'leaves':
+      return ColorValue.leaves;
+    case 'pine':
+      return ColorValue.pine;
+    case 'night':
+      return ColorValue.night;
+    default:
+      return ColorValue.ocean;
+  }
+}

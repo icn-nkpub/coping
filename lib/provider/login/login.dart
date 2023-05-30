@@ -1,4 +1,5 @@
 import 'package:sca6/auth/auth.dart';
+import 'package:sca6/storage/local.dart';
 import 'package:sca6/storage/profiles.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -25,6 +26,8 @@ class LoginCubit extends Cubit<Profile?> {
     if (auth == null) {
       return;
     }
+
+    await storeAuthInfo(auth);
 
     final p = await getProfile(auth);
 
@@ -69,11 +72,43 @@ class LoginCubit extends Cubit<Profile?> {
           secondName: '',
           breathingTime: 0,
           noSmokingTime: DateTime.now(),
+          color: '',
+          isLight: false,
         );
 
     p.breathingTime = breathingTime;
 
     syncProfileBreathingTime(auth, breathingTime);
+
+    emit(Profile(
+      id: auth.id,
+      email: auth.email ?? '',
+      auth: auth,
+      profile: p,
+    ));
+  }
+
+  Future<void> setTheme(String color, bool isLight) async {
+    if (state == null) {
+      return;
+    }
+
+    final auth = state!.auth;
+
+    var p = state?.profile ??
+        ProfileRecord(
+          firstName: '',
+          secondName: '',
+          breathingTime: 0,
+          noSmokingTime: DateTime.now(),
+          color: '',
+          isLight: false,
+        );
+
+    p.color = color;
+    p.isLight = isLight;
+
+    syncProfileTheme(auth, color, isLight);
 
     emit(Profile(
       id: auth.id,
@@ -100,6 +135,8 @@ class LoginCubit extends Cubit<Profile?> {
           secondName: '',
           breathingTime: 0,
           noSmokingTime: DateTime.now(),
+          color: '',
+          isLight: false,
         );
     p.firstName = firstName;
     p.secondName = secondName;
@@ -112,6 +149,18 @@ class LoginCubit extends Cubit<Profile?> {
       email: auth.email ?? '',
       auth: auth,
       profile: p,
+    ));
+  }
+
+  Future<void> overwrite(
+    User auth,
+    ProfileRecord? profile,
+  ) async {
+    emit(Profile(
+      id: auth.id,
+      email: auth.email ?? '',
+      auth: auth,
+      profile: profile,
     ));
   }
 }
