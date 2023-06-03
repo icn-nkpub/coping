@@ -71,7 +71,7 @@ class LoginCubit extends Cubit<Profile?> {
           firstName: '',
           secondName: '',
           breathingTime: 0,
-          noSmokingTime: DateTime.now(),
+          noAddictionTime: DateTime.now(),
           color: '',
           isLight: false,
         );
@@ -100,7 +100,7 @@ class LoginCubit extends Cubit<Profile?> {
           firstName: '',
           secondName: '',
           breathingTime: 0,
-          noSmokingTime: DateTime.now(),
+          noAddictionTime: DateTime.now(),
           color: '',
           isLight: false,
         );
@@ -121,7 +121,7 @@ class LoginCubit extends Cubit<Profile?> {
   Future<void> saveProfile(
     String firstName,
     String secondName,
-    DateTime noSmokingTime,
+    DateTime? noAddictionTime,
   ) async {
     if (state == null) {
       return;
@@ -134,13 +134,17 @@ class LoginCubit extends Cubit<Profile?> {
           firstName: '',
           secondName: '',
           breathingTime: 0,
-          noSmokingTime: DateTime.now(),
+          noAddictionTime: DateTime.now(),
           color: '',
           isLight: false,
         );
     p.firstName = firstName;
     p.secondName = secondName;
-    p.noSmokingTime = noSmokingTime;
+
+    if (noAddictionTime != null) {
+      p.noAddictionTime = noAddictionTime;
+      logAddictionReset(auth, 'smoking', noAddictionTime);
+    }
 
     syncProfile(auth, p);
 

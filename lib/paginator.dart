@@ -1,7 +1,7 @@
-import 'package:cloudcircle/subpages/logout.dart';
-import 'package:cloudcircle/subpages/profile.dart';
-import 'package:cloudcircle/subpages/login.dart';
-import 'package:cloudcircle/subpages/register.dart';
+import 'package:cloudcircle/modals/logout.dart';
+import 'package:cloudcircle/modals/profile.dart';
+import 'package:cloudcircle/modals/login.dart';
+import 'package:cloudcircle/modals/register.dart';
 import 'package:cloudcircle/tokens/icons.dart';
 import 'package:flutter/material.dart';
 

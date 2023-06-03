@@ -46,7 +46,7 @@ class _CountdownState extends State<Countdown> {
           children: [
             BlocBuilder<LoginCubit, Profile?>(
               builder: (context, u) => CountdownDisplay(
-                from: u?.profile?.noSmokingTime ?? DateTime.now(),
+                from: u?.profile?.noAddictionTime ?? DateTime.now(),
               ),
             ),
             GestureDetector(

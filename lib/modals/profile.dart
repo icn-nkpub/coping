@@ -14,14 +14,14 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  DateTime? noSmokingTime;
+  DateTime? noAddictionTime;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginCubit, Profile?>(builder: (context, u) {
       var cFirstName = TextEditingController(text: u?.profile?.firstName ?? '');
       var cSecondName = TextEditingController(text: u?.profile?.secondName ?? '');
-      DateTime lts = noSmokingTime ?? u?.profile?.noSmokingTime ?? DateTime.now();
+      DateTime lts = noAddictionTime ?? u?.profile?.noAddictionTime ?? DateTime.now();
       String day = DateFormat.MMMMEEEEd('en').format(lts);
 
       return Padding(
@@ -40,7 +40,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text("Last time: $day, ${lts.hour}:${lts.minute}:${lts.second}"),
-                    FilledButton.tonal(onPressed: () => setState(() => noSmokingTime = DateTime.now()), child: const Text("reset"))
+                    FilledButton.tonal(onPressed: () => setState(() => noAddictionTime = DateTime.now()), child: const Text("reset"))
                   ],
                 ),
               ),
@@ -49,7 +49,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   context.read<LoginCubit>().saveProfile(
                         cFirstName.text,
                         cSecondName.text,
-                        noSmokingTime ?? u?.profile?.noSmokingTime ?? DateTime.now(),
+                        noAddictionTime,
                       );
                   Navigator.of(context).pop();
                 },

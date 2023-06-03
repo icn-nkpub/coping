@@ -7,7 +7,7 @@ class ProfileRecord {
     required this.firstName,
     required this.secondName,
     required this.breathingTime,
-    required this.noSmokingTime,
+    required this.noAddictionTime,
     required this.color,
     required this.isLight,
   });
@@ -15,7 +15,7 @@ class ProfileRecord {
   String firstName;
   String secondName;
   double breathingTime;
-  DateTime noSmokingTime;
+  DateTime noAddictionTime;
   String? color;
   bool? isLight;
 }
@@ -40,7 +40,7 @@ Future<ProfileRecord?> getProfile(User user) async {
     firstName: record['first_name'] ?? '',
     secondName: record['second_name'] ?? '',
     breathingTime: breathingTime,
-    noSmokingTime: DateTime.parse(record['no_smoking_time'] ?? DateTime.now().toIso8601String()),
+    noAddictionTime: DateTime.parse(record['no_addiction_time'] ?? DateTime.now().toIso8601String()),
     color: themeData['color'],
     isLight: themeData['is_light'],
   );
@@ -111,6 +111,15 @@ Future<void> syncProfileTheme(User user, String color, bool isLight) async {
     'user_id': user.id,
     'theme': theme,
   }).eq('user_id', user.id);
+}
+
+Future<void> logAddictionReset(User user, String type, DateTime time) async {
+  await Supabase.instance.client.from('addiction_reset_log').insert({
+    'user_id': user.id,
+    'reset_time': time.toIso8601String(),
+    'addiction_type': type,
+  });
+  return;
 }
 
 SupabaseQueryBuilder query() {
