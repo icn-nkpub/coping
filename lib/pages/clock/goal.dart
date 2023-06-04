@@ -140,7 +140,7 @@ class _GoalCardState extends State<GoalCard> {
                 ),
                 const Expanded(child: SizedBox()),
                 AnimatedRotation(
-                  duration: Duration(milliseconds: 100),
+                  duration: const Duration(milliseconds: 100),
                   turns: expanded ? 0.5 : 0,
                   child: const SvgIcon(assetName: 'expand_more'),
                 )

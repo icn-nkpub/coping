@@ -109,7 +109,7 @@ class _TopBarState extends State<TopBar> {
                   });
                 },
                 icon: AnimatedRotation(
-                  duration: Duration(milliseconds: 100),
+                  duration: const Duration(milliseconds: 100),
                   turns: expandMenu ? 0.5 : 0,
                   child: const SvgIcon(assetName: 'expand_more'),
                 ),
@@ -159,7 +159,18 @@ class _TopBarState extends State<TopBar> {
     );
   }
 
-  BlocBuilder<ThemeCubit, ThemeState> _themeSettings() {
+  Widget _themeSettings() {
+    return const ThemeChanger();
+  }
+}
+
+class ThemeChanger extends StatelessWidget {
+  const ThemeChanger({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, t) {
         return Row(

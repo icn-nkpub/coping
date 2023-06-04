@@ -34,7 +34,10 @@ Widget modal(BuildContext context, Widget w) {
           ),
           Flexible(
             child: w,
-          )
+          ),
+          const SizedBox(
+            height: 8,
+          ),
         ],
       ),
     ),

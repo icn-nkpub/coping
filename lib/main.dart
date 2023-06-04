@@ -1,7 +1,9 @@
+import 'package:cloudcircle/onboarding.dart';
 import 'package:cloudcircle/provider/goal/goal.dart';
 import 'package:cloudcircle/provider/static/static.dart';
 import 'package:cloudcircle/storage/goal.dart';
 import 'package:cloudcircle/storage/static.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:cloudcircle/provider/login/login.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +12,7 @@ import 'package:cloudcircle/provider/theme/colors.dart';
 import 'package:cloudcircle/provider/theme/theme.dart';
 import 'package:cloudcircle/storage/local.dart';
 import 'package:cloudcircle/storage/profiles.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'home.dart';
 
@@ -34,7 +37,19 @@ void main() async {
     goals = await getGoals(user);
   }
 
-  runApp(App(user, profile, static, goals: goals));
+  var app = App(user, profile, static, goals: goals);
+
+  kDebugMode
+      ? runApp(app)
+      : SentryFlutter.init(
+          (options) {
+            options.dsn = 'https://ffce3775524c43269e47662942503a06@o4505302255665152.ingest.sentry.io/4505302260449280';
+            // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+            // We recommend adjusting this value in production.
+            options.tracesSampleRate = 0;
+          },
+          appRunner: () => runApp(app),
+        );
 }
 
 class App extends StatelessWidget {
@@ -109,7 +124,9 @@ class App extends StatelessWidget {
           ],
           title: 'SCA-6',
           theme: state.data,
-          home: const Home(),
+          home: BlocBuilder<LoginCubit, Profile?>(builder: (context, u) {
+            return u == null ? const Onboarding() : const Home();
+          }),
         ),
       ),
     );

@@ -10,39 +10,41 @@ import 'package:cloudcircle/tokens/topbar.dart';
 
 class CanvasDrawer extends Funvas {
   CanvasDrawer({
+    required this.color,
     required this.fullCycleDuration,
     required this.scale,
     required this.slideDist,
     required this.rounds,
-    required this.color,
+    this.muted = false,
   });
-
+  HSLColor color;
   final double fullCycleDuration;
   final double scale;
   final double slideDist;
   final int rounds;
-  final HSLColor color;
   bool windDown = false;
   double windDownTime = -1;
+  final bool muted;
 
   @override
   void u(double t) {
-    t = max(0, t - 1);
+    if (muted) t += fullCycleDuration;
+    if (!muted) t = max(0, t - 1);
 
     final w = x.width / 2;
     final h = x.height / 2;
     final s = x.width < x.height ? x.width : x.height;
     final pt = (s * scale) / 64;
 
-    _drawGuideLine(pt, w, h);
+    if (!muted) _drawGuideLine(color, pt, w, h);
 
     if (windDownTime > -1) {
       double cycle = graph(windDownTime);
       cycle = max(0, cycle - (t - windDownTime));
       final slide = slideDist * pt - (cycle * (slideDist * pt));
 
-      _drawCircle(pt, w, h, slide);
-      _drawParticles(pt, w, h, cycle, t, slide);
+      _drawCircle(color, pt, w, h, slide);
+      _drawParticles(color, pt, w, h, cycle, t, slide);
 
       return;
     }
@@ -53,14 +55,14 @@ class CanvasDrawer extends Funvas {
     final double cycle = graph(t);
     final slide = slideDist * pt - (cycle * (slideDist * pt));
 
-    _drawCircle(pt, w, h, slide);
-    _drawParticles(pt, w, h, cycle, t, slide);
+    if (!muted) _drawCircle(color, pt, w, h, slide);
+    _drawParticles(color, pt, w, h, cycle, t, slide);
   }
 
-  void _drawParticles(double pt, double w, double h, double cycle, double t, double slide) {
+  void _drawParticles(HSLColor color, double pt, double w, double h, double cycle, double t, double slide) {
     for (int round = 0; round < rounds; round++) {
       final rCycle = round / rounds;
-      final r = (5 * pt) + (((cycle * 2) + 1) * rCycle * 16 * pt) / 3;
+      final r = (5 * pt) + ((((muted ? 0 : cycle) * 2) + 1) * rCycle * 16 * pt) / 3;
 
       final angleSkew = (13.1 + (t / 31)) * ((round + 1) * 14);
 
@@ -91,7 +93,7 @@ class CanvasDrawer extends Funvas {
     }
   }
 
-  void _drawGuideLine(double pt, double w, double h) {
+  void _drawGuideLine(HSLColor color, double pt, double w, double h) {
     final pointPaint = Paint();
     pointPaint.color = color.toColor().withAlpha(25);
     pointPaint.strokeCap = StrokeCap.round;
@@ -103,7 +105,7 @@ class CanvasDrawer extends Funvas {
     );
   }
 
-  void _drawCircle(double pt, double w, double h, double slide) {
+  void _drawCircle(HSLColor color, double pt, double w, double h, double slide) {
     final circlePaint = Paint();
     circlePaint.color = color.toColor();
     circlePaint.strokeCap = StrokeCap.round;

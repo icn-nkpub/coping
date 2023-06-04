@@ -24,7 +24,7 @@ class LogoutModal extends StatelessWidget {
                 },
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Text('Logout'),
+                  child: Text('Clear storage'),
                 ),
               ),
             ],

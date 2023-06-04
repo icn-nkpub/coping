@@ -35,23 +35,21 @@ class _GoalModalState extends State<GoalModal> {
       widgets.add(_divider(context, 'Featured goals'));
       widgets.addAll(staticRec!.goals.map((g) => _togglableGoal(context, g)));
 
-      return Flexible(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Column(children: [
-            Flexible(
-              child: ListView(
-                children: widgets,
-              ),
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Column(children: [
+          Flexible(
+            child: ListView(
+              children: widgets,
             ),
-            FilledButton(
-                onPressed: () {
-                  if (widget.auth != null) context.read<GoalsCubit>().set(widget.auth!, goals);
-                  if (Navigator.of(context).canPop()) Navigator.of(context).pop();
-                },
-                child: const Text("Save")),
-          ]),
-        ),
+          ),
+          FilledButton(
+              onPressed: () {
+                if (widget.auth != null) context.read<GoalsCubit>().set(widget.auth!, goals);
+                if (Navigator.of(context).canPop()) Navigator.of(context).pop();
+              },
+              child: const Text("Save")),
+        ]),
       );
     });
   }
@@ -110,6 +108,9 @@ class _GoalModalState extends State<GoalModal> {
             style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
           ),
         ),
+        const SizedBox(
+          height: 16,
+        )
       ],
     );
   }

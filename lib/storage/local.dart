@@ -20,3 +20,8 @@ storeAuthInfo(User auth) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.setString('v1/auth', jsonEncode(auth.toJson()));
 }
+
+clearLocalStorage() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.clear();
+}

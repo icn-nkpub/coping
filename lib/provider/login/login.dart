@@ -56,6 +56,7 @@ class LoginCubit extends Cubit<Profile?> {
   }
 
   Future<void> signOut() async {
+    clearLocalStorage();
     emit(null);
   }
 
