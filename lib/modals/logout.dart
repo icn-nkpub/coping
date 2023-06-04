@@ -16,9 +16,7 @@ class LogoutModal extends StatelessWidget {
           child: Column(
             children: [
               Text('${u?.profile?.firstName ?? 'Please'}, confirm that you want to logout.'),
-              const SizedBox(
-                height: 16,
-              ),
+              Flexible(child: ListView()),
               FilledButton(
                 onPressed: () {
                   context.read<LoginCubit>().signOut();

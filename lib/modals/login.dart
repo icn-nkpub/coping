@@ -38,7 +38,7 @@ class _LoginModalState extends State<LoginModal> {
                   errorText,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
                 ),
-              const SizedBox(height: 16),
+              Flexible(child: ListView()),
               FilledButton(
                 onPressed: () async {
                   try {

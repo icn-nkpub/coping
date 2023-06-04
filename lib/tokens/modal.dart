@@ -32,7 +32,9 @@ Widget modal(BuildContext context, Widget w) {
               ],
             ),
           ),
-          w,
+          Flexible(
+            child: w,
+          )
         ],
       ),
     ),

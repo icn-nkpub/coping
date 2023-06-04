@@ -22,7 +22,7 @@ class RegisterModal extends StatelessWidget {
               Input(title: 'Email', ctrl: cEmail),
               const SizedBox(height: 8),
               Input(title: 'Password', ctrl: cPwd),
-              const SizedBox(height: 16),
+              Flexible(child: ListView()),
               FilledButton(
                 onPressed: () {
                   context.read<LoginCubit>().signUp(cEmail.text, cPwd.text);

@@ -44,6 +44,7 @@ class _ProfileModalState extends State<ProfileModal> {
                   ],
                 ),
               ),
+              Flexible(child: ListView()),
               FilledButton(
                 onPressed: () {
                   context.read<LoginCubit>().saveProfile(
