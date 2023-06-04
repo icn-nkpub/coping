@@ -1,3 +1,7 @@
+import 'package:cloudcircle/provider/goal/goal.dart';
+import 'package:cloudcircle/provider/static/static.dart';
+import 'package:cloudcircle/storage/goal.dart';
+import 'package:cloudcircle/storage/static.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:cloudcircle/provider/login/login.dart';
 import 'package:flutter/material.dart';
@@ -16,20 +20,30 @@ void main() async {
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRjcWt5b2t5bmRnZWJoY3liZmh4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODU0NjUxOTMsImV4cCI6MjAwMTA0MTE5M30.Nd9M8OSPkIW2zjj_wJjPCBJi8NEApMise-W8nYso1Tw',
   );
 
-  User? u = await restoreAuthInfo();
-  ProfileRecord? p;
-  if (u != null) {
-    p = await getProfile(u);
+  User? user = await restoreAuthInfo();
+  ProfileRecord? profile;
+  StaticRecords? static;
+  List<Goal>? goals;
+  if (user != null) {
+    profile = await getProfile(user);
+
+    static = StaticRecords(
+      goals: await getStaticGoals(user),
+    );
+
+    goals = await getGoals(user);
   }
 
-  runApp(App(u, p));
+  runApp(App(user, profile, static, goals: goals));
 }
 
 class App extends StatelessWidget {
-  const App(this.u, this.p, {super.key});
+  const App(this.user, this.profile, this.statics, {super.key, this.goals});
 
-  final User? u;
-  final ProfileRecord? p;
+  final User? user;
+  final ProfileRecord? profile;
+  final StaticRecords? statics;
+  final List<Goal>? goals;
 
   @override
   Widget build(BuildContext context) {
@@ -38,26 +52,46 @@ class App extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) {
           var c = LoginCubit();
-          if (u == null) {
+          if (user == null) {
             return c;
           }
 
-          c.overwrite(u!, p);
+          c.overwrite(user!, profile);
+
+          return c;
+        }),
+        BlocProvider(create: (_) {
+          var c = StaticCubit();
+          if (statics == null) {
+            return c;
+          }
+
+          c.overwrite(statics!);
 
           return c;
         }),
         BlocProvider(create: (_) {
           var c = ThemeCubit()..setBrightness(tcb);
-          if (p == null) {
+          if (profile == null) {
             return c;
           }
 
-          if (p != null && p!.isLight != null) {
-            c.setBrightness(p!.isLight! ? ThemeMode.light : ThemeMode.dark);
+          if (profile != null && profile!.isLight != null) {
+            c.setBrightness(profile!.isLight! ? ThemeMode.light : ThemeMode.dark);
           }
-          if (p != null && p!.color != null) {
-            c.setColor(findThemeColor(p!.color!));
+          if (profile != null && profile!.color != null) {
+            c.setColor(findThemeColor(profile!.color!));
           }
+
+          return c;
+        }),
+        BlocProvider(create: (_) {
+          var c = GoalsCubit();
+          if (goals == null) {
+            return c;
+          }
+
+          c.overwrite(goals!);
 
           return c;
         }),

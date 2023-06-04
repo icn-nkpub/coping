@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cloudcircle/tokens/icons.dart';
 import 'package:cloudcircle/tokens/measurable.dart';
 
-class Risk extends StatefulWidget {
-  const Risk({
+class GoalCard extends StatefulWidget {
+  const GoalCard({
     super.key,
     required this.from,
     required this.iconName,
@@ -16,18 +16,18 @@ class Risk extends StatefulWidget {
   final String iconName;
   final String title;
   final Map<double, String> descriptions;
-  final double rate;
+  final Duration rate;
 
   @override
-  State<Risk> createState() => _RiskState();
+  State<GoalCard> createState() => _GoalCardState();
 }
 
-class _RiskState extends State<Risk> {
+class _GoalCardState extends State<GoalCard> {
   bool expanded = false;
 
   @override
   Widget build(BuildContext context) {
-    final double value = (DateTime.now().difference(widget.from).inMilliseconds.toDouble() / widget.rate);
+    final double value = (DateTime.now().difference(widget.from).inSeconds.toDouble() / widget.rate.inSeconds.toDouble());
     final bool finished = value > 1 ? true : false;
 
     return Card(
@@ -136,12 +136,14 @@ class _RiskState extends State<Risk> {
                   ),
                 Text(
                   widget.title,
-                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                  style: Theme.of(context).textTheme.titleSmall,
                 ),
                 const Expanded(child: SizedBox()),
-                const SvgIcon(assetName: 'expand_more'),
+                AnimatedRotation(
+                  duration: Duration(milliseconds: 100),
+                  turns: expanded ? 0.5 : 0,
+                  child: const SvgIcon(assetName: 'expand_more'),
+                )
               ],
             ),
           ),

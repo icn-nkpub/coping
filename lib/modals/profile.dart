@@ -4,16 +4,16 @@ import 'package:intl/intl.dart'; // ignore: depend_on_referenced_packages
 import 'package:cloudcircle/provider/login/login.dart';
 import 'package:cloudcircle/tokens/input.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({
+class ProfileModal extends StatefulWidget {
+  const ProfileModal({
     super.key,
   });
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<ProfileModal> createState() => _ProfileModalState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _ProfileModalState extends State<ProfileModal> {
   DateTime? noAddictionTime;
 
   @override
@@ -39,8 +39,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text("Last time: $day, ${lts.hour}:${lts.minute}:${lts.second}"),
-                    FilledButton.tonal(onPressed: () => setState(() => noAddictionTime = DateTime.now()), child: const Text("reset"))
+                    Text('Last time: $day, ${lts.hour}:${lts.minute}:${lts.second}'),
+                    FilledButton.tonal(onPressed: () => setState(() => noAddictionTime = DateTime.now()), child: const Text('reset'))
                   ],
                 ),
               ),

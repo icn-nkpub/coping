@@ -23,7 +23,7 @@ class ThemeState {
     final bc = data.colorScheme.background;
     final pc = data.colorScheme.primary;
     data = data.copyWith(
-      textTheme: GoogleFonts.quicksandTextTheme(data.textTheme),
+      textTheme: GoogleFonts.interTextTheme(data.textTheme),
       scaffoldBackgroundColor: ElevationOverlay.applySurfaceTint(bc, pc, .5),
       appBarTheme: data.appBarTheme.copyWith(
         color: ElevationOverlay.applySurfaceTint(bc, pc, 2),

@@ -46,6 +46,7 @@ class _CountdownState extends State<Countdown> {
           children: [
             BlocBuilder<LoginCubit, Profile?>(
               builder: (context, u) => CountdownDisplay(
+                auth: u?.auth,
                 from: u?.profile?.noAddictionTime ?? DateTime.now(),
               ),
             ),

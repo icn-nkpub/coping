@@ -91,13 +91,13 @@ class _TopBarState extends State<TopBar> {
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: RichText(
                   text: TextSpan(
-                    text: 'Hello, ',
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
+                    text: 'Good day',
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w600),
                     children: [
-                      TextSpan(text: u?.profile?.firstName ?? 'and'),
-                      const TextSpan(text: ' '),
-                      TextSpan(text: u?.profile?.secondName ?? 'welcome'),
-                      const TextSpan(text: '!'),
+                      if (u?.profile?.firstName != null)
+                        TextSpan(
+                          text: ', ${u?.profile?.firstName ?? ''}',
+                        ),
                     ],
                   ),
                 ),
@@ -108,7 +108,11 @@ class _TopBarState extends State<TopBar> {
                     expandMenu = !expandMenu;
                   });
                 },
-                icon: const SvgIcon(assetName: 'settings'),
+                icon: AnimatedRotation(
+                  duration: Duration(milliseconds: 100),
+                  turns: expandMenu ? 0.5 : 0,
+                  child: const SvgIcon(assetName: 'expand_more'),
+                ),
               ),
             ],
           ),
@@ -163,7 +167,7 @@ class _TopBarState extends State<TopBar> {
             FilledButton.tonal(
               style: Theme.of(context).filledButtonTheme.style,
               onPressed: () {
-                // "!" (NOT) because we just fliped but yet refreshed.
+                // '!' (NOT) because we just fliped but yet refreshed.
                 context.read<LoginCubit>().setTheme(t.color.name, !t.isLightMode());
                 context.read<ThemeCubit>().flipBrightness();
               },

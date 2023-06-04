@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cloudcircle/provider/login/login.dart';
 import 'package:cloudcircle/tokens/input.dart';
 
-class RegisterPage extends StatelessWidget {
-  const RegisterPage({
+class RegisterModal extends StatelessWidget {
+  const RegisterModal({
     super.key,
   });
 

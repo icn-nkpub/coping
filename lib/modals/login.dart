@@ -4,16 +4,16 @@ import 'package:cloudcircle/provider/login/login.dart';
 import 'package:cloudcircle/tokens/input.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({
+class LoginModal extends StatefulWidget {
+  const LoginModal({
     super.key,
   });
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<LoginModal> createState() => _LoginModalState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginModalState extends State<LoginModal> {
   String errorText = '';
 
   var cEmail = TextEditingController(text: 'w@w.c');
