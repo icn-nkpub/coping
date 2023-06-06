@@ -1,4 +1,5 @@
 import 'package:cloudcircle/storage/goal.dart';
+import 'package:cloudcircle/storage/trigger.dart';
 import 'package:cloudcircle/tools/maybe_map.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -34,6 +35,29 @@ Future<List<Goal>> getStaticGoals(User user) async {
   }
 
   return gs;
+}
+
+Future<List<Trigger>> getStaticTriggers(User user) async {
+  final data = await query('trigger_templates').select<PostgrestList>().eq('related_addiction', 'smoking');
+
+  if (data.isEmpty) {
+    return [];
+  }
+
+  List<Trigger> ts = [];
+
+  for (var record in data) {
+    final t = Trigger(
+      id: 'static/${record['id']}',
+      label: record['label'],
+      relatedAddiction: record['related_addiction'],
+      author: record['author'],
+    );
+
+    ts.add(t);
+  }
+
+  return ts;
 }
 
 SupabaseQueryBuilder query(String name) {

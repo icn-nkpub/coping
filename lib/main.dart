@@ -1,8 +1,10 @@
 import 'package:cloudcircle/onboarding.dart';
 import 'package:cloudcircle/provider/goal/goal.dart';
 import 'package:cloudcircle/provider/static/static.dart';
+import 'package:cloudcircle/provider/trigger/trigger.dart';
 import 'package:cloudcircle/storage/goal.dart';
 import 'package:cloudcircle/storage/static.dart';
+import 'package:cloudcircle/storage/trigger.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:cloudcircle/provider/login/login.dart';
@@ -27,17 +29,20 @@ void main() async {
   ProfileRecord? profile;
   StaticRecords? static;
   List<Goal>? goals;
+  List<Trigger>? triggers;
   if (user != null) {
     profile = await getProfile(user);
 
     static = StaticRecords(
       goals: await getStaticGoals(user),
+      triggers: await getStaticTriggers(user),
     );
 
     goals = await getGoals(user);
+    triggers = await getTriggers(user);
   }
 
-  var app = App(user, profile, static, goals: goals);
+  var app = App(user, profile, static, goals: goals, triggers: triggers);
 
   kDebugMode
       ? runApp(app)
@@ -53,12 +58,13 @@ void main() async {
 }
 
 class App extends StatelessWidget {
-  const App(this.user, this.profile, this.statics, {super.key, this.goals});
+  const App(this.user, this.profile, this.statics, {super.key, this.goals, this.triggers});
 
   final User? user;
   final ProfileRecord? profile;
   final StaticRecords? statics;
   final List<Goal>? goals;
+  final List<Trigger>? triggers;
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +112,17 @@ class App extends StatelessWidget {
             return c;
           }
 
-          c.overwrite(goals!);
+          c.overwrite(Goals(goals!));
+
+          return c;
+        }),
+        BlocProvider(create: (_) {
+          var c = TriggersCubit();
+          if (triggers == null) {
+            return c;
+          }
+
+          c.overwrite(Triggers(triggers!));
 
           return c;
         }),

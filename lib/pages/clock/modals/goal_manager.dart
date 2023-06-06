@@ -24,7 +24,7 @@ class _GoalModalState extends State<GoalModal> {
   @override
   void initState() {
     final settings = BlocProvider.of<GoalsCubit>(context);
-    if (settings.state != null) goals.addAll(settings.state!);
+    if (settings.state != null) goals.addAll(settings.state!.data);
     super.initState();
   }
 
@@ -45,7 +45,7 @@ class _GoalModalState extends State<GoalModal> {
           ),
           FilledButton(
               onPressed: () {
-                if (widget.auth != null) context.read<GoalsCubit>().set(widget.auth!, goals);
+                if (widget.auth != null) context.read<GoalsCubit>().set(widget.auth!, Goals(goals));
                 if (Navigator.of(context).canPop()) Navigator.of(context).pop();
               },
               child: const Text("Save")),

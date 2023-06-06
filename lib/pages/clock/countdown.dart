@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cloudcircle/pages/clock/goal.dart';
 import 'package:cloudcircle/pages/clock/modals/goal_manager.dart';
 import 'package:cloudcircle/provider/goal/goal.dart';
-import 'package:cloudcircle/storage/goal.dart';
 import 'package:cloudcircle/tokens/icons.dart';
 import 'package:cloudcircle/tokens/modal.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,10 +27,10 @@ class CountdownDisplay extends StatelessWidget {
         const SizedBox(height: 8 * 4),
         Stopwatch(from: from),
         const SizedBox(height: 8 * 3),
-        BlocBuilder<GoalsCubit, List<Goal>?>(
+        BlocBuilder<GoalsCubit, Goals?>(
           builder: (context, goals) => goals != null
               ? Column(
-                  children: goals
+                  children: goals.data
                       .map((g) => GoalCard(
                             from: from,
                             iconName: g.iconName,

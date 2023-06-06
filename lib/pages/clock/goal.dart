@@ -29,6 +29,7 @@ class _GoalCardState extends State<GoalCard> {
   Widget build(BuildContext context) {
     final double value = (DateTime.now().difference(widget.from).inSeconds.toDouble() / widget.rate.inSeconds.toDouble());
     final bool finished = value > 1 ? true : false;
+    final segments = widget.rate.inDays.round().clamp(1, 7 * 4);
 
     return Card(
       child: Padding(
@@ -58,18 +59,9 @@ class _GoalCardState extends State<GoalCard> {
                             ),
                           ),
                           Flexible(
-                            flex: 1,
-                            child: Container(
-                              alignment: Alignment.centerRight,
-                              clipBehavior: Clip.antiAlias,
-                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
-                              child: LinearProgressIndicator(
-                                minHeight: 8,
-                                backgroundColor: ElevationOverlay.applySurfaceTint(
-                                    Theme.of(context).colorScheme.background, Theme.of(context).colorScheme.primary, 50),
-                                color: Theme.of(context).colorScheme.primary,
-                                value: value,
-                              ),
+                            child: Meter(
+                              value,
+                              segments: segments,
                             ),
                           ),
                         ],
@@ -162,6 +154,46 @@ class _GoalCardState extends State<GoalCard> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class Meter extends StatelessWidget {
+  const Meter(
+    this.value, {
+    this.segments = 10,
+    super.key,
+  });
+
+  final double value;
+  final int segments;
+
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> c = [];
+
+    for (var i = 0; i < segments; i++) {
+      c.add(
+        Flexible(
+          flex: 1,
+          child: Container(
+            alignment: Alignment.centerRight,
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
+            margin: const EdgeInsets.all(1),
+            child: LinearProgressIndicator(
+              minHeight: 8,
+              backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(.2),
+              color: Theme.of(context).colorScheme.primary.withOpacity(.5),
+              value: ((value * segments) - i).clamp(0, 1),
+            ),
+          ),
+        ),
+      );
+    }
+
+    return Row(
+      children: c,
     );
   }
 }

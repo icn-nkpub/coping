@@ -62,7 +62,7 @@ class CanvasDrawer extends Funvas {
   void _drawParticles(HSLColor color, double pt, double w, double h, double cycle, double t, double slide) {
     for (int round = 0; round < rounds; round++) {
       final rCycle = round / rounds;
-      final r = (5 * pt) + ((((muted ? 0 : cycle) * 2) + 1) * rCycle * 16 * pt) / 3;
+      final r = (4 * pt) + ((((muted ? 0 : cycle) * 3.85) + 1) * rCycle * 16 * pt) / 3;
 
       final angleSkew = (13.1 + (t / 31)) * ((round + 1) * 14);
 
@@ -72,11 +72,11 @@ class CanvasDrawer extends Funvas {
         alpha = max(0, alpha - (t - windDownTime));
       }
 
-      for (double i = 0; i < 360; i += 360 / ((rounds + (round * 4)))) {
+      for (double i = 0; i < 360; i += 360 / (rounds + (round * 4))) {
         final iCycle = ((1 + sin((pow(i + 1, 2) * (round + 1)) + t * 2)) / 2);
         final v = iCycle * pt / 5;
 
-        final angle = i + angleSkew;
+        final angle = (i + 1) * (pi / 2) + angleSkew;
 
         var lr = r + (v * 8);
 

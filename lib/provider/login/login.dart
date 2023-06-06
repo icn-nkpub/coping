@@ -143,8 +143,8 @@ class LoginCubit extends Cubit<Profile?> {
     p.secondName = secondName;
 
     if (noAddictionTime != null) {
+      logAddictionReset(auth, 'smoking', p.noAddictionTime);
       p.noAddictionTime = noAddictionTime;
-      logAddictionReset(auth, 'smoking', noAddictionTime);
     }
 
     syncProfile(auth, p);
