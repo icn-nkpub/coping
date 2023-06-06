@@ -16,19 +16,22 @@ class TriggersCubit extends Cubit<Triggers?> {
 
   Future<void> toggle(User user, Trigger trigger) async {
     if (state != null) {
-      if (state!.data.where((element) => trigger.id == element.id).isEmpty) {
-        state!.data.add(trigger);
+      var d = state!.data;
+
+      if (d.where((element) => trigger.id == element.id).isEmpty) {
+        d.add(trigger);
       } else {
-        state!.data.removeWhere((element) => trigger.id == element.id);
+        d.removeWhere((element) => trigger.id == element.id);
       }
-      emit(state);
-      syncTriggers(user, state!.data);
+
+      emit(Triggers(d));
+      syncTriggers(user, [...d]);
     }
   }
 
   Future<void> set(User user, Triggers triggers) async {
     emit(triggers);
-    syncTriggers(user, triggers.data);
+    syncTriggers(user, [...triggers.data]);
   }
 
   Future<void> overwrite(Triggers triggers) async {

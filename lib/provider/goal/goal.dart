@@ -16,7 +16,7 @@ class GoalsCubit extends Cubit<Goals?> {
 
   Future<void> set(User user, Goals goals) async {
     emit(goals);
-    syncGoals(user, goals.data);
+    syncGoals(user, [...goals.data]);
   }
 
   Future<void> overwrite(Goals goals) async {
