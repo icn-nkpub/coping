@@ -61,7 +61,7 @@ class TriggersScreen extends StatelessWidget {
             if (triggers != null) {
               children.addAll(
                 triggers.data.map(
-                  (t) => FilledButton.tonal(
+                  (t) => FilledButton(
                     style: const ButtonStyle(
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 8 * 2)),
@@ -76,7 +76,7 @@ class TriggersScreen extends StatelessWidget {
             }
 
             children.add(
-              IconButton.outlined(
+              IconButton.filledTonal(
                 style: const ButtonStyle(
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 8 * 2)),
@@ -113,7 +113,7 @@ class TriggersScreen extends StatelessWidget {
             if (s != null) {
               children.addAll(
                 s.triggers.map(
-                  (t) => OutlinedButton(
+                  (t) => FilledButton.tonal(
                     style: const ButtonStyle(
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 8 * 2)),
