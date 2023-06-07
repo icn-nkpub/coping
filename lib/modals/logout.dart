@@ -20,7 +20,7 @@ class LogoutModal extends StatelessWidget {
               FilledButton(
                 onPressed: () {
                   context.read<LoginCubit>().signOut();
-                  Navigator.of(context).pop();
+                  if (Navigator.of(context).canPop()) Navigator.of(context).pop();
                 },
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),

@@ -26,7 +26,7 @@ class RegisterModal extends StatelessWidget {
               FilledButton(
                 onPressed: () {
                   context.read<LoginCubit>().signUp(cEmail.text, cPwd.text);
-                  Navigator.of(context).pop();
+                  if (Navigator.of(context).canPop()) Navigator.of(context).pop();
                 },
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),

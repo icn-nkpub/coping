@@ -101,6 +101,8 @@ flutter:
     - assets/icons/done.svg
     - assets/icons/calendar_add_on.svg
     - assets/icons/add.svg
+    - assets/icons/pause.svg
+    - assets/icons/resume.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -43,7 +43,7 @@ class _LoginModalState extends State<LoginModal> {
                 onPressed: () async {
                   try {
                     await context.read<LoginCubit>().signIn(cEmail.text, cPwd.text);
-                    navigator.pop();
+                    if (navigator.canPop()) navigator.pop();
                   } on AuthException catch (error) {
                     setState(() {
                       errorText = error.message;

@@ -1,8 +1,10 @@
 import 'package:cloudcircle/onboarding.dart';
+import 'package:cloudcircle/provider/countdown/countdown.dart';
 import 'package:cloudcircle/provider/goal/goal.dart';
 import 'package:cloudcircle/provider/static/static.dart';
 import 'package:cloudcircle/provider/trigger/trigger.dart';
 import 'package:cloudcircle/storage/goal.dart';
+import 'package:cloudcircle/storage/reset_log.dart';
 import 'package:cloudcircle/storage/static.dart';
 import 'package:cloudcircle/storage/trigger.dart';
 import 'package:flutter/foundation.dart';
@@ -28,6 +30,7 @@ void main() async {
   User? user = await restoreAuthInfo();
   ProfileRecord? profile;
   StaticRecords? static;
+  List<CountdownReset>? resets;
   List<Goal>? goals;
   List<Trigger>? triggers;
   if (user != null) {
@@ -38,11 +41,13 @@ void main() async {
       triggers: await getStaticTriggers(user),
     );
 
+    resets = await getCountdownResets(user, 'smoking');
+
     goals = await getGoals(user);
     triggers = await getTriggers(user);
   }
 
-  var app = App(user, profile, static, goals: goals, triggers: triggers);
+  var app = App(user, profile, static, resets: resets, goals: goals, triggers: triggers);
 
   kDebugMode
       ? runApp(app)
@@ -58,11 +63,12 @@ void main() async {
 }
 
 class App extends StatelessWidget {
-  const App(this.user, this.profile, this.statics, {super.key, this.goals, this.triggers});
+  const App(this.user, this.profile, this.statics, {super.key, this.resets, this.goals, this.triggers});
 
   final User? user;
   final ProfileRecord? profile;
   final StaticRecords? statics;
+  final List<CountdownReset>? resets;
   final List<Goal>? goals;
   final List<Trigger>? triggers;
 
@@ -103,6 +109,16 @@ class App extends StatelessWidget {
           if (profile != null && profile!.color != null) {
             c.setColor(findThemeColor(profile!.color!));
           }
+
+          return c;
+        }),
+        BlocProvider(create: (_) {
+          var c = CountdownTimerCubit();
+          if (resets == null) {
+            return c;
+          }
+
+          c.overwrite(resets!);
 
           return c;
         }),

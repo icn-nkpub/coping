@@ -1,3 +1,4 @@
+import 'package:cloudcircle/provider/countdown/countdown.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cloudcircle/pages/clock/countdown.dart';
 import 'package:cloudcircle/provider/login/login.dart';
@@ -43,22 +44,8 @@ class _CountdownState extends State<Countdown> {
         child: ListView(
           shrinkWrap: true,
           scrollDirection: Axis.vertical,
-          children: [
-            BlocBuilder<LoginCubit, Profile?>(
-              builder: (context, u) => CountdownDisplay(
-                auth: u?.auth,
-                from: u?.profile?.noAddictionTime ?? DateTime.now(),
-              ),
-            ),
-            GestureDetector(
-              // todo: remove it
-              child: Container(
-                color: Colors.transparent,
-                height: 8,
-                width: 8,
-              ),
-              onTap: () => setState(() => debug = !debug),
-            ),
+          children: const [
+            CountdownDisplay(),
           ],
         ),
       ),
