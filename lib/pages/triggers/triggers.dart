@@ -29,7 +29,7 @@ class TriggersScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(14),
                 child: Text(
-                  "Personal triggers",
+                  'Personal triggers',
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
@@ -38,7 +38,7 @@ class TriggersScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(14),
                 child: Text(
-                  "Discover triggers",
+                  'Discover triggers',
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
@@ -83,7 +83,7 @@ class TriggersScreen extends StatelessWidget {
                 ),
                 onPressed: () {},
                 icon: const SvgIcon(
-                  assetName: "add",
+                  assetName: 'add',
                 ),
               ),
             );

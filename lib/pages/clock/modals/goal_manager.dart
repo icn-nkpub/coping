@@ -48,7 +48,7 @@ class _GoalModalState extends State<GoalModal> {
                 if (widget.auth != null) context.read<GoalsCubit>().set(widget.auth!, Goals(goals));
                 if (Navigator.of(context).canPop()) Navigator.of(context).pop();
               },
-              child: const Text("Save")),
+              child: const Text('Save')),
         ]),
       );
     });

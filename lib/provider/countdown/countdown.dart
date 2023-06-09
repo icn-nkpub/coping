@@ -28,15 +28,23 @@ class CountdownTimer {
     final resets = sortedCopy();
 
     var total = DateTime.now();
-    for (var r in resets) {
-      if (r.resumeTime == null) {
-        continue;
-      }
-      final d = r.resumeTime!.difference(r.resetTime);
+
+    for (var r in resets.reversed) {
+      var d = (r.resumeTime ?? DateTime.now()).difference(r.resetTime);
       total = total.subtract(d);
     }
 
-    return Splits(resets.lastOrNull?.resumeTime, total);
+    final DateTime last;
+    if (resets.lastOrNull?.resumeTime == null) {
+      last = DateTime.now();
+    } else {
+      last = resets.last.resumeTime!;
+    }
+
+    return Splits(
+      DateTime(last.year, last.month, last.day, last.hour, last.minute, last.second),
+      resets.isEmpty ? null : DateTime(total.year, total.month, total.day, total.hour, total.minute, total.second),
+    );
   }
 }
 
@@ -44,7 +52,7 @@ class Splits {
   const Splits(this.last, this.total);
 
   final DateTime? last;
-  final DateTime total;
+  final DateTime? total;
 }
 
 class CountdownTimerCubit extends Cubit<CountdownTimer?> {
@@ -54,10 +62,14 @@ class CountdownTimerCubit extends Cubit<CountdownTimer?> {
     if (state == null) return;
 
     var resets = state!.sortedCopy();
-    resets.last = CountdownReset(
-      resetTime: resets.last.resetTime,
-      resumeTime: dt,
-    );
+    if (resets.isEmpty) {
+      resets.add(CountdownReset(resetTime: state?.paused ?? DateTime.now(), resumeTime: dt));
+    } else {
+      resets.last = CountdownReset(
+        resetTime: resets.last.resetTime,
+        resumeTime: dt,
+      );
+    }
 
     await logCountdownResume(auth, 'smoking', dt);
 
@@ -91,8 +103,8 @@ class CountdownTimerCubit extends Cubit<CountdownTimer?> {
     resets.sort((a, b) => a.compareTo(b));
 
     emit(CountdownTimer(
-      paused: resets.last.resetTime,
-      resumed: resets.last.resumeTime,
+      paused: resets.lastOrNull?.resetTime ?? DateTime.now(),
+      resumed: resets.lastOrNull?.resumeTime,
       resets: [...resets],
     ));
   }

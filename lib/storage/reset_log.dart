@@ -9,9 +9,20 @@ class CountdownReset {
   final DateTime resetTime; // reset_time
   final DateTime? resumeTime; // resume_time
 
-  int compareTo(CountdownReset b) {
-    final art = resumeTime ?? DateTime.now();
-    final brt = b.resumeTime ?? DateTime.now();
+  int compareTo(CountdownReset other) {
+    final art = resumeTime;
+    final brt = other.resumeTime;
+
+    if (art == null && brt == null) {
+      return resetTime.compareTo(other.resetTime);
+    }
+
+    if (art == null) {
+      return 1;
+    }
+    if (brt == null) {
+      return -1;
+    }
 
     return art.compareTo(brt);
   }
@@ -48,10 +59,14 @@ Future<void> logCountdownResume(User user, String type, DateTime time) async {
     return;
   }
 
-  await query().update({
-    'id': data[0]['id'],
-    'resume_time': time.toUtc().toIso8601String(),
-  }).eq('user_id', user.id);
+  await query()
+      .update({
+        'id': data[0]['id'],
+        'user_id': user.id,
+        'resume_time': time.toUtc().toIso8601String(),
+      })
+      .eq('user_id', user.id)
+      .eq('id', data[0]['id']);
 
   return;
 }

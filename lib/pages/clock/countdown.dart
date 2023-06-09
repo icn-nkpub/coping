@@ -10,7 +10,6 @@ import 'package:cloudcircle/tokens/modal.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class CountdownDisplay extends StatelessWidget {
   const CountdownDisplay({super.key});
@@ -22,11 +21,15 @@ class CountdownDisplay extends StatelessWidget {
         return BlocBuilder<CountdownTimerCubit, CountdownTimer?>(
           builder: (context, ct) {
             final splits = ct?.splits();
+            final paused = ct?.resumed == null;
 
             return Column(
               children: [
                 const SizedBox(height: 8 * 4),
-                Stopwatch(from: splits?.last ?? DateTime.now()),
+                Stopwatch(
+                  from: splits?.last,
+                  frozen: paused,
+                ),
                 const SizedBox(height: 8),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8 * 3),
@@ -34,11 +37,11 @@ class CountdownDisplay extends StatelessWidget {
                     builder: (context, ct) => Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        ct?.paused == null
+                        paused
                             ? IconButton(
                                 onPressed: () async {
                                   var auth = context.read<LoginCubit>().state!.auth;
-                                  await context.read<CountdownTimerCubit>().pause(auth);
+                                  await context.read<CountdownTimerCubit>().resume(auth, DateTime.now());
                                 },
                                 icon: SvgIcon(
                                   assetName: 'resume',
@@ -48,7 +51,7 @@ class CountdownDisplay extends StatelessWidget {
                             : IconButton(
                                 onPressed: () async {
                                   var auth = context.read<LoginCubit>().state!.auth;
-                                  await context.read<CountdownTimerCubit>().resume(auth, DateTime.now());
+                                  await context.read<CountdownTimerCubit>().pause(auth);
                                 },
                                 icon: SvgIcon(
                                   assetName: 'pause',
@@ -56,7 +59,11 @@ class CountdownDisplay extends StatelessWidget {
                                 ),
                               ),
                         Expanded(
-                          child: Stopwatch(from: splits?.total ?? DateTime.now(), small: true),
+                          child: Stopwatch(
+                            from: splits?.total ?? splits?.last,
+                            frozen: paused,
+                            small: true,
+                          ),
                         ),
                         IconButton(
                           onPressed: _gotoShop(context),
@@ -118,15 +125,29 @@ class CountdownDisplay extends StatelessWidget {
 class Stopwatch extends StatelessWidget {
   const Stopwatch({
     required this.from,
+    required this.frozen,
     this.small = false,
     super.key,
   });
 
-  final DateTime from;
+  final DateTime? from;
+  final bool frozen;
   final bool small;
 
   @override
   Widget build(BuildContext context) {
+    final tsm = GoogleFonts.spaceMono(
+      textStyle: small ? Theme.of(context).textTheme.titleMedium : Theme.of(context).textTheme.displaySmall,
+    ).copyWith(
+      fontWeight: FontWeight.w100,
+      color: Theme.of(context).colorScheme.secondary,
+    );
+
+    final ts = (small ? Theme.of(context).textTheme.titleMedium : Theme.of(context).textTheme.displaySmall)?.copyWith(
+      fontWeight: FontWeight.w100,
+      color: Theme.of(context).colorScheme.secondary,
+    );
+
     return Container(
       alignment: Alignment.center,
       width: double.infinity,
@@ -134,13 +155,13 @@ class Stopwatch extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Ticker(small: small, child: Days(from: from, style: textStyleMono(context, small))),
-          Text(':', style: textStyle(context, small)),
-          Ticker(small: small, child: Hours(from: from, style: textStyleMono(context, small))),
-          Text(':', style: textStyle(context, small)),
-          Ticker(small: small, child: Minutes(from: from, style: textStyleMono(context, small))),
-          Text(':', style: textStyle(context, small)),
-          Ticker(small: small, child: Seconds(from: from, style: textStyleMono(context, small))),
+          Ticker(small: small, child: ClockHand(ClockHandType.days, from: from, frozen: frozen, style: tsm)),
+          Text(':', style: ts),
+          Ticker(small: small, child: ClockHand(ClockHandType.hours, from: from, frozen: frozen, style: tsm)),
+          Text(':', style: ts),
+          Ticker(small: small, child: ClockHand(ClockHandType.minutes, from: from, frozen: frozen, style: tsm)),
+          Text(':', style: ts),
+          Ticker(small: small, child: ClockHand(ClockHandType.seconds, from: from, frozen: frozen, style: tsm)),
         ],
       ),
     );
@@ -170,154 +191,98 @@ class Ticker extends StatelessWidget {
   }
 }
 
-class Seconds extends StatefulWidget {
-  const Seconds({
+enum ClockHandType {
+  days,
+  hours,
+  minutes,
+  seconds,
+}
+
+class ClockHand extends StatefulWidget {
+  const ClockHand(
+    this.tm, {
     super.key,
     required this.from,
+    required this.frozen,
     required this.style,
   });
 
-  final DateTime from;
+  final ClockHandType tm;
+  final DateTime? from;
+  final bool frozen;
   final TextStyle style;
 
   @override
-  State<Seconds> createState() => _SecondsState();
+  State<ClockHand> createState() => _ClockHandState();
 }
 
-class _SecondsState extends State<Seconds> {
+class _ClockHandState extends State<ClockHand> {
   @override
   Widget build(BuildContext context) {
-    Timer? t;
-    t = Timer(const Duration(seconds: 1), () {
-      if (!mounted) {
-        t!.cancel();
-        return;
-      }
-      setState(() {});
-    });
+    if (!widget.frozen) scheduleRefresh();
+
     return Text(
-      (DateTime.now().difference(widget.from).inSeconds % 60).toString().padLeft(2, '0').replaceAll('0', 'O'),
+      value(),
       style: widget.style,
       textAlign: TextAlign.center,
     );
   }
-}
 
-class Minutes extends StatefulWidget {
-  const Minutes({
-    super.key,
-    required this.from,
-    required this.style,
-  });
+  String value() {
+    String v = 'OO';
+    if (widget.from != null) {
+      final Duration diff = DateTime.now().difference(widget.from!);
 
-  final DateTime from;
-  final TextStyle style;
+      switch (widget.tm) {
+        case ClockHandType.days:
+          final p = diff.inDays;
+          v = p.toString();
+          break;
+        case ClockHandType.hours:
+          final p = (diff.inHours % 24);
+          v = p.toString();
+          break;
+        case ClockHandType.minutes:
+          final p = (diff.inMinutes % 60);
+          v = p.toString();
+          break;
+        case ClockHandType.seconds:
+          final p = (diff.inSeconds % 60);
+          v = p.toString();
+          break;
+      }
+    }
 
-  @override
-  State<Minutes> createState() => _MinutesState();
-}
+    return v.padLeft(2, '0').replaceAll('0', 'O');
+  }
 
-class _MinutesState extends State<Minutes> {
-  @override
-  Widget build(BuildContext context) {
+  Timer? scheduleRefresh() {
+    final Duration timerDuration;
+    switch (widget.tm) {
+      case ClockHandType.days:
+        timerDuration = const Duration(seconds: 1);
+        break;
+      case ClockHandType.hours:
+        timerDuration = const Duration(seconds: 1);
+        break;
+      case ClockHandType.minutes:
+        timerDuration = const Duration(seconds: 1);
+        break;
+      case ClockHandType.seconds:
+        timerDuration = const Duration(milliseconds: 10);
+        break;
+    }
+
     Timer? t;
-    t = Timer(const Duration(minutes: 1), () {
-      if (!mounted) {
+    t = Timer(timerDuration, () {
+      if (widget.frozen || !mounted) {
         t!.cancel();
         return;
       }
+
       setState(() {});
     });
-    return Text(
-      (DateTime.now().difference(widget.from).inMinutes % 60).toString().padLeft(2, '0').replaceAll('0', 'O'),
-      style: widget.style,
-      textAlign: TextAlign.center,
-    );
+
+    return t;
   }
-}
-
-class Hours extends StatefulWidget {
-  const Hours({
-    super.key,
-    required this.from,
-    required this.style,
-  });
-
-  final DateTime from;
-  final TextStyle style;
-
-  @override
-  State<Hours> createState() => _HoursState();
-}
-
-class _HoursState extends State<Hours> {
-  @override
-  Widget build(BuildContext context) {
-    Timer? t;
-    t = Timer(const Duration(hours: 1), () {
-      if (!mounted) {
-        t!.cancel();
-        return;
-      }
-      setState(() {});
-    });
-    return Text(
-      (DateTime.now().difference(widget.from).inHours % 24).toString().padLeft(2, '0').replaceAll('0', 'O'),
-      style: widget.style,
-      textAlign: TextAlign.center,
-    );
-  }
-}
-
-class Days extends StatefulWidget {
-  const Days({
-    super.key,
-    required this.from,
-    required this.style,
-  });
-
-  final DateTime from;
-  final TextStyle style;
-
-  @override
-  State<Days> createState() => _DaysState();
-}
-
-class _DaysState extends State<Days> {
-  @override
-  Widget build(BuildContext context) {
-    Timer? t;
-    t = Timer(const Duration(days: 1), () {
-      if (!mounted) {
-        t!.cancel();
-        return;
-      }
-      setState(() {});
-    });
-    return Text(
-      DateTime.now().difference(widget.from).inDays.toString().padLeft(2, '0').replaceAll('0', 'O'),
-      style: widget.style,
-      textAlign: TextAlign.center,
-    );
-  }
-}
-
-TextStyle textStyleMono(BuildContext context, bool small) {
-  final t = small ? Theme.of(context).textTheme.titleMedium : Theme.of(context).textTheme.displaySmall;
-
-  return GoogleFonts.spaceMono(
-    textStyle: t,
-  ).copyWith(
-    fontWeight: FontWeight.w100,
-    color: Theme.of(context).colorScheme.secondary,
-  );
-}
-
-TextStyle? textStyle(BuildContext context, bool small) {
-  final t = small ? Theme.of(context).textTheme.titleMedium : Theme.of(context).textTheme.displaySmall;
-
-  return t?.copyWith(
-    fontWeight: FontWeight.w100,
-    color: Theme.of(context).colorScheme.secondary,
-  );
 }
