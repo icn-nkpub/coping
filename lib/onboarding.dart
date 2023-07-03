@@ -1,7 +1,7 @@
-import 'package:cloudcircle/paginator.dart';
-import 'package:cloudcircle/provider/theme/theme.dart';
-import 'package:cloudcircle/pages/meditation/meditation.dart';
-import 'package:cloudcircle/tokens/topbar.dart';
+import 'package:dependencecoping/paginator.dart';
+import 'package:dependencecoping/provider/theme/theme.dart';
+import 'package:dependencecoping/pages/meditation/meditation.dart';
+import 'package:dependencecoping/tokens/topbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:funvas/funvas.dart';

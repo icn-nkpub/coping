@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:cloudcircle/tokens/icons.dart';
-import 'package:cloudcircle/tokens/measurable.dart';
+import 'package:dependencecoping/tokens/icons.dart';
+import 'package:dependencecoping/tokens/measurable.dart';
 
 class GoalCard extends StatefulWidget {
   const GoalCard({

@@ -1,5 +1,5 @@
-import 'package:cloudcircle/pages/clock/countdown.dart';
-import 'package:cloudcircle/tokens/topbar.dart';
+import 'package:dependencecoping/pages/clock/countdown.dart';
+import 'package:dependencecoping/tokens/topbar.dart';
 import 'package:flutter/material.dart';
 
 class ClockScreen extends StatelessWidget {

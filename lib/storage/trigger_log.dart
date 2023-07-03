@@ -1,4 +1,4 @@
-import 'package:cloudcircle/storage/trigger.dart';
+import 'package:dependencecoping/storage/trigger.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> logTrigger(User user, Trigger t) async {

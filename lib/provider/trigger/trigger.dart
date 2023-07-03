@@ -1,4 +1,4 @@
-import 'package:cloudcircle/storage/trigger.dart';
+import 'package:dependencecoping/storage/trigger.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:cloudcircle/tools/maybe_map.dart';
+import 'package:dependencecoping/tools/maybe_map.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Goal {
@@ -89,7 +89,7 @@ Future<List<Goal>> getGoals(User user) async {
       iconName: record['icon_name'],
       relatedAddiction: record['related_addiction'],
       author: record['author'],
-      links: maybeList(record['links']) ,
+      links: maybeList(record['links']),
       descriptions: descriptions,
       rate: Duration(seconds: record['rate_seconds']),
     );

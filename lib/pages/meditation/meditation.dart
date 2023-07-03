@@ -1,12 +1,12 @@
 import 'dart:math';
 import 'dart:core';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:cloudcircle/provider/login/login.dart';
-import 'package:cloudcircle/tokens/icons.dart';
+import 'package:dependencecoping/provider/login/login.dart';
+import 'package:dependencecoping/tokens/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:funvas/funvas.dart';
-import 'package:cloudcircle/tokens/measurable.dart';
-import 'package:cloudcircle/tokens/topbar.dart';
+import 'package:dependencecoping/tokens/measurable.dart';
+import 'package:dependencecoping/tokens/topbar.dart';
 
 class CanvasDrawer extends Funvas {
   CanvasDrawer({

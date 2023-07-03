@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "cloudcircle-pb.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "dependencecoping-pb.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "cloudcircle-pb 1.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "dependencecoping-pb 1.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "cloudcircle-pb 2.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "dependencecoping-pb 2.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

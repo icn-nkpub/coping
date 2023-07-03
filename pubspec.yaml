@@ -1,5 +1,5 @@
-name: cloudcircle
-description: "Cloud Circle"
+name: dependencecoping
+description: "Dependence Coping"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.7+1
+version: 1.1.0+1
 
 environment:
   sdk: '>=3.0.0'
@@ -133,19 +133,19 @@ flutter:
 
 flutter_icons:
   ios: true
-  image_path_ios: "assets/cloudcircle-pb.png"
+  image_path_ios: "assets/logo-pb.png"
   remove_alpha_ios: true
   
   android: false
   image_path_android: "assets/opaqring.png"
   adaptive_icon_background: "#000000"
-  adaptive_icon_foreground: "assets/cloudcircle.png"
+  adaptive_icon_foreground: "assets/logo.png"
   min_sdk_android: 21
   
   windows:
     generate: true
-    image_path: "assets/cloudcircle.png"
+    image_path: "assets/logo.png"
     icon_size: 256
   macos:
-    image_path: "assets/cloudcircle.png"
+    image_path: "assets/logo.png"
     generate: true

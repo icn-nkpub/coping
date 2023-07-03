@@ -1,8 +1,8 @@
-import 'package:cloudcircle/pages/clock/main.dart';
-import 'package:cloudcircle/pages/triggers/triggers.dart';
-import 'package:cloudcircle/paginator.dart';
-import 'package:cloudcircle/tokens/icons.dart';
-import 'package:cloudcircle/pages/meditation/meditation.dart';
+import 'package:dependencecoping/pages/clock/main.dart';
+import 'package:dependencecoping/pages/triggers/triggers.dart';
+import 'package:dependencecoping/paginator.dart';
+import 'package:dependencecoping/tokens/icons.dart';
+import 'package:dependencecoping/pages/meditation/meditation.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {

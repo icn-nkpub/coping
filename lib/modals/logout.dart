@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:cloudcircle/provider/login/login.dart';
+import 'package:dependencecoping/provider/login/login.dart';
 
 class LogoutModal extends StatelessWidget {
   const LogoutModal({

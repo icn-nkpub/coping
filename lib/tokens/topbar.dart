@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:cloudcircle/tokens/icons.dart';
+import 'package:dependencecoping/tokens/icons.dart';
 import 'package:flutter/material.dart';
-import 'package:cloudcircle/tokens/cardrope.dart';
-import 'package:cloudcircle/provider/login/login.dart';
+import 'package:dependencecoping/tokens/cardrope.dart';
+import 'package:dependencecoping/provider/login/login.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:cloudcircle/provider/theme/colors.dart';
-import 'package:cloudcircle/provider/theme/theme.dart';
-import 'package:cloudcircle/tokens/measurable.dart';
+import 'package:dependencecoping/provider/theme/colors.dart';
+import 'package:dependencecoping/provider/theme/theme.dart';
+import 'package:dependencecoping/tokens/measurable.dart';
 
 class NullTopBar extends StatelessWidget {
   const NullTopBar({

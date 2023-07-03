@@ -1,5 +1,5 @@
-import 'package:cloudcircle/storage/goal.dart';
-import 'package:cloudcircle/storage/trigger.dart';
+import 'package:dependencecoping/storage/goal.dart';
+import 'package:dependencecoping/storage/trigger.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StaticRecords {

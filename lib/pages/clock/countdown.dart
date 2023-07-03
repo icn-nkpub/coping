@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:cloudcircle/pages/clock/goal.dart';
-import 'package:cloudcircle/pages/clock/modals/goal_manager.dart';
-import 'package:cloudcircle/provider/countdown/countdown.dart';
-import 'package:cloudcircle/provider/goal/goal.dart';
-import 'package:cloudcircle/provider/login/login.dart';
-import 'package:cloudcircle/tokens/icons.dart';
-import 'package:cloudcircle/tokens/modal.dart';
+import 'package:dependencecoping/pages/clock/goal.dart';
+import 'package:dependencecoping/pages/clock/modals/goal_manager.dart';
+import 'package:dependencecoping/provider/countdown/countdown.dart';
+import 'package:dependencecoping/provider/goal/goal.dart';
+import 'package:dependencecoping/provider/login/login.dart';
+import 'package:dependencecoping/tokens/icons.dart';
+import 'package:dependencecoping/tokens/modal.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';

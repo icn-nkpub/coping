@@ -1,7 +1,7 @@
-import 'package:cloudcircle/provider/goal/goal.dart';
-import 'package:cloudcircle/provider/static/static.dart';
-import 'package:cloudcircle/storage/goal.dart';
-import 'package:cloudcircle/tokens/icons.dart';
+import 'package:dependencecoping/provider/goal/goal.dart';
+import 'package:dependencecoping/provider/static/static.dart';
+import 'package:dependencecoping/storage/goal.dart';
+import 'package:dependencecoping/tokens/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';

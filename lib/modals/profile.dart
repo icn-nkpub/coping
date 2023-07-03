@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:cloudcircle/provider/login/login.dart';
-import 'package:cloudcircle/tokens/input.dart';
+import 'package:dependencecoping/provider/login/login.dart';
+import 'package:dependencecoping/tokens/input.dart';
 
 class ProfileModal extends StatelessWidget {
   const ProfileModal({

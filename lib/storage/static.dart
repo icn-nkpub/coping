@@ -1,6 +1,6 @@
-import 'package:cloudcircle/storage/goal.dart';
-import 'package:cloudcircle/storage/trigger.dart';
-import 'package:cloudcircle/tools/maybe_map.dart';
+import 'package:dependencecoping/storage/goal.dart';
+import 'package:dependencecoping/storage/trigger.dart';
+import 'package:dependencecoping/tools/maybe_map.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<List<Goal>> getStaticGoals(User user) async {

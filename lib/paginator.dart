@@ -1,8 +1,8 @@
-import 'package:cloudcircle/modals/logout.dart';
-import 'package:cloudcircle/modals/profile.dart';
-import 'package:cloudcircle/modals/login.dart';
-import 'package:cloudcircle/modals/register.dart';
-import 'package:cloudcircle/tokens/modal.dart';
+import 'package:dependencecoping/modals/logout.dart';
+import 'package:dependencecoping/modals/profile.dart';
+import 'package:dependencecoping/modals/login.dart';
+import 'package:dependencecoping/modals/register.dart';
+import 'package:dependencecoping/tokens/modal.dart';
 import 'package:flutter/material.dart';
 
 Function(int) pagginator(BuildContext context) {
