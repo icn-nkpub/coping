@@ -10,6 +10,7 @@ class StaticRecords {
 
   List<Goal> goals;
   List<Trigger> triggers;
+  bool get isEmpty => goals.isEmpty && triggers.isEmpty;
 
   @override
   bool operator ==(Object other) => false; // ignore: hash_and_equals

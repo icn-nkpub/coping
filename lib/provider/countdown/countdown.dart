@@ -27,11 +27,17 @@ class CountdownTimer {
   Splits splits() {
     final resets = sortedCopy();
 
-    var total = DateTime.now();
+    int score = 1;
 
-    for (var r in resets.reversed) {
-      var d = (r.resumeTime ?? DateTime.now()).difference(r.resetTime);
-      total = total.subtract(d);
+    if (resets.isNotEmpty) {
+      var total = const Duration();
+
+      for (var r in resets.reversed) {
+        var d = (r.resumeTime ?? DateTime.now()).difference(r.resetTime);
+        total += d;
+      }
+
+      score = (total.inSeconds / 60).round();
     }
 
     final DateTime last;
@@ -43,16 +49,16 @@ class CountdownTimer {
 
     return Splits(
       DateTime(last.year, last.month, last.day, last.hour, last.minute, last.second),
-      resets.isEmpty ? null : DateTime(total.year, total.month, total.day, total.hour, total.minute, total.second),
+      score,
     );
   }
 }
 
 class Splits {
-  const Splits(this.last, this.total);
+  const Splits(this.last, this.score);
 
   final DateTime? last;
-  final DateTime? total;
+  final int score;
 }
 
 class CountdownTimerCubit extends Cubit<CountdownTimer?> {

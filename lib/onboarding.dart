@@ -26,11 +26,11 @@ class _OnboardingState extends State<Onboarding> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 0,
-        surfaceTintColor: Theme.of(context).appBarTheme.backgroundColor,
-        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),
       bottomNavigationBar: Container(
-        color: Theme.of(context).appBarTheme.backgroundColor,
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: const SafeArea(
           left: false,
           top: false,
@@ -40,7 +40,7 @@ class _OnboardingState extends State<Onboarding> {
         ),
       ),
       body: Container(
-        color: Theme.of(context).appBarTheme.backgroundColor,
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: Column(
           children: [
             const Flexible(
@@ -80,7 +80,9 @@ class Display extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cd = CanvasDrawer(
-      color: HSLColor.fromColor(context.read<ThemeCubit>().state.data.colorScheme.primary),
+      backdrop: context.read<ThemeCubit>().state.data.scaffoldBackgroundColor,
+      primary: HSLColor.fromColor(context.read<ThemeCubit>().state.data.colorScheme.primary),
+      secondary: HSLColor.fromColor(context.read<ThemeCubit>().state.data.colorScheme.secondary),
       fullCycleDuration: 4,
       scale: 2,
       rounds: 12,
@@ -90,7 +92,9 @@ class Display extends StatelessWidget {
 
     return BlocListener<ThemeCubit, ThemeState>(
       listener: (context, state) {
-        cd.color = HSLColor.fromColor(state.data.colorScheme.primary);
+        cd.backdrop = context.read<ThemeCubit>().state.data.scaffoldBackgroundColor;
+        cd.primary = HSLColor.fromColor(state.data.colorScheme.primary);
+        cd.secondary = HSLColor.fromColor(state.data.colorScheme.secondary);
       },
       child: FunvasContainer(
         funvas: cd,

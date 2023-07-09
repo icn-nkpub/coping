@@ -183,7 +183,7 @@ class ThemeChanger extends StatelessWidget {
                 context.read<ThemeCubit>().flipBrightness();
               },
               child: SvgIcon(
-                assetName: t.isLightMode() ? 'mode_light' : 'mode_dark',
+                assetName: t.isLightMode() ? 'light_mode' : 'dark_mode',
               ),
             ),
             Flexible(
@@ -191,7 +191,7 @@ class ThemeChanger extends StatelessWidget {
                 width: double.infinity,
                 alignment: Alignment.center,
                 child: Text(
-                  themeColorName(t.color),
+                  t.color.name,
                   style: Theme.of(context).textTheme.labelMedium,
                 ),
               ),

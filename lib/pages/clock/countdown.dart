@@ -10,6 +10,7 @@ import 'package:dependencecoping/tokens/modal.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CountdownDisplay extends StatelessWidget {
   const CountdownDisplay({super.key});
@@ -34,46 +35,76 @@ class CountdownDisplay extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8 * 3),
                   child: BlocBuilder<CountdownTimerCubit, CountdownTimer?>(
-                    builder: (context, ct) => Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        paused
-                            ? IconButton(
-                                onPressed: () async {
-                                  var auth = context.read<LoginCubit>().state!.auth;
-                                  await context.read<CountdownTimerCubit>().resume(auth, DateTime.now());
-                                },
-                                icon: SvgIcon(
-                                  assetName: 'resume',
-                                  color: Theme.of(context).hintColor,
+                    builder: (context, ct) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          paused
+                              ? IconButton(
+                                  onPressed: () async {
+                                    var auth = context.read<LoginCubit>().state!.auth;
+                                    await context.read<CountdownTimerCubit>().resume(auth, DateTime.now());
+                                  },
+                                  icon: SvgIcon(
+                                    assetName: 'resume',
+                                    color: Theme.of(context).colorScheme.onSecondaryContainer,
+                                  ),
+                                )
+                              : IconButton(
+                                  onPressed: () async {
+                                    var auth = context.read<LoginCubit>().state!.auth;
+                                    await context.read<CountdownTimerCubit>().pause(auth);
+                                  },
+                                  icon: SvgIcon(
+                                    assetName: 'pause',
+                                    color: Theme.of(context).colorScheme.onSecondaryContainer,
+                                  ),
                                 ),
-                              )
-                            : IconButton(
-                                onPressed: () async {
-                                  var auth = context.read<LoginCubit>().state!.auth;
-                                  await context.read<CountdownTimerCubit>().pause(auth);
-                                },
-                                icon: SvgIcon(
-                                  assetName: 'pause',
-                                  color: Theme.of(context).hintColor,
+                          Flexible(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Card(
+                                  margin: EdgeInsets.zero,
+                                  color: Theme.of(context).colorScheme.secondaryContainer,
+                                  elevation: 3,
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 14),
+                                        child: SvgIcon(
+                                          assetName: "bolt",
+                                          color: Theme.of(context).colorScheme.onSecondaryContainer,
+                                          size: 18,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(right: 16, left: 8, top: 8, bottom: 8),
+                                        child: Text(
+                                          NumberFormat.decimalPattern().format(splits?.score),
+                                          style: GoogleFonts.spaceMono(textStyle: Theme.of(context).textTheme.bodyLarge).copyWith(
+                                            color: Theme.of(context).colorScheme.onSecondaryContainer,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                        Expanded(
-                          child: Stopwatch(
-                            from: splits?.total ?? splits?.last,
-                            frozen: paused,
-                            small: true,
+                              ],
+                            ),
                           ),
-                        ),
-                        IconButton(
-                          onPressed: _gotoShop(context),
-                          icon: SvgIcon(
-                            assetName: 'settings',
-                            color: Theme.of(context).hintColor,
+                          IconButton(
+                            onPressed: _gotoShop(context),
+                            icon: SvgIcon(
+                              assetName: 'settings',
+                              color: Theme.of(context).colorScheme.onSecondaryContainer,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      );
+                    },
                   ),
                 ),
                 const SizedBox(height: 8 * 3),
@@ -139,13 +170,13 @@ class Stopwatch extends StatelessWidget {
     final tsm = GoogleFonts.spaceMono(
       textStyle: small ? Theme.of(context).textTheme.titleMedium : Theme.of(context).textTheme.displaySmall,
     ).copyWith(
-      fontWeight: FontWeight.w100,
-      color: Theme.of(context).colorScheme.secondary,
+      fontWeight: FontWeight.bold,
+      color: Theme.of(context).colorScheme.onSecondaryContainer,
     );
 
     final ts = (small ? Theme.of(context).textTheme.titleMedium : Theme.of(context).textTheme.displaySmall)?.copyWith(
       fontWeight: FontWeight.w100,
-      color: Theme.of(context).colorScheme.secondary,
+      color: Theme.of(context).colorScheme.onSecondaryContainer,
     );
 
     return Container(
@@ -181,7 +212,8 @@ class Ticker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: small ? 2 : 5,
+      elevation: 2,
+      color: Theme.of(context).colorScheme.secondaryContainer,
       child: Container(
         alignment: Alignment.center,
         padding: EdgeInsets.all(small ? 8 : 16),

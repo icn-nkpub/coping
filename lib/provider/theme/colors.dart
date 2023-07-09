@@ -1,50 +1,32 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
-enum ColorValue { ocean, cherry, leaves, pine, night }
+enum ColorValue {
+  ocean(name: 'Ocean', canvas: Color(0xFF03A5FF), hueShift: -30),
+  peaches(name: 'Peaches', canvas: Color(0xFFFF3E45), hueShift: 30),
+  pine(name: 'Pine', canvas: Color(0xFF41BF5D), hueShift: 40),
+  midnight(name: 'Midnight', canvas: Color(0xFF8A37FF), hueShift: -60),
+  slimes(name: 'Slimes', canvas: Color(0xFF70FFBB), hueShift: 60),
+  contrast(name: 'Contrast', canvas: Color(0xFF8A89F1), hueShift: 180);
 
-Color themeColor(ColorValue c) {
-  switch (c) {
-    case ColorValue.ocean:
-      return Colors.blue;
-    case ColorValue.cherry:
-      return Colors.pink;
-    case ColorValue.leaves:
-      return Colors.green;
-    case ColorValue.pine:
-      return Color.alphaBlend(Colors.green.withOpacity(.5), Colors.blue.withOpacity(.5));
-    case ColorValue.night:
-      return Color.alphaBlend(Colors.purple.withOpacity(.3), Colors.blue.withOpacity(.7));
-  }
-}
+  const ColorValue({
+    required this.name,
+    required this.canvas,
+    required this.hueShift,
+  });
 
-String themeColorName(ColorValue c) {
-  switch (c) {
-    case ColorValue.ocean:
-      return 'Ocean';
-    case ColorValue.cherry:
-      return 'Cherry';
-    case ColorValue.leaves:
-      return 'Leaves';
-    case ColorValue.pine:
-      return 'Forrest';
-    case ColorValue.night:
-      return 'Midnight';
+  final String name;
+  final Color canvas;
+  final double hueShift;
+
+  Color get primary => HSLColor.fromColor(canvas).toColor();
+  Color get secondary {
+    final c = HSLColor.fromColor(canvas);
+    return c.withHue((360 + c.hue + hueShift) % 360).toColor();
   }
 }
 
 ColorValue findThemeColor(String c) {
-  switch (c) {
-    case 'ocean':
-      return ColorValue.ocean;
-    case 'cherry':
-      return ColorValue.cherry;
-    case 'leaves':
-      return ColorValue.leaves;
-    case 'pine':
-      return ColorValue.pine;
-    case 'night':
-      return ColorValue.night;
-    default:
-      return ColorValue.ocean;
-  }
+  return ColorValue.values.where((v) => v.name == c).firstOrNull ?? ColorValue.ocean;
 }

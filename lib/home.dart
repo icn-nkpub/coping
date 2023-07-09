@@ -1,3 +1,4 @@
+
 import 'package:dependencecoping/pages/clock/main.dart';
 import 'package:dependencecoping/pages/triggers/triggers.dart';
 import 'package:dependencecoping/paginator.dart';

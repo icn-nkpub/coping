@@ -3,10 +3,7 @@ import 'package:dependencecoping/provider/countdown/countdown.dart';
 import 'package:dependencecoping/provider/goal/goal.dart';
 import 'package:dependencecoping/provider/static/static.dart';
 import 'package:dependencecoping/provider/trigger/trigger.dart';
-import 'package:dependencecoping/storage/goal.dart';
-import 'package:dependencecoping/storage/reset_log.dart';
-import 'package:dependencecoping/storage/static.dart';
-import 'package:dependencecoping/storage/trigger.dart';
+import 'package:dependencecoping/storage/init.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:dependencecoping/provider/login/login.dart';
@@ -14,11 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dependencecoping/provider/theme/colors.dart';
 import 'package:dependencecoping/provider/theme/theme.dart';
-import 'package:dependencecoping/storage/local.dart';
-import 'package:dependencecoping/storage/profiles.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'home.dart';
+import 'dart:core';
 
 void main() async {
   await Supabase.initialize(
@@ -27,27 +23,7 @@ void main() async {
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRjcWt5b2t5bmRnZWJoY3liZmh4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODU0NjUxOTMsImV4cCI6MjAwMTA0MTE5M30.Nd9M8OSPkIW2zjj_wJjPCBJi8NEApMise-W8nYso1Tw',
   );
 
-  User? user = await restoreAuthInfo();
-  ProfileRecord? profile;
-  StaticRecords? static;
-  List<CountdownReset>? resets;
-  List<Goal>? goals;
-  List<Trigger>? triggers;
-  if (user != null) {
-    profile = await getProfile(user);
-
-    static = StaticRecords(
-      goals: await getStaticGoals(user),
-      triggers: await getStaticTriggers(user),
-    );
-
-    resets = await getCountdownResets(user, 'smoking');
-
-    goals = await getGoals(user);
-    triggers = await getTriggers(user);
-  }
-
-  var app = App(user, profile, static, resets: resets, goals: goals, triggers: triggers);
+  var app = const App();
 
   kDebugMode
       ? runApp(app)
@@ -56,24 +32,43 @@ void main() async {
             options.dsn = 'https://ffce3775524c43269e47662942503a06@o4505302255665152.ingest.sentry.io/4505302260449280';
             // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
             // We recommend adjusting this value in production.
-            options.tracesSampleRate = 0;
+            options.tracesSampleRate = 1;
           },
           appRunner: () => runApp(app),
         );
 }
 
-class App extends StatelessWidget {
-  const App(this.user, this.profile, this.statics, {super.key, this.resets, this.goals, this.triggers});
-
-  final User? user;
-  final ProfileRecord? profile;
-  final StaticRecords? statics;
-  final List<CountdownReset>? resets;
-  final List<Goal>? goals;
-  final List<Trigger>? triggers;
+class App extends StatefulWidget {
+  const App({super.key});
 
   @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> with Assets {
+  @override
   Widget build(BuildContext context) {
+    if (tryLock()) {
+      load(context);
+    }
+    if (loadingState != LoadingProgress.done) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Container(
+          color: Colors.black,
+          child: const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(
+                color: Colors.white,
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     final tcb = MediaQuery.of(context).platformBrightness == Brightness.light ? ThemeMode.light : ThemeMode.dark;
     return MultiBlocProvider(
       providers: [
@@ -89,11 +84,11 @@ class App extends StatelessWidget {
         }),
         BlocProvider(create: (_) {
           var c = StaticCubit();
-          if (statics == null) {
+          if (statics.isEmpty) {
             return c;
           }
 
-          c.overwrite(statics!);
+          c.overwrite(statics);
 
           return c;
         }),
@@ -154,7 +149,7 @@ class App extends StatelessWidget {
           supportedLocales: const [
             Locale('en'),
           ],
-          title: 'SCA-6',
+          title: 'Coping',
           theme: state.data,
           home: BlocBuilder<LoginCubit, Profile?>(builder: (context, u) {
             return u == null ? const Onboarding() : const Home();

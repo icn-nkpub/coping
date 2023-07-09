@@ -10,14 +10,18 @@ import 'package:dependencecoping/tokens/topbar.dart';
 
 class CanvasDrawer extends Funvas {
   CanvasDrawer({
-    required this.color,
+    required this.primary,
+    required this.secondary,
+    required this.backdrop,
     required this.fullCycleDuration,
     required this.scale,
     required this.slideDist,
     required this.rounds,
     this.muted = false,
   });
-  HSLColor color;
+  HSLColor primary;
+  HSLColor secondary;
+  Color backdrop;
   final double fullCycleDuration;
   final double scale;
   final double slideDist;
@@ -36,15 +40,13 @@ class CanvasDrawer extends Funvas {
     final s = x.width < x.height ? x.width : x.height;
     final pt = (s * scale) / 64;
 
-    if (!muted) _drawGuideLine(color, pt, w, h);
-
     if (windDownTime > -1) {
       double cycle = graph(windDownTime);
       cycle = max(0, cycle - (t - windDownTime));
       final slide = slideDist * pt - (cycle * (slideDist * pt));
 
-      _drawCircle(color, pt, w, h, slide);
-      _drawParticles(color, pt, w, h, cycle, t, slide);
+      _drawCircle(primary, pt, w, h, slide);
+      _drawParticles(pt, w, h, cycle, t, slide);
 
       return;
     }
@@ -55,26 +57,27 @@ class CanvasDrawer extends Funvas {
     final double cycle = graph(t);
     final slide = slideDist * pt - (cycle * (slideDist * pt));
 
-    if (!muted) _drawCircle(color, pt, w, h, slide);
-    _drawParticles(color, pt, w, h, cycle, t, slide);
+    _drawParticles(pt, w, h, cycle, t, slide);
+    if (!muted) _drawGuideLine(primary, pt, w, h);
+    if (!muted) _drawCircle(primary, pt, w, h, slide);
   }
 
-  void _drawParticles(HSLColor color, double pt, double w, double h, double cycle, double t, double slide) {
+  void _drawParticles(double pt, double w, double h, double cycle, double t, double slide) {
     for (int round = 0; round < rounds; round++) {
       final rCycle = round / rounds;
       final r = (4 * pt) + ((((muted ? 0 : cycle) * 3.85) + 1) * rCycle * 16 * pt) / 3;
 
       final angleSkew = (13.1 + (t / 31)) * ((round + 1) * 14);
 
-      double alpha = min(max((t / fullCycleDuration) - .25, 0), (round / rounds));
+      double alpha = max(0, (min(max((t / fullCycleDuration) - .25, 0), (round / rounds)) / 2) - 0.05);
 
       if (windDownTime > -1) {
         alpha = max(0, alpha - (t - windDownTime));
       }
 
       for (double i = 0; i < 360; i += 360 / (rounds + (round * 4))) {
-        final iCycle = ((1 + sin((pow(i + 1, 2) * (round + 1)) + t * 2)) / 2);
-        final v = iCycle * pt / 5;
+        final iCycle = (1 + sin((pow(i + 1, 2) * (round + 1)) + t * 2)) / 2;
+        final v = iCycle * pt / 2;
 
         final angle = (i + 1) * (pi / 2) + angleSkew;
 
@@ -84,10 +87,12 @@ class CanvasDrawer extends Funvas {
         var y1 = lr * sin(angle * pi / 180);
         y1 = y1 - slide;
 
+        final col = (i % 5 != 0 ? primary : secondary).withAlpha(alpha).toColor();
+
         c.drawCircle(
           Offset(w + x1, h - y1),
           v,
-          Paint()..color = color.withAlpha(alpha).toColor(),
+          Paint()..color = Color.alphaBlend(col, backdrop),
         );
       }
     }
@@ -145,7 +150,9 @@ class MeditationScreen extends StatelessWidget {
       final breathingTime = u?.profile?.breathingTime ?? 6.0;
 
       var cd = CanvasDrawer(
-        color: HSLColor.fromColor(Theme.of(context).colorScheme.primary),
+        backdrop: Theme.of(context).scaffoldBackgroundColor,
+        primary: HSLColor.fromColor(Theme.of(context).colorScheme.primary),
+        secondary: HSLColor.fromColor(Theme.of(context).colorScheme.secondary),
         fullCycleDuration: breathingTime,
         scale: 1.3,
         rounds: 12,

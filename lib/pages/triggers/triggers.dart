@@ -61,7 +61,7 @@ class TriggersScreen extends StatelessWidget {
             if (triggers != null) {
               children.addAll(
                 triggers.data.map(
-                  (t) => FilledButton(
+                  (t) => FilledButton.tonal(
                     style: const ButtonStyle(
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 8 * 2)),

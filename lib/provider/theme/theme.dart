@@ -16,22 +16,34 @@ class ThemeState {
 
   resetThemeData() {
     data = ThemeData(
-      colorSchemeSeed: themeColor(color),
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: color.primary,
+        secondary: color.secondary,
+        brightness: isLightMode() ? Brightness.light : Brightness.dark,
+      ),
       useMaterial3: true,
       brightness: isLightMode() ? Brightness.light : Brightness.dark,
     );
+
     final bc = data.colorScheme.background;
-    final pc = data.colorScheme.primary;
+    final pc = data.colorScheme.surfaceTint;
+
+    final shadow = color.secondary.withOpacity(.2);
+    // const shadow = Colors.transparent;
+
     data = data.copyWith(
       textTheme: GoogleFonts.interTextTheme(data.textTheme),
-      scaffoldBackgroundColor: ElevationOverlay.applySurfaceTint(bc, pc, .5),
+      iconTheme: data.iconTheme.copyWith(
+        color: data.colorScheme.onPrimaryContainer,
+      ),
+      scaffoldBackgroundColor: isLightMode() ? Colors.white : ElevationOverlay.applySurfaceTint(bc, pc, .5),
       appBarTheme: data.appBarTheme.copyWith(
         color: ElevationOverlay.applySurfaceTint(bc, pc, 2),
-        shadowColor: Colors.transparent,
+        shadowColor: shadow,
       ),
-      shadowColor: Colors.transparent,
+      shadowColor: shadow,
       cardTheme: data.cardTheme.copyWith(
-        shadowColor: Colors.transparent,
+        shadowColor: shadow,
       ),
     );
   }
@@ -50,7 +62,11 @@ class ThemeCubit extends Cubit<ThemeState> {
           mode: ThemeMode.system,
           color: ColorValue.ocean,
           data: ThemeData(
-            colorSchemeSeed: themeColor(ColorValue.ocean),
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: ColorValue.ocean.primary,
+              secondary: ColorValue.ocean.secondary,
+              brightness: ThemeMode.system == ThemeMode.light ? Brightness.light : Brightness.dark,
+            ),
             useMaterial3: true,
             brightness: ThemeMode.system == ThemeMode.light ? Brightness.light : Brightness.dark,
           ),

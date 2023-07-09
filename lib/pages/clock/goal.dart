@@ -56,6 +56,7 @@ class _GoalCardState extends State<GoalCard> {
                             padding: const EdgeInsets.only(right: 12),
                             child: SvgIcon(
                               assetName: widget.iconName,
+                              color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
                           Flexible(
