@@ -28,8 +28,8 @@ class ThemeState {
     final bc = data.colorScheme.background;
     final pc = data.colorScheme.surfaceTint;
 
-    final shadow = color.secondary.withOpacity(.2);
-    // const shadow = Colors.transparent;
+    // final shadow = color.secondary.withOpacity(.2);
+    const shadow = Colors.transparent;
 
     data = data.copyWith(
       textTheme: GoogleFonts.interTextTheme(data.textTheme),

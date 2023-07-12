@@ -7,21 +7,13 @@ import 'package:flutter/material.dart';
 
 Function(int) pagginator(BuildContext context) {
   return (int page) {
-    Navigator.of(context).push(PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) {
-        return [
-          modal(context, const LoginModal()),
-          modal(context, const RegisterModal()),
-          modal(context, const ProfileModal()),
-          modal(context, const LogoutModal()),
-        ][page];
-      },
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return FadeTransition(
-          opacity: animation.drive(CurveTween(curve: Curves.easeInOut)),
-          child: child,
-        );
-      },
-    ));
+    openModal(
+        context,
+        [
+          modal(context, 'Login', const LoginModal()),
+          modal(context, 'Register', const RegisterModal()),
+          modal(context, 'Profile', const ProfileModal()),
+          modal(context, 'Logout', const LogoutModal()),
+        ][page]);
   };
 }

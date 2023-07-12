@@ -27,7 +27,7 @@ class CountdownTimer {
   Splits splits() {
     final resets = sortedCopy();
 
-    int score = 1;
+    int score = 0;
 
     if (resets.isNotEmpty) {
       var total = const Duration();
@@ -100,6 +100,12 @@ class CountdownTimerCubit extends Cubit<CountdownTimer?> {
       paused: DateTime.now(),
       resets: [...resets],
     ));
+  }
+
+  Future<void> syncResets(
+    List<CountdownReset> input,
+  ) async {
+    await overwrite(input);
   }
 
   Future<void> overwrite(

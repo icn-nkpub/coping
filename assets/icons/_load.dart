@@ -5,7 +5,7 @@ import 'dart:io';
 // dart run ./_load.dart
 
 void main() {
-  const style = 'wght500fill1';
+  const style = 'wght300';
   print('starting');
 
   Directory dir = Directory('.');

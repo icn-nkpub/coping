@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dependencecoping/pages/clock/goal.dart';
 import 'package:dependencecoping/pages/clock/modals/goal_manager.dart';
+import 'package:dependencecoping/pages/clock/modals/time_manager.dart';
 import 'package:dependencecoping/provider/countdown/countdown.dart';
 import 'package:dependencecoping/provider/goal/goal.dart';
 import 'package:dependencecoping/provider/login/login.dart';
@@ -33,78 +34,50 @@ class CountdownDisplay extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8 * 3),
-                  child: BlocBuilder<CountdownTimerCubit, CountdownTimer?>(
-                    builder: (context, ct) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          paused
-                              ? IconButton(
-                                  onPressed: () async {
-                                    var auth = context.read<LoginCubit>().state!.auth;
-                                    await context.read<CountdownTimerCubit>().resume(auth, DateTime.now());
-                                  },
-                                  icon: SvgIcon(
-                                    assetName: 'resume',
-                                    color: Theme.of(context).colorScheme.onSecondaryContainer,
-                                  ),
-                                )
-                              : IconButton(
-                                  onPressed: () async {
-                                    var auth = context.read<LoginCubit>().state!.auth;
-                                    await context.read<CountdownTimerCubit>().pause(auth);
-                                  },
-                                  icon: SvgIcon(
-                                    assetName: 'pause',
-                                    color: Theme.of(context).colorScheme.onSecondaryContainer,
-                                  ),
-                                ),
-                          Flexible(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Card(
-                                  margin: EdgeInsets.zero,
-                                  color: Theme.of(context).colorScheme.secondaryContainer,
-                                  elevation: 3,
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 14),
-                                        child: SvgIcon(
-                                          assetName: "bolt",
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ...controlls(context, paused),
+                      const SizedBox(width: 16),
+                      BlocBuilder<CountdownTimerCubit, CountdownTimer?>(
+                        builder: (context, ct) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Card(
+                                margin: EdgeInsets.zero,
+                                color: Theme.of(context).colorScheme.secondaryContainer,
+                                elevation: 3,
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 14),
+                                      child: SvgIcon(
+                                        assetName: "bolt",
+                                        color: Theme.of(context).colorScheme.onSecondaryContainer,
+                                        size: 18,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 16, left: 8, top: 8, bottom: 8),
+                                      child: Text(
+                                        NumberFormat.decimalPattern().format(splits?.score ?? 0).replaceAll('0', 'O'),
+                                        style: GoogleFonts.spaceMono(textStyle: Theme.of(context).textTheme.bodyLarge).copyWith(
                                           color: Theme.of(context).colorScheme.onSecondaryContainer,
-                                          size: 18,
+                                          fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(right: 16, left: 8, top: 8, bottom: 8),
-                                        child: Text(
-                                          NumberFormat.decimalPattern().format(splits?.score),
-                                          style: GoogleFonts.spaceMono(textStyle: Theme.of(context).textTheme.bodyLarge).copyWith(
-                                            color: Theme.of(context).colorScheme.onSecondaryContainer,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ),
-                          IconButton(
-                            onPressed: _gotoShop(context),
-                            icon: SvgIcon(
-                              assetName: 'settings',
-                              color: Theme.of(context).colorScheme.onSecondaryContainer,
-                            ),
-                          ),
-                        ],
-                      );
-                    },
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 8 * 3),
@@ -131,25 +104,60 @@ class CountdownDisplay extends StatelessWidget {
     );
   }
 
-  _gotoShop(BuildContext context) => () {
-        return Navigator.of(context).push(PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) {
-            return BlocBuilder<LoginCubit, Profile?>(
-              builder: (context, u) => modal(
-                context,
-                GoalModal(
-                  auth: u?.auth,
+  controlls(BuildContext context, bool paused) => [
+        paused
+            ? IconButton.filledTonal(
+                onPressed: () async {
+                  var auth = context.read<LoginCubit>().state!.auth;
+                  await context.read<CountdownTimerCubit>().resume(auth, DateTime.now());
+                },
+                icon: SvgIcon(
+                  assetName: 'play_circle',
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                ),
+              )
+            : IconButton.filledTonal(
+                onPressed: () async {
+                  var auth = context.read<LoginCubit>().state!.auth;
+                  await context.read<CountdownTimerCubit>().pause(auth);
+                },
+                icon: SvgIcon(
+                  assetName: 'stop_circle',
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
                 ),
               ),
-            );
-          },
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(
-              opacity: animation.drive(CurveTween(curve: Curves.easeInOut)),
-              child: child,
-            );
-          },
-        ));
+        IconButton.filledTonal(
+          onPressed: _gotoTime(context),
+          icon: SvgIcon(
+            assetName: 'history',
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
+          ),
+        ),
+        IconButton.filledTonal(
+          onPressed: _gotoShop(context),
+          icon: SvgIcon(
+            assetName: 'checklist',
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
+          ),
+        ),
+      ];
+
+  _gotoShop(BuildContext context) => () {
+        return openModal(
+          context,
+          BlocBuilder<LoginCubit, Profile?>(
+            builder: (context, u) => modal(context, 'Goals', GoalModal(auth: u?.auth)),
+          ),
+        );
+      };
+
+  _gotoTime(BuildContext context) => () {
+        return openModal(
+          context,
+          BlocBuilder<LoginCubit, Profile?>(
+            builder: (context, u) => modal(context, 'Timer events', TimeModal(auth: u?.auth)),
+          ),
+        );
       };
 }
 
@@ -308,7 +316,7 @@ class _ClockHandState extends State<ClockHand> {
     Timer? t;
     t = Timer(timerDuration, () {
       if (widget.frozen || !mounted) {
-        t!.cancel();
+        if (t != null) t.cancel();
         return;
       }
 

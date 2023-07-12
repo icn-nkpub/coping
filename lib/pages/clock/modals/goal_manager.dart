@@ -32,7 +32,7 @@ class _GoalModalState extends State<GoalModal> {
   Widget build(BuildContext context) {
     return BlocBuilder<StaticCubit, StaticRecords?>(builder: (context, staticRec) {
       List<Widget> widgets = [];
-      widgets.add(_divider(context, 'Featured goals'));
+      // widgets.add(_divider(context, 'Featured goals'));
       widgets.addAll(staticRec!.goals.map((g) => _togglableGoal(context, g)));
 
       return Padding(
@@ -97,7 +97,7 @@ class _GoalModalState extends State<GoalModal> {
         });
       };
 
-  Column _divider(BuildContext context, String name) {
+  Column divider(BuildContext context, String name) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [

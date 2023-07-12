@@ -56,6 +56,13 @@ Future<void> logCountdownResume(User user, String type, DateTime time) async {
   final data = await query().select<PostgrestList>().eq('user_id', user.id).eq('addiction_type', type).is_('resume_time', null);
 
   if (data.isEmpty) {
+    await query().insert({
+      'user_id': user.id,
+      'reset_time': time.toUtc().toIso8601String(),
+      'resume_time': time.toUtc().toIso8601String(),
+      'addiction_type': type,
+    });
+
     return;
   }
 
@@ -77,6 +84,7 @@ Future<void> logCountdownReset(User user, String type, DateTime time) async {
     'reset_time': time.toUtc().toIso8601String(),
     'addiction_type': type,
   });
+
   return;
 }
 

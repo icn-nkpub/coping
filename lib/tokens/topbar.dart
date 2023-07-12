@@ -60,12 +60,9 @@ class _TopBarState extends State<TopBar> {
   goTo(int pageKey) {
     return () {
       widget.setPage(pageKey);
-      Future.delayed(
-        const Duration(milliseconds: 300),
-        () => setState(() {
-          expandMenu = !expandMenu;
-        }),
-      );
+      setState(() {
+        expandMenu = !expandMenu;
+      });
     };
   }
 
@@ -91,7 +88,7 @@ class _TopBarState extends State<TopBar> {
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: RichText(
                   text: TextSpan(
-                    text: 'Good day',
+                    text: 'Hello',
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w600),
                     children: [
                       if (u?.profile?.firstName != null)
