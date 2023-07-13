@@ -67,10 +67,10 @@ void openModal(BuildContext context, Widget content) {
     PageRouteBuilder(
       opaque: false,
       barrierColor: Colors.black.withOpacity(.75),
-      pageBuilder: (context, animation, secondaryAnimation) {
+      pageBuilder: (context, animation, _) {
         return content;
       },
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      transitionsBuilder: (context, animation, _, child) {
         return SlideTransition(
           position: Tween<Offset>(
             begin: const Offset(0, 1),

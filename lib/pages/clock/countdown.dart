@@ -48,7 +48,7 @@ class CountdownDisplay extends StatelessWidget {
                             children: [
                               Card(
                                 margin: EdgeInsets.zero,
-                                color: Theme.of(context).colorScheme.secondaryContainer,
+                                color: Theme.of(context).colorScheme.tertiaryContainer,
                                 elevation: 3,
                                 child: Row(
                                   children: [
@@ -56,7 +56,7 @@ class CountdownDisplay extends StatelessWidget {
                                       padding: const EdgeInsets.only(left: 14),
                                       child: SvgIcon(
                                         assetName: "bolt",
-                                        color: Theme.of(context).colorScheme.onSecondaryContainer,
+                                        color: Theme.of(context).colorScheme.onTertiaryContainer,
                                         size: 18,
                                       ),
                                     ),
@@ -65,7 +65,7 @@ class CountdownDisplay extends StatelessWidget {
                                       child: Text(
                                         NumberFormat.decimalPattern().format(splits?.score ?? 0).replaceAll('0', 'O'),
                                         style: GoogleFonts.spaceMono(textStyle: Theme.of(context).textTheme.bodyLarge).copyWith(
-                                          color: Theme.of(context).colorScheme.onSecondaryContainer,
+                                          color: Theme.of(context).colorScheme.onTertiaryContainer,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),

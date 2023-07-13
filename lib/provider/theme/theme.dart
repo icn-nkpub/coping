@@ -18,7 +18,6 @@ class ThemeState {
     data = ThemeData(
       colorScheme: ColorScheme.fromSeed(
         seedColor: color.primary,
-        secondary: color.secondary,
         brightness: isLightMode() ? Brightness.light : Brightness.dark,
       ),
       useMaterial3: true,
@@ -28,7 +27,6 @@ class ThemeState {
     final bc = data.colorScheme.background;
     final pc = data.colorScheme.surfaceTint;
 
-    // final shadow = color.secondary.withOpacity(.2);
     const shadow = Colors.transparent;
 
     data = data.copyWith(
@@ -64,7 +62,6 @@ class ThemeCubit extends Cubit<ThemeState> {
           data: ThemeData(
             colorScheme: ColorScheme.fromSeed(
               seedColor: ColorValue.ocean.primary,
-              secondary: ColorValue.ocean.secondary,
               brightness: ThemeMode.system == ThemeMode.light ? Brightness.light : Brightness.dark,
             ),
             useMaterial3: true,

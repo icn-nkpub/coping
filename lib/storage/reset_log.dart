@@ -2,10 +2,12 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class CountdownReset {
   const CountdownReset({
+    this.id,
     required this.resetTime,
     required this.resumeTime,
   });
 
+  final int? id; // id
   final DateTime resetTime; // reset_time
   final DateTime? resumeTime; // resume_time
 
@@ -42,6 +44,7 @@ Future<List<CountdownReset>> getCountdownResets(User user, String type) async {
     if (resume != null) resume = resume.toLocal();
 
     final cr = CountdownReset(
+      id: record['id'],
       resetTime: DateTime.parse(record['reset_time']).toLocal(),
       resumeTime: resume,
     );

@@ -54,27 +54,29 @@ class _GoalModalState extends State<GoalModal> {
     });
   }
 
-  Row _togglableGoal(BuildContext context, Goal g) {
-    return Row(
-      children: [
-        Checkbox(
-          value: _isToggled(g),
-          onChanged: _toggle(g),
-        ),
-        Column(
-          children: [
-            Text('${g.title} by ${g.author}'),
-          ],
-        ),
-        const Expanded(child: SizedBox()),
-        SvgIcon(
-          assetName: g.iconName,
-          color: Theme.of(context).colorScheme.primary.withOpacity(.5),
-        ),
-        const SizedBox(
-          width: 16,
-        )
-      ],
+  Widget _togglableGoal(BuildContext context, Goal g) {
+    return Card(
+      child: Row(
+        children: [
+          Checkbox(
+            value: _isToggled(g),
+            onChanged: _toggle(g),
+          ),
+          Column(
+            children: [
+              Text('${g.title} by ${g.author}'),
+            ],
+          ),
+          const Expanded(child: SizedBox()),
+          SvgIcon(
+            assetName: g.iconName,
+            color: Theme.of(context).colorScheme.primary.withOpacity(.5),
+          ),
+          const SizedBox(
+            width: 16,
+          )
+        ],
+      ),
     );
   }
 

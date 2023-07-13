@@ -25,6 +25,8 @@ void main() async {
 
   var app = const App();
 
+  imageCache.clear();
+
   kDebugMode
       ? runApp(app)
       : SentryFlutter.init(
