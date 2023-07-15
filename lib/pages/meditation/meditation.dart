@@ -286,22 +286,28 @@ class _InfoCardState extends State<InfoCard> {
                     ),
                   )),
               const SizedBox(height: 8),
-              Slider(
-                value: _speed > 3 || _speed < 32 ? _speed : 6,
-                min: 3,
-                max: 32,
-                onChangeEnd: (x) {
-                  setState(() {
-                    _speed = (x * 10).round() / 10;
-                    widget.setSpeed(x);
-                  });
-                },
-                onChanged: (x) {
-                  setState(() {
-                    _speed = (x * 10).round() / 10;
-                    widget.changingSpeed();
-                  });
-                },
+              SliderTheme(
+                data: Theme.of(context).sliderTheme.copyWith(
+                      showValueIndicator: ShowValueIndicator.always,
+                    ),
+                child: Slider(
+                  value: _speed > 3 || _speed < 32 ? _speed : 6,
+                  min: 3,
+                  max: 32,
+                  label: "${(_speed / 3 * 2).round()}",
+                  onChangeEnd: (x) {
+                    setState(() {
+                      _speed = (x * 10).round() / 10;
+                      widget.setSpeed(x);
+                    });
+                  },
+                  onChanged: (x) {
+                    setState(() {
+                      _speed = (x * 10).round() / 10;
+                      widget.changingSpeed();
+                    });
+                  },
+                ),
               ),
             ],
           ),

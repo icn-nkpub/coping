@@ -1,8 +1,8 @@
+import 'package:dependencecoping/pages/triggers/list.dart';
+import 'package:dependencecoping/pages/triggers/log.dart';
 import 'package:dependencecoping/provider/login/login.dart';
 import 'package:dependencecoping/provider/static/static.dart';
 import 'package:dependencecoping/provider/trigger/trigger.dart';
-import 'package:dependencecoping/storage/trigger_log.dart';
-import 'package:dependencecoping/tokens/icons.dart';
 import 'package:dependencecoping/tokens/topbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,7 +33,7 @@ class TriggersScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
-              userFolder(),
+              const TriggerList(),
               const SizedBox(height: 8),
               Padding(
                 padding: const EdgeInsets.all(14),
@@ -42,67 +42,38 @@ class TriggersScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
-              comunityFolder(),
+              const ComunityFolder(),
+              Padding(
+                padding: const EdgeInsets.all(14),
+                child: Text(
+                  'Triggers log',
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
+                ),
+              ),
+              BlocBuilder<TriggersCubit, Triggers?>(builder: (context, ts) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: ts?.log.map((tl) => TriggerLogCard(tl)).toList() ?? [],
+                  ),
+                );
+              }),
             ],
           ),
         ),
       ],
     );
   }
+}
 
-  Padding userFolder() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: BlocBuilder<LoginCubit, Profile?>(builder: (context, p) {
-        return BlocBuilder<TriggersCubit, Triggers?>(
-          builder: (context, triggers) {
-            List<Widget> children = [];
+class ComunityFolder extends StatelessWidget {
+  const ComunityFolder({
+    super.key,
+  });
 
-            if (triggers != null) {
-              children.addAll(
-                triggers.data.map(
-                  (t) => FilledButton.tonal(
-                    style: const ButtonStyle(
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 8 * 2)),
-                    ),
-                    onPressed: () {
-                      if (p != null) logTrigger(p.auth, t);
-                    },
-                    child: Text(t.label),
-                  ),
-                ),
-              );
-            }
-
-            children.add(
-              IconButton.filledTonal(
-                style: const ButtonStyle(
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 8 * 2)),
-                ),
-                onPressed: () {},
-                icon: const SvgIcon(
-                  assetName: 'add',
-                ),
-              ),
-            );
-
-            return Wrap(
-              alignment: WrapAlignment.start,
-              crossAxisAlignment: WrapCrossAlignment.start,
-              runAlignment: WrapAlignment.start,
-              runSpacing: 4,
-              spacing: 4,
-              children: children,
-            );
-          },
-        );
-      }),
-    );
-  }
-
-  Padding comunityFolder() {
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: BlocBuilder<LoginCubit, Profile?>(builder: (context, p) {

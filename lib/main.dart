@@ -28,19 +28,21 @@ void main() async {
 
   var app = const App();
 
-  imageCache.clear();
+  if (kDebugMode) {
+    imageCache.clear();
+    runApp(app);
+    return;
+  }
 
-  kDebugMode
-      ? runApp(app)
-      : SentryFlutter.init(
-          (options) {
-            options.dsn = 'https://ffce3775524c43269e47662942503a06@o4505302255665152.ingest.sentry.io/4505302260449280';
-            // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
-            // We recommend adjusting this value in production.
-            options.tracesSampleRate = 1;
-          },
-          appRunner: () => runApp(app),
-        );
+  SentryFlutter.init(
+    (options) {
+      options.dsn = 'https://ffce3775524c43269e47662942503a06@o4505302255665152.ingest.sentry.io/4505302260449280';
+      // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+      // We recommend adjusting this value in production.
+      options.tracesSampleRate = 1;
+    },
+    appRunner: () => runApp(app),
+  );
 }
 
 class App extends StatefulWidget {
@@ -138,7 +140,12 @@ class _AppState extends State<App> with Assets {
             return c;
           }
 
-          c.overwrite(Triggers(triggers!));
+          if (triggersLog == null) {
+            c.overwrite(Triggers(triggers!, []));
+            return c;
+          }
+
+          c.overwrite(Triggers(triggers!, triggersLog!));
 
           return c;
         }),

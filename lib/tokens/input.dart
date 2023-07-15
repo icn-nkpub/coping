@@ -12,12 +12,35 @@ class Input extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var t = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        AnimatedSize(
+          duration: const Duration(milliseconds: 100),
+          alignment: Alignment.centerLeft,
+          child: ValueListenableBuilder<TextEditingValue>(
+            valueListenable: ctrl,
+            builder: (context, value, child) {
+              return value.text.isNotEmpty
+                  ? Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        title,
+                        style: t.textTheme.bodySmall!.copyWith(
+                          color: t.hintColor,
+                        ),
+                      ),
+                    )
+                  : const SizedBox();
+            },
+          ),
+        ),
         Container(
           clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+          ),
           child: TextField(
             controller: ctrl,
             decoration: InputDecoration(

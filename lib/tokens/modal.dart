@@ -22,6 +22,7 @@ Widget modal(BuildContext context, String title, Widget w) {
         top: false,
         right: false,
         bottom: true,
+        minimum: const EdgeInsets.only(bottom: 16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,

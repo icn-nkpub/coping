@@ -7,6 +7,7 @@ import 'package:dependencecoping/storage/profiles.dart';
 import 'package:dependencecoping/storage/reset_log.dart';
 import 'package:dependencecoping/storage/static.dart';
 import 'package:dependencecoping/storage/trigger.dart';
+import 'package:dependencecoping/storage/trigger_log.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -20,6 +21,7 @@ mixin Assets<T extends StatefulWidget> on State<T> {
   List<CountdownReset>? resets;
   List<Goal>? goals;
   List<Trigger>? triggers;
+  List<TriggerLog>? triggersLog;
   StaticRecords statics = StaticRecords(
     goals: [],
     triggers: [],
@@ -80,6 +82,10 @@ mixin Assets<T extends StatefulWidget> on State<T> {
       final triggersFuture = getTriggers(user!);
       triggersFuture.then((value) => setState(() => triggers = value));
       waitGroup.add(triggersFuture);
+
+      final triggersLogFuture = getTriggersLog(user!, 'smoking');
+      triggersLogFuture.then((value) => setState(() => triggersLog = value));
+      waitGroup.add(triggersLogFuture);
     }
 
     await Future.wait(waitGroup, eagerError: true);
