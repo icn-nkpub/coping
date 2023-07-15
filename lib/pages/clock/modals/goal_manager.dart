@@ -62,19 +62,19 @@ class _GoalModalState extends State<GoalModal> {
             value: _isToggled(g),
             onChanged: _toggle(g),
           ),
-          Column(
-            children: [
-              Text('${g.title} by ${g.author}'),
-            ],
+          Expanded(
+            child: Text(
+              g.title,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
-          const Expanded(child: SizedBox()),
-          SvgIcon(
-            assetName: g.iconName,
-            color: Theme.of(context).colorScheme.primary.withOpacity(.5),
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: SvgIcon(
+              assetName: g.iconName,
+              color: Theme.of(context).colorScheme.primary.withOpacity(.5),
+            ),
           ),
-          const SizedBox(
-            width: 16,
-          )
         ],
       ),
     );
