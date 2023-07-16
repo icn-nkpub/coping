@@ -6,8 +6,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() {
   patrolTest(
-    'counter state is the same after going to home and switching apps',
-    nativeAutomation: true,
+    'registration flow',
+    nativeAutomation: false,
     (t) async {
       await Supabase.initialize(
         url: 'https://tcqkyokyndgebhcybfhx.supabase.co',
@@ -19,12 +19,14 @@ void main() {
 
       await t.pumpWidgetAndSettle(const App());
 
-      if (await t.native.isPermissionDialogVisible(timeout: const Duration(seconds: 5))) {
-        await t.native.grantPermissionWhenInUse();
-      }
+      // notifications();
+      // if (await t.native.isPermissionDialogVisible(timeout: const Duration(seconds: 5))) {
+      //   await t.native.grantPermissionWhenInUse();
+      // }
 
-      expect(t('app'), findsOneWidget);
-      await t.native.pressHome();
+      t('Register').tap();
+
+      await Future.delayed(Duration(seconds: 5));
     },
   );
 }
