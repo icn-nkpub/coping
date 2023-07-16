@@ -51,6 +51,9 @@ dependencies:
   onesignal_flutter: ^3.5.0
 
 dev_dependencies:
+  patrol: ^2.0.7
+  integration_test:
+    sdk: flutter
   flutter_test:
     sdk: flutter
 
@@ -123,3 +126,8 @@ flutter_icons:
   macos:
     image_path: "assets/logo.png"
     generate: true
+
+patrol:
+  app_name: Coping
+  ios:
+    bundle_id: com.nkpub.dependencecoping
