@@ -152,7 +152,7 @@ class MeditationScreen extends StatelessWidget {
       var cd = CanvasDrawer(
         backdrop: Theme.of(context).scaffoldBackgroundColor,
         primary: HSLColor.fromColor(Theme.of(context).colorScheme.primary),
-        secondary: HSLColor.fromColor(Theme.of(context).colorScheme.secondary),
+        secondary: HSLColor.fromColor(Theme.of(context).colorScheme.tertiary),
         fullCycleDuration: breathingTime,
         scale: 1.3,
         rounds: 12,

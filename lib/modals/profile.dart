@@ -19,9 +19,9 @@ class ProfileModal extends StatelessWidget {
         child: Form(
           child: Column(
             children: [
-              Input(title: 'First name', ctrl: cFirstName),
+              Input(title: 'First name', ctrl: cFirstName, autocorrect: true),
               const SizedBox(height: 8),
-              Input(title: 'Second name', ctrl: cSecondName),
+              Input(title: 'Second name', ctrl: cSecondName, autocorrect: true),
               const SizedBox(height: 8),
               Flexible(child: ListView()),
               FilledButton(

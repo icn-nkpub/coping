@@ -82,7 +82,7 @@ class Display extends StatelessWidget {
     final cd = CanvasDrawer(
       backdrop: context.read<ThemeCubit>().state.data.scaffoldBackgroundColor,
       primary: HSLColor.fromColor(context.read<ThemeCubit>().state.data.colorScheme.primary),
-      secondary: HSLColor.fromColor(context.read<ThemeCubit>().state.data.colorScheme.secondary),
+      secondary: HSLColor.fromColor(context.read<ThemeCubit>().state.data.colorScheme.tertiary),
       fullCycleDuration: 4,
       scale: 2,
       rounds: 12,

@@ -29,6 +29,7 @@ class LoginCubit extends Cubit<Profile?> {
     }
 
     await storeAuthInfo(auth);
+    OneSignal.shared.setExternalUserId(auth.id);
 
     final p = await getProfile(auth);
 
@@ -48,14 +49,7 @@ class LoginCubit extends Cubit<Profile?> {
 
     OneSignal.shared.setExternalUserId(auth.id);
 
-    final p = await getProfile(auth);
-
-    emit(Profile(
-      id: auth.id,
-      email: auth.email ?? '',
-      auth: auth,
-      profile: p,
-    ));
+    await signIn(email, password);
   }
 
   Future<void> signOut() async {

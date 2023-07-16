@@ -116,8 +116,6 @@ class TriggersCubit extends Cubit<Triggers?> {
     }
   }
 
-  // log.add(TriggerRecord(situation: situation, thought: thought, impulse: impulse, time: time))
-
   Future<void> overwrite(Triggers triggers) async {
     List<Trigger> d = [];
     Set<String> seen = {};

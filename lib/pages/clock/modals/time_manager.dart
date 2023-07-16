@@ -8,6 +8,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+const enableEdit = false;
+
 class TimeModal extends StatefulWidget {
   const TimeModal({
     super.key,
@@ -35,8 +37,8 @@ class _TimeModalState extends State<TimeModal> {
     List<CountdownEvent> c = [];
 
     for (var element in resets.reversed) {
-      if (element.resumeTime != null) c.add(CountdownEvent(id: element.id!, resume: true, time: element.resumeTime!));
-      c.add(CountdownEvent(id: element.id!, resume: false, time: element.resetTime));
+      if (element.resumeTime != null) c.add(CountdownEvent(id: element.id, resume: true, time: element.resumeTime!));
+      c.add(CountdownEvent(id: element.id, resume: false, time: element.resetTime));
     }
 
     return BlocBuilder<StaticCubit, StaticRecords?>(builder: (context, staticRec) {
@@ -48,12 +50,14 @@ class _TimeModalState extends State<TimeModal> {
               children: c.map(record).toList(),
             ),
           ),
-          FilledButton(
+          if (enableEdit)
+            FilledButton(
               onPressed: () {
                 if (widget.auth != null) context.read<CountdownTimerCubit>().overwrite(resets);
                 if (Navigator.of(context).canPop()) Navigator.of(context).pop();
               },
-              child: const Text('Save')),
+              child: const Text('Save'),
+            ),
         ]),
       );
     });
@@ -72,43 +76,58 @@ class _TimeModalState extends State<TimeModal> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(width: 8),
-                r.resume
-                    ? SvgIcon(
-                        assetName: 'play_arrow',
-                        color: Theme.of(context).colorScheme.onPrimaryContainer,
-                      )
-                    : SvgIcon(
-                        assetName: 'stop',
-                        color: Theme.of(context).colorScheme.onTertiaryContainer,
-                      ),
-                const SizedBox(width: 8),
-                Text(
+            Flexible(
+                flex: 0,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: r.resume
+                      ? SvgIcon(
+                          assetName: 'play_arrow',
+                          color: Theme.of(context).colorScheme.onPrimaryContainer,
+                        )
+                      : SvgIcon(
+                          assetName: 'stop',
+                          color: Theme.of(context).colorScheme.onTertiaryContainer,
+                        ),
+                )),
+            Flexible(
+              flex: 1,
+              child: Align(
+                alignment: enableEdit ? Alignment.centerLeft : Alignment.centerRight,
+                child: Text(
                   DateFormat('dd.MM.yyyy HH:mm:ss').format(r.time),
                   style: tsm,
                 ),
-              ],
+              ),
             ),
-            Row(
-              children: [
-                IconButton(
-                  onPressed: () {
-                    showTimePicker(
+            if (enableEdit)
+              Flexible(
+                flex: 0,
+                child: IconButton(
+                  onPressed: () async {
+                    var c = context.read<CountdownTimerCubit>();
+                    var v = await showTimePicker(
                       context: context,
                       initialTime: TimeOfDay.fromDateTime(r.time),
                     );
+                    if (v == null) return;
+
+                    if (widget.auth != null) {
+                      var t = r.time..copyWith(hour: v.hour, minute: v.minute);
+
+                      if (r.resume) {
+                        await c.editResume(widget.auth!, r.id, t);
+                      } else {
+                        await c.editReset(widget.auth!, r.id, t);
+                      }
+                    }
                   },
                   icon: SvgIcon(
                     assetName: 'edit',
                     color: r.resume ? Theme.of(context).colorScheme.onPrimaryContainer : Theme.of(context).colorScheme.onTertiaryContainer,
                   ),
                 ),
-              ],
-            )
+              )
           ],
         ),
       ),

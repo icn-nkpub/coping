@@ -126,9 +126,9 @@ class _TriggerListState extends State<TriggerList> with TickerProviderStateMixin
               ),
             ),
           ),
-          Input(title: "Situation", ctrl: situation),
+          Input(title: "Situation", ctrl: situation, autocorrect: true),
           const SizedBox(height: 8),
-          Input(title: "Thought", ctrl: thought),
+          Input(title: "Thought", ctrl: thought, autocorrect: true),
           const SizedBox(height: 8 * 4),
           ImpulseSlider(
             title: "Impulse",

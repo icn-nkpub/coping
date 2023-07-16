@@ -26,7 +26,7 @@ class _PersonalTriggerFormModalState extends State<PersonalTriggerFormModal> {
         child: Form(
           child: Column(
             children: [
-              Input(title: 'Label', ctrl: cLabel),
+              Input(title: 'Label', ctrl: cLabel, autocorrect: true),
               const SizedBox(height: 8),
               Flexible(child: ListView()),
               FilledButton(

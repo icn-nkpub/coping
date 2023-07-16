@@ -67,17 +67,22 @@ class CountdownTimerCubit extends Cubit<CountdownTimer?> {
   Future<void> resume(User auth, DateTime dt) async {
     if (state == null) return;
 
+    final id = await logCountdownResume(auth, 'smoking', dt);
+
     var resets = state!.sortedCopy();
     if (resets.isEmpty) {
-      resets.add(CountdownReset(resetTime: state?.paused ?? DateTime.now(), resumeTime: dt));
+      resets.add(CountdownReset(
+        id: id,
+        resetTime: state?.paused ?? DateTime.now(),
+        resumeTime: dt,
+      ));
     } else {
       resets.last = CountdownReset(
+        id: id,
         resetTime: resets.last.resetTime,
         resumeTime: dt,
       );
     }
-
-    await logCountdownResume(auth, 'smoking', dt);
 
     emit(CountdownTimer(resumed: dt, paused: null, resets: resets));
   }
@@ -88,12 +93,12 @@ class CountdownTimerCubit extends Cubit<CountdownTimer?> {
     var resets = state!.sortedCopy();
     final resetTime = state?.resumed ?? DateTime.now();
 
+    final id = await logCountdownReset(auth, 'smoking', resetTime);
     resets.add(CountdownReset(
+      id: id,
       resetTime: resetTime,
       resumeTime: null,
     ));
-
-    await logCountdownReset(auth, 'smoking', resetTime);
 
     emit(CountdownTimer(
       resumed: null,
@@ -102,10 +107,36 @@ class CountdownTimerCubit extends Cubit<CountdownTimer?> {
     ));
   }
 
-  Future<void> syncResets(
-    List<CountdownReset> input,
-  ) async {
-    await overwrite(input);
+  Future<void> editReset(User user, int id, DateTime time) async {
+    await editCountdownReset(user, id, time);
+
+    var resets = state!.sortedCopy();
+    for (var i = 0; i < resets.length; i++) {
+      var r = resets[i];
+      if (r.id == id) resets[i] = CountdownReset(id: r.id, resetTime: time, resumeTime: r.resumeTime);
+    }
+
+    emit(CountdownTimer(
+      resumed: state?.resumed,
+      paused: state?.paused,
+      resets: [...resets],
+    ));
+  }
+
+  Future<void> editResume(User user, int id, DateTime time) async {
+    await editCountdownResume(user, id, time);
+
+    var resets = state!.sortedCopy();
+    for (var i = 0; i < resets.length; i++) {
+      var r = resets[i];
+      if (r.id == id) resets[i] = CountdownReset(id: r.id, resetTime: r.resetTime, resumeTime: time);
+    }
+
+    emit(CountdownTimer(
+      resumed: state?.resumed,
+      paused: state?.paused,
+      resets: [...resets],
+    ));
   }
 
   Future<void> overwrite(

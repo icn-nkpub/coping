@@ -16,8 +16,8 @@ class LoginModal extends StatefulWidget {
 class _LoginModalState extends State<LoginModal> {
   String errorText = '';
 
-  var cEmail = TextEditingController(text: 'w@w.c');
-  var cPwd = TextEditingController(text: 'qwertyui');
+  var cEmail = TextEditingController(text: '');
+  var cPwd = TextEditingController(text: '');
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +29,9 @@ class _LoginModalState extends State<LoginModal> {
         child: Form(
           child: Column(
             children: [
-              Input(title: 'Email', ctrl: cEmail),
+              Input(title: 'Email', ctrl: cEmail, autocorrect: false),
               const SizedBox(height: 8),
-              Input(title: 'Password', ctrl: cPwd),
+              Input(title: 'Password', ctrl: cPwd, autocorrect: false, obscureText: true),
               if (errorText != '') const SizedBox(height: 8),
               if (errorText != '')
                 Text(

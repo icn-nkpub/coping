@@ -81,21 +81,22 @@ class CountdownDisplay extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8 * 3),
-                BlocBuilder<GoalsCubit, Goals?>(
-                  builder: (context, goals) => goals != null
-                      ? Column(
-                          children: goals.data
-                              .map((g) => GoalCard(
-                                    from: splits?.last ?? DateTime.now(),
-                                    iconName: g.iconName,
-                                    title: g.title,
-                                    descriptions: g.descriptions,
-                                    rate: g.rate,
-                                  ))
-                              .toList(),
-                        )
-                      : Container(),
-                ),
+                BlocBuilder<GoalsCubit, Goals?>(builder: (BuildContext context, Goals? goals) {
+                  var gs = (goals?.data ?? []).toList();
+                  gs.sort((a, b) => a.rate.compareTo(b.rate));
+
+                  return Column(
+                    children: gs
+                        .map((g) => GoalCard(
+                              from: splits?.last ?? DateTime.now(),
+                              iconName: g.iconName,
+                              title: g.title,
+                              descriptions: g.descriptions,
+                              rate: g.rate,
+                            ))
+                        .toList(),
+                  );
+                }),
               ],
             );
           },

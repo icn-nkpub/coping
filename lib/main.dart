@@ -58,6 +58,7 @@ class _AppState extends State<App> with Assets {
     if (tryLock()) {
       load(context);
     }
+
     if (loadingState != LoadingProgress.done) {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -150,22 +151,26 @@ class _AppState extends State<App> with Assets {
           return c;
         }),
       ],
-      child: BlocBuilder<ThemeCubit, ThemeState>(
-        builder: (context, state) => MaterialApp(
-          debugShowCheckedModeBanner: false,
-          localizationsDelegates: const [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: const [
-            Locale('en'),
-          ],
-          title: 'Coping',
-          theme: state.data,
-          home: BlocBuilder<LoginCubit, Profile?>(builder: (context, u) {
-            return u == null ? const Onboarding() : const Home();
-          }),
+      child: BlocListener<LoginCubit, Profile?>(
+        listenWhen: (p, c) => p?.auth.id != c?.auth.id,
+        listener: (context, state) => reset(context),
+        child: BlocBuilder<ThemeCubit, ThemeState>(
+          builder: (context, state) => MaterialApp(
+            debugShowCheckedModeBanner: false,
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('en'),
+            ],
+            title: 'Coping',
+            theme: state.data,
+            home: BlocBuilder<LoginCubit, Profile?>(builder: (context, u) {
+              return u == null ? const Onboarding() : const Home();
+            }),
+          ),
         ),
       ),
     );

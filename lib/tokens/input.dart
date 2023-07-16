@@ -5,10 +5,14 @@ class Input extends StatelessWidget {
     super.key,
     required this.title,
     required this.ctrl,
+    required this.autocorrect,
+    this.obscureText = false,
   });
 
   final String title;
   final TextEditingController ctrl;
+  final bool autocorrect;
+  final bool obscureText;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +47,8 @@ class Input extends StatelessWidget {
           ),
           child: TextField(
             controller: ctrl,
+            autocorrect: autocorrect,
+            obscureText: obscureText,
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: title,

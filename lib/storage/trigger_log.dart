@@ -1,18 +1,6 @@
 import 'package:dependencecoping/storage/trigger.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-Future<void> logTrigger(User user, Trigger t, String situation, String thought, int impulse) async {
-  await query().insert({
-    'user_id': user.id,
-    'meta_id': t.id,
-    'addiction_type': t.relatedAddiction,
-    'label': t.label,
-    'situation': situation,
-    'thought': thought,
-    'impulse': impulse,
-  });
-}
-
 class TriggerLog {
   const TriggerLog({
     required this.label,
@@ -27,6 +15,18 @@ class TriggerLog {
   final String thought;
   final int impulse;
   final DateTime time;
+}
+
+Future<void> logTrigger(User user, Trigger t, String situation, String thought, int impulse) async {
+  await query().insert({
+    'user_id': user.id,
+    'meta_id': t.id,
+    'addiction_type': t.relatedAddiction,
+    'label': t.label,
+    'situation': situation,
+    'thought': thought,
+    'impulse': impulse,
+  });
 }
 
 Future<List<TriggerLog>> getTriggersLog(User user, String type) async {

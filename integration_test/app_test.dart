@@ -26,7 +26,7 @@ void main() {
 
       t('Register').tap();
 
-      await Future.delayed(Duration(seconds: 5));
+      await Future.delayed(const Duration(seconds: 5));
     },
   );
 }

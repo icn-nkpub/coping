@@ -50,6 +50,14 @@ mixin Assets<T extends StatefulWidget> on State<T> {
     return false;
   }
 
+  Future<void> reset(BuildContext context) async {
+    setState(() {
+      loadingState = LoadingProgress.started;
+    });
+
+    await load(context);
+  }
+
   Future<void> load(BuildContext context) async {
     final userData = await restoreAuthInfo();
     setState(() {
