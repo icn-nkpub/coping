@@ -33,7 +33,9 @@ class _GoalModalState extends State<GoalModal> {
   Widget build(BuildContext context) {
     return BlocBuilder<StaticCubit, StaticRecords?>(builder: (context, staticRec) {
       List<Widget> widgets = [];
-      widgets.addAll(staticRec!.goals.map((g) => _togglableGoal(context, g)));
+      var sortedGoals = [...staticRec!.goals];
+      sortedGoals.sort((g1, g2) => g1.rate.compareTo(g2.rate));
+      widgets.addAll(sortedGoals.map((g) => _togglableGoal(context, g)));
 
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -55,6 +57,11 @@ class _GoalModalState extends State<GoalModal> {
   }
 
   Widget _togglableGoal(BuildContext context, Goal g) {
+    String title = g.titles['en']!;
+    for (var t in g.titles.entries) {
+      if (t.key == Localizations.localeOf(context).languageCode) title = t.value;
+    }
+
     return Card(
       child: Row(
         children: [
@@ -64,7 +71,7 @@ class _GoalModalState extends State<GoalModal> {
           ),
           Expanded(
             child: Text(
-              g.title,
+              title,
               overflow: TextOverflow.ellipsis,
             ),
           ),

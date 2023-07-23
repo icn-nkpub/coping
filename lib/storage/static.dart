@@ -13,16 +13,12 @@ Future<List<Goal>> getStaticGoals(User user) async {
   List<Goal> gs = [];
 
   for (var record in data) {
-    Map<String, dynamic> rawDescriptions = maybeMap(record['descriptions']);
-    Map<double, String> descriptions = {};
-
-    for (var d in rawDescriptions.entries) {
-      descriptions[double.parse(d.key)] = d.value;
-    }
+    final descriptions = maybeLocalized(record['v2_descriptions']);
+    final titles = maybeLocalized(record['v2_titles']);
 
     final g = Goal(
       id: 'static/${record['id']}',
-      title: record['title'],
+      titles: titles,
       iconName: record['icon_name'],
       relatedAddiction: record['related_addiction'],
       author: record['author'],
@@ -47,9 +43,11 @@ Future<List<Trigger>> getStaticTriggers(User user) async {
   List<Trigger> ts = [];
 
   for (var record in data) {
+    var labels = maybeLocalized(record['v2_labels']);
+
     final t = Trigger(
       id: 'static/${record['id']}',
-      label: record['label'],
+      labels: labels,
       relatedAddiction: record['related_addiction'],
       author: record['author'],
     );

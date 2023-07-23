@@ -93,7 +93,7 @@ class ComunityFolder extends StatelessWidget {
                     onPressed: () {
                       if (p != null) context.read<TriggersCubit>().toggle(p.auth, t);
                     },
-                    child: Text(t.label),
+                    child: Text(t.labels[Localizations.localeOf(context).languageCode] ?? t.labels["en"] ?? "[...]"),
                   ),
                 ),
               );

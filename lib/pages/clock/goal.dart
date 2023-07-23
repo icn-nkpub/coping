@@ -8,15 +8,15 @@ class GoalCard extends StatefulWidget {
     super.key,
     required this.from,
     required this.iconName,
-    required this.title,
+    required this.titles,
     required this.descriptions,
     required this.rate,
   });
 
   final DateTime from;
   final String iconName;
-  final String title;
-  final Map<double, String> descriptions;
+  final Map<String, String> titles;
+  final Map<String, String> descriptions;
   final Duration rate;
 
   @override
@@ -36,10 +36,10 @@ class _GoalCardState extends State<GoalCard> {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
         child: finished
-            ? _desc(finished, value)
+            ? _desc(context, finished, value)
             : Column(
                 children: [
-                  _desc(finished, value),
+                  _desc(context, finished, value),
                   Container(
                     padding: const EdgeInsets.only(top: 8),
                     child: Container(
@@ -76,10 +76,15 @@ class _GoalCardState extends State<GoalCard> {
     );
   }
 
-  Widget _desc(bool finished, double value) {
-    String description = widget.descriptions[0]!;
+  Widget _desc(BuildContext context, bool finished, double value) {
+    String description = widget.descriptions['en']!;
     for (var d in widget.descriptions.entries) {
-      if (value > d.key) description = d.value;
+      if (d.key == Localizations.localeOf(context).languageCode) description = d.value;
+    }
+
+    String title = widget.titles['en']!;
+    for (var t in widget.titles.entries) {
+      if (t.key == Localizations.localeOf(context).languageCode) title = t.value;
     }
 
     final c = Color.alphaBlend(
@@ -129,7 +134,7 @@ class _GoalCardState extends State<GoalCard> {
                     ),
                   ),
                 Text(
-                  widget.title,
+                  title,
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
                 const Expanded(child: SizedBox()),

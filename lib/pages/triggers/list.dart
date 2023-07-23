@@ -2,6 +2,7 @@ import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/pages/triggers/impulse.dart';
 import 'package:dependencecoping/pages/triggers/modals/personal.dart';
 import 'package:dependencecoping/provider/login/login.dart';
+import 'package:dependencecoping/provider/theme/fonts.dart';
 import 'package:dependencecoping/provider/trigger/trigger.dart';
 import 'package:dependencecoping/storage/trigger.dart';
 import 'package:dependencecoping/tokens/icons.dart';
@@ -55,7 +56,7 @@ class _TriggerListState extends State<TriggerList> with TickerProviderStateMixin
                     onPressed: () {
                       openModal(context, modal(context, AppLocalizations.of(context)!.modalLogTrigger, triggerModal(t)));
                     },
-                    child: Text(t.label),
+                    child: Text(t.labels[Localizations.localeOf(context).languageCode] ?? t.labels["en"] ?? "[...]"),
                   ),
                 ),
               );
@@ -111,8 +112,8 @@ class _TriggerListState extends State<TriggerList> with TickerProviderStateMixin
               child: AnimatedBuilder(
                 animation: _c,
                 child: Text(
-                  t.label,
-                  style: GoogleFonts.spaceMono(
+                  t.labels[Localizations.localeOf(context).languageCode] ?? t.labels["en"] ?? "[...]",
+                  style: fAccent(
                     textStyle: Theme.of(context).textTheme.displaySmall,
                   ).copyWith(fontWeight: FontWeight.w900),
                 ),

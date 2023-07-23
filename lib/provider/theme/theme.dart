@@ -1,3 +1,4 @@
+import 'package:dependencecoping/provider/theme/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dependencecoping/provider/theme/colors.dart';
@@ -30,7 +31,7 @@ class ThemeState {
     const shadow = Colors.transparent;
 
     data = data.copyWith(
-      textTheme: GoogleFonts.interTextTheme(data.textTheme),
+      textTheme: fBody(data.textTheme),
       iconTheme: data.iconTheme.copyWith(
         color: data.colorScheme.onPrimaryContainer,
       ),

@@ -58,7 +58,7 @@ class TriggersCubit extends Cubit<Triggers?> {
         d.add(t);
       }
 
-      d.add(Trigger(id: 'personal/$label', label: label, relatedAddiction: 'smoking'));
+      d.add(Trigger(id: 'personal/$label', labels: {"en": label}, relatedAddiction: 'smoking'));
 
       var log = state!.triggerLog;
 
@@ -104,7 +104,7 @@ class TriggersCubit extends Cubit<Triggers?> {
 
       var log = state!.triggerLog;
       log.add(TriggerLog(
-        label: trigger.label,
+        labels: trigger.labels,
         situation: situation,
         thought: thought,
         impulse: impulse,

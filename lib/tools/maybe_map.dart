@@ -1,11 +1,12 @@
 import 'dart:convert';
 
-Map<String, dynamic> maybeMap(dynamic d) {
+Map<String, String> maybeLocalized(dynamic d) {
   if (d.runtimeType == String) {
-    return jsonDecode(d);
+    if (d.toString().startsWith('{')) return Map<String, String>.from(jsonDecode(d));
+    return {'en': d.toString()};
   }
 
-  return d;
+  return Map<String, String>.from(d);
 }
 
 List<String> maybeList(dynamic d) {

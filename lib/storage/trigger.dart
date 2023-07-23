@@ -1,15 +1,16 @@
+import 'package:dependencecoping/tools/maybe_map.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Trigger {
   Trigger({
     required this.id,
-    required this.label,
+    required this.labels,
     required this.relatedAddiction,
     this.author,
   });
 
   String id;
-  String label; // label
+  Map<String, String> labels; // label
   String relatedAddiction; // related_addiction
   String? author; // author
 }
@@ -22,7 +23,7 @@ Future<void> syncTriggers(User user, List<Trigger> triggers) async {
 
   for (var t in triggers) {
     var rec = {
-      'label': t.label,
+      'label': t.labels,
       'related_addiction': t.relatedAddiction,
     };
 
@@ -55,9 +56,11 @@ Future<List<Trigger>> getTriggers(User user) async {
   List<Trigger> ts = [];
 
   for (var record in data) {
+    final labels = maybeLocalized(record['label']);
+
     final t = Trigger(
       id: record['meta_id'],
-      label: record['label'],
+      labels: labels,
       relatedAddiction: record['related_addiction'],
     );
 

@@ -6,7 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class Goal {
   Goal({
     required this.id,
-    required this.title,
+    required this.titles,
     required this.iconName,
     required this.relatedAddiction,
     required this.author,
@@ -16,12 +16,12 @@ class Goal {
   });
 
   String id;
-  String title; // title
+  Map<String, String> titles; // title
   String iconName; // icon_name
   String relatedAddiction; // related_addiction
   String author; // author
   List<String> links; // links
-  Map<double, String> descriptions; // descriptions
+  Map<String, String> descriptions; // descriptions
   Duration rate; // rate_ms
 }
 
@@ -38,7 +38,7 @@ Future<void> syncGoals(User user, List<Goal> goals) async {
     }
 
     var rec = {
-      'title': g.title,
+      'title': g.titles,
       'icon_name': g.iconName,
       'related_addiction': g.relatedAddiction,
       'author': g.author,
@@ -76,16 +76,12 @@ Future<List<Goal>> getGoals(User user) async {
   List<Goal> gs = [];
 
   for (var record in data) {
-    Map<String, dynamic> rawDescriptions = maybeMap(record['descriptions']);
-    Map<double, String> descriptions = {};
-
-    for (var d in rawDescriptions.entries) {
-      descriptions[double.parse(d.key)] = d.value;
-    }
+    final descriptions = maybeLocalized(record['descriptions']);
+    final titles = maybeLocalized(record['title']);
 
     final g = Goal(
       id: record['meta_id'],
-      title: record['title'],
+      titles: titles,
       iconName: record['icon_name'],
       relatedAddiction: record['related_addiction'],
       author: record['author'],

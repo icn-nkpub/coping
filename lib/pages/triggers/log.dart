@@ -1,4 +1,5 @@
 import 'package:dependencecoping/pages/triggers/modals/log_event.dart';
+import 'package:dependencecoping/provider/theme/fonts.dart';
 import 'package:dependencecoping/storage/trigger_log.dart';
 import 'package:dependencecoping/tokens/modal.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ class TriggerLogCard extends StatelessWidget {
                 },
                 icon: Text(
                   tl.impulse.toString().replaceAll('0', 'O'),
-                  style: GoogleFonts.spaceMono(
+                  style: fAccent(
                     textStyle: Theme.of(context).textTheme.titleSmall,
                   ),
                 ),
@@ -40,7 +41,7 @@ class TriggerLogCard extends StatelessWidget {
                 flex: 1,
                 child: Center(
                   child: Text(
-                    tl.label,
+                    tl.labels[Localizations.localeOf(context).languageCode] ?? tl.labels["en"] ?? "[...]",
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w900),
                   ),
                 ),
@@ -51,7 +52,7 @@ class TriggerLogCard extends StatelessWidget {
                   alignment: Alignment.centerRight,
                   child: Text(
                     DateFormat("dd.MM.yyyy HH:mm").format(tl.time).replaceAll('0', 'O'),
-                    style: GoogleFonts.spaceMono(
+                    style: fAccent(
                       textStyle: Theme.of(context).textTheme.bodyMedium,
                     ).copyWith(fontWeight: FontWeight.w100),
                   ),

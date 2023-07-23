@@ -7,6 +7,7 @@ import 'package:dependencecoping/pages/clock/modals/time_manager.dart';
 import 'package:dependencecoping/provider/countdown/countdown.dart';
 import 'package:dependencecoping/provider/goal/goal.dart';
 import 'package:dependencecoping/provider/login/login.dart';
+import 'package:dependencecoping/provider/theme/fonts.dart';
 import 'package:dependencecoping/tokens/icons.dart';
 import 'package:dependencecoping/tokens/modal.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,7 +67,7 @@ class CountdownDisplay extends StatelessWidget {
                                       padding: const EdgeInsets.only(right: 16, left: 8, top: 8, bottom: 8),
                                       child: Text(
                                         NumberFormat.decimalPattern().format(splits?.score ?? 0).replaceAll('0', 'O'),
-                                        style: GoogleFonts.spaceMono(textStyle: Theme.of(context).textTheme.bodyLarge).copyWith(
+                                        style: fAccent(textStyle: Theme.of(context).textTheme.bodyLarge).copyWith(
                                           color: Theme.of(context).colorScheme.onTertiaryContainer,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -92,7 +93,7 @@ class CountdownDisplay extends StatelessWidget {
                         .map((g) => GoalCard(
                               from: splits?.last ?? DateTime.now(),
                               iconName: g.iconName,
-                              title: g.title,
+                              titles: g.titles,
                               descriptions: g.descriptions,
                               rate: g.rate,
                             ))
@@ -178,7 +179,7 @@ class Stopwatch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tsm = GoogleFonts.spaceMono(
+    final tsm = fAccent(
       textStyle: small ? Theme.of(context).textTheme.titleMedium : Theme.of(context).textTheme.displaySmall,
     ).copyWith(
       fontWeight: FontWeight.bold,

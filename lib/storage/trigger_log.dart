@@ -1,16 +1,17 @@
 import 'package:dependencecoping/storage/trigger.dart';
+import 'package:dependencecoping/tools/maybe_map.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class TriggerLog {
   const TriggerLog({
-    required this.label,
+    required this.labels,
     required this.situation,
     required this.thought,
     required this.impulse,
     required this.time,
   });
 
-  final String label;
+  final Map<String, String> labels;
   final String situation;
   final String thought;
   final int impulse;
@@ -22,7 +23,7 @@ Future<void> logTrigger(User user, Trigger t, String situation, String thought, 
     'user_id': user.id,
     'meta_id': t.id,
     'addiction_type': t.relatedAddiction,
-    'label': t.label,
+    'label': t.labels,
     'situation': situation,
     'thought': thought,
     'impulse': impulse,
@@ -34,8 +35,10 @@ Future<List<TriggerLog>> getTriggersLog(User user, String type) async {
 
   List<TriggerLog> result = [];
   for (var r in data) {
+    final labels = maybeLocalized(r['label']);
+
     result.add(TriggerLog(
-      label: r['label'],
+      labels: labels,
       situation: r['situation'],
       thought: r['thought'],
       impulse: int.parse(r['impulse'].toString()),

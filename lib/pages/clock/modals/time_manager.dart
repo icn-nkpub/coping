@@ -1,6 +1,7 @@
 import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/provider/countdown/countdown.dart';
 import 'package:dependencecoping/provider/static/static.dart';
+import 'package:dependencecoping/provider/theme/fonts.dart';
 import 'package:dependencecoping/storage/reset_log.dart';
 import 'package:dependencecoping/tokens/icons.dart';
 import 'package:flutter/material.dart';
@@ -66,7 +67,7 @@ class _TimeModalState extends State<TimeModal> {
   }
 
   Widget record(CountdownEvent r) {
-    final tsm = GoogleFonts.spaceMono(
+    final tsm = fAccent(
       textStyle: Theme.of(context).textTheme.titleSmall,
     ).copyWith(
       color: r.resume ? Theme.of(context).colorScheme.onPrimaryContainer : Theme.of(context).colorScheme.onTertiaryContainer,
