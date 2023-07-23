@@ -1,3 +1,4 @@
+import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:dependencecoping/tokens/icons.dart';
 import 'package:dependencecoping/tokens/measurable.dart';
@@ -55,7 +56,7 @@ class _GoalCardState extends State<GoalCard> {
                           Padding(
                             padding: const EdgeInsets.only(right: 12),
                             child: SvgIcon(
-                              assetName: widget.iconName,
+                              assetPath: 'assets/icons/${widget.iconName}.svg',
                               color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
@@ -106,8 +107,8 @@ class _GoalCardState extends State<GoalCard> {
                         borderRadius: BorderRadius.circular(800),
                         color: c,
                       ),
-                      child: const SvgIcon(
-                        assetName: 'done',
+                      child: SvgIcon(
+                        assetPath: Assets.icons.done,
                         size: 24 - (4 * 2),
                       ),
                     ),
@@ -122,7 +123,7 @@ class _GoalCardState extends State<GoalCard> {
                         color: c,
                       ),
                       child: SvgIcon(
-                        assetName: widget.iconName,
+                        assetPath: 'assets/icons/${widget.iconName}.svg',
                         size: 24 - (4 * 2),
                       ),
                     ),
@@ -135,7 +136,7 @@ class _GoalCardState extends State<GoalCard> {
                 AnimatedRotation(
                   duration: const Duration(milliseconds: 100),
                   turns: expanded ? 0.5 : 0,
-                  child: const SvgIcon(assetName: 'expand_more'),
+                  child: SvgIcon(assetPath: Assets.icons.expandMore),
                 )
               ],
             ),

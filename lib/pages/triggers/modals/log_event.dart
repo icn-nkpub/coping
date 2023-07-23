@@ -1,5 +1,6 @@
 import 'package:dependencecoping/storage/trigger_log.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TriggerLogEventModal extends StatelessWidget {
   const TriggerLogEventModal({
@@ -24,7 +25,7 @@ class TriggerLogEventModal extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Situation",
+                    AppLocalizations.of(context)!.triggerLogEventSituation,
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   const SizedBox(height: 8),
@@ -41,7 +42,7 @@ class TriggerLogEventModal extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Thought",
+                    AppLocalizations.of(context)!.triggerLogEventThought,
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   const SizedBox(height: 8),

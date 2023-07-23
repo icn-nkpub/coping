@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/pages/clock/goal.dart';
 import 'package:dependencecoping/pages/clock/modals/goal_manager.dart';
 import 'package:dependencecoping/pages/clock/modals/time_manager.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CountdownDisplay extends StatelessWidget {
   const CountdownDisplay({super.key});
@@ -55,7 +57,7 @@ class CountdownDisplay extends StatelessWidget {
                                     Padding(
                                       padding: const EdgeInsets.only(left: 14),
                                       child: SvgIcon(
-                                        assetName: "bolt",
+                                        assetPath: Assets.icons.bolt,
                                         color: Theme.of(context).colorScheme.onTertiaryContainer,
                                         size: 18,
                                       ),
@@ -113,7 +115,7 @@ class CountdownDisplay extends StatelessWidget {
                   await context.read<CountdownTimerCubit>().resume(auth, DateTime.now());
                 },
                 icon: SvgIcon(
-                  assetName: 'play_circle',
+                  assetPath: Assets.icons.playCircle,
                   color: Theme.of(context).colorScheme.onPrimaryContainer,
                 ),
               )
@@ -123,21 +125,21 @@ class CountdownDisplay extends StatelessWidget {
                   await context.read<CountdownTimerCubit>().pause(auth);
                 },
                 icon: SvgIcon(
-                  assetName: 'stop_circle',
+                  assetPath: Assets.icons.stopCircle,
                   color: Theme.of(context).colorScheme.onPrimaryContainer,
                 ),
               ),
         IconButton.filledTonal(
           onPressed: _gotoTime(context),
           icon: SvgIcon(
-            assetName: 'history',
+            assetPath: Assets.icons.history,
             color: Theme.of(context).colorScheme.onPrimaryContainer,
           ),
         ),
         IconButton.filledTonal(
           onPressed: _gotoShop(context),
           icon: SvgIcon(
-            assetName: 'checklist',
+            assetPath: Assets.icons.checklist,
             color: Theme.of(context).colorScheme.onPrimaryContainer,
           ),
         ),
@@ -147,7 +149,7 @@ class CountdownDisplay extends StatelessWidget {
         return openModal(
           context,
           BlocBuilder<LoginCubit, Profile?>(
-            builder: (context, u) => modal(context, 'Goals', GoalModal(auth: u?.auth)),
+            builder: (context, u) => modal(context, AppLocalizations.of(context)!.modalGoals, GoalModal(auth: u?.auth)),
           ),
         );
       };
@@ -156,7 +158,7 @@ class CountdownDisplay extends StatelessWidget {
         return openModal(
           context,
           BlocBuilder<LoginCubit, Profile?>(
-            builder: (context, u) => modal(context, 'Timer events', TimeModal(auth: u?.auth)),
+            builder: (context, u) => modal(context, AppLocalizations.of(context)!.modalTimerEvents, TimeModal(auth: u?.auth)),
           ),
         );
       };

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dependencecoping/provider/login/login.dart';
 import 'package:dependencecoping/tokens/input.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PersonalTriggerFormModal extends StatefulWidget {
   const PersonalTriggerFormModal({
@@ -26,7 +27,7 @@ class _PersonalTriggerFormModalState extends State<PersonalTriggerFormModal> {
         child: Form(
           child: Column(
             children: [
-              Input(title: 'Label', ctrl: cLabel, autocorrect: true),
+              Input(title: AppLocalizations.of(context)!.triggerPersonalLabel, ctrl: cLabel, autocorrect: true),
               const SizedBox(height: 8),
               Flexible(child: ListView()),
               FilledButton(
@@ -34,9 +35,9 @@ class _PersonalTriggerFormModalState extends State<PersonalTriggerFormModal> {
                   await context.read<TriggersCubit>().addPersonal(u!.auth, cLabel.value.text);
                   if (navigator.canPop()) navigator.pop();
                 },
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text('Add trigger'),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(AppLocalizations.of(context)!.triggerPersonalAddTrigger),
                 ),
               ),
             ],

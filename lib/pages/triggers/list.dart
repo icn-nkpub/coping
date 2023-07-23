@@ -1,3 +1,4 @@
+import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/pages/triggers/impulse.dart';
 import 'package:dependencecoping/pages/triggers/modals/personal.dart';
 import 'package:dependencecoping/provider/login/login.dart';
@@ -9,6 +10,7 @@ import 'package:dependencecoping/tokens/modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TriggerList extends StatefulWidget {
   const TriggerList({
@@ -51,7 +53,7 @@ class _TriggerListState extends State<TriggerList> with TickerProviderStateMixin
                       if (p?.auth != null) context.read<TriggersCubit>().removePersonal(p!.auth, t.id);
                     },
                     onPressed: () {
-                      openModal(context, modal(context, "Log trigger", triggerModal(t)));
+                      openModal(context, modal(context, AppLocalizations.of(context)!.modalLogTrigger, triggerModal(t)));
                     },
                     child: Text(t.label),
                   ),
@@ -66,10 +68,10 @@ class _TriggerListState extends State<TriggerList> with TickerProviderStateMixin
                   padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 8 * 2)),
                 ),
                 onPressed: () {
-                  openModal(context, modal(context, "Add personal trigger", const PersonalTriggerFormModal()));
+                  openModal(context, modal(context, AppLocalizations.of(context)!.modalAddPersonalTrigger, const PersonalTriggerFormModal()));
                 },
-                icon: const SvgIcon(
-                  assetName: 'add',
+                icon: SvgIcon(
+                  assetPath: Assets.icons.add,
                 ),
               ),
             );
@@ -126,12 +128,12 @@ class _TriggerListState extends State<TriggerList> with TickerProviderStateMixin
               ),
             ),
           ),
-          Input(title: "Situation", ctrl: situation, autocorrect: true),
+          Input(title: AppLocalizations.of(context)!.personalTriggerSituation, ctrl: situation, autocorrect: true),
           const SizedBox(height: 8),
-          Input(title: "Thought", ctrl: thought, autocorrect: true),
+          Input(title: AppLocalizations.of(context)!.personalTriggerThought, ctrl: thought, autocorrect: true),
           const SizedBox(height: 8 * 4),
           ImpulseSlider(
-            title: "Impulse",
+            title: AppLocalizations.of(context)!.personalTriggerImpulse,
             callback: (i) => setState(() => impulse = i.round()),
           ),
           Flexible(child: ListView()),
@@ -141,9 +143,9 @@ class _TriggerListState extends State<TriggerList> with TickerProviderStateMixin
               if (p != null) context.read<TriggersCubit>().send(p.auth, t, situation.value.text, thought.value.text, impulse);
               if (navigator.canPop()) navigator.pop();
             },
-            child: const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text('Submit'),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(AppLocalizations.of(context)!.personalTriggerSubmit),
             ),
           ),
         ],

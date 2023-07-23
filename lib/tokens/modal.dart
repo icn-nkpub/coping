@@ -1,3 +1,4 @@
+import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/tokens/icons.dart';
 import 'package:flutter/material.dart';
 
@@ -36,7 +37,7 @@ Widget modal(BuildContext context, String title, Widget w) {
                     onPressed: () {
                       if (Navigator.of(context).canPop()) Navigator.of(context).pop();
                     },
-                    icon: const SvgIcon(assetName: 'arrow_back'),
+                    icon: SvgIcon(assetPath: Assets.icons.arrowBack),
                   ),
                   Text(
                     title,
@@ -48,7 +49,7 @@ Widget modal(BuildContext context, String title, Widget w) {
                       onPressed: () {
                         if (Navigator.of(context).canPop()) Navigator.of(context).pop();
                       },
-                      icon: const SvgIcon(assetName: 'arrow_back'),
+                      icon: SvgIcon(assetPath: Assets.icons.arrowBack),
                     ),
                   ),
                 ],

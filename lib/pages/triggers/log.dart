@@ -3,6 +3,7 @@ import 'package:dependencecoping/storage/trigger_log.dart';
 import 'package:dependencecoping/tokens/modal.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 class TriggerLogCard extends StatelessWidget {
@@ -25,7 +26,7 @@ class TriggerLogCard extends StatelessWidget {
             children: [
               IconButton.filledTonal(
                 onPressed: () {
-                  openModal(context, modal(context, "Trigger log event", TriggerLogEventModal(tl: tl)));
+                  openModal(context, modal(context, AppLocalizations.of(context)!.modalTriggerLogEvent, TriggerLogEventModal(tl: tl)));
                 },
                 icon: Text(
                   tl.impulse.toString().replaceAll('0', 'O'),

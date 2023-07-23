@@ -4,7 +4,7 @@ enum ColorValue {
   ocean(name: 'Ocean', canvas: Color(0xFF4bcffa)),
   cherry(name: 'Cherry', canvas: Color(0xFFff5e57)),
   rose(name: 'Rose', canvas: Color(0xFFef5777)),
-  forest(name: 'Forest', canvas: Color(0xFF575fcf)),
+  midnight(name: 'Midnight', canvas: Color(0xFF575fcf)),
   garden(name: 'Garden', canvas: Color(0xFF05c46b)),
   sun(name: 'Sun', canvas: Color(0xFFffc048));
 

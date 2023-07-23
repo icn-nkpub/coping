@@ -1,10 +1,11 @@
-
+import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/pages/clock/main.dart';
 import 'package:dependencecoping/pages/triggers/triggers.dart';
 import 'package:dependencecoping/paginator.dart';
 import 'package:dependencecoping/tokens/icons.dart';
 import 'package:dependencecoping/pages/meditation/meditation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Home extends StatefulWidget {
   const Home({
@@ -33,18 +34,18 @@ class _HomeState extends State<Home> {
             currentPageIndex = index;
           });
         },
-        destinations: const [
+        destinations: [
           NavigationDestination(
-            icon: SvgIcon(assetName: 'timer'),
-            label: 'Clock',
+            icon: SvgIcon(assetPath: Assets.icons.timer),
+            label: AppLocalizations.of(context)!.screenClock,
           ),
           NavigationDestination(
-            icon: SvgIcon(assetName: 'mindfulness'),
-            label: 'Triggers',
+            icon: SvgIcon(assetPath: Assets.icons.mindfulness),
+            label: AppLocalizations.of(context)!.screenTriggers,
           ),
           NavigationDestination(
-            icon: SvgIcon(assetName: 'relax'),
-            label: 'Meditation',
+            icon: SvgIcon(assetPath: Assets.icons.relax),
+            label: AppLocalizations.of(context)!.screenMeditation,
           ),
         ],
       ),

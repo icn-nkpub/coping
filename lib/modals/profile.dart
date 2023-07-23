@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dependencecoping/provider/login/login.dart';
 import 'package:dependencecoping/tokens/input.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileModal extends StatelessWidget {
   const ProfileModal({
@@ -19,9 +20,9 @@ class ProfileModal extends StatelessWidget {
         child: Form(
           child: Column(
             children: [
-              Input(title: 'First name', ctrl: cFirstName, autocorrect: true),
+              Input(title: AppLocalizations.of(context)!.profileFirstName, ctrl: cFirstName, autocorrect: true),
               const SizedBox(height: 8),
-              Input(title: 'Second name', ctrl: cSecondName, autocorrect: true),
+              Input(title: AppLocalizations.of(context)!.profileSecondName, ctrl: cSecondName, autocorrect: true),
               const SizedBox(height: 8),
               Flexible(child: ListView()),
               FilledButton(
@@ -32,9 +33,9 @@ class ProfileModal extends StatelessWidget {
                       );
                   if (Navigator.of(context).canPop()) Navigator.of(context).pop();
                 },
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text('Save'),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(AppLocalizations.of(context)!.profileSave),
                 ),
               ),
             ],

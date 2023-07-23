@@ -5,6 +5,7 @@ import 'package:dependencecoping/tokens/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GoalModal extends StatefulWidget {
   const GoalModal({
@@ -32,7 +33,6 @@ class _GoalModalState extends State<GoalModal> {
   Widget build(BuildContext context) {
     return BlocBuilder<StaticCubit, StaticRecords?>(builder: (context, staticRec) {
       List<Widget> widgets = [];
-      // widgets.add(_divider(context, 'Featured goals'));
       widgets.addAll(staticRec!.goals.map((g) => _togglableGoal(context, g)));
 
       return Padding(
@@ -48,7 +48,7 @@ class _GoalModalState extends State<GoalModal> {
                 if (widget.auth != null) context.read<GoalsCubit>().set(widget.auth!, Goals(goals));
                 if (Navigator.of(context).canPop()) Navigator.of(context).pop();
               },
-              child: const Text('Save')),
+              child: Text(AppLocalizations.of(context)!.goalsSave)),
         ]),
       );
     });
@@ -71,7 +71,7 @@ class _GoalModalState extends State<GoalModal> {
           Padding(
             padding: const EdgeInsets.all(16),
             child: SvgIcon(
-              assetName: g.iconName,
+              assetPath: 'assets/icons/${g.iconName}.svg',
               color: Theme.of(context).colorScheme.primary.withOpacity(.5),
             ),
           ),

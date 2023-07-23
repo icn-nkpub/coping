@@ -13,7 +13,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 enum LoadingProgress { notStarted, started, done }
 
-mixin Assets<T extends StatefulWidget> on State<T> {
+mixin AssetsInitializer<T extends StatefulWidget> on State<T> {
   LoadingProgress loadingState = LoadingProgress.notStarted;
 
   User? user;

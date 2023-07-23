@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dependencecoping/provider/login/login.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LogoutModal extends StatelessWidget {
   const LogoutModal({
@@ -15,16 +16,16 @@ class LogoutModal extends StatelessWidget {
         child: Form(
           child: Column(
             children: [
-              Text('${u?.profile?.firstName ?? 'Please'}, confirm that you want to logout.'),
+              Text(AppLocalizations.of(context)!.clearStorageWarning),
               Flexible(child: ListView()),
               FilledButton(
                 onPressed: () {
                   context.read<LoginCubit>().signOut();
                   if (Navigator.of(context).canPop()) Navigator.of(context).pop();
                 },
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text('Clear storage'),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(AppLocalizations.of(context)!.clearStorage),
                 ),
               ),
             ],

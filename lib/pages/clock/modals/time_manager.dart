@@ -1,3 +1,4 @@
+import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/provider/countdown/countdown.dart';
 import 'package:dependencecoping/provider/static/static.dart';
 import 'package:dependencecoping/storage/reset_log.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 const enableEdit = false;
 
@@ -56,7 +58,7 @@ class _TimeModalState extends State<TimeModal> {
                 if (widget.auth != null) context.read<CountdownTimerCubit>().overwrite(resets);
                 if (Navigator.of(context).canPop()) Navigator.of(context).pop();
               },
-              child: const Text('Save'),
+              child: Text(AppLocalizations.of(context)!.timeManagerSave),
             ),
         ]),
       );
@@ -82,11 +84,11 @@ class _TimeModalState extends State<TimeModal> {
                   padding: const EdgeInsets.only(right: 8),
                   child: r.resume
                       ? SvgIcon(
-                          assetName: 'play_arrow',
+                          assetPath: Assets.icons.playArrow,
                           color: Theme.of(context).colorScheme.onPrimaryContainer,
                         )
                       : SvgIcon(
-                          assetName: 'stop',
+                          assetPath: Assets.icons.stop,
                           color: Theme.of(context).colorScheme.onTertiaryContainer,
                         ),
                 )),
@@ -123,7 +125,7 @@ class _TimeModalState extends State<TimeModal> {
                     }
                   },
                   icon: SvgIcon(
-                    assetName: 'edit',
+                    assetPath: Assets.icons.edit,
                     color: r.resume ? Theme.of(context).colorScheme.onPrimaryContainer : Theme.of(context).colorScheme.onTertiaryContainer,
                   ),
                 ),

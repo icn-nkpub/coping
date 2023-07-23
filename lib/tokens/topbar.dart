@@ -1,4 +1,4 @@
-
+import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/tokens/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:dependencecoping/tokens/cardrope.dart';
@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dependencecoping/provider/theme/colors.dart';
 import 'package:dependencecoping/provider/theme/theme.dart';
 import 'package:dependencecoping/tokens/measurable.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NullTopBar extends StatelessWidget {
   const NullTopBar({
@@ -80,14 +81,14 @@ class _TopBarState extends State<TopBar> {
                 opacity: 0,
                 child: IconButton(
                   onPressed: () {},
-                  icon: const SvgIcon(assetName: 'more'),
+                  icon: SvgIcon(assetPath: Assets.icons.more),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: RichText(
                   text: TextSpan(
-                    text: 'Hello',
+                    text: AppLocalizations.of(context)!.hello,
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w600),
                     children: [
                       if (u?.profile?.firstName != null)
@@ -107,7 +108,7 @@ class _TopBarState extends State<TopBar> {
                 icon: AnimatedRotation(
                   duration: const Duration(milliseconds: 100),
                   turns: expandMenu ? 0.5 : 0,
-                  child: const SvgIcon(assetName: 'expand_more'),
+                  child: SvgIcon(assetPath: Assets.icons.expandMore),
                 ),
               ),
             ],
@@ -128,11 +129,11 @@ class _TopBarState extends State<TopBar> {
                 List<Widget> children = [];
 
                 if (u == null) {
-                  children.add(NavButton('Login', onPressed: goTo(0)));
-                  children.add(NavButton('Register', onPressed: goTo(1)));
+                  children.add(NavButton(AppLocalizations.of(context)!.screenLogin, onPressed: goTo(0)));
+                  children.add(NavButton(AppLocalizations.of(context)!.screenRegister, onPressed: goTo(1)));
                 } else {
-                  children.add(NavButton('Profile', onPressed: goTo(2)));
-                  children.add(NavButton('Logout', onPressed: goTo(3)));
+                  children.add(NavButton(AppLocalizations.of(context)!.screenProfile, onPressed: goTo(2)));
+                  children.add(NavButton(AppLocalizations.of(context)!.screenLogout, onPressed: goTo(3)));
                 }
 
                 return Wrap(
@@ -179,7 +180,7 @@ class ThemeChanger extends StatelessWidget {
                 context.read<ThemeCubit>().flipBrightness();
               },
               child: SvgIcon(
-                assetName: t.isLightMode() ? 'light_mode' : 'dark_mode',
+                assetPath: t.isLightMode() ? Assets.icons.lightMode : Assets.icons.darkMode,
               ),
             ),
             Flexible(
@@ -199,7 +200,7 @@ class ThemeChanger extends StatelessWidget {
                 context.read<ThemeCubit>().setColor(selected);
                 context.read<LoginCubit>().setTheme(selected.name, t.isLightMode());
               },
-              child: const SvgIcon(assetName: 'palette'),
+              child: SvgIcon(assetPath: Assets.icons.palette),
             ),
           ],
         );

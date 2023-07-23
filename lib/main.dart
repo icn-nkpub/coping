@@ -6,7 +6,6 @@ import 'package:dependencecoping/provider/static/static.dart';
 import 'package:dependencecoping/provider/trigger/trigger.dart';
 import 'package:dependencecoping/storage/init.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:dependencecoping/provider/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +15,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'home.dart';
 import 'dart:core';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   await Supabase.initialize(
@@ -52,7 +52,7 @@ class App extends StatefulWidget {
   State<App> createState() => _AppState();
 }
 
-class _AppState extends State<App> with Assets {
+class _AppState extends State<App> with AssetsInitializer {
   @override
   Widget build(BuildContext context) {
     if (tryLock()) {
@@ -62,6 +62,8 @@ class _AppState extends State<App> with Assets {
     if (loadingState != LoadingProgress.done) {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         home: Container(
           color: Colors.black,
           child: const Column(
@@ -157,14 +159,8 @@ class _AppState extends State<App> with Assets {
         child: BlocBuilder<ThemeCubit, ThemeState>(
           builder: (context, state) => MaterialApp(
             debugShowCheckedModeBanner: false,
-            localizationsDelegates: const [
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: const [
-              Locale('en'),
-            ],
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
             title: 'Coping',
             theme: state.data,
             home: BlocBuilder<LoginCubit, Profile?>(builder: (context, u) {

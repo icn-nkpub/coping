@@ -1,0 +1,68 @@
+{
+    "screenLogin": "Войти",
+    "screenRegister": "Зарегистрироваться",
+    "screenProfile": "Профиль",
+    "screenLogout": "Выйти",
+    "screenClock": "Таймер",
+    "screenTriggers": "Триггеры",
+    "screenMeditation": "Медитация",
+    "hello": "Привет",
+    "loginEmail": "Электронная почта",
+    "loginPassword": "Пароль",
+    "loginLogin": "Войти",
+    "clearStorage": "Очистить хранилище",
+    "clearStorageWarning": "Пожалуйста, подтвердите, что хотите выйти",
+    "profileFirstName": "Имя",
+    "profileSecondName": "Фамилия",
+    "profileSave": "Сохранить",
+    "registerEmail": "Электронная почта",
+    "registerPassword": "Пароль",
+    "registerRegister": "Зарегистрироваться",
+    "modalGoals": "Цели",
+    "modalTimerEvents": "Журнал таймера",
+    "modalLogTrigger": "Записать триггер",
+    "modalAddPersonalTrigger": "Добавить личный триггер",
+    "modalTriggerLogEvent": "Запись триггера",
+    "goalsFeatured": "Избранные цели",
+    "goalsSave": "Сохранить",
+    "timeManagerSave": "Сохранить",
+    "personalTriggerSituation": "Ситуация",
+    "personalTriggerThought": "Мысль",
+    "personalTriggerImpulse": "Импульс",
+    "personalTriggerSubmit": "Записать",
+    "triggerPersonalTriggers": "Ваши триггеры",
+    "triggerDiscoverTriggers": "Популярные триггеры",
+    "triggerTriggerLog": "Журнал триггеров",
+    "triggerLogEventSituation": "Ситуация",
+    "triggerLogEventThought": "Мысль",
+    "triggerPersonalLabel": "Название",
+    "triggerPersonalAddTrigger": "Добавить триггер",
+    "meditationHowToTitle": "Как следить за дыхательным циклом",
+    "meditationHowTo1": "Лягте на спину и расслабьтесь",
+    "meditationHowTo2": "Вдыхайте и выдыхайте медленно и размеренно",
+    "meditationHowTo3": "Положите одну руку на живот и почувствуйте, как он двигается вверх и вниз при дыхании",
+    "meditationHowTo4": "Если вы дышите грудью, вам нужно дышать глубже",
+    "meditationHowTo5": "Вдохните, чтобы ваш живот поднимался",
+    "meditationHowTo6": "Выдохните, чтобы живот и грудь опустились",
+    "meditationHowTo7": "Когда выдыхаете, сожмите губы, как будто задуваете свечу",
+    "meditationHowTo8": "Вдох в течении {breathInTime, plural, =1{секунды} other{{breathInTime} секунд}}",
+    "@meditationHowTo8": {
+        "placeholders": {
+            "breathInTime": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "meditationHowTo9": "и выдох в течении {breathOutTime, plural, =1{секунды} other{{breathOutTime} секунд}}",
+    "@meditationHowTo9": {
+        "placeholders": {
+            "breathOutTime": {
+                "type": "num",
+                "format": "compact"
+            }
+        }
+    },
+    "meditationHowTo10": "Следуйте по кругу",
+    "exit": "выход"
+}

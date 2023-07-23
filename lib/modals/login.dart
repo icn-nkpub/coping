@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dependencecoping/provider/login/login.dart';
 import 'package:dependencecoping/tokens/input.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginModal extends StatefulWidget {
   const LoginModal({
@@ -29,9 +30,9 @@ class _LoginModalState extends State<LoginModal> {
         child: Form(
           child: Column(
             children: [
-              Input(title: 'Email', ctrl: cEmail, autocorrect: false),
+              Input(title: AppLocalizations.of(context)!.loginEmail, ctrl: cEmail, autocorrect: false),
               const SizedBox(height: 8),
-              Input(title: 'Password', ctrl: cPwd, autocorrect: false, obscureText: true),
+              Input(title: AppLocalizations.of(context)!.loginPassword, ctrl: cPwd, autocorrect: false, obscureText: true),
               if (errorText != '') const SizedBox(height: 8),
               if (errorText != '')
                 Text(
@@ -50,9 +51,9 @@ class _LoginModalState extends State<LoginModal> {
                     });
                   }
                 },
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text('Login'),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(AppLocalizations.of(context)!.loginLogin),
                 ),
               ),
             ],

@@ -5,6 +5,7 @@ import 'package:dependencecoping/tokens/topbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:funvas/funvas.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({
@@ -52,11 +53,11 @@ class _OnboardingState extends State<Onboarding> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8 * 2),
-              child: NavButton('Login', onPressed: () => goTo(0)),
+              child: NavButton(AppLocalizations.of(context)!.screenLogin, onPressed: () => goTo(0)),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8 * 2),
-              child: NavButton('Register', onPressed: () => goTo(1)),
+              child: NavButton(AppLocalizations.of(context)!.screenRegister, onPressed: () => goTo(1)),
             ),
             const SizedBox(
               height: 8 * 6,

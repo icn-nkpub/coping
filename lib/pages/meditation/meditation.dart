@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'dart:core';
+import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dependencecoping/provider/login/login.dart';
 import 'package:dependencecoping/tokens/icons.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:funvas/funvas.dart';
 import 'package:dependencecoping/tokens/measurable.dart';
 import 'package:dependencecoping/tokens/topbar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CanvasDrawer extends Funvas {
   CanvasDrawer({
@@ -229,7 +231,7 @@ class _InfoCardState extends State<InfoCard> {
                 _expandInfo = !_expandInfo;
               });
             },
-            icon: _expandInfo ? const SvgIcon(assetName: 'close') : const SvgIcon(assetName: 'expand_more'),
+            icon: _expandInfo ? SvgIcon(assetPath: Assets.icons.close) : SvgIcon(assetPath: Assets.icons.expandMore),
           ),
         ),
         Shrinkable(
@@ -255,21 +257,20 @@ class _InfoCardState extends State<InfoCard> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  'How to follow breathing circle',
+                  AppLocalizations.of(context)!.meditationHowToTitle,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
               ...[
-                'Lie down on your back and relax',
-                'Breathe in and out slowly and steadily',
-                'Put one hand on your abdomen to feel it move up and down as you breathe',
-                'If you use your chest, you need breath deeper',
-                'Breathe in so your abdomen goes out',
-                'Breathe out abdonmen and chest goes down',
-                'When you breathe out, purse your lips like you are blowing out a candle',
-                'Breath in for ${(_speed / 3 * 1).round()} seconds '
-                    'and out for ${(_speed / 3 * 2).round()} seconds',
-                'Follow the circle'
+                AppLocalizations.of(context)!.meditationHowTo1,
+                AppLocalizations.of(context)!.meditationHowTo2,
+                AppLocalizations.of(context)!.meditationHowTo3,
+                AppLocalizations.of(context)!.meditationHowTo4,
+                AppLocalizations.of(context)!.meditationHowTo5,
+                AppLocalizations.of(context)!.meditationHowTo6,
+                AppLocalizations.of(context)!.meditationHowTo7,
+                "${AppLocalizations.of(context)!.meditationHowTo8((_speed / 3 * 1).round())} ${AppLocalizations.of(context)!.meditationHowTo9((_speed / 3 * 2).round())}",
+                AppLocalizations.of(context)!.meditationHowTo10,
               ].map((e) => Container(
                     padding: const EdgeInsets.symmetric(
                       vertical: 2,

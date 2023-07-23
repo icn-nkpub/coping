@@ -6,6 +6,7 @@ import 'package:dependencecoping/provider/trigger/trigger.dart';
 import 'package:dependencecoping/tokens/topbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TriggersScreen extends StatelessWidget {
   const TriggersScreen({
@@ -29,7 +30,7 @@ class TriggersScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(14),
                 child: Text(
-                  'Personal triggers',
+                  AppLocalizations.of(context)!.triggerPersonalTriggers,
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
@@ -38,7 +39,7 @@ class TriggersScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(14),
                 child: Text(
-                  'Discover triggers',
+                  AppLocalizations.of(context)!.triggerDiscoverTriggers,
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
@@ -46,7 +47,7 @@ class TriggersScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(14),
                 child: Text(
-                  'Triggers log',
+                  AppLocalizations.of(context)!.triggerTriggerLog,
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
