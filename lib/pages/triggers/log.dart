@@ -3,7 +3,6 @@ import 'package:dependencecoping/provider/theme/fonts.dart';
 import 'package:dependencecoping/storage/trigger_log.dart';
 import 'package:dependencecoping/tokens/modal.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
@@ -21,44 +20,58 @@ class TriggerLogCard extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8),
       child: Card(
         margin: EdgeInsets.zero,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 8, bottom: 8, left: 8, right: 16),
-          child: Row(
-            children: [
-              IconButton.filledTonal(
-                onPressed: () {
-                  openModal(context, modal(context, AppLocalizations.of(context)!.modalTriggerLogEvent, TriggerLogEventModal(tl: tl)));
-                },
-                icon: Text(
-                  tl.impulse.toString().replaceAll('0', 'O'),
-                  style: fAccent(
-                    textStyle: Theme.of(context).textTheme.titleSmall,
+        clipBehavior: Clip.antiAlias,
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Theme.of(context).colorScheme.primary.withOpacity(.01),
+                Theme.of(context).colorScheme.primary.withOpacity(.05),
+                Colors.transparent,
+                Colors.transparent,
+              ],
+              stops: [0, tl.impulse / 10, tl.impulse / 10, 1],
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 8, bottom: 8, left: 8, right: 16),
+            child: Row(
+              children: [
+                IconButton.filledTonal(
+                  onPressed: () {
+                    openModal(context, modal(context, AppLocalizations.of(context)!.modalTriggerLogEvent, TriggerLogEventModal(tl: tl)));
+                  },
+                  icon: Text(
+                    tl.impulse.toString().replaceAll('0', 'O'),
+                    style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                flex: 1,
-                child: Center(
-                  child: Text(
-                    tl.labels[Localizations.localeOf(context).languageCode] ?? tl.labels["en"] ?? "[...]",
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w900),
+                const SizedBox(width: 8),
+                Expanded(
+                  flex: 1,
+                  child: Center(
+                    child: Text(
+                      tl.labels[Localizations.localeOf(context).languageCode] ?? tl.labels["en"] ?? "[...]",
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w900),
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    DateFormat("dd.MM.yyyy HH:mm").format(tl.time).replaceAll('0', 'O'),
-                    style: fAccent(
-                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                    ).copyWith(fontWeight: FontWeight.w100),
+                Expanded(
+                  flex: 1,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      DateFormat("dd.MM.yyyy HH:mm").format(tl.time).replaceAll('0', 'O'),
+                      style: fAccent(
+                        textStyle: Theme.of(context).textTheme.bodyMedium,
+                      ).copyWith(fontWeight: FontWeight.w100),
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
