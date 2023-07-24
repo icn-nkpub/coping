@@ -3,7 +3,8 @@ import 'package:flutter_svg/svg.dart';
 
 class SvgIcon extends StatelessWidget {
   const SvgIcon({
-    required this.assetPath, super.key,
+    required this.assetPath,
+    super.key,
     this.size = 24,
     this.color,
   });
@@ -24,6 +25,7 @@ class SvgIcon extends StatelessWidget {
       colorFilter: iconColor,
       width: size,
       height: size,
+      clipBehavior: Clip.none,
     );
   }
 }

@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:dependencecoping/gen/assets.gen.dart';
+import 'package:dependencecoping/modals/help.dart';
 import 'package:dependencecoping/provider/login/login.dart';
 import 'package:dependencecoping/provider/theme/colors.dart';
 import 'package:dependencecoping/provider/theme/theme.dart';
 import 'package:dependencecoping/tokens/cardrope.dart';
 import 'package:dependencecoping/tokens/icons.dart';
 import 'package:dependencecoping/tokens/measurable.dart';
+import 'package:dependencecoping/tokens/modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -72,12 +74,18 @@ class _TopBarState extends State<TopBar> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Opacity(
-                    opacity: 0,
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: SvgIcon(assetPath: Assets.icons.more),
-                    ),
+                  IconButton(
+                    onPressed: () {
+                      openModal(
+                        context,
+                        modal(
+                          context,
+                          AppLocalizations.of(context)!.screenManual,
+                          const HelpModal(),
+                        ),
+                      );
+                    },
+                    icon: SvgIcon(assetPath: Assets.icons.developerGuide),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),

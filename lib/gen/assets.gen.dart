@@ -51,6 +51,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/delete.svg
   String get delete => 'assets/icons/delete.svg';
 
+  /// File path: assets/icons/developer_guide.svg
+  String get developerGuide => 'assets/icons/developer_guide.svg';
+
   /// File path: assets/icons/done.svg
   String get done => 'assets/icons/done.svg';
 
@@ -144,6 +147,7 @@ class $AssetsIconsGen {
         cognition,
         darkMode,
         delete,
+        developerGuide,
         done,
         edit,
         expandMore,
