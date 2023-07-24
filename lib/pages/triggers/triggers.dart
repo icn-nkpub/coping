@@ -24,42 +24,44 @@ class TriggersScreen extends StatelessWidget {
         children: [
           TopBar(setPage: setPage),
           Expanded(
-            child: ListView(
-              children: [
-                const SizedBox(height: 8),
-                Padding(
-                  padding: const EdgeInsets.all(14),
-                  child: Text(
-                    AppLocalizations.of(context)!.triggerPersonalTriggers,
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
+            child: BlocBuilder<TriggersCubit, Triggers?>(
+              builder: (final context, final ts) => ListView(
+                children: [
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.all(14),
+                    child: Text(
+                      AppLocalizations.of(context)!.triggerPersonalTriggers,
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
+                    ),
                   ),
-                ),
-                const TriggerList(),
-                const SizedBox(height: 8),
-                Padding(
-                  padding: const EdgeInsets.all(14),
-                  child: Text(
-                    AppLocalizations.of(context)!.triggerDiscoverTriggers,
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
+                  const TriggerList(),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.all(14),
+                    child: Text(
+                      AppLocalizations.of(context)!.triggerDiscoverTriggers,
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
+                    ),
                   ),
-                ),
-                const ComunityFolder(),
-                Padding(
-                  padding: const EdgeInsets.all(14),
-                  child: Text(
-                    AppLocalizations.of(context)!.triggerTriggerLog,
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
+                  const ComunityFolder(),
+                  if ((ts?.log ?? []).isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.all(14),
+                      child: Text(
+                        AppLocalizations.of(context)!.triggerTriggerLog,
+                        style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: ts?.log.map(TriggerLogCard.new).toList() ?? [],
+                    ),
                   ),
-                ),
-                BlocBuilder<TriggersCubit, Triggers?>(
-                    builder: (final context, final ts) => Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: ts?.log.map(TriggerLogCard.new).toList() ?? [],
-                          ),
-                        )),
-              ],
+                ],
+              ),
             ),
           ),
         ],

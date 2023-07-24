@@ -21,6 +21,7 @@ class TriggerLogCard extends StatelessWidget {
           margin: EdgeInsets.zero,
           clipBehavior: Clip.antiAlias,
           child: Container(
+            padding: const EdgeInsets.only(top: 8, bottom: 8, left: 8, right: 16),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
@@ -32,41 +33,38 @@ class TriggerLogCard extends StatelessWidget {
                 stops: [0, tl.impulse / 10, tl.impulse / 10, 1],
               ),
             ),
-            child: Padding(
-              padding: const EdgeInsets.only(top: 8, bottom: 8, left: 8, right: 16),
-              child: Row(
-                children: [
-                  IconButton.filledTonal(
-                    onPressed: () {
-                      openModal(context, modal(context, AppLocalizations.of(context)!.modalTriggerLogEvent, TriggerLogEventModal(tl: tl)));
-                    },
-                    icon: Text(
-                      tl.impulse.toString().replaceAll('0', 'O'),
-                      style: Theme.of(context).textTheme.titleSmall,
+            child: Row(
+              children: [
+                IconButton.filledTonal(
+                  onPressed: () {
+                    openModal(context, modal(context, AppLocalizations.of(context)!.modalTriggerLogEvent, TriggerLogEventModal(tl: tl)));
+                  },
+                  icon: Text(
+                    tl.impulse.toString().replaceAll('0', 'O'),
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      tl.labels[Localizations.localeOf(context).languageCode] ?? tl.labels['en'] ?? '[...]',
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w900),
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Center(
-                      child: Text(
-                        tl.labels[Localizations.localeOf(context).languageCode] ?? tl.labels['en'] ?? '[...]',
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w900),
-                      ),
+                ),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      DateFormat('dd.MM.yyyy HH:mm').format(tl.time).replaceAll('0', 'O'),
+                      style: fAccent(
+                        textStyle: Theme.of(context).textTheme.bodyMedium,
+                      ).copyWith(fontWeight: FontWeight.w100),
                     ),
                   ),
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        DateFormat('dd.MM.yyyy HH:mm').format(tl.time).replaceAll('0', 'O'),
-                        style: fAccent(
-                          textStyle: Theme.of(context).textTheme.bodyMedium,
-                        ).copyWith(fontWeight: FontWeight.w100),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
