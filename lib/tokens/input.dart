@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 
 class Input extends StatelessWidget {
   const Input({
-    super.key,
-    required this.title,
-    required this.ctrl,
-    required this.autocorrect,
+    required this.title, required this.ctrl, required this.autocorrect, super.key,
     this.obscureText = false,
   });
 
@@ -15,8 +12,8 @@ class Input extends StatelessWidget {
   final bool obscureText;
 
   @override
-  Widget build(BuildContext context) {
-    var t = Theme.of(context);
+  Widget build(final BuildContext context) {
+    final t = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -25,8 +22,7 @@ class Input extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: ValueListenableBuilder<TextEditingValue>(
             valueListenable: ctrl,
-            builder: (context, value, child) {
-              return value.text.isNotEmpty
+            builder: (final context, final value, final child) => value.text.isNotEmpty
                   ? Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
@@ -36,8 +32,7 @@ class Input extends StatelessWidget {
                         ),
                       ),
                     )
-                  : const SizedBox();
-            },
+                  : const SizedBox(),
           ),
         ),
         Container(

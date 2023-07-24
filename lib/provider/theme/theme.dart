@@ -1,7 +1,7 @@
+import 'package:dependencecoping/provider/theme/colors.dart';
 import 'package:dependencecoping/provider/theme/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:dependencecoping/provider/theme/colors.dart';
 
 class ThemeState {
   ThemeState({
@@ -14,7 +14,7 @@ class ThemeState {
   ThemeData data;
   ColorValue color;
 
-  resetThemeData() {
+  void resetThemeData() {
     data = ThemeData(
       colorScheme: ColorScheme.fromSeed(
         seedColor: color.primary,
@@ -46,12 +46,10 @@ class ThemeState {
     );
   }
 
-  bool isLightMode() {
-    return mode == ThemeMode.light;
-  }
+  bool isLightMode() => mode == ThemeMode.light;
 
   @override
-  bool operator ==(Object other) => false; // ignore: hash_and_equals
+  bool operator ==(final Object other) => false; // ignore: hash_and_equals
 }
 
 class ThemeCubit extends Cubit<ThemeState> {
@@ -81,13 +79,13 @@ class ThemeCubit extends Cubit<ThemeState> {
     emit(state);
   }
 
-  Future<void> setBrightness(ThemeMode mode) async {
+  void setBrightness(final ThemeMode mode) {
     state.mode = mode;
     state.resetThemeData();
     emit(state);
   }
 
-  Future<void> setColor(ColorValue c) async {
+  void setColor(final ColorValue c) {
     state.color = c;
 
     state.resetThemeData();

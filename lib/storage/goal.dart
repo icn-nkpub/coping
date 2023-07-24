@@ -25,19 +25,19 @@ class Goal {
   Duration rate; // rate_ms
 }
 
-Future<void> syncGoals(User user, List<Goal> goals) async {
+Future<void> syncGoals(final User user, final List<Goal> goals) async {
   final data = await query().select<PostgrestList>().eq(
         'user_id',
         user.id,
       );
 
-  for (var g in goals) {
-    Map<String, String> ds = {};
-    for (var d in g.descriptions.entries) {
-      ds[d.key.toString()] = d.value;
+  for (final g in goals) {
+    final Map<String, String> ds = {};
+    for (final d in g.descriptions.entries) {
+      ds[d.key] = d.value;
     }
 
-    var rec = {
+    final rec = {
       'title': g.titles,
       'icon_name': g.iconName,
       'related_addiction': g.relatedAddiction,
@@ -47,7 +47,7 @@ Future<void> syncGoals(User user, List<Goal> goals) async {
       'rate_seconds': g.rate.inSeconds,
     };
 
-    var existant = data.where((element) => element['meta_id'] == g.id).firstOrNull;
+    final existant = data.where((final element) => element['meta_id'] == g.id).firstOrNull;
 
     if (existant != null) {
       await query().update(rec).eq('user_id', user.id).eq('meta_id', g.id);
@@ -60,22 +60,22 @@ Future<void> syncGoals(User user, List<Goal> goals) async {
     await query().insert(rec);
   }
 
-  var nonExistant = data.where((src) => goals.where((g) => src['meta_id'] == g.id).firstOrNull == null);
-  for (var element in nonExistant) {
+  final nonExistant = data.where((final src) => goals.where((final g) => src['meta_id'] == g.id).firstOrNull == null);
+  for (final element in nonExistant) {
     await query().delete().eq('user_id', user.id).eq('meta_id', element['meta_id']);
   }
 }
 
-Future<List<Goal>> getGoals(User user) async {
+Future<List<Goal>> getGoals(final User user) async {
   final data = await query().select<PostgrestList>().eq('related_addiction', 'smoking');
 
   if (data.isEmpty) {
     return [];
   }
 
-  List<Goal> gs = [];
+  final List<Goal> gs = [];
 
-  for (var record in data) {
+  for (final record in data) {
     final descriptions = maybeLocalized(record['descriptions']);
     final titles = maybeLocalized(record['title']);
 
@@ -96,6 +96,4 @@ Future<List<Goal>> getGoals(User user) async {
   return gs;
 }
 
-SupabaseQueryBuilder query() {
-  return Supabase.instance.client.from('goals');
-}
+SupabaseQueryBuilder query() => Supabase.instance.client.from('goals');

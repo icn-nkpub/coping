@@ -1,6 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-Future<User?> supalogin(String email, String password) async {
+Future<User?> supalogin(final String email, final String password) async {
   final db = Supabase.instance.client;
 
   final AuthResponse res = await db.auth.signInWithPassword(
@@ -11,7 +11,7 @@ Future<User?> supalogin(String email, String password) async {
   return res.user;
 }
 
-Future<User?> suparegister(String email, String password) async {
+Future<User?> suparegister(final String email, final String password) async {
   final db = Supabase.instance.client;
 
   final AuthResponse res = await db.auth.signUp(

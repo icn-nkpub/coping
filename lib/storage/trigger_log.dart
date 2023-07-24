@@ -18,7 +18,7 @@ class TriggerLog {
   final DateTime time;
 }
 
-Future<void> logTrigger(User user, Trigger t, String situation, String thought, int impulse) async {
+Future<void> logTrigger(final User user, final Trigger t, final String situation, final String thought, final int impulse) async {
   await query().insert({
     'user_id': user.id,
     'meta_id': t.id,
@@ -30,11 +30,11 @@ Future<void> logTrigger(User user, Trigger t, String situation, String thought, 
   });
 }
 
-Future<List<TriggerLog>> getTriggersLog(User user, String type) async {
-  var data = await query().select<PostgrestList>().eq('user_id', user.id).eq('addiction_type', type);
+Future<List<TriggerLog>> getTriggersLog(final User user, final String type) async {
+  final data = await query().select<PostgrestList>().eq('user_id', user.id).eq('addiction_type', type);
 
-  List<TriggerLog> result = [];
-  for (var r in data) {
+  final List<TriggerLog> result = [];
+  for (final r in data) {
     final labels = maybeLocalized(r['label']);
 
     result.add(TriggerLog(
@@ -49,6 +49,4 @@ Future<List<TriggerLog>> getTriggersLog(User user, String type) async {
   return result;
 }
 
-SupabaseQueryBuilder query() {
-  return Supabase.instance.client.from('trigger_logs');
-}
+SupabaseQueryBuilder query() => Supabase.instance.client.from('trigger_logs');

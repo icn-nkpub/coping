@@ -1,8 +1,8 @@
+import 'package:dependencecoping/provider/login/login.dart';
 import 'package:dependencecoping/provider/trigger/trigger.dart';
+import 'package:dependencecoping/tokens/input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:dependencecoping/provider/login/login.dart';
-import 'package:dependencecoping/tokens/input.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PersonalTriggerFormModal extends StatefulWidget {
@@ -18,11 +18,10 @@ class _PersonalTriggerFormModalState extends State<PersonalTriggerFormModal> {
   var cLabel = TextEditingController(text: '');
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final navigator = Navigator.of(context);
 
-    return BlocBuilder<LoginCubit, Profile?>(builder: (context, u) {
-      return Padding(
+    return BlocBuilder<LoginCubit, Profile?>(builder: (final context, final u) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Form(
           child: Column(
@@ -43,7 +42,6 @@ class _PersonalTriggerFormModalState extends State<PersonalTriggerFormModal> {
             ],
           ),
         ),
-      );
-    });
+      ));
   }
 }

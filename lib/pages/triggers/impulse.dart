@@ -18,10 +18,9 @@ class _ImpulseSliderState extends State<ImpulseSlider> {
   double impulse = 3;
 
   @override
-  Widget build(BuildContext context) {
-    var t = Theme.of(context);
+  Widget build(final BuildContext context) {
+    final t = Theme.of(context);
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SliderTheme(
           data: Theme.of(context).sliderTheme.copyWith(
@@ -29,16 +28,15 @@ class _ImpulseSliderState extends State<ImpulseSlider> {
               ),
           child: Slider(
             value: impulse,
-            min: 0,
             max: 10,
             divisions: 10,
-            label: "${impulse.round()}",
-            onChanged: (double value) {
+            label: '${impulse.round()}',
+            onChanged: (final double value) {
               setState(() {
                 impulse = value;
               });
             },
-            onChangeEnd: (value) => widget.callback(value),
+            onChangeEnd: (final value) => widget.callback(value),
           ),
         ),
         Text(

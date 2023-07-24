@@ -18,7 +18,7 @@ class ProfileRecord {
   bool? isLight;
 }
 
-Future<ProfileRecord?> getProfile(User user) async {
+Future<ProfileRecord?> getProfile(final User user) async {
   final data = await query().select<PostgrestList>().eq(
         'user_id',
         user.id,
@@ -32,7 +32,7 @@ Future<ProfileRecord?> getProfile(User user) async {
   var breathingTime = double.parse((record['breathing_time'] ?? '6').toString());
   if (breathingTime < 3 || breathingTime > 32) breathingTime = 6;
 
-  Map<String, dynamic> themeData = jsonDecode(record['theme'] ?? '{}');
+  final Map<String, dynamic> themeData = jsonDecode(record['theme'] ?? '{}');
 
   return ProfileRecord(
     firstName: record['first_name'] ?? '',
@@ -43,7 +43,7 @@ Future<ProfileRecord?> getProfile(User user) async {
   );
 }
 
-Future<void> syncProfile(User user, ProfileRecord p) async {
+Future<void> syncProfile(final User user, final ProfileRecord p) async {
   final data = await query().select<PostgrestList>().eq(
         'user_id',
         user.id,
@@ -65,7 +65,7 @@ Future<void> syncProfile(User user, ProfileRecord p) async {
   }).eq('user_id', user.id);
 }
 
-Future<void> syncProfileBreathingTime(User user, double breathingTime) async {
+Future<void> syncProfileBreathingTime(final User user, final double breathingTime) async {
   final data = await query().select<PostgrestList>().eq(
         'user_id',
         user.id,
@@ -85,7 +85,7 @@ Future<void> syncProfileBreathingTime(User user, double breathingTime) async {
   }).eq('user_id', user.id);
 }
 
-Future<void> syncProfileTheme(User user, String color, bool isLight) async {
+Future<void> syncProfileTheme(final User user, final String color, {final bool isLight = false}) async {
   final data = await query().select<PostgrestList>().eq(
         'user_id',
         user.id,
@@ -110,6 +110,4 @@ Future<void> syncProfileTheme(User user, String color, bool isLight) async {
   }).eq('user_id', user.id);
 }
 
-SupabaseQueryBuilder query() {
-  return Supabase.instance.client.from('profiles');
-}
+SupabaseQueryBuilder query() => Supabase.instance.client.from('profiles');

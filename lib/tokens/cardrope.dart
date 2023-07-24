@@ -2,40 +2,37 @@ import 'package:flutter/material.dart';
 
 class RopedCard extends StatelessWidget {
   const RopedCard({
-    super.key,
     required this.children,
+    super.key,
   });
 
   final List<Widget> children;
 
   @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.all(0),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: children,
+  Widget build(final BuildContext context) => Card(
+        margin: EdgeInsets.zero,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: children,
+          ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 class CardRope extends StatelessWidget {
   const CardRope({
-    super.key,
     required this.cards,
+    super.key,
   });
 
   final List<Widget> cards;
 
   @override
-  Widget build(BuildContext context) {
-    List<Widget> ws = [];
-    for (var card in cards) {
+  Widget build(final BuildContext context) {
+    final List<Widget> ws = [];
+    for (final card in cards) {
       ws.add(const SizedBox(
         height: 8,
       ));

@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 
 class Measurable extends StatefulWidget {
   const Measurable({
-    super.key,
-    required this.reportHeight,
-    required this.child,
+    required this.reportHeight, required this.child, super.key,
   });
 
   final Function(double) reportHeight;
@@ -20,26 +18,22 @@ class _MeasurableState extends State<Measurable> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((final _) {
       final rb = _key.currentContext!.findRenderObject()! as RenderBox;
       widget.reportHeight(rb.size.height);
     });
   }
 
   @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
+  Widget build(final BuildContext context) => SingleChildScrollView(
       reverse: true,
       child: Container(key: _key, child: widget.child),
     );
-  }
 }
 
 class Shrinkable extends StatefulWidget {
   const Shrinkable({
-    super.key,
-    required this.child,
-    required this.expanded,
+    required this.child, required this.expanded, super.key,
     this.duration = const Duration(milliseconds: 200),
   });
 
@@ -55,14 +49,12 @@ class _ShrinkableState extends State<Shrinkable> {
   double size = 0;
 
   @override
-  Widget build(BuildContext context) {
-    return AnimatedContainer(
+  Widget build(final BuildContext context) => AnimatedContainer(
       duration: widget.duration,
       height: widget.expanded ? size : 0,
       child: Measurable(
-        reportHeight: (h) => setState(() => size = h),
+        reportHeight: (final h) => setState(() => size = h),
         child: widget.child,
       ),
     );
-  }
 }

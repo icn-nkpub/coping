@@ -1,13 +1,12 @@
+import 'package:dependencecoping/modals/login.dart';
 import 'package:dependencecoping/modals/logout.dart';
 import 'package:dependencecoping/modals/profile.dart';
-import 'package:dependencecoping/modals/login.dart';
 import 'package:dependencecoping/modals/register.dart';
 import 'package:dependencecoping/tokens/modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-Function(int) pagginator(BuildContext context) {
-  return (int page) {
+Function(int) pagginator(final BuildContext context) => (final int page) {
     openModal(
         context,
         [
@@ -17,4 +16,3 @@ Function(int) pagginator(BuildContext context) {
           modal(context, AppLocalizations.of(context)!.screenLogout, const LogoutModal()),
         ][page]);
   };
-}

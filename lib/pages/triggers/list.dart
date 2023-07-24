@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/pages/triggers/impulse.dart';
 import 'package:dependencecoping/pages/triggers/modals/personal.dart';
@@ -32,68 +34,60 @@ class _TriggerListState extends State<TriggerList> with TickerProviderStateMixin
   int impulse = 3;
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: BlocBuilder<LoginCubit, Profile?>(builder: (context, p) {
-        return BlocBuilder<TriggersCubit, Triggers?>(
-          builder: (context, triggers) {
-            List<Widget> children = [];
+  Widget build(final BuildContext context) => Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: BlocBuilder<LoginCubit, Profile?>(
+            builder: (final context, final p) => BlocBuilder<TriggersCubit, Triggers?>(
+                  builder: (final context, final triggers) {
+                    final List<Widget> children = [];
 
-            if (triggers != null) {
-              children.addAll(
-                triggers.templates.map(
-                  (t) => FilledButton.tonal(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.tertiaryContainer),
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      padding: const MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 8 * 2)),
-                    ),
-                    onLongPress: () {
-                      if (p?.auth != null) context.read<TriggersCubit>().removePersonal(p!.auth, t.id);
-                    },
-                    onPressed: () {
-                      openModal(context, modal(context, AppLocalizations.of(context)!.modalLogTrigger, triggerModal(t)));
-                    },
-                    child: Text(t.labels[Localizations.localeOf(context).languageCode] ?? t.labels["en"] ?? "[...]"),
-                  ),
-                ),
-              );
-            }
+                    if (triggers != null) {
+                      children.addAll(
+                        triggers.templates.map(
+                          (final t) => FilledButton.tonal(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.tertiaryContainer),
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              padding: const MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 8 * 2)),
+                            ),
+                            onLongPress: () {
+                              if (p?.auth != null) unawaited(context.read<TriggersCubit>().removePersonal(p!.auth, t.id));
+                            },
+                            onPressed: () {
+                              openModal(context, modal(context, AppLocalizations.of(context)!.modalLogTrigger, triggerModal(t)));
+                            },
+                            child: Text(t.labels[Localizations.localeOf(context).languageCode] ?? t.labels['en'] ?? '[...]'),
+                          ),
+                        ),
+                      );
+                    }
 
-            children.add(
-              IconButton.filledTonal(
-                style: const ButtonStyle(
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 8 * 2)),
-                ),
-                onPressed: () {
-                  openModal(context, modal(context, AppLocalizations.of(context)!.modalAddPersonalTrigger, const PersonalTriggerFormModal()));
-                },
-                icon: SvgIcon(
-                  assetPath: Assets.icons.add,
-                ),
-              ),
-            );
+                    children.add(
+                      IconButton.filledTonal(
+                        style: const ButtonStyle(
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 8 * 2)),
+                        ),
+                        onPressed: () {
+                          openModal(context, modal(context, AppLocalizations.of(context)!.modalAddPersonalTrigger, const PersonalTriggerFormModal()));
+                        },
+                        icon: SvgIcon(
+                          assetPath: Assets.icons.add,
+                        ),
+                      ),
+                    );
 
-            return Wrap(
-              alignment: WrapAlignment.start,
-              crossAxisAlignment: WrapCrossAlignment.start,
-              runAlignment: WrapAlignment.start,
-              runSpacing: 4,
-              spacing: 4,
-              children: children,
-            );
-          },
-        );
-      }),
-    );
-  }
+                    return Wrap(
+                      runSpacing: 4,
+                      spacing: 4,
+                      children: children,
+                    );
+                  },
+                )),
+      );
 
-  Padding triggerModal(Trigger t) {
-    final navigator = Navigator.of(context);
-
-    var g = LinearGradient(colors: [
+  Padding triggerModal(final Trigger t) {
+    final g = LinearGradient(colors: [
       Theme.of(context).colorScheme.primary,
       Theme.of(context).colorScheme.primary,
       Theme.of(context).colorScheme.tertiary,
@@ -102,8 +96,6 @@ class _TriggerListState extends State<TriggerList> with TickerProviderStateMixin
     return Padding(
       padding: const EdgeInsets.all(8),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 8, bottom: 8 * 4),
@@ -111,20 +103,18 @@ class _TriggerListState extends State<TriggerList> with TickerProviderStateMixin
               child: AnimatedBuilder(
                 animation: _c,
                 child: Text(
-                  t.labels[Localizations.localeOf(context).languageCode] ?? t.labels["en"] ?? "[...]",
+                  t.labels[Localizations.localeOf(context).languageCode] ?? t.labels['en'] ?? '[...]',
                   style: fAccent(
                     textStyle: Theme.of(context).textTheme.displaySmall,
                   ).copyWith(fontWeight: FontWeight.w900),
                 ),
-                builder: (context, child) {
-                  return ShaderMask(
-                    blendMode: BlendMode.srcIn,
-                    shaderCallback: (bounds) => g.createShader(
-                      Rect.fromLTWH((bounds.width) * (1 - (_c.value * 2)).abs(), 0, bounds.width / 2, bounds.height),
-                    ),
-                    child: child,
-                  );
-                },
+                builder: (final context, final child) => ShaderMask(
+                  blendMode: BlendMode.srcIn,
+                  shaderCallback: (final bounds) => g.createShader(
+                    Rect.fromLTWH((bounds.width) * (1 - (_c.value * 2)).abs(), 0, bounds.width / 2, bounds.height),
+                  ),
+                  child: child,
+                ),
               ),
             ),
           ),
@@ -134,14 +124,18 @@ class _TriggerListState extends State<TriggerList> with TickerProviderStateMixin
           const SizedBox(height: 8 * 4),
           ImpulseSlider(
             title: AppLocalizations.of(context)!.personalTriggerImpulse,
-            callback: (i) => setState(() => impulse = i.round()),
+            callback: (final i) => setState(() => impulse = i.round()),
           ),
           Flexible(child: ListView()),
           FilledButton(
-            onPressed: () async {
-              var p = context.read<LoginCubit>().state;
-              if (p != null) context.read<TriggersCubit>().send(p.auth, t, situation.value.text, thought.value.text, impulse);
-              if (navigator.canPop()) navigator.pop();
+            onPressed: () {
+              final navigator = Navigator.of(context);
+
+              if (navigator.canPop()) {
+                final p = context.read<LoginCubit>().state;
+                if (p != null) unawaited(context.read<TriggersCubit>().send(p.auth, t, situation.value.text, thought.value.text, impulse));
+                navigator.pop();
+              }
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),

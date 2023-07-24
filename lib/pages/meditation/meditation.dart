@@ -1,14 +1,15 @@
-import 'dart:math';
 import 'dart:core';
+import 'dart:math';
+
 import 'package:dependencecoping/gen/assets.gen.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dependencecoping/provider/login/login.dart';
 import 'package:dependencecoping/tokens/icons.dart';
-import 'package:flutter/material.dart';
-import 'package:funvas/funvas.dart';
 import 'package:dependencecoping/tokens/measurable.dart';
 import 'package:dependencecoping/tokens/topbar.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:funvas/funvas.dart';
 
 class CanvasDrawer extends Funvas {
   CanvasDrawer({
@@ -64,14 +65,14 @@ class CanvasDrawer extends Funvas {
     if (!muted) _drawCircle(primary, pt, w, h, slide);
   }
 
-  void _drawParticles(double pt, double w, double h, double cycle, double t, double slide) {
+  void _drawParticles(final double pt, final double w, final double h, final double cycle, final double t, final double slide) {
     for (int round = 0; round < rounds; round++) {
       final rCycle = round / rounds;
       final r = (4 * pt) + ((((muted ? 0 : cycle) * 3.85) + 1) * rCycle * 16 * pt) / 3;
 
       final angleSkew = (13.1 + (t / 31)) * ((round + 1) * 14);
 
-      double alpha = max(0, (min(max((t / fullCycleDuration) - .25, 0), (round / rounds)) / 2) - 0.05);
+      double alpha = max(0, (min(max((t / fullCycleDuration) - .25, 0), round / rounds) / 2) - 0.05);
 
       if (windDownTime > -1) {
         alpha = max(0, alpha - (t - windDownTime));
@@ -83,9 +84,9 @@ class CanvasDrawer extends Funvas {
 
         final angle = (i + 1) * (pi / 2) + angleSkew;
 
-        var lr = r + (v * 8);
+        final lr = r + (v * 8);
 
-        var x1 = lr * cos(angle * pi / 180);
+        final x1 = lr * cos(angle * pi / 180);
         var y1 = lr * sin(angle * pi / 180);
         y1 = y1 - slide;
 
@@ -100,7 +101,7 @@ class CanvasDrawer extends Funvas {
     }
   }
 
-  void _drawGuideLine(HSLColor color, double pt, double w, double h) {
+  void _drawGuideLine(final HSLColor color, final double pt, final double w, final double h) {
     final pointPaint = Paint();
     pointPaint.color = color.toColor().withAlpha(25);
     pointPaint.strokeCap = StrokeCap.round;
@@ -112,7 +113,7 @@ class CanvasDrawer extends Funvas {
     );
   }
 
-  void _drawCircle(HSLColor color, double pt, double w, double h, double slide) {
+  void _drawCircle(final HSLColor color, final double pt, final double w, final double h, final double slide) {
     final circlePaint = Paint();
     circlePaint.color = color.toColor();
     circlePaint.strokeCap = StrokeCap.round;
@@ -124,17 +125,17 @@ class CanvasDrawer extends Funvas {
     );
   }
 
-  double graph(double t) {
+  double graph(final double t) {
     final x = 1 - ((t % fullCycleDuration) / fullCycleDuration);
 
     final fnUp = bezFn(x, 3, 0);
     final fnDown = bezFn(x, -1.5, -1);
 
-    var cycle = x < 1 / 3 ? fnUp : fnDown;
+    final cycle = x < 1 / 3 ? fnUp : fnDown;
     return cycle;
   }
 
-  double bezFn(double x, double compression, double offset) {
+  double bezFn(final double x, final double compression, final double offset) {
     final v = compression * (x + offset);
 
     final y = pow(v, 2) / (2 * (pow(v, 2) - v) + 1);
@@ -147,56 +148,54 @@ class MeditationScreen extends StatelessWidget {
   const MeditationScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<LoginCubit, Profile?>(builder: (context, u) {
-      final breathingTime = u?.profile?.breathingTime ?? 6.0;
+  Widget build(final BuildContext context) => BlocBuilder<LoginCubit, Profile?>(builder: (final context, final u) {
+        final breathingTime = u?.profile?.breathingTime ?? 6.0;
 
-      var cd = CanvasDrawer(
-        backdrop: Theme.of(context).scaffoldBackgroundColor,
-        primary: HSLColor.fromColor(Theme.of(context).colorScheme.primary),
-        secondary: HSLColor.fromColor(Theme.of(context).colorScheme.tertiary),
-        fullCycleDuration: breathingTime,
-        scale: 1.3,
-        rounds: 12,
-        slideDist: 12,
-      );
-      return Stack(
-        alignment: Alignment.center,
-        children: [
-          SizedBox(
-            width: double.infinity,
-            height: double.infinity,
-            child: FunvasContainer(
-              funvas: cd,
+        final cd = CanvasDrawer(
+          backdrop: Theme.of(context).scaffoldBackgroundColor,
+          primary: HSLColor.fromColor(Theme.of(context).colorScheme.primary),
+          secondary: HSLColor.fromColor(Theme.of(context).colorScheme.tertiary),
+          fullCycleDuration: breathingTime,
+          scale: 1.3,
+          rounds: 12,
+          slideDist: 12,
+        );
+        return Stack(
+          alignment: Alignment.center,
+          children: [
+            SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: FunvasContainer(
+                funvas: cd,
+              ),
             ),
-          ),
-          SizedBox(
-            width: double.infinity,
-            height: double.infinity,
-            child: InfoCard(
-              speed: breathingTime,
-              setSpeed: (s) {
-                Future.delayed(const Duration(seconds: 1), () {
-                  context.read<LoginCubit>().setBreathingTime(s);
-                });
-              },
-              changingSpeed: () {
-                cd.windDown = true;
-              },
-            ),
-          )
-        ],
-      );
-    });
-  }
+            SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: InfoCard(
+                speed: breathingTime,
+                setSpeed: (final s) {
+                  Future.delayed(const Duration(seconds: 1), () async {
+                    await context.read<LoginCubit>().setBreathingTime(s);
+                  });
+                },
+                changingSpeed: () {
+                  cd.windDown = true;
+                },
+              ),
+            )
+          ],
+        );
+      });
 }
 
 class InfoCard extends StatefulWidget {
   const InfoCard({
-    super.key,
     required this.speed,
     required this.setSpeed,
     required this.changingSpeed,
+    super.key,
   });
 
   final double speed;
@@ -218,102 +217,97 @@ class _InfoCardState extends State<InfoCard> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      verticalDirection: VerticalDirection.up,
-      children: [
-        const Expanded(child: SizedBox()),
-        Padding(
-          padding: const EdgeInsets.only(top: 8.0),
-          child: IconButton.filledTonal(
-            onPressed: () {
-              setState(() {
-                _expandInfo = !_expandInfo;
-              });
-            },
-            icon: _expandInfo ? SvgIcon(assetPath: Assets.icons.close) : SvgIcon(assetPath: Assets.icons.expandMore),
+  Widget build(final BuildContext context) => Column(
+        verticalDirection: VerticalDirection.up,
+        children: [
+          const Expanded(child: SizedBox()),
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: IconButton.filledTonal(
+              onPressed: () {
+                setState(() {
+                  _expandInfo = !_expandInfo;
+                });
+              },
+              icon: _expandInfo ? SvgIcon(assetPath: Assets.icons.close) : SvgIcon(assetPath: Assets.icons.expandMore),
+            ),
           ),
-        ),
-        Shrinkable(
-          expanded: _expandInfo,
-          child: body(context),
-        ),
-        const NullTopBar(),
-      ],
-    );
-  }
+          Shrinkable(
+            expanded: _expandInfo,
+            child: body(context),
+          ),
+          const NullTopBar(),
+        ],
+      );
 
-  Widget body(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
-      child: Card(
-        margin: EdgeInsets.zero,
-        elevation: 1,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  AppLocalizations.of(context)!.meditationHowToTitle,
-                  style: Theme.of(context).textTheme.titleMedium,
+  Widget body(final BuildContext context) => Padding(
+        padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
+        child: Card(
+          margin: EdgeInsets.zero,
+          elevation: 1,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    AppLocalizations.of(context)!.meditationHowToTitle,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
                 ),
-              ),
-              ...[
-                AppLocalizations.of(context)!.meditationHowTo1,
-                AppLocalizations.of(context)!.meditationHowTo2,
-                AppLocalizations.of(context)!.meditationHowTo3,
-                AppLocalizations.of(context)!.meditationHowTo4,
-                AppLocalizations.of(context)!.meditationHowTo5,
-                AppLocalizations.of(context)!.meditationHowTo6,
-                AppLocalizations.of(context)!.meditationHowTo7,
-                "${AppLocalizations.of(context)!.meditationHowTo8((_speed / 3 * 1).round())} ${AppLocalizations.of(context)!.meditationHowTo9((_speed / 3 * 2).round())}",
-                AppLocalizations.of(context)!.meditationHowTo10,
-              ].map((e) => Container(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 2,
-                      horizontal: 8,
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('+ ', style: Theme.of(context).textTheme.bodySmall),
-                        Flexible(
-                          child: Text(e, style: Theme.of(context).textTheme.bodySmall),
-                        ),
-                      ],
-                    ),
-                  )),
-              const SizedBox(height: 8),
-              SliderTheme(
-                data: Theme.of(context).sliderTheme.copyWith(
-                      showValueIndicator: ShowValueIndicator.always,
-                    ),
-                child: Slider(
-                  value: _speed > 3 || _speed < 32 ? _speed : 6,
-                  min: 3,
-                  max: 32,
-                  label: "${(_speed / 3 * 2).round()}",
-                  onChangeEnd: (x) {
-                    setState(() {
-                      _speed = (x * 10).round() / 10;
-                      widget.setSpeed(x);
-                    });
-                  },
-                  onChanged: (x) {
-                    setState(() {
-                      _speed = (x * 10).round() / 10;
-                      widget.changingSpeed();
-                    });
-                  },
+                ...[
+                  AppLocalizations.of(context)!.meditationHowTo1,
+                  AppLocalizations.of(context)!.meditationHowTo2,
+                  AppLocalizations.of(context)!.meditationHowTo3,
+                  AppLocalizations.of(context)!.meditationHowTo4,
+                  AppLocalizations.of(context)!.meditationHowTo5,
+                  AppLocalizations.of(context)!.meditationHowTo6,
+                  AppLocalizations.of(context)!.meditationHowTo7,
+                  '${AppLocalizations.of(context)!.meditationHowTo8((_speed / 3 * 1).round())} ${AppLocalizations.of(context)!.meditationHowTo9((_speed / 3 * 2).round())}',
+                  AppLocalizations.of(context)!.meditationHowTo10,
+                ].map((final e) => Container(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 2,
+                        horizontal: 8,
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('+ ', style: Theme.of(context).textTheme.bodySmall),
+                          Flexible(
+                            child: Text(e, style: Theme.of(context).textTheme.bodySmall),
+                          ),
+                        ],
+                      ),
+                    )),
+                const SizedBox(height: 8),
+                SliderTheme(
+                  data: Theme.of(context).sliderTheme.copyWith(
+                        showValueIndicator: ShowValueIndicator.always,
+                      ),
+                  child: Slider(
+                    value: _speed > 3 || _speed < 32 ? _speed : 6,
+                    min: 3,
+                    max: 32,
+                    label: '${(_speed / 3 * 2).round()}',
+                    onChangeEnd: (final x) {
+                      setState(() {
+                        _speed = (x * 10).round() / 10;
+                        widget.setSpeed(x);
+                      });
+                    },
+                    onChanged: (final x) {
+                      setState(() {
+                        _speed = (x * 10).round() / 10;
+                        widget.changingSpeed();
+                      });
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }

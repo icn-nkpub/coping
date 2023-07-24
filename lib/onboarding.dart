@@ -1,11 +1,11 @@
+import 'package:dependencecoping/pages/meditation/meditation.dart';
 import 'package:dependencecoping/paginator.dart';
 import 'package:dependencecoping/provider/theme/theme.dart';
-import 'package:dependencecoping/pages/meditation/meditation.dart';
 import 'package:dependencecoping/tokens/topbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:funvas/funvas.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:funvas/funvas.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({
@@ -21,8 +21,8 @@ class _OnboardingState extends State<Onboarding> {
   double animationOffset = 4;
 
   @override
-  Widget build(BuildContext context) {
-    var goTo = pagginator(context);
+  Widget build(final BuildContext context) {
+    final goTo = pagginator(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -36,7 +36,6 @@ class _OnboardingState extends State<Onboarding> {
           left: false,
           top: false,
           right: false,
-          bottom: true,
           child: SizedBox(),
         ),
       ),
@@ -79,7 +78,7 @@ class Display extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final cd = CanvasDrawer(
       backdrop: context.read<ThemeCubit>().state.data.scaffoldBackgroundColor,
       primary: HSLColor.fromColor(context.read<ThemeCubit>().state.data.colorScheme.primary),
@@ -92,7 +91,7 @@ class Display extends StatelessWidget {
     );
 
     return BlocListener<ThemeCubit, ThemeState>(
-      listener: (context, state) {
+      listener: (final context, final state) {
         cd.backdrop = context.read<ThemeCubit>().state.data.scaffoldBackgroundColor;
         cd.primary = HSLColor.fromColor(state.data.colorScheme.primary);
         cd.secondary = HSLColor.fromColor(state.data.colorScheme.secondary);

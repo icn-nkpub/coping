@@ -3,8 +3,7 @@ import 'package:flutter_svg/svg.dart';
 
 class SvgIcon extends StatelessWidget {
   const SvgIcon({
-    super.key,
-    required this.assetPath,
+    required this.assetPath, super.key,
     this.size = 24,
     this.color,
   });
@@ -14,7 +13,7 @@ class SvgIcon extends StatelessWidget {
   final Color? color;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final iconColor = ColorFilter.mode(
       color ?? Theme.of(context).iconTheme.color!,
       BlendMode.srcIn,

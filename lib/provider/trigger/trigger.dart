@@ -9,91 +9,88 @@ class Triggers {
   List<Trigger> templates;
   List<TriggerLog> triggerLog;
 
-  List<TriggerLog> get log => triggerLog.toList()
-    ..sort((a, b) {
-      return b.time.compareTo(a.time);
-    });
+  List<TriggerLog> get log => triggerLog.toList()..sort((final a, final b) => b.time.compareTo(a.time));
 
   @override
-  bool operator ==(Object other) => false; // ignore: hash_and_equals
+  bool operator ==(final Object other) => false; // ignore: hash_and_equals
 }
 
 class TriggersCubit extends Cubit<Triggers?> {
   TriggersCubit() : super(null);
 
-  Future<void> toggle(User user, Trigger trigger) async {
+  Future<void> toggle(final User user, final Trigger trigger) async {
     if (state != null) {
-      List<Trigger> d = [];
-      Set<String> seen = {};
+      final List<Trigger> d = [];
+      final Set<String> seen = {};
 
-      for (var t in state!.templates) {
+      for (final t in state!.templates) {
         if (seen.contains(t.id)) continue;
         seen.add(t.id);
 
         d.add(t);
       }
 
-      if (d.where((element) => trigger.id == element.id).isEmpty) {
+      if (d.where((final element) => trigger.id == element.id).isEmpty) {
         d.add(trigger);
       } else {
-        d.removeWhere((element) => trigger.id == element.id);
+        d.removeWhere((final element) => trigger.id == element.id);
       }
 
-      var log = state!.triggerLog;
+      final log = state!.triggerLog;
 
       emit(Triggers(d, log));
-      syncTriggers(user, [...d]);
+      await syncTriggers(user, [...d]);
     }
   }
 
-  Future<void> addPersonal(User user, String label) async {
+  Future<void> addPersonal(final User user, final String label) async {
     if (state != null) {
-      List<Trigger> d = [];
-      Set<String> seen = {};
+      final List<Trigger> d = [];
+      final Set<String> seen = {};
 
-      for (var t in state!.templates) {
+      for (final t in state!.templates) {
         if (seen.contains(t.id)) continue;
         seen.add(t.id);
 
         d.add(t);
       }
 
-      d.add(Trigger(id: 'personal/$label', labels: {"en": label}, relatedAddiction: 'smoking'));
+      d.add(Trigger(id: 'personal/$label', labels: {'en': label}, relatedAddiction: 'smoking'));
 
-      var log = state!.triggerLog;
+      final log = state!.triggerLog;
 
       emit(Triggers(d, log));
-      syncTriggers(user, [...d]);
+      await syncTriggers(user, [...d]);
     }
   }
 
-  Future<void> removePersonal(User user, String id) async {
+  Future<void> removePersonal(final User user, final String id) async {
     if (state != null) {
-      List<Trigger> d = [];
-      Set<String> seen = {};
+      final List<Trigger> d = [];
+      final Set<String> seen = {};
 
-      for (var t in state!.templates) {
+      for (final t in state!.templates) {
         if (seen.contains(t.id)) continue;
         seen.add(t.id);
 
         d.add(t);
       }
 
-      d.removeWhere((element) => id == element.id);
+      d.removeWhere((final element) => id == element.id);
 
-      var log = state!.triggerLog;
+      final log = state!.triggerLog;
 
       emit(Triggers(d, log));
-      syncTriggers(user, [...d]);
+      await syncTriggers(user, [...d]);
     }
   }
 
-  Future<void> send(User user, Trigger trigger, String situation, String thought, int impulse) async {
+  Future<void> send(final User user, final Trigger trigger, final String situation, final String thought, final int impulse) async {
     if (state != null) {
-      List<Trigger> d = [];
-      Set<String> seen = {};
+      final List<Trigger> d = [];
+      final Set<String> seen = {};
 
-      for (var t in state!.templates) {
+      for (final t in state!.templates) {
         if (seen.contains(t.id)) continue;
         seen.add(t.id);
 
@@ -102,7 +99,7 @@ class TriggersCubit extends Cubit<Triggers?> {
 
       await logTrigger(user, trigger, situation, thought, impulse);
 
-      var log = state!.triggerLog;
+      final log = state!.triggerLog;
       log.add(TriggerLog(
         labels: trigger.labels,
         situation: situation,
@@ -112,15 +109,15 @@ class TriggersCubit extends Cubit<Triggers?> {
       ));
 
       emit(Triggers(d, log));
-      syncTriggers(user, [...d]);
+      await syncTriggers(user, [...d]);
     }
   }
 
-  Future<void> overwrite(Triggers triggers) async {
-    List<Trigger> d = [];
-    Set<String> seen = {};
+  void overwrite(final Triggers triggers) {
+    final List<Trigger> d = [];
+    final Set<String> seen = {};
 
-    for (var t in triggers.templates) {
+    for (final t in triggers.templates) {
       if (seen.contains(t.id)) continue;
       seen.add(t.id);
 

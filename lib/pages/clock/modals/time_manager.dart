@@ -6,9 +6,9 @@ import 'package:dependencecoping/storage/reset_log.dart';
 import 'package:dependencecoping/tokens/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 const enableEdit = false;
 
@@ -35,37 +35,38 @@ class _TimeModalState extends State<TimeModal> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    List<CountdownEvent> c = [];
+  Widget build(final BuildContext context) {
+    final List<CountdownEvent> c = [];
 
-    for (var element in resets.reversed) {
+    for (final element in resets.reversed) {
       if (element.resumeTime != null) c.add(CountdownEvent(id: element.id, resume: true, time: element.resumeTime!));
       c.add(CountdownEvent(id: element.id, resume: false, time: element.resetTime));
     }
 
-    return BlocBuilder<StaticCubit, StaticRecords?>(builder: (context, staticRec) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Column(children: [
-          Flexible(
-            child: ListView(
-              children: c.map(record).toList(),
-            ),
-          ),
-          if (enableEdit)
-            FilledButton(
-              onPressed: () {
-                if (widget.auth != null) context.read<CountdownTimerCubit>().overwrite(resets);
-                if (Navigator.of(context).canPop()) Navigator.of(context).pop();
-              },
-              child: Text(AppLocalizations.of(context)!.timeManagerSave),
-            ),
-        ]),
-      );
-    });
+    return BlocBuilder<StaticCubit, StaticRecords?>(
+        builder: (final context, final staticRec) => Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Column(children: [
+                Flexible(
+                  child: ListView(
+                    children: c.map(record).toList(),
+                  ),
+                ),
+                if (enableEdit)
+                  FilledButton(
+                    onPressed: () {
+                      if (Navigator.of(context).canPop() && widget.auth != null) {
+                        context.read<CountdownTimerCubit>().overwrite(resets);
+                        Navigator.of(context).pop();
+                      }
+                    },
+                    child: Text(AppLocalizations.of(context)!.timeManagerSave),
+                  ),
+              ]),
+            ));
   }
 
-  Widget record(CountdownEvent r) {
+  Widget record(final CountdownEvent r) {
     final tsm = fAccent(
       textStyle: Theme.of(context).textTheme.titleSmall,
     ).copyWith(
@@ -93,7 +94,6 @@ class _TimeModalState extends State<TimeModal> {
                         ),
                 )),
             Flexible(
-              flex: 1,
               child: Align(
                 alignment: enableEdit ? Alignment.centerLeft : Alignment.centerRight,
                 child: Text(
@@ -107,15 +107,15 @@ class _TimeModalState extends State<TimeModal> {
                 flex: 0,
                 child: IconButton(
                   onPressed: () async {
-                    var c = context.read<CountdownTimerCubit>();
-                    var v = await showTimePicker(
+                    final c = context.read<CountdownTimerCubit>();
+                    final v = await showTimePicker(
                       context: context,
                       initialTime: TimeOfDay.fromDateTime(r.time),
                     );
                     if (v == null) return;
 
                     if (widget.auth != null) {
-                      var t = r.time..copyWith(hour: v.hour, minute: v.minute);
+                      final t = r.time..copyWith(hour: v.hour, minute: v.minute);
 
                       if (r.resume) {
                         await c.editResume(widget.auth!, r.id, t);

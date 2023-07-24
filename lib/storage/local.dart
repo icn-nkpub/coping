@@ -6,22 +6,22 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 Future<User?> restoreAuthInfo() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  String? stored = prefs.getString('v1/auth');
+  final String? stored = prefs.getString('v1/auth');
   if (stored == null) {
     return null;
   }
 
-  var auth = User.fromJson(jsonDecode(stored));
+  final auth = User.fromJson(jsonDecode(stored));
 
   return auth;
 }
 
-storeAuthInfo(User auth) async {
+Future<void> storeAuthInfo(final User auth) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.setString('v1/auth', jsonEncode(auth.toJson()));
 }
 
-clearLocalStorage() async {
+Future<void> clearLocalStorage() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.clear();
 }

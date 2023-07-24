@@ -3,16 +3,16 @@ import 'package:dependencecoping/storage/trigger.dart';
 import 'package:dependencecoping/tools/maybe_map.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-Future<List<Goal>> getStaticGoals(User user) async {
+Future<List<Goal>> getStaticGoals(final User user) async {
   final data = await query('goal_templates').select<PostgrestList>().eq('related_addiction', 'smoking');
 
   if (data.isEmpty) {
     return [];
   }
 
-  List<Goal> gs = [];
+  final List<Goal> gs = [];
 
-  for (var record in data) {
+  for (final record in data) {
     final descriptions = maybeLocalized(record['v2_descriptions']);
     final titles = maybeLocalized(record['v2_titles']);
 
@@ -33,17 +33,17 @@ Future<List<Goal>> getStaticGoals(User user) async {
   return gs;
 }
 
-Future<List<Trigger>> getStaticTriggers(User user) async {
+Future<List<Trigger>> getStaticTriggers(final User user) async {
   final data = await query('trigger_templates').select<PostgrestList>().eq('related_addiction', 'smoking');
 
   if (data.isEmpty) {
     return [];
   }
 
-  List<Trigger> ts = [];
+  final List<Trigger> ts = [];
 
-  for (var record in data) {
-    var labels = maybeLocalized(record['v2_labels']);
+  for (final record in data) {
+    final labels = maybeLocalized(record['v2_labels']);
 
     final t = Trigger(
       id: 'static/${record['id']}',
@@ -58,6 +58,4 @@ Future<List<Trigger>> getStaticTriggers(User user) async {
   return ts;
 }
 
-SupabaseQueryBuilder query(String name) {
-  return Supabase.instance.client.from('static_$name');
-}
+SupabaseQueryBuilder query(final String name) => Supabase.instance.client.from('static_$name');

@@ -4,21 +4,18 @@ import 'package:flutter/material.dart';
 
 class ClockScreen extends StatelessWidget {
   const ClockScreen({
-    super.key,
-    required this.setPage,
+    required this.setPage, super.key,
   });
 
   final void Function(int) setPage;
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
+  Widget build(final BuildContext context) => Column(
       children: [
         TopBar(setPage: setPage),
         const Countdown(),
       ],
     );
-  }
 }
 
 class Countdown extends StatefulWidget {
@@ -34,18 +31,15 @@ class _CountdownState extends State<Countdown> {
   bool debug = false;
 
   @override
-  Widget build(BuildContext context) {
-    return Expanded(
+  Widget build(final BuildContext context) => Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: ListView(
           shrinkWrap: true,
-          scrollDirection: Axis.vertical,
           children: const [
             CountdownDisplay(),
           ],
         ),
       ),
     );
-  }
 }

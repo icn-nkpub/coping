@@ -1,9 +1,9 @@
 import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/pages/clock/main.dart';
+import 'package:dependencecoping/pages/meditation/meditation.dart';
 import 'package:dependencecoping/pages/triggers/triggers.dart';
 import 'package:dependencecoping/paginator.dart';
 import 'package:dependencecoping/tokens/icons.dart';
-import 'package:dependencecoping/pages/meditation/meditation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -20,8 +20,7 @@ class _HomeState extends State<Home> {
   int currentPageIndex = 0;
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(final BuildContext context) => Scaffold(
       appBar: AppBar(
         toolbarHeight: 0,
         surfaceTintColor: Theme.of(context).appBarTheme.backgroundColor,
@@ -29,7 +28,7 @@ class _HomeState extends State<Home> {
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: currentPageIndex,
-        onDestinationSelected: (int index) {
+        onDestinationSelected: (final int index) {
           setState(() {
             currentPageIndex = index;
           });
@@ -55,5 +54,4 @@ class _HomeState extends State<Home> {
         const MeditationScreen(),
       ][currentPageIndex],
     );
-  }
 }

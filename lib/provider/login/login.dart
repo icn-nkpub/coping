@@ -22,14 +22,14 @@ class Profile {
 class LoginCubit extends Cubit<Profile?> {
   LoginCubit() : super(null);
 
-  Future<void> signIn(String email, String password) async {
+  Future<void> signIn(final String email, final String password) async {
     final auth = await supalogin(email, password);
     if (auth == null) {
       return;
     }
 
     await storeAuthInfo(auth);
-    OneSignal.shared.setExternalUserId(auth.id);
+    await OneSignal.shared.setExternalUserId(auth.id);
 
     final p = await getProfile(auth);
 
@@ -41,30 +41,30 @@ class LoginCubit extends Cubit<Profile?> {
     ));
   }
 
-  Future<void> signUp(String email, String password) async {
+  Future<void> signUp(final String email, final String password) async {
     final auth = await suparegister(email, password);
     if (auth == null) {
       return;
     }
 
-    OneSignal.shared.setExternalUserId(auth.id);
+    await OneSignal.shared.setExternalUserId(auth.id);
 
     await signIn(email, password);
   }
 
   Future<void> signOut() async {
-    clearLocalStorage();
+    await clearLocalStorage();
     emit(null);
   }
 
-  Future<void> setBreathingTime(double breathingTime) async {
+  Future<void> setBreathingTime(final double breathingTime) async {
     if (state == null) {
       return;
     }
 
     final auth = state!.auth;
 
-    var p = state?.profile ??
+    final p = state?.profile ??
         ProfileRecord(
           firstName: '',
           secondName: '',
@@ -75,7 +75,7 @@ class LoginCubit extends Cubit<Profile?> {
 
     p.breathingTime = breathingTime;
 
-    syncProfileBreathingTime(auth, breathingTime);
+    await syncProfileBreathingTime(auth, breathingTime);
 
     emit(Profile(
       id: auth.id,
@@ -85,14 +85,14 @@ class LoginCubit extends Cubit<Profile?> {
     ));
   }
 
-  Future<void> setTheme(String color, bool isLight) async {
+  Future<void> setTheme(final String color, {final bool isLight = false}) async {
     if (state == null) {
       return;
     }
 
     final auth = state!.auth;
 
-    var p = state?.profile ??
+    final p = state?.profile ??
         ProfileRecord(
           firstName: '',
           secondName: '',
@@ -104,7 +104,7 @@ class LoginCubit extends Cubit<Profile?> {
     p.color = color;
     p.isLight = isLight;
 
-    syncProfileTheme(auth, color, isLight);
+    await syncProfileTheme(auth, color, isLight: isLight);
 
     emit(Profile(
       id: auth.id,
@@ -115,8 +115,8 @@ class LoginCubit extends Cubit<Profile?> {
   }
 
   Future<void> saveProfile(
-    String firstName,
-    String secondName,
+    final String firstName,
+    final String secondName,
   ) async {
     if (state == null) {
       return;
@@ -124,7 +124,7 @@ class LoginCubit extends Cubit<Profile?> {
 
     final auth = state!.auth;
 
-    var p = state?.profile ??
+    final p = state?.profile ??
         ProfileRecord(
           firstName: '',
           secondName: '',
@@ -135,7 +135,7 @@ class LoginCubit extends Cubit<Profile?> {
     p.firstName = firstName;
     p.secondName = secondName;
 
-    syncProfile(auth, p);
+    await syncProfile(auth, p);
 
     emit(Profile(
       id: auth.id,
@@ -145,11 +145,11 @@ class LoginCubit extends Cubit<Profile?> {
     ));
   }
 
-  Future<void> overwrite(
-    User auth,
-    ProfileRecord? profile,
+  void overwrite(
+    final User auth,
+    final ProfileRecord? profile,
   ) async {
-    OneSignal.shared.setExternalUserId(auth.id);
+    await OneSignal.shared.setExternalUserId(auth.id);
 
     emit(Profile(
       id: auth.id,

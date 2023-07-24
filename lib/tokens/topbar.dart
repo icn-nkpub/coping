@@ -1,12 +1,14 @@
+import 'dart:async';
+
 import 'package:dependencecoping/gen/assets.gen.dart';
-import 'package:dependencecoping/tokens/icons.dart';
-import 'package:flutter/material.dart';
-import 'package:dependencecoping/tokens/cardrope.dart';
 import 'package:dependencecoping/provider/login/login.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dependencecoping/provider/theme/colors.dart';
 import 'package:dependencecoping/provider/theme/theme.dart';
+import 'package:dependencecoping/tokens/cardrope.dart';
+import 'package:dependencecoping/tokens/icons.dart';
 import 'package:dependencecoping/tokens/measurable.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NullTopBar extends StatelessWidget {
@@ -15,23 +17,21 @@ class NullTopBar extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Theme.of(context).appBarTheme.backgroundColor,
-      shadowColor: Theme.of(context).appBarTheme.shadowColor,
-      elevation: 2,
-      child: const SizedBox(
-        width: double.infinity,
-        height: 4,
-      ),
-    );
-  }
+  Widget build(final BuildContext context) => Material(
+        color: Theme.of(context).appBarTheme.backgroundColor,
+        shadowColor: Theme.of(context).appBarTheme.shadowColor,
+        elevation: 2,
+        child: const SizedBox(
+          width: double.infinity,
+          height: 4,
+        ),
+      );
 }
 
 class TopBar extends StatefulWidget {
   const TopBar({
-    super.key,
     required this.setPage,
+    super.key,
   });
 
   final void Function(int) setPage;
@@ -44,121 +44,110 @@ class _TopBarState extends State<TopBar> {
   bool expandMenu = false;
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      child: Column(
-        verticalDirection: VerticalDirection.up,
-        children: [
-          body(),
-          head(context),
-        ],
-      ),
-    );
-  }
-
-  goTo(int pageKey) {
-    return () {
-      widget.setPage(pageKey);
-      setState(() {
-        expandMenu = !expandMenu;
-      });
-    };
-  }
-
-  BlocBuilder<LoginCubit, Profile?> head(BuildContext context) {
-    return BlocBuilder<LoginCubit, Profile?>(builder: (_, u) {
-      return Material(
-        color: Theme.of(context).appBarTheme.backgroundColor,
-        shadowColor: Theme.of(context).appBarTheme.shadowColor,
-        elevation: 2,
-        child: Container(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Opacity(
-                opacity: 0,
-                child: IconButton(
-                  onPressed: () {},
-                  icon: SvgIcon(assetPath: Assets.icons.more),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: RichText(
-                  text: TextSpan(
-                    text: AppLocalizations.of(context)!.hello,
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w600),
-                    children: [
-                      if (u?.profile?.firstName != null)
-                        TextSpan(
-                          text: ', ${u?.profile?.firstName ?? ''}',
-                        ),
-                    ],
-                  ),
-                ),
-              ),
-              IconButton(
-                onPressed: () {
-                  setState(() {
-                    expandMenu = !expandMenu;
-                  });
-                },
-                icon: AnimatedRotation(
-                  duration: const Duration(milliseconds: 100),
-                  turns: expandMenu ? 0.5 : 0,
-                  child: SvgIcon(assetPath: Assets.icons.expandMore),
-                ),
-              ),
-            ],
-          ),
+  Widget build(final BuildContext context) => Container(
+        alignment: Alignment.center,
+        child: Column(
+          verticalDirection: VerticalDirection.up,
+          children: [
+            body(),
+            head(context),
+          ],
         ),
       );
-    });
-  }
 
-  Widget body() {
-    return Shrinkable(
-      expanded: expandMenu,
-      child: CardRope(
-        cards: [
-          RopedCard(
-            children: [
-              BlocBuilder<LoginCubit, Profile?>(builder: (context, u) {
-                List<Widget> children = [];
+  Null Function() goTo(final int pageKey) => () {
+        widget.setPage(pageKey);
+        setState(() {
+          expandMenu = !expandMenu;
+        });
+      };
 
-                if (u == null) {
-                  children.add(NavButton(AppLocalizations.of(context)!.screenLogin, onPressed: goTo(0)));
-                  children.add(NavButton(AppLocalizations.of(context)!.screenRegister, onPressed: goTo(1)));
-                } else {
-                  children.add(NavButton(AppLocalizations.of(context)!.screenProfile, onPressed: goTo(2)));
-                  children.add(NavButton(AppLocalizations.of(context)!.screenLogout, onPressed: goTo(3)));
-                }
+  BlocBuilder<LoginCubit, Profile?> head(final BuildContext context) => BlocBuilder<LoginCubit, Profile?>(
+      builder: (final _, final u) => Material(
+            color: Theme.of(context).appBarTheme.backgroundColor,
+            shadowColor: Theme.of(context).appBarTheme.shadowColor,
+            elevation: 2,
+            child: Container(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Opacity(
+                    opacity: 0,
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: SvgIcon(assetPath: Assets.icons.more),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: RichText(
+                      text: TextSpan(
+                        text: AppLocalizations.of(context)!.hello,
+                        style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w600),
+                        children: [
+                          if (u?.profile?.firstName != null)
+                            TextSpan(
+                              text: ', ${u?.profile?.firstName ?? ''}',
+                            ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        expandMenu = !expandMenu;
+                      });
+                    },
+                    icon: AnimatedRotation(
+                      duration: const Duration(milliseconds: 100),
+                      turns: expandMenu ? 0.5 : 0,
+                      child: SvgIcon(assetPath: Assets.icons.expandMore),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ));
 
-                return Wrap(
-                  runSpacing: 8,
-                  children: children,
-                );
-              }),
-            ],
-          ),
-          RopedCard(
-            children: [
-              _themeSettings(),
-            ],
-          ),
-          const SizedBox(
-            height: 0,
-          ),
-        ],
-      ),
-    );
-  }
+  Widget body() => Shrinkable(
+        expanded: expandMenu,
+        child: CardRope(
+          cards: [
+            RopedCard(
+              children: [
+                BlocBuilder<LoginCubit, Profile?>(builder: (final context, final u) {
+                  final List<Widget> children = [];
 
-  Widget _themeSettings() {
-    return const ThemeChanger();
-  }
+                  if (u == null) {
+                    children.add(NavButton(AppLocalizations.of(context)!.screenLogin, onPressed: goTo(0)));
+                    children.add(NavButton(AppLocalizations.of(context)!.screenRegister, onPressed: goTo(1)));
+                  } else {
+                    children.add(NavButton(AppLocalizations.of(context)!.screenProfile, onPressed: goTo(2)));
+                    children.add(NavButton(AppLocalizations.of(context)!.screenLogout, onPressed: goTo(3)));
+                  }
+
+                  return Wrap(
+                    runSpacing: 8,
+                    children: children,
+                  );
+                }),
+              ],
+            ),
+            RopedCard(
+              children: [
+                _themeSettings(),
+              ],
+            ),
+            const SizedBox(
+              height: 0,
+            ),
+          ],
+        ),
+      );
+
+  Widget _themeSettings() => const ThemeChanger();
 }
 
 class ThemeChanger extends StatelessWidget {
@@ -167,17 +156,15 @@ class ThemeChanger extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<ThemeCubit, ThemeState>(
-      builder: (context, t) {
-        return Row(
+  Widget build(final BuildContext context) => BlocBuilder<ThemeCubit, ThemeState>(
+        builder: (final context, final t) => Row(
           children: [
             FilledButton.tonal(
               style: Theme.of(context).filledButtonTheme.style,
               onPressed: () {
                 // '!' (NOT) because we just fliped but yet refreshed.
-                context.read<LoginCubit>().setTheme(t.color.name, !t.isLightMode());
-                context.read<ThemeCubit>().flipBrightness();
+                unawaited(context.read<LoginCubit>().setTheme(t.color.name, isLight: !t.isLightMode()));
+                unawaited(context.read<ThemeCubit>().flipBrightness());
               },
               child: SvgIcon(
                 assetPath: t.isLightMode() ? Assets.icons.lightMode : Assets.icons.darkMode,
@@ -195,38 +182,34 @@ class ThemeChanger extends StatelessWidget {
             ),
             FilledButton.tonal(
               onPressed: () {
-                var next = (ColorValue.values.indexOf(t.color) + 1) % (ColorValue.values.length);
-                var selected = ColorValue.values[next];
+                final next = (ColorValue.values.indexOf(t.color) + 1) % (ColorValue.values.length);
+                final selected = ColorValue.values[next];
                 context.read<ThemeCubit>().setColor(selected);
-                context.read<LoginCubit>().setTheme(selected.name, t.isLightMode());
+                unawaited(context.read<LoginCubit>().setTheme(selected.name, isLight: t.isLightMode()));
               },
               child: SvgIcon(assetPath: Assets.icons.palette),
             ),
           ],
-        );
-      },
-    );
-  }
+        ),
+      );
 }
 
 class NavButton extends StatelessWidget {
   const NavButton(
     this.page, {
-    super.key,
     required this.onPressed,
+    super.key,
   });
   final String page;
   final Function() onPressed;
 
   @override
-  Widget build(BuildContext context) {
-    return FilledButton.tonal(
-      onPressed: onPressed,
-      child: Container(
-        width: double.infinity,
-        alignment: Alignment.center,
-        child: Text(page),
-      ),
-    );
-  }
+  Widget build(final BuildContext context) => FilledButton.tonal(
+        onPressed: onPressed,
+        child: Container(
+          width: double.infinity,
+          alignment: Alignment.center,
+          child: Text(page),
+        ),
+      );
 }

@@ -1,16 +1,16 @@
 import 'package:dependencecoping/gen/assets.gen.dart';
-import 'package:flutter/material.dart';
 import 'package:dependencecoping/tokens/icons.dart';
 import 'package:dependencecoping/tokens/measurable.dart';
+import 'package:flutter/material.dart';
 
 class GoalCard extends StatefulWidget {
   const GoalCard({
-    super.key,
     required this.from,
     required this.iconName,
     required this.titles,
     required this.descriptions,
     required this.rate,
+    super.key,
   });
 
   final DateTime from;
@@ -27,10 +27,10 @@ class _GoalCardState extends State<GoalCard> {
   bool expanded = false;
 
   @override
-  Widget build(BuildContext context) {
-    final double value = (DateTime.now().difference(widget.from).inSeconds.toDouble() / widget.rate.inSeconds.toDouble());
+  Widget build(final BuildContext context) {
+    final double value = DateTime.now().difference(widget.from).inSeconds.toDouble() / widget.rate.inSeconds.toDouble();
     final bool finished = value > 1 ? true : false;
-    final segments = widget.rate.inDays.round().clamp(1, 7 * 4);
+    final segments = widget.rate.inDays.clamp(1, 7 * 4);
 
     return Card(
       child: Padding(
@@ -76,14 +76,14 @@ class _GoalCardState extends State<GoalCard> {
     );
   }
 
-  Widget _desc(BuildContext context, bool finished, double value) {
-    String description = widget.descriptions['en']!;
-    for (var d in widget.descriptions.entries) {
+  Widget _desc(final BuildContext context, final bool finished, final double value) {
+    String description = widget.descriptions['en'] ?? widget.descriptions['0'] ?? widget.descriptions['0.0'] ?? '[...]';
+    for (final d in widget.descriptions.entries) {
       if (d.key == Localizations.localeOf(context).languageCode) description = d.value;
     }
 
-    String title = widget.titles['en']!;
-    for (var t in widget.titles.entries) {
+    String title = widget.titles['en'] ?? widget.titles['0'] ?? widget.titles['0.0'] ?? '[...]';
+    for (final t in widget.titles.entries) {
       if (t.key == Localizations.localeOf(context).languageCode) title = t.value;
     }
 
@@ -101,7 +101,6 @@ class _GoalCardState extends State<GoalCard> {
             shadowColor: Colors.transparent,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 if (finished)
                   Padding(
@@ -150,7 +149,7 @@ class _GoalCardState extends State<GoalCard> {
         Shrinkable(
           expanded: expanded,
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 4),
+            padding: const EdgeInsets.symmetric(vertical: 4),
             alignment: Alignment.centerLeft,
             child: Text(
               description,
@@ -176,13 +175,12 @@ class Meter extends StatelessWidget {
   final int segments;
 
   @override
-  Widget build(BuildContext context) {
-    List<Widget> c = [];
+  Widget build(final BuildContext context) {
+    final List<Widget> c = [];
 
     for (var i = 0; i < segments; i++) {
       c.add(
         Flexible(
-          flex: 1,
           child: Container(
             alignment: Alignment.centerRight,
             clipBehavior: Clip.antiAlias,

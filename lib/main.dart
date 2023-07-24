@@ -1,21 +1,23 @@
+import 'dart:async';
+import 'dart:core';
+
+import 'package:dependencecoping/home.dart';
 import 'package:dependencecoping/notifications.dart';
 import 'package:dependencecoping/onboarding.dart';
 import 'package:dependencecoping/provider/countdown/countdown.dart';
 import 'package:dependencecoping/provider/goal/goal.dart';
+import 'package:dependencecoping/provider/login/login.dart';
 import 'package:dependencecoping/provider/static/static.dart';
+import 'package:dependencecoping/provider/theme/colors.dart';
+import 'package:dependencecoping/provider/theme/theme.dart';
 import 'package:dependencecoping/provider/trigger/trigger.dart';
 import 'package:dependencecoping/storage/init.dart';
 import 'package:flutter/foundation.dart';
-import 'package:dependencecoping/provider/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:dependencecoping/provider/theme/colors.dart';
-import 'package:dependencecoping/provider/theme/theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'home.dart';
-import 'dart:core';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   await Supabase.initialize(
@@ -26,7 +28,7 @@ void main() async {
 
   notifications();
 
-  var app = const App();
+  const app = App();
 
   if (kDebugMode) {
     imageCache.clear();
@@ -34,8 +36,8 @@ void main() async {
     return;
   }
 
-  SentryFlutter.init(
-    (options) {
+  await SentryFlutter.init(
+    (final options) {
       options.dsn = 'https://ffce3775524c43269e47662942503a06@o4505302255665152.ingest.sentry.io/4505302260449280';
       // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
       // We recommend adjusting this value in production.
@@ -54,9 +56,9 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> with AssetsInitializer {
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     if (tryLock()) {
-      load(context);
+      unawaited(init(context));
     }
 
     if (loadingState != LoadingProgress.done) {
@@ -68,7 +70,6 @@ class _AppState extends State<App> with AssetsInitializer {
           color: Colors.black,
           child: const Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CircularProgressIndicator(
                 color: Colors.white,
@@ -82,8 +83,8 @@ class _AppState extends State<App> with AssetsInitializer {
     final tcb = MediaQuery.of(context).platformBrightness == Brightness.light ? ThemeMode.light : ThemeMode.dark;
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) {
-          var c = LoginCubit();
+        BlocProvider(create: (final _) {
+          final c = LoginCubit();
           if (user == null) {
             return c;
           }
@@ -92,8 +93,8 @@ class _AppState extends State<App> with AssetsInitializer {
 
           return c;
         }),
-        BlocProvider(create: (_) {
-          var c = StaticCubit();
+        BlocProvider(create: (final _) {
+          final c = StaticCubit();
           if (statics.isEmpty) {
             return c;
           }
@@ -102,8 +103,8 @@ class _AppState extends State<App> with AssetsInitializer {
 
           return c;
         }),
-        BlocProvider(create: (_) {
-          var c = ThemeCubit()..setBrightness(tcb);
+        BlocProvider(create: (final _) {
+          final c = ThemeCubit()..setBrightness(tcb);
           if (profile == null) {
             return c;
           }
@@ -117,8 +118,8 @@ class _AppState extends State<App> with AssetsInitializer {
 
           return c;
         }),
-        BlocProvider(create: (_) {
-          var c = CountdownTimerCubit();
+        BlocProvider(create: (final _) {
+          final c = CountdownTimerCubit();
           if (resets == null) {
             return c;
           }
@@ -127,8 +128,8 @@ class _AppState extends State<App> with AssetsInitializer {
 
           return c;
         }),
-        BlocProvider(create: (_) {
-          var c = GoalsCubit();
+        BlocProvider(create: (final _) {
+          final c = GoalsCubit();
           if (goals == null) {
             return c;
           }
@@ -137,8 +138,8 @@ class _AppState extends State<App> with AssetsInitializer {
 
           return c;
         }),
-        BlocProvider(create: (_) {
-          var c = TriggersCubit();
+        BlocProvider(create: (final _) {
+          final c = TriggersCubit();
           if (triggers == null) {
             return c;
           }
@@ -154,18 +155,16 @@ class _AppState extends State<App> with AssetsInitializer {
         }),
       ],
       child: BlocListener<LoginCubit, Profile?>(
-        listenWhen: (p, c) => p?.auth.id != c?.auth.id,
-        listener: (context, state) => reset(context),
+        listenWhen: (final p, final c) => (!initOK) && (p?.auth.id != c?.auth.id),
+        listener: (final context, final state) => unawaited(reset(context)),
         child: BlocBuilder<ThemeCubit, ThemeState>(
-          builder: (context, state) => MaterialApp(
+          builder: (final context, final state) => MaterialApp(
             debugShowCheckedModeBanner: false,
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             title: 'Coping',
             theme: state.data,
-            home: BlocBuilder<LoginCubit, Profile?>(builder: (context, u) {
-              return u == null ? const Onboarding() : const Home();
-            }),
+            home: BlocBuilder<LoginCubit, Profile?>(builder: (final context, final u) => u == null ? const Onboarding() : const Home()),
           ),
         ),
       ),

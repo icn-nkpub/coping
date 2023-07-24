@@ -13,13 +13,13 @@ class StaticRecords {
   bool get isEmpty => goals.isEmpty && triggers.isEmpty;
 
   @override
-  bool operator ==(Object other) => false; // ignore: hash_and_equals
+  bool operator ==(final Object other) => false; // ignore: hash_and_equals
 }
 
 class StaticCubit extends Cubit<StaticRecords?> {
   StaticCubit() : super(null);
 
-  Future<void> overwrite(StaticRecords s) async {
+  void overwrite(final StaticRecords s) async {
     emit(s);
   }
 }

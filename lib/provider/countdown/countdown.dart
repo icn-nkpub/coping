@@ -14,12 +14,12 @@ class CountdownTimer {
   DateTime? paused;
 
   @override
-  bool operator ==(Object other) => false; // ignore: hash_and_equals
+  bool operator ==(final Object other) => false; // ignore: hash_and_equals
 
   List<CountdownReset> sortedCopy() {
-    var r = [...resets];
+    final r = [...resets];
 
-    r.sort((a, b) => a.compareTo(b));
+    r.sort((final a, final b) => a.compareTo(b));
 
     return r;
   }
@@ -30,10 +30,10 @@ class CountdownTimer {
     int score = 0;
 
     if (resets.isNotEmpty) {
-      var total = const Duration();
+      var total = Duration.zero;
 
-      for (var r in resets.reversed) {
-        var d = (r.resumeTime ?? DateTime.now()).difference(r.resetTime);
+      for (final r in resets.reversed) {
+        final d = (r.resumeTime ?? DateTime.now()).difference(r.resetTime);
         total += d;
       }
 
@@ -64,12 +64,12 @@ class Splits {
 class CountdownTimerCubit extends Cubit<CountdownTimer?> {
   CountdownTimerCubit() : super(null);
 
-  Future<void> resume(User auth, DateTime dt) async {
+  Future<void> resume(final User auth, final DateTime dt) async {
     if (state == null) return;
 
     final id = await logCountdownResume(auth, 'smoking', dt);
 
-    var resets = state!.sortedCopy();
+    final resets = state!.sortedCopy();
     if (resets.isEmpty) {
       resets.add(CountdownReset(
         id: id,
@@ -87,10 +87,10 @@ class CountdownTimerCubit extends Cubit<CountdownTimer?> {
     emit(CountdownTimer(resumed: dt, paused: null, resets: resets));
   }
 
-  Future<void> pause(User auth) async {
+  Future<void> pause(final User auth) async {
     if (state == null) return;
 
-    var resets = state!.sortedCopy();
+    final resets = state!.sortedCopy();
     final resetTime = state?.resumed ?? DateTime.now();
 
     final id = await logCountdownReset(auth, 'smoking', resetTime);
@@ -107,12 +107,12 @@ class CountdownTimerCubit extends Cubit<CountdownTimer?> {
     ));
   }
 
-  Future<void> editReset(User user, int id, DateTime time) async {
+  Future<void> editReset(final User user, final int id, final DateTime time) async {
     await editCountdownReset(user, id, time);
 
-    var resets = state!.sortedCopy();
+    final resets = state!.sortedCopy();
     for (var i = 0; i < resets.length; i++) {
-      var r = resets[i];
+      final r = resets[i];
       if (r.id == id) resets[i] = CountdownReset(id: r.id, resetTime: time, resumeTime: r.resumeTime);
     }
 
@@ -123,12 +123,12 @@ class CountdownTimerCubit extends Cubit<CountdownTimer?> {
     ));
   }
 
-  Future<void> editResume(User user, int id, DateTime time) async {
+  Future<void> editResume(final User user, final int id, final DateTime time) async {
     await editCountdownResume(user, id, time);
 
-    var resets = state!.sortedCopy();
+    final resets = state!.sortedCopy();
     for (var i = 0; i < resets.length; i++) {
-      var r = resets[i];
+      final r = resets[i];
       if (r.id == id) resets[i] = CountdownReset(id: r.id, resetTime: r.resetTime, resumeTime: time);
     }
 
@@ -139,11 +139,11 @@ class CountdownTimerCubit extends Cubit<CountdownTimer?> {
     ));
   }
 
-  Future<void> overwrite(
-    List<CountdownReset> input,
+  void overwrite(
+    final List<CountdownReset> input,
   ) async {
-    var resets = [...input];
-    resets.sort((a, b) => a.compareTo(b));
+    final resets = [...input];
+    resets.sort((final a, final b) => a.compareTo(b));
 
     emit(CountdownTimer(
       paused: resets.lastOrNull?.resetTime ?? DateTime.now(),

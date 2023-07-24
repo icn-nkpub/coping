@@ -10,20 +10,18 @@ import 'package:dependencecoping/provider/login/login.dart';
 import 'package:dependencecoping/provider/theme/fonts.dart';
 import 'package:dependencecoping/tokens/icons.dart';
 import 'package:dependencecoping/tokens/modal.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 
 class CountdownDisplay extends StatelessWidget {
   const CountdownDisplay({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<LoginCubit, Profile?>(
-      builder: (context, u) {
-        return BlocBuilder<CountdownTimerCubit, CountdownTimer?>(
-          builder: (context, ct) {
+  Widget build(final BuildContext context) => BlocBuilder<LoginCubit, Profile?>(
+        builder: (final context, final u) => BlocBuilder<CountdownTimerCubit, CountdownTimer?>(
+          builder: (final context, final ct) {
             final splits = ct?.splits();
             final paused = ct?.resumed == null;
 
@@ -40,56 +38,53 @@ class CountdownDisplay extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ...controlls(context, paused),
+                      ...controlls(context, paused: paused),
                       const SizedBox(width: 16),
                       BlocBuilder<CountdownTimerCubit, CountdownTimer?>(
-                        builder: (context, ct) {
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Card(
-                                margin: EdgeInsets.zero,
-                                color: Theme.of(context).colorScheme.tertiaryContainer,
-                                elevation: 3,
-                                child: Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 14),
-                                      child: SvgIcon(
-                                        assetPath: Assets.icons.bolt,
+                        builder: (final context, final ct) => Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Card(
+                              margin: EdgeInsets.zero,
+                              color: Theme.of(context).colorScheme.tertiaryContainer,
+                              elevation: 3,
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 14),
+                                    child: SvgIcon(
+                                      assetPath: Assets.icons.bolt,
+                                      color: Theme.of(context).colorScheme.onTertiaryContainer,
+                                      size: 18,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 16, left: 8, top: 8, bottom: 8),
+                                    child: Text(
+                                      NumberFormat.decimalPattern().format(splits?.score ?? 0).replaceAll('0', 'O'),
+                                      style: fAccent(textStyle: Theme.of(context).textTheme.bodyLarge).copyWith(
                                         color: Theme.of(context).colorScheme.onTertiaryContainer,
-                                        size: 18,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 16, left: 8, top: 8, bottom: 8),
-                                      child: Text(
-                                        NumberFormat.decimalPattern().format(splits?.score ?? 0).replaceAll('0', 'O'),
-                                        style: fAccent(textStyle: Theme.of(context).textTheme.bodyLarge).copyWith(
-                                          color: Theme.of(context).colorScheme.onTertiaryContainer,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          );
-                        },
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ),
                 const SizedBox(height: 8 * 3),
-                BlocBuilder<GoalsCubit, Goals?>(builder: (BuildContext context, Goals? goals) {
-                  var gs = (goals?.data ?? []).toList();
-                  gs.sort((a, b) => a.rate.compareTo(b.rate));
+                BlocBuilder<GoalsCubit, Goals?>(builder: (final BuildContext context, final Goals? goals) {
+                  final gs = (goals?.data ?? []).toList();
+                  gs.sort((final a, final b) => a.rate.compareTo(b.rate));
 
                   return Column(
                     children: gs
-                        .map((g) => GoalCard(
+                        .map((final g) => GoalCard(
                               from: splits?.last ?? DateTime.now(),
                               iconName: g.iconName,
                               titles: g.titles,
@@ -102,16 +97,14 @@ class CountdownDisplay extends StatelessWidget {
               ],
             );
           },
-        );
-      },
-    );
-  }
+        ),
+      );
 
-  controlls(BuildContext context, bool paused) => [
+  List<IconButton> controlls(final BuildContext context, {final bool paused = false}) => [
         paused
             ? IconButton.filledTonal(
                 onPressed: () async {
-                  var auth = context.read<LoginCubit>().state!.auth;
+                  final auth = context.read<LoginCubit>().state!.auth;
                   await context.read<CountdownTimerCubit>().resume(auth, DateTime.now());
                 },
                 icon: SvgIcon(
@@ -121,7 +114,7 @@ class CountdownDisplay extends StatelessWidget {
               )
             : IconButton.filledTonal(
                 onPressed: () async {
-                  var auth = context.read<LoginCubit>().state!.auth;
+                  final auth = context.read<LoginCubit>().state!.auth;
                   await context.read<CountdownTimerCubit>().pause(auth);
                 },
                 icon: SvgIcon(
@@ -145,23 +138,19 @@ class CountdownDisplay extends StatelessWidget {
         ),
       ];
 
-  _gotoShop(BuildContext context) => () {
-        return openModal(
-          context,
-          BlocBuilder<LoginCubit, Profile?>(
-            builder: (context, u) => modal(context, AppLocalizations.of(context)!.modalGoals, GoalModal(auth: u?.auth)),
-          ),
-        );
-      };
+  void Function() _gotoShop(final BuildContext context) => () => openModal(
+        context,
+        BlocBuilder<LoginCubit, Profile?>(
+          builder: (final context, final u) => modal(context, AppLocalizations.of(context)!.modalGoals, GoalModal(auth: u?.auth)),
+        ),
+      );
 
-  _gotoTime(BuildContext context) => () {
-        return openModal(
-          context,
-          BlocBuilder<LoginCubit, Profile?>(
-            builder: (context, u) => modal(context, AppLocalizations.of(context)!.modalTimerEvents, TimeModal(auth: u?.auth)),
-          ),
-        );
-      };
+  void Function() _gotoTime(final BuildContext context) => () => openModal(
+        context,
+        BlocBuilder<LoginCubit, Profile?>(
+          builder: (final context, final u) => modal(context, AppLocalizations.of(context)!.modalTimerEvents, TimeModal(auth: u?.auth)),
+        ),
+      );
 }
 
 class Stopwatch extends StatelessWidget {
@@ -177,7 +166,7 @@ class Stopwatch extends StatelessWidget {
   final bool small;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final tsm = fAccent(
       textStyle: small ? Theme.of(context).textTheme.titleMedium : Theme.of(context).textTheme.displaySmall,
     ).copyWith(
@@ -194,7 +183,6 @@ class Stopwatch extends StatelessWidget {
       alignment: Alignment.center,
       width: double.infinity,
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Ticker(small: small, child: ClockHand(ClockHandType.days, from: from, frozen: frozen, style: tsm)),
@@ -212,26 +200,24 @@ class Stopwatch extends StatelessWidget {
 
 class Ticker extends StatelessWidget {
   const Ticker({
-    super.key,
     required this.child,
     required this.small,
+    super.key,
   });
 
   final Widget child;
   final bool small;
 
   @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 2,
-      color: Theme.of(context).colorScheme.secondaryContainer,
-      child: Container(
-        alignment: Alignment.center,
-        padding: EdgeInsets.all(small ? 8 : 16),
-        child: child,
-      ),
-    );
-  }
+  Widget build(final BuildContext context) => Card(
+        elevation: 2,
+        color: Theme.of(context).colorScheme.secondaryContainer,
+        child: Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.all(small ? 8 : 16),
+          child: child,
+        ),
+      );
 }
 
 enum ClockHandType {
@@ -244,10 +230,10 @@ enum ClockHandType {
 class ClockHand extends StatefulWidget {
   const ClockHand(
     this.tm, {
-    super.key,
     required this.from,
     required this.frozen,
     required this.style,
+    super.key,
   });
 
   final ClockHandType tm;
@@ -261,7 +247,7 @@ class ClockHand extends StatefulWidget {
 
 class _ClockHandState extends State<ClockHand> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     if (!widget.frozen) scheduleRefresh();
 
     return Text(
@@ -280,19 +266,15 @@ class _ClockHandState extends State<ClockHand> {
         case ClockHandType.days:
           final p = diff.inDays;
           v = p.toString();
-          break;
         case ClockHandType.hours:
-          final p = (diff.inHours % 24);
+          final p = diff.inHours % 24;
           v = p.toString();
-          break;
         case ClockHandType.minutes:
-          final p = (diff.inMinutes % 60);
+          final p = diff.inMinutes % 60;
           v = p.toString();
-          break;
         case ClockHandType.seconds:
-          final p = (diff.inSeconds % 60);
+          final p = diff.inSeconds % 60;
           v = p.toString();
-          break;
       }
     }
 
@@ -304,20 +286,16 @@ class _ClockHandState extends State<ClockHand> {
     switch (widget.tm) {
       case ClockHandType.days:
         timerDuration = const Duration(seconds: 1);
-        break;
       case ClockHandType.hours:
         timerDuration = const Duration(seconds: 1);
-        break;
       case ClockHandType.minutes:
         timerDuration = const Duration(seconds: 1);
-        break;
       case ClockHandType.seconds:
         timerDuration = const Duration(milliseconds: 10);
-        break;
     }
 
     Timer? t;
-    t = Timer(timerDuration, () {
+    return t = Timer(timerDuration, () {
       if (widget.frozen || !mounted) {
         if (t != null) t.cancel();
         return;
@@ -325,7 +303,5 @@ class _ClockHandState extends State<ClockHand> {
 
       setState(() {});
     });
-
-    return t;
   }
 }

@@ -8,18 +8,18 @@ class Goals {
   List<Goal> data;
 
   @override
-  bool operator ==(Object other) => false; // ignore: hash_and_equals
+  bool operator ==(final Object other) => false; // ignore: hash_and_equals
 }
 
 class GoalsCubit extends Cubit<Goals?> {
   GoalsCubit() : super(null);
 
-  Future<void> set(User user, Goals goals) async {
+  Future<void> set(final User user, final Goals goals) async {
     emit(goals);
-    syncGoals(user, [...goals.data]);
+    await syncGoals(user, [...goals.data]);
   }
 
-  Future<void> overwrite(Goals goals) async {
+  void overwrite(final Goals goals) async {
     emit(goals);
   }
 }

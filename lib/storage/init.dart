@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:dependencecoping/provider/static/static.dart';
 import 'package:dependencecoping/storage/goal.dart';
@@ -15,6 +17,7 @@ enum LoadingProgress { notStarted, started, done }
 
 mixin AssetsInitializer<T extends StatefulWidget> on State<T> {
   LoadingProgress loadingState = LoadingProgress.notStarted;
+  bool initOK = false;
 
   User? user;
   ProfileRecord? profile;
@@ -32,12 +35,11 @@ mixin AssetsInitializer<T extends StatefulWidget> on State<T> {
     super.initState();
   }
 
-  Future<String> localText(BuildContext context, String name) async {
-    return await DefaultAssetBundle.of(context).loadString(name);
-  }
+  Future<String> localText(final BuildContext context, final String name) => DefaultAssetBundle.of(context).loadString(name);
 
   bool tryLock() {
     log('trying to lock: state $loadingState', name: 'tools.Assets');
+    sleep(const Duration(seconds: 1));
 
     if (loadingState == LoadingProgress.notStarted) {
       setState(() {
@@ -50,49 +52,61 @@ mixin AssetsInitializer<T extends StatefulWidget> on State<T> {
     return false;
   }
 
-  Future<void> reset(BuildContext context) async {
+  Future<void> reset(final BuildContext context) async {
     setState(() {
       loadingState = LoadingProgress.started;
     });
 
-    await load(context);
+    await _load(context);
   }
 
-  Future<void> load(BuildContext context) async {
+  Future<void> init(final BuildContext context) async {
+    setState(() {
+      initOK = false;
+    });
+
+    await _load(context);
+
+    setState(() {
+      initOK = true;
+    });
+  }
+
+  Future<void> _load(final BuildContext context) async {
     final userData = await restoreAuthInfo();
     setState(() {
       user = userData;
     });
 
-    List<Future> waitGroup = [];
+    final List<Future> waitGroup = [];
 
     if (user != null) {
       final profileFuture = getProfile(user!);
-      profileFuture.then((value) => setState(() => profile = value));
+      unawaited(profileFuture.then((final value) => setState(() => profile = value)));
       waitGroup.add(profileFuture);
 
       final staticGoalsFuture = getStaticGoals(user!);
-      staticGoalsFuture.then((value) => setState(() => statics.goals = value));
+      unawaited(staticGoalsFuture.then((final value) => setState(() => statics.goals = value)));
       waitGroup.add(staticGoalsFuture);
 
       final staticTriggersFuture = getStaticTriggers(user!);
-      staticTriggersFuture.then((value) => setState(() => statics.triggers = value));
+      unawaited(staticTriggersFuture.then((final value) => setState(() => statics.triggers = value)));
       waitGroup.add(staticTriggersFuture);
 
       final resetsFuture = getCountdownResets(user!, 'smoking');
-      resetsFuture.then((value) => setState(() => resets = value));
+      unawaited(resetsFuture.then((final value) => setState(() => resets = value)));
       waitGroup.add(resetsFuture);
 
       final goalsFuture = getGoals(user!);
-      goalsFuture.then((value) => setState(() => goals = value));
+      unawaited(goalsFuture.then((final value) => setState(() => goals = value)));
       waitGroup.add(goalsFuture);
 
       final triggersFuture = getTriggers(user!);
-      triggersFuture.then((value) => setState(() => triggers = value));
+      unawaited(triggersFuture.then((final value) => setState(() => triggers = value)));
       waitGroup.add(triggersFuture);
 
       final triggersLogFuture = getTriggersLog(user!, 'smoking');
-      triggersLogFuture.then((value) => setState(() => triggersLog = value));
+      unawaited(triggersLogFuture.then((final value) => setState(() => triggersLog = value)));
       waitGroup.add(triggersLogFuture);
     }
 

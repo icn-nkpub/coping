@@ -15,66 +15,60 @@ class TriggerLogCard extends StatelessWidget {
   final TriggerLog tl;
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: Card(
-        margin: EdgeInsets.zero,
-        clipBehavior: Clip.antiAlias,
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Theme.of(context).colorScheme.primary.withOpacity(.01),
-                Theme.of(context).colorScheme.primary.withOpacity(.05),
-                Colors.transparent,
-                Colors.transparent,
-              ],
-              stops: [0, tl.impulse / 10, tl.impulse / 10, 1],
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
+  Widget build(final BuildContext context) => Padding(
+        padding: const EdgeInsets.only(bottom: 8),
+        child: Card(
+          margin: EdgeInsets.zero,
+          clipBehavior: Clip.antiAlias,
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Theme.of(context).colorScheme.primary.withOpacity(.05),
+                  Theme.of(context).colorScheme.primary.withOpacity(.05),
+                  Colors.transparent,
+                  Colors.transparent,
+                ],
+                stops: [0, tl.impulse / 10, tl.impulse / 10, 1],
+              ),
             ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 8, bottom: 8, left: 8, right: 16),
-            child: Row(
-              children: [
-                IconButton.filledTonal(
-                  onPressed: () {
-                    openModal(context, modal(context, AppLocalizations.of(context)!.modalTriggerLogEvent, TriggerLogEventModal(tl: tl)));
-                  },
-                  icon: Text(
-                    tl.impulse.toString().replaceAll('0', 'O'),
-                    style: Theme.of(context).textTheme.titleSmall,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  flex: 1,
-                  child: Center(
-                    child: Text(
-                      tl.labels[Localizations.localeOf(context).languageCode] ?? tl.labels["en"] ?? "[...]",
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w900),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 8, bottom: 8, left: 8, right: 16),
+              child: Row(
+                children: [
+                  IconButton.filledTonal(
+                    onPressed: () {
+                      openModal(context, modal(context, AppLocalizations.of(context)!.modalTriggerLogEvent, TriggerLogEventModal(tl: tl)));
+                    },
+                    icon: Text(
+                      tl.impulse.toString().replaceAll('0', 'O'),
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
                   ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      DateFormat("dd.MM.yyyy HH:mm").format(tl.time).replaceAll('0', 'O'),
-                      style: fAccent(
-                        textStyle: Theme.of(context).textTheme.bodyMedium,
-                      ).copyWith(fontWeight: FontWeight.w100),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Center(
+                      child: Text(
+                        tl.labels[Localizations.localeOf(context).languageCode] ?? tl.labels['en'] ?? '[...]',
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w900),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        DateFormat('dd.MM.yyyy HH:mm').format(tl.time).replaceAll('0', 'O'),
+                        style: fAccent(
+                          textStyle: Theme.of(context).textTheme.bodyMedium,
+                        ).copyWith(fontWeight: FontWeight.w100),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }

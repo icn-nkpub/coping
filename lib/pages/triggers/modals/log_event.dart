@@ -4,15 +4,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TriggerLogEventModal extends StatelessWidget {
   const TriggerLogEventModal({
-    super.key,
-    required this.tl,
+    required this.tl, super.key,
   });
 
   final TriggerLog tl;
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
+  Widget build(final BuildContext context) => Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -54,5 +52,4 @@ class TriggerLogEventModal extends StatelessWidget {
         ],
       ),
     );
-  }
 }
