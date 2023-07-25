@@ -55,7 +55,7 @@ class CountdownDisplay extends StatelessWidget {
                                     child: SvgIcon(
                                       assetPath: Assets.icons.bolt,
                                       color: Theme.of(context).colorScheme.onTertiaryContainer,
-                                      size: 18,
+                                      sizeOffset: 6,
                                     ),
                                   ),
                                   Padding(
@@ -85,6 +85,7 @@ class CountdownDisplay extends StatelessWidget {
                   return Column(
                     children: gs
                         .map((final g) => GoalCard(
+                              key: GlobalKey(debugLabel: '${g.id} ${g.iconName}'),
                               from: splits?.last ?? DateTime.now(),
                               iconName: g.iconName,
                               titles: g.titles,

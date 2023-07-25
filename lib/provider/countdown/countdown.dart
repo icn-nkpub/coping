@@ -141,7 +141,7 @@ class CountdownTimerCubit extends Cubit<CountdownTimer?> {
 
   void overwrite(
     final List<CountdownReset> input,
-  ) async {
+  ) {
     final resets = [...input];
     resets.sort((final a, final b) => a.compareTo(b));
 

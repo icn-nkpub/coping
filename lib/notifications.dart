@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
-void notifications() async {
+Future<void> notifications() async {
   await OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
   await OneSignal.shared.setAppId('334d0f7c-7da2-4734-922c-12e49dccbfd8');
   await OneSignal.shared.promptUserForPushNotificationPermission().then((final accepted) {

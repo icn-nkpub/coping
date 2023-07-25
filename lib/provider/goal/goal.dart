@@ -19,7 +19,7 @@ class GoalsCubit extends Cubit<Goals?> {
     await syncGoals(user, [...goals.data]);
   }
 
-  void overwrite(final Goals goals) async {
+  void overwrite(final Goals goals) {
     emit(goals);
   }
 }

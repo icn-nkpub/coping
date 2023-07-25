@@ -19,7 +19,7 @@ class StaticRecords {
 class StaticCubit extends Cubit<StaticRecords?> {
   StaticCubit() : super(null);
 
-  void overwrite(final StaticRecords s) async {
+  void overwrite(final StaticRecords s) {
     emit(s);
   }
 }

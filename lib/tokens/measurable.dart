@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 class Measurable extends StatefulWidget {
   const Measurable({
-    required this.reportHeight, required this.child, super.key,
+    required this.reportHeight,
+    required this.child,
+    super.key,
   });
 
   final Function(double) reportHeight;
@@ -26,14 +28,16 @@ class _MeasurableState extends State<Measurable> {
 
   @override
   Widget build(final BuildContext context) => SingleChildScrollView(
-      reverse: true,
-      child: Container(key: _key, child: widget.child),
-    );
+        reverse: true,
+        child: Container(key: _key, child: widget.child),
+      );
 }
 
 class Shrinkable extends StatefulWidget {
   const Shrinkable({
-    required this.child, required this.expanded, super.key,
+    required this.child,
+    required this.expanded,
+    super.key,
     this.duration = const Duration(milliseconds: 200),
   });
 
@@ -50,11 +54,11 @@ class _ShrinkableState extends State<Shrinkable> {
 
   @override
   Widget build(final BuildContext context) => AnimatedContainer(
-      duration: widget.duration,
-      height: widget.expanded ? size : 0,
-      child: Measurable(
-        reportHeight: (final h) => setState(() => size = h),
-        child: widget.child,
-      ),
-    );
+        duration: widget.duration,
+        height: widget.expanded ? size : 0,
+        child: Measurable(
+          reportHeight: (final h) => setState(() => size = h),
+          child: widget.child,
+        ),
+      );
 }

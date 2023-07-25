@@ -113,7 +113,7 @@ class _GoalCardState extends State<GoalCard> {
                       ),
                       child: SvgIcon(
                         assetPath: Assets.icons.done,
-                        size: 24 - (4 * 2),
+                        sizeOffset: 8,
                       ),
                     ),
                   ),
@@ -128,7 +128,7 @@ class _GoalCardState extends State<GoalCard> {
                       ),
                       child: SvgIcon(
                         assetPath: 'assets/icons/${widget.iconName}.svg',
-                        size: 24 - (4 * 2),
+                        sizeOffset: 8,
                       ),
                     ),
                   ),

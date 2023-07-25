@@ -82,35 +82,49 @@ mixin AssetsInitializer<T extends StatefulWidget> on State<T> {
 
     if (user != null) {
       final profileFuture = getProfile(user!);
-      unawaited(profileFuture.then((final value) => setState(() => profile = value)));
       waitGroup.add(profileFuture);
 
       final staticGoalsFuture = getStaticGoals(user!);
-      unawaited(staticGoalsFuture.then((final value) => setState(() => statics.goals = value)));
       waitGroup.add(staticGoalsFuture);
 
       final staticTriggersFuture = getStaticTriggers(user!);
-      unawaited(staticTriggersFuture.then((final value) => setState(() => statics.triggers = value)));
       waitGroup.add(staticTriggersFuture);
 
       final resetsFuture = getCountdownResets(user!, 'smoking');
-      unawaited(resetsFuture.then((final value) => setState(() => resets = value)));
       waitGroup.add(resetsFuture);
 
       final goalsFuture = getGoals(user!);
-      unawaited(goalsFuture.then((final value) => setState(() => goals = value)));
       waitGroup.add(goalsFuture);
 
       final triggersFuture = getTriggers(user!);
-      unawaited(triggersFuture.then((final value) => setState(() => triggers = value)));
       waitGroup.add(triggersFuture);
 
       final triggersLogFuture = getTriggersLog(user!, 'smoking');
-      unawaited(triggersLogFuture.then((final value) => setState(() => triggersLog = value)));
       waitGroup.add(triggersLogFuture);
-    }
 
-    await Future.wait(waitGroup, eagerError: true);
+      await Future.wait(waitGroup, eagerError: true);
+
+      final vProfile = await profileFuture;
+      final vStaticsGoals = await staticGoalsFuture;
+      final vStaticsTriggers = await staticTriggersFuture;
+      final vResets = await resetsFuture;
+      final vGoals = await goalsFuture;
+      final vTriggers = await triggersFuture;
+      final vTriggersLog = await triggersLogFuture;
+
+      setState(() {
+        profile = vProfile;
+        statics.goals = vStaticsGoals;
+        statics.triggers = vStaticsTriggers;
+        resets = vResets;
+        goals = vGoals;
+        triggers = vTriggers;
+        triggersLog = vTriggersLog;
+        loadingState = LoadingProgress.done;
+      });
+
+      return;
+    }
 
     setState(() {
       loadingState = LoadingProgress.done;

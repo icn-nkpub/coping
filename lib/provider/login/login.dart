@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dependencecoping/auth/auth.dart';
 import 'package:dependencecoping/storage/local.dart';
 import 'package:dependencecoping/storage/profiles.dart';
@@ -148,8 +150,8 @@ class LoginCubit extends Cubit<Profile?> {
   void overwrite(
     final User auth,
     final ProfileRecord? profile,
-  ) async {
-    await OneSignal.shared.setExternalUserId(auth.id);
+  ) {
+    unawaited(OneSignal.shared.setExternalUserId(auth.id));
 
     emit(Profile(
       id: auth.id,
