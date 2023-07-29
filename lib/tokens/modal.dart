@@ -76,7 +76,10 @@ void openModal(final BuildContext context, final Widget content) {
           parent: animation,
           curve: Curves.linear,
         )),
-        child: child,
+        child: Container(
+          key: GlobalKey(),
+          child: child,
+        ),
       ),
     ),
   ));

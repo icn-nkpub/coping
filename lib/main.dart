@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:core';
 
+import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/home.dart';
 import 'package:dependencecoping/notifications.dart';
 import 'package:dependencecoping/onboarding.dart';
@@ -173,7 +174,7 @@ class HomeLoader extends StatelessWidget {
   Widget build(final BuildContext context) => Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset('assets/opaqring.png', width: 148, height: 148),
+          Image.asset(Assets.opaqring.path, width: 148, height: 148),
           const SizedBox(height: 16),
           const Text(
             'Loading...',

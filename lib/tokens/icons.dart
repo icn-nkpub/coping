@@ -20,15 +20,12 @@ class SvgIcon extends StatelessWidget {
       BlendMode.srcATop,
     );
 
-    return Padding(
-      padding: const EdgeInsets.all(1),
-      child: SvgPicture.asset(
-        assetPath,
-        colorFilter: iconColor,
-        width: 22 - sizeOffset,
-        height: 22 - sizeOffset,
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-      ),
+    return SvgPicture.asset(
+      assetPath,
+      colorFilter: iconColor,
+      width: 22 - sizeOffset,
+      height: 22 - sizeOffset,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
     );
   }
 }

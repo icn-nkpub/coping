@@ -9,6 +9,35 @@
 
 import 'package:flutter/widgets.dart';
 
+class $AssetsGuyGen {
+  const $AssetsGuyGen();
+
+  /// File path: assets/guy/angry.svg
+  String get angry => 'assets/guy/angry.svg';
+
+  /// File path: assets/guy/deceptive.svg
+  String get deceptive => 'assets/guy/deceptive.svg';
+
+  /// File path: assets/guy/happy.svg
+  String get happy => 'assets/guy/happy.svg';
+
+  /// File path: assets/guy/neutral.svg
+  String get neutral => 'assets/guy/neutral.svg';
+
+  /// File path: assets/guy/positive.svg
+  String get positive => 'assets/guy/positive.svg';
+
+  /// File path: assets/guy/sceptic.svg
+  String get sceptic => 'assets/guy/sceptic.svg';
+
+  /// File path: assets/guy/smart.svg
+  String get smart => 'assets/guy/smart.svg';
+
+  /// List of all assets
+  List<String> get values =>
+      [angry, deceptive, happy, neutral, positive, sceptic, smart];
+}
+
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
@@ -180,7 +209,12 @@ class $AssetsIconsGen {
 class Assets {
   Assets._();
 
+  static const $AssetsGuyGen guy = $AssetsGuyGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
+  static const AssetGenImage opaqring = AssetGenImage('assets/opaqring.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [opaqring];
 }
 
 class AssetGenImage {
