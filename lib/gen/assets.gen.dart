@@ -18,6 +18,9 @@ class $AssetsGuyGen {
   /// File path: assets/guy/deceptive.svg
   String get deceptive => 'assets/guy/deceptive.svg';
 
+  /// File path: assets/guy/hand.svg
+  String get hand => 'assets/guy/hand.svg';
+
   /// File path: assets/guy/happy.svg
   String get happy => 'assets/guy/happy.svg';
 
@@ -35,7 +38,7 @@ class $AssetsGuyGen {
 
   /// List of all assets
   List<String> get values =>
-      [angry, deceptive, happy, neutral, positive, sceptic, smart];
+      [angry, deceptive, hand, happy, neutral, positive, sceptic, smart];
 }
 
 class $AssetsIconsGen {

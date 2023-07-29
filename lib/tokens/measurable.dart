@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 
 class Measurable extends StatefulWidget {
   const Measurable({
-    required this.reportHeight,
     required this.child,
+    this.reportWidth,
+    this.reportHeight,
     super.key,
   });
 
-  final Function(double) reportHeight;
+  final Function(double)? reportHeight;
+  final Function(double)? reportWidth;
   final Widget child;
 
   @override
@@ -22,7 +24,8 @@ class _MeasurableState extends State<Measurable> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((final _) {
       final rb = _key.currentContext!.findRenderObject()! as RenderBox;
-      widget.reportHeight(rb.size.height);
+      widget.reportWidth?.call(rb.size.width);
+      widget.reportHeight?.call(rb.size.height);
     });
   }
 

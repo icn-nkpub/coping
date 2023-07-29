@@ -78,11 +78,7 @@ class _TopBarState extends State<TopBar> {
                     onPressed: () {
                       openModal(
                         context,
-                        modal(
-                          context,
-                          AppLocalizations.of(context)!.screenManual,
-                          const HelpModal(),
-                        ),
+                        const HelpModal(),
                       );
                     },
                     icon: SvgIcon(assetPath: Assets.icons.developerGuide),

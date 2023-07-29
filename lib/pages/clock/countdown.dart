@@ -41,38 +41,8 @@ class CountdownDisplay extends StatelessWidget {
                       ...controlls(context, paused: paused),
                       const SizedBox(width: 16),
                       BlocBuilder<CountdownTimerCubit, CountdownTimer?>(
-                        builder: (final context, final ct) => Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Card(
-                              margin: EdgeInsets.zero,
-                              color: Theme.of(context).colorScheme.tertiaryContainer,
-                              elevation: 3,
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 14),
-                                    child: SvgIcon(
-                                      assetPath: Assets.icons.bolt,
-                                      color: Theme.of(context).colorScheme.onTertiaryContainer,
-                                      sizeOffset: 6,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 16, left: 8, top: 8, bottom: 8),
-                                    child: Text(
-                                      NumberFormat.decimalPattern().format(splits?.score ?? 0).replaceAll('0', 'O'),
-                                      style: fAccent(textStyle: Theme.of(context).textTheme.bodyLarge).copyWith(
-                                        color: Theme.of(context).colorScheme.onTertiaryContainer,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                        builder: (final context, final ct) =>
+                            ScoreCard(score: NumberFormat.decimalPattern().format(splits?.score ?? 0).replaceAll('0', 'O')),
                       ),
                     ],
                   ),
@@ -154,6 +124,44 @@ class CountdownDisplay extends StatelessWidget {
       );
 }
 
+class ScoreCard extends StatelessWidget {
+  const ScoreCard({
+    required this.score,
+    super.key,
+  });
+
+  final String score;
+
+  @override
+  Widget build(final BuildContext context) => Card(
+        margin: EdgeInsets.zero,
+        color: Theme.of(context).colorScheme.tertiaryContainer,
+        elevation: 3,
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 14),
+              child: SvgIcon(
+                assetPath: Assets.icons.bolt,
+                color: Theme.of(context).colorScheme.onTertiaryContainer,
+                sizeOffset: 6,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 16, left: 8, top: 8, bottom: 8),
+              child: Text(
+                score,
+                style: fAccent(textStyle: Theme.of(context).textTheme.bodyLarge).copyWith(
+                  color: Theme.of(context).colorScheme.onTertiaryContainer,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+}
+
 class Stopwatch extends StatelessWidget {
   const Stopwatch({
     required this.from,
@@ -184,7 +192,7 @@ class Stopwatch extends StatelessWidget {
       alignment: Alignment.center,
       width: double.infinity,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Ticker(small: small, child: ClockHand(ClockHandType.days, from: from, frozen: frozen, style: tsm)),
           Text(':', style: ts),
@@ -210,13 +218,20 @@ class Ticker extends StatelessWidget {
   final bool small;
 
   @override
-  Widget build(final BuildContext context) => Card(
-        elevation: 2,
-        color: Theme.of(context).colorScheme.secondaryContainer,
-        child: Container(
-          alignment: Alignment.center,
-          padding: EdgeInsets.all(small ? 8 : 16),
-          child: child,
+  Widget build(final BuildContext context) => Flexible(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Card(
+              elevation: 2,
+              color: Theme.of(context).colorScheme.secondaryContainer,
+              child: Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                child: child,
+              ),
+            ),
+          ],
         ),
       );
 }
@@ -251,10 +266,13 @@ class _ClockHandState extends State<ClockHand> {
   Widget build(final BuildContext context) {
     if (!widget.frozen) scheduleRefresh();
 
-    return Text(
-      value(),
-      style: widget.style,
-      textAlign: TextAlign.center,
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Text(
+        value(),
+        style: widget.style.copyWith(fontSize: 160),
+        textAlign: TextAlign.center,
+      ),
     );
   }
 

@@ -94,7 +94,7 @@ class Display extends StatelessWidget {
       listener: (final context, final state) {
         cd.backdrop = context.read<ThemeCubit>().state.data.scaffoldBackgroundColor;
         cd.primary = HSLColor.fromColor(state.data.colorScheme.primary);
-        cd.secondary = HSLColor.fromColor(state.data.colorScheme.secondary);
+        cd.secondary = HSLColor.fromColor(state.data.colorScheme.tertiary);
       },
       child: FunvasContainer(
         funvas: cd,
