@@ -2,10 +2,8 @@ import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/modals/help_pages/_guy.dart';
 import 'package:dependencecoping/modals/help_pages/_handed.dart';
 import 'package:dependencecoping/tokens/icons.dart';
+import 'package:dependencecoping/tools/text_asset.dart';
 import 'package:flutter/material.dart';
-
-// ignore: unused_import
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ControlButtonsHelpPage extends StatelessWidget {
   const ControlButtonsHelpPage({
@@ -18,35 +16,35 @@ class ControlButtonsHelpPage extends StatelessWidget {
         children: [
           Guy(text: 'Control buttons', face: Assets.guy.positive),
           Expanded(
-              child: ListView(
-            children: [
-              const SizedBox(height: 16),
-              handedControls(context, 1, paused: true),
-              const Padding(
-                padding: EdgeInsets.all(16),
-                child: Text(
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin enim ligula, fringilla ac urna at, consectetur elementum nunc. Nullam mattis dapibus iaculis.'),
-              ),
-              handedControls(context, 1),
-              const Padding(
-                padding: EdgeInsets.all(16),
-                child: Text(
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin enim ligula, fringilla ac urna at, consectetur elementum nunc. Nullam mattis dapibus iaculis.'),
-              ),
-              handedControls(context, 2.15, paused: true),
-              const Padding(
-                padding: EdgeInsets.all(16),
-                child: Text(
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin enim ligula, fringilla ac urna at, consectetur elementum nunc. Nullam mattis dapibus iaculis.'),
-              ),
-              handedControls(context, 3.2, paused: true),
-              const Padding(
-                padding: EdgeInsets.all(16),
-                child: Text(
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin enim ligula, fringilla ac urna at, consectetur elementum nunc. Nullam mattis dapibus iaculis.'),
-              ),
-            ],
-          ))
+            child: ListView(
+              children: [
+                const SizedBox(height: 16),
+                Center(child: handedControls(context, 1, paused: true)),
+                const Padding(
+                  padding: EdgeInsets.all(16),
+                  child: MarkdownManual(section: 'buttons', fragment: 'start'),
+                ),
+                Center(child: handedControls(context, 1)),
+                const Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Text(
+                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin enim ligula, fringilla ac urna at, consectetur elementum nunc. Nullam mattis dapibus iaculis.'),
+                ),
+                Center(child: handedControls(context, 2.15, paused: true)),
+                const Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Text(
+                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin enim ligula, fringilla ac urna at, consectetur elementum nunc. Nullam mattis dapibus iaculis.'),
+                ),
+                Center(child: handedControls(context, 3.2, paused: true)),
+                const Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Text(
+                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin enim ligula, fringilla ac urna at, consectetur elementum nunc. Nullam mattis dapibus iaculis.'),
+                ),
+              ],
+            ),
+          ),
         ],
       );
 

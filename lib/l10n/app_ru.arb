@@ -66,5 +66,6 @@
     },
     "meditationHowTo10": "Следуйте по кругу",
     "helpSwipeAction": "Проведите влево для следующей страницы",
+    "helpManuals": "assets/manuals/ru/{section}/{fragment}.md",
     "exit": "выход"
 }

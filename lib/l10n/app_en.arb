@@ -66,5 +66,6 @@
     },
     "meditationHowTo10": "Follow the circle",
     "helpSwipeAction": "Swipe horizontally for the next page",
+    "helpManuals": "assets/manuals/en/{section}/{fragment}.md",
     "exit": "exit"
 }

@@ -209,11 +209,39 @@ class $AssetsIconsGen {
       ];
 }
 
+class $AssetsManualsGen {
+  const $AssetsManualsGen();
+
+  $AssetsManualsEnGen get en => const $AssetsManualsEnGen();
+  $AssetsManualsRuGen get ru => const $AssetsManualsRuGen();
+}
+
+class $AssetsManualsEnGen {
+  const $AssetsManualsEnGen();
+
+  /// File path: assets/manuals/en/intro.md
+  String get intro => 'assets/manuals/en/intro.md';
+
+  /// List of all assets
+  List<String> get values => [intro];
+}
+
+class $AssetsManualsRuGen {
+  const $AssetsManualsRuGen();
+
+  /// File path: assets/manuals/ru/intro.md
+  String get intro => 'assets/manuals/ru/intro.md';
+
+  /// List of all assets
+  List<String> get values => [intro];
+}
+
 class Assets {
   Assets._();
 
   static const $AssetsGuyGen guy = $AssetsGuyGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
+  static const $AssetsManualsGen manuals = $AssetsManualsGen();
   static const AssetGenImage opaqring = AssetGenImage('assets/opaqring.png');
 
   /// List of all assets
