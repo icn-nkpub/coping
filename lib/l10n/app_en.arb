@@ -69,5 +69,15 @@
     "meditationHowTo10": "Follow the circle",
     "helpSwipeAction": "Swipe horizontally for the next page",
     "helpManuals": "assets/manuals/en/{section}/{fragment}.md",
+    "notificationsTimerEvent": "Timer event",
+    "notificationsPass_1": "First hour without addiction!",
+    "notificationsPass_2": "Second hour without addiction!",
+    "notificationsPass_24": "Day without addiction!",
+    "notificationsPass_48": "Two days without addiction!",
+    "notificationsPass_72": "Three days without addiction!",
+    "notificationsPass_96": "Four days without addiction!",
+    "notificationsPass_168": "Week without addiction!",
+    "notificationsHourPassReset": "It's an hour after timer stop. Consider another try to quit.",
+    "notificationsDayPassReset": "It's an day after timer stop. Consider another try to quit.",
     "exit": "exit"
 }

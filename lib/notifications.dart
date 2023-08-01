@@ -1,7 +1,21 @@
 import 'dart:developer';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
+
+FlutterLocalNotificationsPlugin? fnp;
 
 Future<void> notifications() async {
+  tz.initializeTimeZones();
+
+  fnp = FlutterLocalNotificationsPlugin();
+  await fnp!.initialize(InitializationSettings(
+    iOS: DarwinInitializationSettings(
+      onDidReceiveLocalNotification: (final id, final title, final body, final _) => log('$id - $title', name: 'silence notificaion'),
+    ),
+  ));
+
   await OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
   await OneSignal.shared.setAppId('334d0f7c-7da2-4734-922c-12e49dccbfd8');
   await OneSignal.shared.promptUserForPushNotificationPermission().then((final accepted) {
@@ -28,4 +42,34 @@ Future<void> notifications() async {
     // Will be called whenever the subscription changes
     // (ie. user gets registered with OneSignal and gets a user ID)
   });
+}
+
+Future<void> scheduleNotification(
+  final int id,
+  final Duration after,
+  final String title,
+  final String body,
+) async {
+  if (fnp == null) {
+    return;
+  }
+
+  await fnp!.cancel(id);
+  await fnp!.zonedSchedule(
+    id,
+    title,
+    body,
+    tz.TZDateTime.now(tz.local).add(after),
+    const NotificationDetails(),
+    androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+    uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+  );
+}
+
+Future<void> unscheduleNotification(final int id) async {
+  if (fnp == null) {
+    return;
+  }
+
+  await fnp!.cancel(id);
 }

@@ -69,5 +69,15 @@
     "meditationHowTo10": "Следуйте по кругу",
     "helpSwipeAction": "Проведите влево для следующей страницы",
     "helpManuals": "assets/manuals/ru/{section}/{fragment}.md",
+    "notificationsTimerEvent": "Событие таймера",
+    "notificationsPass_1": "Первый час без зависимости!",
+    "notificationsPass_2": "Второй час без зависимости!",
+    "notificationsPass_24": "День без зависимости!",
+    "notificationsPass_48": "Два дня без зависимости!",
+    "notificationsPass_72": "Три дня без зависимости!",
+    "notificationsPass_96": "Четыре дня без зависимости!",
+    "notificationsPass_168": "Неделя без зависимости!",
+    "notificationsHourPassReset": "Прошел час после остановки таймера. Стоит рассмотреть еще одну попытку бросить.",
+    "notificationsDayPassReset": "Прошел день после остановки таймера. Стоит рассмотреть еще одну попытку бросить.",
     "exit": "выход"
 }
