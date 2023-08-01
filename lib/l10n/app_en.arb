@@ -15,6 +15,8 @@
     "clearStorageWarning": "Please, confirm that you want to logout",
     "profileFirstName": "First name",
     "profileSecondName": "Second name",
+    "profileAddictionLabel": "Addiction",
+    "profileAddictionSuggestions": "Vape, Disposable, Cigarettes",
     "profileSave": "Save",
     "registerEmail": "Email",
     "registerPassword": "Password",

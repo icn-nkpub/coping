@@ -71,6 +71,7 @@ class LoginCubit extends Cubit<Profile?> {
           firstName: '',
           secondName: '',
           breathingTime: 0,
+          addictionLabel: '',
           color: '',
           isLight: false,
         );
@@ -99,6 +100,7 @@ class LoginCubit extends Cubit<Profile?> {
           firstName: '',
           secondName: '',
           breathingTime: 0,
+          addictionLabel: '',
           color: '',
           isLight: false,
         );
@@ -119,6 +121,7 @@ class LoginCubit extends Cubit<Profile?> {
   Future<void> saveProfile(
     final String firstName,
     final String secondName,
+    final String addictionLabel,
   ) async {
     if (state == null) {
       return;
@@ -131,11 +134,13 @@ class LoginCubit extends Cubit<Profile?> {
           firstName: '',
           secondName: '',
           breathingTime: 0,
+          addictionLabel: '',
           color: '',
           isLight: false,
         );
     p.firstName = firstName;
     p.secondName = secondName;
+    p.addictionLabel = addictionLabel;
 
     await syncProfile(auth, p);
 

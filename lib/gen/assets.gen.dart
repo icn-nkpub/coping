@@ -213,27 +213,22 @@ class $AssetsManualsGen {
   const $AssetsManualsGen();
 
   $AssetsManualsEnGen get en => const $AssetsManualsEnGen();
-  $AssetsManualsRuGen get ru => const $AssetsManualsRuGen();
 }
 
 class $AssetsManualsEnGen {
   const $AssetsManualsEnGen();
 
-  /// File path: assets/manuals/en/intro.md
-  String get intro => 'assets/manuals/en/intro.md';
-
-  /// List of all assets
-  List<String> get values => [intro];
+  $AssetsManualsEnButtonsGen get buttons => const $AssetsManualsEnButtonsGen();
 }
 
-class $AssetsManualsRuGen {
-  const $AssetsManualsRuGen();
+class $AssetsManualsEnButtonsGen {
+  const $AssetsManualsEnButtonsGen();
 
-  /// File path: assets/manuals/ru/intro.md
-  String get intro => 'assets/manuals/ru/intro.md';
+  /// File path: assets/manuals/en/buttons/start.md
+  String get start => 'assets/manuals/en/buttons/start.md';
 
   /// List of all assets
-  List<String> get values => [intro];
+  List<String> get values => [start];
 }
 
 class Assets {

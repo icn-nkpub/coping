@@ -7,6 +7,7 @@ class ProfileRecord {
     required this.firstName,
     required this.secondName,
     required this.breathingTime,
+    required this.addictionLabel,
     required this.color,
     required this.isLight,
   });
@@ -14,6 +15,7 @@ class ProfileRecord {
   String firstName;
   String secondName;
   double breathingTime;
+  String addictionLabel; // addiction_label
   String? color;
   bool? isLight;
 }
@@ -38,6 +40,7 @@ Future<ProfileRecord?> getProfile(final User user) async {
     firstName: record['first_name'] ?? '',
     secondName: record['second_name'] ?? '',
     breathingTime: breathingTime,
+    addictionLabel: record['addiction_label'] ?? '',
     color: themeData['color'],
     isLight: themeData['is_light'],
   );
@@ -54,6 +57,7 @@ Future<void> syncProfile(final User user, final ProfileRecord p) async {
       'user_id': user.id,
       'first_name': p.firstName,
       'second_name': p.secondName,
+      'addiction_label': p.addictionLabel,
     });
     return;
   }
@@ -62,6 +66,7 @@ Future<void> syncProfile(final User user, final ProfileRecord p) async {
     'user_id': user.id,
     'first_name': p.firstName,
     'second_name': p.secondName,
+    'addiction_label': p.addictionLabel,
   }).eq('user_id', user.id);
 }
 
