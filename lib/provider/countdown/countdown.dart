@@ -84,7 +84,11 @@ class CountdownTimerCubit extends Cubit<CountdownTimer?> {
       );
     }
 
-    emit(CountdownTimer(resumed: dt, paused: null, resets: resets));
+    emit(CountdownTimer(
+      resumed: dt,
+      paused: null,
+      resets: resets,
+    ));
   }
 
   Future<void> pause(final User auth) async {
@@ -102,7 +106,7 @@ class CountdownTimerCubit extends Cubit<CountdownTimer?> {
 
     emit(CountdownTimer(
       resumed: null,
-      paused: DateTime.now(),
+      paused: resetTime,
       resets: [...resets],
     ));
   }
