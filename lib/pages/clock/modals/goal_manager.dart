@@ -64,34 +64,13 @@ class _GoalModalState extends State<GoalModal> {
       if (t.key == Localizations.localeOf(context).languageCode) title = t.value;
     }
 
-    final togler = _toggle(g);
+    final onChanged = _toggle(g);
+    final currentValue = goals.where((final element) => element.id == g.id).isNotEmpty;
 
-    return Card(
-      child: Row(
-        children: [
-          Checkbox(
-            value: _isToggled(g),
-            onChanged: (final v) => togler(checkState: v),
-          ),
-          Expanded(
-            child: Text(
-              title,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: SvgIcon(
-              assetPath: 'assets/icons/${g.iconName}.svg',
-              color: Theme.of(context).colorScheme.primary.withOpacity(.5),
-            ),
-          ),
-        ],
-      ),
-    );
+    final goalIconPath = 'assets/icons/${g.iconName}.svg';
+
+    return GoalToggleCard(currentValue: currentValue, onChanged: onChanged, title: title, goalIconPath: goalIconPath);
   }
-
-  bool _isToggled(final Goal g) => goals.where((final element) => element.id == g.id).isNotEmpty;
 
   Null Function({bool? checkState}) _toggle(final Goal g) => ({final bool? checkState}) {
         if (checkState == null) {
@@ -123,5 +102,45 @@ class _GoalModalState extends State<GoalModal> {
             height: 16,
           )
         ],
+      );
+}
+
+class GoalToggleCard extends StatelessWidget {
+  const GoalToggleCard({
+    required this.title,
+    required this.goalIconPath,
+    required this.currentValue,
+    this.onChanged,
+    super.key,
+  });
+
+  final bool currentValue;
+  final Null Function({bool? checkState})? onChanged;
+  final String title;
+  final String goalIconPath;
+
+  @override
+  Widget build(final BuildContext context) => Card(
+        child: Row(
+          children: [
+            Checkbox(
+              value: currentValue,
+              onChanged: (final v) => onChanged?.call(checkState: v),
+            ),
+            Expanded(
+              child: Text(
+                title,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: SvgIcon(
+                assetPath: goalIconPath,
+                color: Theme.of(context).colorScheme.primary.withOpacity(.5),
+              ),
+            ),
+          ],
+        ),
       );
 }

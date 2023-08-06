@@ -2,6 +2,7 @@ import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/modals/help_pages/_guy.dart';
 import 'package:dependencecoping/modals/help_pages/_handed.dart';
 import 'package:dependencecoping/pages/clock/countdown.dart';
+import 'package:dependencecoping/tools/text_asset.dart';
 import 'package:flutter/material.dart';
 
 // ignore: unused_import
@@ -32,8 +33,7 @@ class IntroHelpPage extends StatelessWidget {
                 ),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin enim ligula, fringilla ac urna at, consectetur elementum nunc. Nullam mattis dapibus iaculis. Donec id lectus in nunc sollicitudin ultrices. Sed euismod nulla nulla, et scelerisque justo fringilla eget. Quisque at lacus id sapien ultrices ornare. Fusce in diam lorem. Donec vel lacinia tellus, ac tempor quam. Nullam cursus non nisi a rutrum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer lobortis, eros id tempus tincidunt, magna metus molestie diam, in tempus libero lorem sit amet quam. Nulla ex mauris, tincidunt eu massa vel, faucibus condimentum lacus. Sed id justo mollis, tristique ante cursus, volutpat quam. Suspendisse euismod malesuada purus nec pretium. Curabitur ornare fermentum odio, eget volutpat felis lobortis sit amet.'),
+                  child: MarkdownManual(section: 'clock', fragment: '1_clock'),
                 ),
                 Handed(
                   computeTop: (final s, final av) => s - (av * 4),
@@ -48,8 +48,7 @@ class IntroHelpPage extends StatelessWidget {
                 ),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin enim ligula, fringilla ac urna at, consectetur elementum nunc. Nullam mattis dapibus iaculis. Donec id lectus in nunc sollicitudin ultrices. Sed euismod nulla nulla, et scelerisque justo fringilla eget. Quisque at lacus id sapien ultrices ornare. Fusce in diam lorem. Donec vel lacinia tellus, ac tempor quam. Nullam cursus non nisi a rutrum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer lobortis, eros id tempus tincidunt, magna metus molestie diam, in tempus libero lorem sit amet quam. Nulla ex mauris, tincidunt eu massa vel, faucibus condimentum lacus. Sed id justo mollis, tristique ante cursus, volutpat quam. Suspendisse euismod malesuada purus nec pretium. Curabitur ornare fermentum odio, eget volutpat felis lobortis sit amet.'),
+                  child: MarkdownManual(section: 'clock', fragment: '2_score'),
                 ),
               ],
             ),

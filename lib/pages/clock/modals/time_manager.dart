@@ -66,11 +66,48 @@ class _TimeModalState extends State<TimeModal> {
             ));
   }
 
-  Widget record(final CountdownEvent r) {
+  Widget record(final CountdownEvent r) => TimerJournalCard(
+        resume: r.resume,
+        dateText: DateFormat('dd.MM.yyyy HH:mm:ss').format(r.time),
+        onEditPressed: () async {
+          final c = context.read<CountdownTimerCubit>();
+          final v = await showTimePicker(
+            context: context,
+            initialTime: TimeOfDay.fromDateTime(r.time),
+          );
+          if (v == null) return;
+
+          if (widget.auth != null) {
+            final t = r.time..copyWith(hour: v.hour, minute: v.minute);
+
+            if (r.resume) {
+              await c.editResume(widget.auth!, r.id, t);
+            } else {
+              await c.editReset(widget.auth!, r.id, t);
+            }
+          }
+        },
+      );
+}
+
+class TimerJournalCard extends StatelessWidget {
+  const TimerJournalCard({
+    required this.resume,
+    required this.dateText,
+    required this.onEditPressed,
+    super.key,
+  });
+
+  final bool resume;
+  final String dateText;
+  final Future<void> Function() onEditPressed;
+
+  @override
+  Widget build(final BuildContext context) {
     final tsm = fAccent(
       textStyle: Theme.of(context).textTheme.titleSmall,
     ).copyWith(
-      color: r.resume ? Theme.of(context).colorScheme.onPrimaryContainer : Theme.of(context).colorScheme.onTertiaryContainer,
+      color: resume ? Theme.of(context).colorScheme.onPrimaryContainer : Theme.of(context).colorScheme.onTertiaryContainer,
     );
 
     return Card(
@@ -83,7 +120,7 @@ class _TimeModalState extends State<TimeModal> {
                 flex: 0,
                 child: Padding(
                   padding: const EdgeInsets.only(right: 8),
-                  child: r.resume
+                  child: resume
                       ? SvgIcon(
                           assetPath: Assets.icons.playArrow,
                           color: Theme.of(context).colorScheme.onPrimaryContainer,
@@ -97,7 +134,7 @@ class _TimeModalState extends State<TimeModal> {
               child: Align(
                 alignment: enableEdit ? Alignment.centerLeft : Alignment.centerRight,
                 child: Text(
-                  DateFormat('dd.MM.yyyy HH:mm:ss').format(r.time),
+                  dateText,
                   style: tsm,
                 ),
               ),
@@ -106,27 +143,10 @@ class _TimeModalState extends State<TimeModal> {
               Flexible(
                 flex: 0,
                 child: IconButton(
-                  onPressed: () async {
-                    final c = context.read<CountdownTimerCubit>();
-                    final v = await showTimePicker(
-                      context: context,
-                      initialTime: TimeOfDay.fromDateTime(r.time),
-                    );
-                    if (v == null) return;
-
-                    if (widget.auth != null) {
-                      final t = r.time..copyWith(hour: v.hour, minute: v.minute);
-
-                      if (r.resume) {
-                        await c.editResume(widget.auth!, r.id, t);
-                      } else {
-                        await c.editReset(widget.auth!, r.id, t);
-                      }
-                    }
-                  },
+                  onPressed: onEditPressed,
                   icon: SvgIcon(
                     assetPath: Assets.icons.edit,
-                    color: r.resume ? Theme.of(context).colorScheme.onPrimaryContainer : Theme.of(context).colorScheme.onTertiaryContainer,
+                    color: resume ? Theme.of(context).colorScheme.onPrimaryContainer : Theme.of(context).colorScheme.onTertiaryContainer,
                   ),
                 ),
               )

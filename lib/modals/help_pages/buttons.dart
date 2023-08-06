@@ -1,9 +1,14 @@
 import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/modals/help_pages/_guy.dart';
 import 'package:dependencecoping/modals/help_pages/_handed.dart';
+import 'package:dependencecoping/modals/help_pages/_modal.dart';
+import 'package:dependencecoping/pages/clock/modals/goal_manager.dart';
+import 'package:dependencecoping/pages/clock/modals/time_manager.dart';
 import 'package:dependencecoping/tokens/icons.dart';
 import 'package:dependencecoping/tools/text_asset.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 
 class ControlButtonsHelpPage extends StatelessWidget {
   const ControlButtonsHelpPage({
@@ -22,25 +27,65 @@ class ControlButtonsHelpPage extends StatelessWidget {
                 Center(child: handedControls(context, 1, paused: true)),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: MarkdownManual(section: 'buttons', fragment: 'start'),
+                  child: MarkdownManual(section: 'buttons', fragment: '1_start'),
                 ),
                 Center(child: handedControls(context, 1)),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin enim ligula, fringilla ac urna at, consectetur elementum nunc. Nullam mattis dapibus iaculis.'),
+                  child: MarkdownManual(section: 'buttons', fragment: '2_stop'),
                 ),
                 Center(child: handedControls(context, 2.15, paused: true)),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin enim ligula, fringilla ac urna at, consectetur elementum nunc. Nullam mattis dapibus iaculis.'),
+                  child: MarkdownManual(section: 'buttons', fragment: '3_history'),
+                ),
+                ModalContainer(
+                  title: AppLocalizations.of(context)!.modalTimerEvents,
+                  computeTop: (final s, final av) => s * 1,
+                  computeLeft: (final s, final av) => 16 + (s - 32) * av,
+                  child: Column(
+                    children: [
+                      TimerJournalCard(
+                        resume: false,
+                        dateText: DateFormat('dd.MM.yyyy HH:mm:ss').format(DateTime.now()),
+                        onEditPressed: () async {},
+                      ),
+                      TimerJournalCard(
+                        resume: true,
+                        dateText: DateFormat('dd.MM.yyyy HH:mm:ss').format(DateTime.now().add(const Duration(hours: -8, minutes: 2, seconds: 8))),
+                        onEditPressed: () async {},
+                      ),
+                      TimerJournalCard(
+                        resume: false,
+                        dateText: DateFormat('dd.MM.yyyy HH:mm:ss').format(DateTime.now().add(const Duration(hours: -9, minutes: 46, seconds: 17))),
+                        onEditPressed: () async {},
+                      ),
+                    ],
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(16),
+                  child: MarkdownManual(section: 'buttons', fragment: '4_history_modal'),
                 ),
                 Center(child: handedControls(context, 3.2, paused: true)),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin enim ligula, fringilla ac urna at, consectetur elementum nunc. Nullam mattis dapibus iaculis.'),
+                  child: MarkdownManual(section: 'buttons', fragment: '5_goals'),
+                ),
+                ModalContainer(
+                  title: AppLocalizations.of(context)!.modalGoals,
+                  computeTop: (final s, final av) => s * .99,
+                  computeLeft: (final s, final av) => 16 + (s - 32) * av,
+                  child: Column(
+                    children: [
+                      GoalToggleCard(currentValue: true, title: 'A****** c***', goalIconPath: Assets.icons.cardiology),
+                      GoalToggleCard(currentValue: false, title: 'B***** o****', goalIconPath: Assets.icons.mindfulness),
+                    ],
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(16),
+                  child: MarkdownManual(section: 'buttons', fragment: '6_goals_modal'),
                 ),
               ],
             ),
