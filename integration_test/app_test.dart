@@ -16,7 +16,7 @@ void main() {
 
       await clearLocalStorage();
 
-      await t.pumpWidgetAndSettle(const App());
+      await t.pumpWidgetAndSettle(App());
 
       // notifications();
       // if (await t.native.isPermissionDialogVisible(timeout: const Duration(seconds: 5))) {

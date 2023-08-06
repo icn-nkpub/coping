@@ -129,7 +129,7 @@ class CountdownDisplay extends StatelessWidget {
 
   Future<void> stopNotifications(final AppLocalizations al) async {
     await scheduleNotification(121, const Duration(hours: 1), al.notificationsTimerEvent, al.notificationsHourPassReset);
-    await scheduleNotification(122, const Duration(hours: 1), al.notificationsTimerEvent, al.notificationsDayPassReset);
+    await scheduleNotification(122, const Duration(hours: 24), al.notificationsTimerEvent, al.notificationsDayPassReset);
 
     for (var i = 100; i < 110; i++) {
       await unscheduleNotification(i);
@@ -139,14 +139,20 @@ class CountdownDisplay extends StatelessWidget {
   void Function() _gotoShop(final BuildContext context) => () => openModal(
         context,
         BlocBuilder<LoginCubit, Profile?>(
-          builder: (final context, final u) => modal(context, AppLocalizations.of(context)!.modalGoals, GoalModal(auth: u?.auth)),
+          builder: (final context, final u) => Modal(
+            title: AppLocalizations.of(context)!.modalGoals,
+            child: GoalModal(auth: u?.auth),
+          ),
         ),
       );
 
   void Function() _gotoTime(final BuildContext context) => () => openModal(
         context,
         BlocBuilder<LoginCubit, Profile?>(
-          builder: (final context, final u) => modal(context, AppLocalizations.of(context)!.modalTimerEvents, TimeModal(auth: u?.auth)),
+          builder: (final context, final u) => Modal(
+            title: AppLocalizations.of(context)!.modalTimerEvents,
+            child: TimeModal(auth: u?.auth),
+          ),
         ),
       );
 }

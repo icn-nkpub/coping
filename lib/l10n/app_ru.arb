@@ -69,7 +69,7 @@
     "meditationHowTo10": "Следуйте по кругу",
     "helpSwipeAction": "Проведите влево для следующей страницы",
     "helpManuals": "assets/manuals/ru/{section}/{fragment}.md",
-    "notificationsTimerEvent": "Событие таймера",
+    "notificationsTimerEvent": "Coping timer",
     "notificationsPass_1": "Первый час без зависимости!",
     "notificationsPass_2": "Второй час без зависимости!",
     "notificationsPass_24": "День без зависимости!",

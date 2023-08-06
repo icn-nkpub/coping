@@ -7,12 +7,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Function(int) pagginator(final BuildContext context) => (final int page) {
-    openModal(
-        context,
-        [
-          modal(context, AppLocalizations.of(context)!.screenLogin, const LoginModal()),
-          modal(context, AppLocalizations.of(context)!.screenRegister, const RegisterModal()),
-          modal(context, AppLocalizations.of(context)!.screenProfile, const ProfileModal()),
-          modal(context, AppLocalizations.of(context)!.screenLogout, const LogoutModal()),
-        ][page]);
-  };
+      openModal(
+          context,
+          [
+            Modal(
+              title: AppLocalizations.of(context)!.screenLogin,
+              child: const LoginModal(),
+            ),
+            Modal(
+              title: AppLocalizations.of(context)!.screenRegister,
+              child: const RegisterModal(),
+            ),
+            Modal(
+              title: AppLocalizations.of(context)!.screenProfile,
+              child: const ProfileModal(),
+            ),
+            Modal(
+              title: AppLocalizations.of(context)!.screenLogout,
+              child: const LogoutModal(),
+            ),
+          ][page]);
+    };

@@ -40,7 +40,12 @@ class TriggerLogCard extends StatelessWidget {
             children: [
               IconButton.filledTonal(
                 onPressed: () {
-                  openModal(context, modal(context, AppLocalizations.of(context)!.modalTriggerLogEvent, TriggerLogEventModal(tl: tl)));
+                  openModal(
+                      context,
+                      Modal(
+                        title: AppLocalizations.of(context)!.modalTriggerLogEvent,
+                        child: TriggerLogEventModal(tl: tl),
+                      ));
                 },
                 icon: Text(
                   tl.impulse.toString().replaceAll('0', 'O'),

@@ -54,7 +54,10 @@ class _TriggerListState extends State<TriggerList> with TickerProviderStateMixin
                               if (p?.auth != null) unawaited(context.read<TriggersCubit>().removePersonal(p!.auth, t.id));
                             },
                             onPressed: () {
-                              openModal(context, modal(context, AppLocalizations.of(context)!.modalLogTrigger, triggerModal(t)));
+                              openModal(
+                                context,
+                                Modal(title: AppLocalizations.of(context)!.modalLogTrigger, child: triggerModal(t)),
+                              );
                             },
                             child: Text(t.labels[Localizations.localeOf(context).languageCode] ?? t.labels['en'] ?? '[...]'),
                           ),
@@ -69,7 +72,10 @@ class _TriggerListState extends State<TriggerList> with TickerProviderStateMixin
                           padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 8 * 2)),
                         ),
                         onPressed: () {
-                          openModal(context, modal(context, AppLocalizations.of(context)!.modalAddPersonalTrigger, const PersonalTriggerFormModal()));
+                          openModal(
+                            context,
+                            Modal(title: AppLocalizations.of(context)!.modalAddPersonalTrigger, child: const PersonalTriggerFormModal()),
+                          );
                         },
                         icon: SvgIcon(
                           assetPath: Assets.icons.add,

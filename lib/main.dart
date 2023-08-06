@@ -29,7 +29,16 @@ Future<void> main() async {
 
   await notifications();
 
-  const app = App();
+  final GlobalKey<NavigatorState> mainNavigatorKey = GlobalKey<NavigatorState>();
+
+  final app = MaterialApp(
+    navigatorKey: mainNavigatorKey,
+    debugShowCheckedModeBanner: false,
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
+    title: 'Coping',
+    home: App(),
+  );
 
   if (kDebugMode) {
     imageCache.clear();
@@ -37,154 +46,136 @@ Future<void> main() async {
     return;
   }
 
-  await SentryFlutter.init(
-    (final options) {
-      options.dsn = 'https://ffce3775524c43269e47662942503a06@o4505302255665152.ingest.sentry.io/4505302260449280';
-      // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
-      // We recommend adjusting this value in production.
-      options.tracesSampleRate = 1;
-    },
-    appRunner: () => runApp(app),
-  );
+  await SentryFlutter.init((final options) {
+    options.dsn = 'https://ffce3775524c43269e47662942503a06@o4505302255665152.ingest.sentry.io/4505302260449280';
+    // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+    // We recommend adjusting this value in production.
+    options.tracesSampleRate = 1;
+  }, appRunner: () => runApp(app));
 }
 
 class App extends StatefulWidget {
-  const App({super.key});
+  App({super.key});
+
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   State<App> createState() => _AppState();
 }
 
-class _AppState extends State<App> with AssetsInitializer {
+class _AppState extends State<App> with AssetsInitializer, TickerProviderStateMixin {
+  late final AnimationController _spinnerController = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 1),
+  )..repeat();
+  bool _spinnerActive = true;
+
   @override
-  Widget build(final BuildContext context) {
-    if (tryLock()) {
-      unawaited(init(context));
-    }
-
-    if (loadingState != LoadingProgress.done) {
-      return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: Container(
-          color: Colors.black,
-          child: const HomeLoader(),
-        ),
-      );
-    }
-
-    final tcb = MediaQuery.of(context).platformBrightness == Brightness.light ? ThemeMode.light : ThemeMode.dark;
-
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (final _) {
-          final c = LoginCubit();
-          if (user == null) {
-            return c;
-          }
-
-          c.overwrite(user!, profile);
-
-          return c;
-        }),
-        BlocProvider(create: (final _) {
-          final c = StaticCubit();
-          if (statics.isEmpty) {
-            return c;
-          }
-
-          c.overwrite(statics);
-
-          return c;
-        }),
-        BlocProvider(create: (final _) {
-          final c = ThemeCubit()..setBrightness(tcb);
-          if (profile == null) {
-            return c;
-          }
-
-          if (profile != null && profile!.isLight != null) {
-            c.setBrightness(profile!.isLight! ? ThemeMode.light : ThemeMode.dark);
-          }
-          if (profile != null && profile!.color != null) {
-            c.setColor(findThemeColor(profile!.color!));
-          }
-
-          return c;
-        }),
-        BlocProvider(create: (final _) {
-          final c = CountdownTimerCubit();
-          if (resets == null) {
-            return c;
-          }
-
-          c.overwrite(resets!);
-
-          return c;
-        }),
-        BlocProvider(create: (final _) {
-          final c = GoalsCubit();
-          if (goals == null) {
-            return c;
-          }
-
-          c.overwrite(Goals(goals!));
-
-          return c;
-        }),
-        BlocProvider(create: (final _) {
-          final c = TriggersCubit();
-          if (triggers == null) {
-            return c;
-          }
-
-          if (triggersLog == null) {
-            c.overwrite(Triggers(triggers!, []));
-            return c;
-          }
-
-          c.overwrite(Triggers(triggers!, triggersLog!));
-
-          return c;
-        }),
-      ],
-      child: BlocListener<LoginCubit, Profile?>(
-        listenWhen: (final p, final c) => (!initOK) && (p?.auth.id != c?.auth.id),
-        listener: (final context, final state) => unawaited(reset(context)),
-        child: BlocBuilder<ThemeCubit, ThemeState>(
-          builder: (final context, final state) => MaterialApp(
-            debugShowCheckedModeBanner: false,
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
-            supportedLocales: AppLocalizations.supportedLocales,
-            title: 'Coping',
-            theme: state.data,
-            home: BlocBuilder<LoginCubit, Profile?>(builder: (final context, final u) => u == null ? const Onboarding() : const Home()),
-          ),
-        ),
-      ),
-    );
+  void dispose() {
+    _spinnerController.dispose();
+    super.dispose();
   }
-}
-
-class HomeLoader extends StatelessWidget {
-  const HomeLoader({super.key});
 
   @override
-  Widget build(final BuildContext context) => Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(Assets.opaqring.path, width: 148, height: 148),
-          const SizedBox(height: 16),
-          const Text(
-            'Loading...',
-            style: TextStyle(
-              decoration: TextDecoration.none,
-              color: Colors.white,
-              fontWeight: FontWeight.normal,
-              fontSize: 16,
-            ),
-          ),
-        ],
+  void initState() {
+    super.initState();
+    Timer(const Duration(milliseconds: 100), () {
+      WidgetsBinding.instance.addPostFrameCallback((final _) {
+        if (tryLock()) {
+          unawaited(init(() {
+            setState(() {
+              _spinnerActive = false;
+            });
+          }));
+        }
+      });
+    });
+  }
+
+  @override
+  Widget build(final BuildContext context) => Container(
+        color: Colors.black,
+        child: _spinnerActive
+            ? Center(
+                child: AnimatedBuilder(
+                  animation: _spinnerController,
+                  builder: (final context, final _) => Opacity(
+                    opacity: _spinnerController.value,
+                    child: ColorFiltered(
+                      colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcATop),
+                      child: Image.asset(Assets.opaqring.path, width: 148, height: 148),
+                    ),
+                  ),
+                ),
+              )
+            : Builder(builder: (final context) {
+                final loginCubit = LoginCubit();
+                if (user != null) {
+                  loginCubit.overwrite(user!, profile);
+                }
+
+                final staticCubit = StaticCubit();
+                if (!statics.isEmpty) {
+                  staticCubit.overwrite(statics);
+                }
+
+                final tcb = MediaQuery.of(context).platformBrightness == Brightness.light ? ThemeMode.light : ThemeMode.dark;
+                final themeCubit = ThemeCubit()..setBrightness(tcb);
+                if (profile != null && profile!.isLight != null) {
+                  themeCubit.setBrightness(profile!.isLight! ? ThemeMode.light : ThemeMode.dark);
+                }
+                if (profile != null && profile!.color != null) {
+                  themeCubit.setColor(findThemeColor(profile!.color!));
+                }
+
+                final countdownTimerCubit = CountdownTimerCubit();
+                if (resets != null) {
+                  countdownTimerCubit.overwrite(resets!);
+                }
+
+                final goalsCubit = GoalsCubit();
+                if (goals != null) {
+                  goalsCubit.overwrite(Goals(goals!));
+                }
+
+                final triggersCubit = TriggersCubit();
+                if (triggers != null) {
+                  if (triggersLog == null) {
+                    triggersCubit.overwrite(Triggers(triggers!, []));
+                  } else {
+                    triggersCubit.overwrite(Triggers(triggers!, triggersLog!));
+                  }
+                }
+
+                return MultiBlocProvider(
+                  providers: [
+                    BlocProvider(create: (final _) => loginCubit),
+                    BlocProvider(create: (final _) => staticCubit),
+                    BlocProvider(create: (final _) => themeCubit),
+                    BlocProvider(create: (final _) => countdownTimerCubit),
+                    BlocProvider(create: (final _) => goalsCubit),
+                    BlocProvider(create: (final _) => triggersCubit),
+                  ],
+                  child: BlocListener<LoginCubit, Profile?>(
+                    listenWhen: (final p, final c) => (!initOK) && (p?.auth.id != c?.auth.id),
+                    listener: (final context, final state) => unawaited(reset(() {
+                      // todo
+                    })),
+                    child: BlocBuilder<ThemeCubit, ThemeState>(
+                      builder: (final context, final state) => Theme(
+                        data: state.data,
+                        child: BlocBuilder<LoginCubit, Profile?>(
+                          builder: (final context, final u) => Navigator(
+                            onGenerateRoute: (final settings) => MaterialPageRoute(
+                              settings: settings,
+                              builder: (final context) => u == null ? const Onboarding() : const Home(),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }),
       );
 }

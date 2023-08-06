@@ -35,7 +35,7 @@ mixin AssetsInitializer<T extends StatefulWidget> on State<T> {
     super.initState();
   }
 
-  Future<String> localText(final BuildContext context, final String name) => DefaultAssetBundle.of(context).loadString(name);
+  Future<String> localText(final String name) => DefaultAssetBundle.of(context).loadString(name);
 
   bool tryLock() {
     log('trying to lock: state $loadingState', name: 'tools.Assets');
@@ -52,27 +52,27 @@ mixin AssetsInitializer<T extends StatefulWidget> on State<T> {
     return false;
   }
 
-  Future<void> reset(final BuildContext context) async {
+  Future<void> reset(final Function() onEnd) async {
     setState(() {
       loadingState = LoadingProgress.started;
     });
 
-    await _load(context);
+    await _load(onEnd);
   }
 
-  Future<void> init(final BuildContext context) async {
+  Future<void> init(final Function() onEnd) async {
     setState(() {
       initOK = false;
     });
 
-    await _load(context);
+    await _load(onEnd);
 
     setState(() {
       initOK = true;
     });
   }
 
-  Future<void> _load(final BuildContext context) async {
+  Future<void> _load(final Function() onEnd) async {
     final userData = await restoreAuthInfo();
     setState(() {
       user = userData;
@@ -122,6 +122,8 @@ mixin AssetsInitializer<T extends StatefulWidget> on State<T> {
         triggersLog = vTriggersLog;
         loadingState = LoadingProgress.done;
       });
+
+      onEnd();
 
       return;
     }
