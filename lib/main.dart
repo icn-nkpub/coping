@@ -29,16 +29,7 @@ Future<void> main() async {
 
   await notifications();
 
-  final GlobalKey<NavigatorState> mainNavigatorKey = GlobalKey<NavigatorState>();
-
-  final app = MaterialApp(
-    navigatorKey: mainNavigatorKey,
-    debugShowCheckedModeBanner: false,
-    localizationsDelegates: AppLocalizations.localizationsDelegates,
-    supportedLocales: AppLocalizations.supportedLocales,
-    title: 'Coping',
-    home: App(),
-  );
+  final app = App();
 
   if (kDebugMode) {
     imageCache.clear();
@@ -58,6 +49,7 @@ class App extends StatefulWidget {
   App({super.key});
 
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> mainNavigatorKey = GlobalKey<NavigatorState>();
 
   @override
   State<App> createState() => _AppState();
@@ -93,89 +85,97 @@ class _AppState extends State<App> with AssetsInitializer, TickerProviderStateMi
   }
 
   @override
-  Widget build(final BuildContext context) => Container(
-        color: Colors.black,
-        child: _spinnerActive
-            ? Center(
-                child: AnimatedBuilder(
-                  animation: _spinnerController,
-                  builder: (final context, final _) => Opacity(
-                    opacity: _spinnerController.value,
-                    child: ColorFiltered(
-                      colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcATop),
-                      child: Image.asset(Assets.opaqring.path, width: 148, height: 148),
+  Widget build(final BuildContext context) => MaterialApp(
+        navigatorKey: widget.mainNavigatorKey,
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        themeAnimationDuration: const Duration(seconds: 2),
+        title: 'Coping',
+        home: Container(
+          color: Colors.black,
+          child: _spinnerActive
+              ? Center(
+                  child: AnimatedBuilder(
+                    animation: _spinnerController,
+                    builder: (final context, final _) => Opacity(
+                      opacity: _spinnerController.value,
+                      child: ColorFiltered(
+                        colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcATop),
+                        child: Image.asset(Assets.opaqring.path, width: 148, height: 148),
+                      ),
                     ),
                   ),
-                ),
-              )
-            : Builder(builder: (final context) {
-                final loginCubit = LoginCubit();
-                if (user != null) {
-                  loginCubit.overwrite(user!, profile);
-                }
-
-                final staticCubit = StaticCubit();
-                if (!statics.isEmpty) {
-                  staticCubit.overwrite(statics);
-                }
-
-                final tcb = MediaQuery.of(context).platformBrightness == Brightness.light ? ThemeMode.light : ThemeMode.dark;
-                final themeCubit = ThemeCubit()..setBrightness(tcb);
-                if (profile != null && profile!.isLight != null) {
-                  themeCubit.setBrightness(profile!.isLight! ? ThemeMode.light : ThemeMode.dark);
-                }
-                if (profile != null && profile!.color != null) {
-                  themeCubit.setColor(findThemeColor(profile!.color!));
-                }
-
-                final countdownTimerCubit = CountdownTimerCubit();
-                if (resets != null) {
-                  countdownTimerCubit.overwrite(resets!);
-                }
-
-                final goalsCubit = GoalsCubit();
-                if (goals != null) {
-                  goalsCubit.overwrite(Goals(goals!));
-                }
-
-                final triggersCubit = TriggersCubit();
-                if (triggers != null) {
-                  if (triggersLog == null) {
-                    triggersCubit.overwrite(Triggers(triggers!, []));
-                  } else {
-                    triggersCubit.overwrite(Triggers(triggers!, triggersLog!));
+                )
+              : Builder(builder: (final context) {
+                  final loginCubit = LoginCubit();
+                  if (user != null) {
+                    loginCubit.overwrite(user!, profile);
                   }
-                }
 
-                return MultiBlocProvider(
-                  providers: [
-                    BlocProvider(create: (final _) => loginCubit),
-                    BlocProvider(create: (final _) => staticCubit),
-                    BlocProvider(create: (final _) => themeCubit),
-                    BlocProvider(create: (final _) => countdownTimerCubit),
-                    BlocProvider(create: (final _) => goalsCubit),
-                    BlocProvider(create: (final _) => triggersCubit),
-                  ],
-                  child: BlocListener<LoginCubit, Profile?>(
-                    listenWhen: (final p, final c) => (!initOK) && (p?.auth.id != c?.auth.id),
-                    listener: (final context, final state) => unawaited(reset(() {
-                      // todo
-                    })),
-                    child: BlocBuilder<ThemeCubit, ThemeState>(
-                      builder: (final context, final state) => Theme(
-                        data: state.data,
-                        child: BlocBuilder<LoginCubit, Profile?>(
-                          builder: (final context, final u) => Navigator(
-                            onGenerateRoute: (final settings) => MaterialPageRoute(
-                              settings: settings,
-                              builder: (final context) => u == null ? const Onboarding() : const Home(),
+                  final staticCubit = StaticCubit();
+                  if (!statics.isEmpty) {
+                    staticCubit.overwrite(statics);
+                  }
+
+                  final tcb = MediaQuery.of(context).platformBrightness == Brightness.light ? ThemeMode.light : ThemeMode.dark;
+                  final themeCubit = ThemeCubit()..setBrightness(tcb);
+                  if (profile != null && profile!.isLight != null) {
+                    themeCubit.setBrightness(profile!.isLight! ? ThemeMode.light : ThemeMode.dark);
+                  }
+                  if (profile != null && profile!.color != null) {
+                    themeCubit.setColor(findThemeColor(profile!.color!));
+                  }
+
+                  final countdownTimerCubit = CountdownTimerCubit();
+                  if (resets != null) {
+                    countdownTimerCubit.overwrite(resets!);
+                  }
+
+                  final goalsCubit = GoalsCubit();
+                  if (goals != null) {
+                    goalsCubit.overwrite(Goals(goals!));
+                  }
+
+                  final triggersCubit = TriggersCubit();
+                  if (triggers != null) {
+                    if (triggersLog == null) {
+                      triggersCubit.overwrite(Triggers(triggers!, []));
+                    } else {
+                      triggersCubit.overwrite(Triggers(triggers!, triggersLog!));
+                    }
+                  }
+
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (final _) => loginCubit),
+                      BlocProvider(create: (final _) => staticCubit),
+                      BlocProvider(create: (final _) => themeCubit),
+                      BlocProvider(create: (final _) => countdownTimerCubit),
+                      BlocProvider(create: (final _) => goalsCubit),
+                      BlocProvider(create: (final _) => triggersCubit),
+                    ],
+                    child: BlocListener<LoginCubit, Profile?>(
+                      listenWhen: (final p, final c) => (!initOK) && (p?.auth.id != c?.auth.id),
+                      listener: (final context, final state) => unawaited(reset(() {
+                        // todo
+                      })),
+                      child: BlocBuilder<ThemeCubit, ThemeState>(
+                        builder: (final context, final state) => Theme(
+                          data: state.data,
+                          child: BlocBuilder<LoginCubit, Profile?>(
+                            builder: (final context, final u) => Navigator(
+                              onGenerateRoute: (final settings) => MaterialPageRoute(
+                                settings: settings,
+                                builder: (final context) => u == null ? const Onboarding() : const Home(),
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                );
-              }),
+                  );
+                }),
+        ),
       );
 }
