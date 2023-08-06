@@ -1,15 +1,8 @@
 import 'dart:async';
 
 import 'package:dependencecoping/gen/assets.gen.dart';
-import 'package:dependencecoping/provider/countdown/countdown.dart';
-import 'package:dependencecoping/provider/goal/goal.dart';
-import 'package:dependencecoping/provider/login/login.dart';
-import 'package:dependencecoping/provider/static/static.dart';
-import 'package:dependencecoping/provider/theme/theme.dart';
-import 'package:dependencecoping/provider/trigger/trigger.dart';
 import 'package:dependencecoping/tokens/icons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Modal extends StatelessWidget {
   const Modal({

@@ -59,7 +59,7 @@ class _AppState extends State<App> with AssetsInitializer, TickerProviderStateMi
   late final AnimationController _spinnerController = AnimationController(
     vsync: this,
     duration: const Duration(seconds: 1),
-  )..repeat();
+  );
   bool _spinnerActive = true;
 
   @override
@@ -73,6 +73,7 @@ class _AppState extends State<App> with AssetsInitializer, TickerProviderStateMi
     super.initState();
     Timer(const Duration(milliseconds: 100), () {
       WidgetsBinding.instance.addPostFrameCallback((final _) {
+        _spinnerController.repeat();
         if (tryLock()) {
           unawaited(init(() {
             setState(() {
@@ -99,7 +100,7 @@ class _AppState extends State<App> with AssetsInitializer, TickerProviderStateMi
                   child: AnimatedBuilder(
                     animation: _spinnerController,
                     builder: (final context, final _) => Opacity(
-                      opacity: _spinnerController.value,
+                      opacity: ((final double x) => (x <= .5 ? x : 1 - x) * 2)(_spinnerController.value),
                       child: ColorFiltered(
                         colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcATop),
                         child: Image.asset(Assets.opaqring.path, width: 148, height: 148),
@@ -156,10 +157,23 @@ class _AppState extends State<App> with AssetsInitializer, TickerProviderStateMi
                       BlocProvider(create: (final _) => triggersCubit),
                     ],
                     child: BlocListener<LoginCubit, Profile?>(
-                      listenWhen: (final p, final c) => (!initOK) && (p?.auth.id != c?.auth.id),
-                      listener: (final context, final state) => unawaited(reset(() {
-                        // todo
-                      })),
+                      listenWhen: (final p, final c) => p?.auth.id != c?.auth.id,
+                      listener: (final context, final state) {
+                        _spinnerController.reset();
+                        setState(() {
+                          _spinnerActive = true;
+                        });
+                        _spinnerController.repeat();
+
+                        Timer(const Duration(seconds: 1), () {
+                          unawaited(reset(() {
+                            _spinnerController.repeat();
+                            setState(() {
+                              _spinnerActive = false;
+                            });
+                          }));
+                        });
+                      },
                       child: BlocBuilder<ThemeCubit, ThemeState>(
                         builder: (final context, final state) => Theme(
                           data: state.data,

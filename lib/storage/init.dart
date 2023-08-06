@@ -131,5 +131,7 @@ mixin AssetsInitializer<T extends StatefulWidget> on State<T> {
     setState(() {
       loadingState = LoadingProgress.done;
     });
+
+    onEnd();
   }
 }
