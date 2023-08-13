@@ -5,7 +5,6 @@ import 'package:dependencecoping/pages/clock/countdown.dart';
 import 'package:dependencecoping/tools/text_asset.dart';
 import 'package:flutter/material.dart';
 
-// ignore: unused_import
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class IntroHelpPage extends StatelessWidget {
@@ -17,7 +16,7 @@ class IntroHelpPage extends StatelessWidget {
   Widget build(final BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Guy(text: 'Intro', face: Assets.guy.neutral),
+          Guy(text: AppLocalizations.of(context)!.helpIntro, face: Assets.guy.neutral),
           Expanded(
             child: ListView(
               children: [

@@ -46,15 +46,15 @@ class ModalDecoration extends StatelessWidget {
 class ModalContainer extends StatelessWidget {
   const ModalContainer({
     required this.title,
-    required this.computeTop,
-    required this.computeLeft,
     required this.child,
+    this.computeTop,
+    this.computeLeft,
     super.key,
   });
 
   final String title;
-  final double Function(double s, double av) computeTop;
-  final double Function(double s, double av) computeLeft;
+  final double Function(double s, double av)? computeTop;
+  final double Function(double s, double av)? computeLeft;
   final Column child;
 
   @override
@@ -73,12 +73,17 @@ class ModalContainer extends StatelessWidget {
           child: Column(
             children: [
               ModalDecoration(title: title),
-              Handed(
-                computeTop: computeTop,
-                computeLeft: computeLeft,
-                duration: const Duration(seconds: 10),
-                child: child,
-              ),
+              (computeLeft != null && computeTop != null)
+                  ? Handed(
+                      computeTop: computeTop!,
+                      computeLeft: computeLeft!,
+                      duration: const Duration(seconds: 10),
+                      child: child,
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: child,
+                    ),
               const SizedBox(height: 32),
             ],
           ),

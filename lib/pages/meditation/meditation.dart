@@ -274,7 +274,7 @@ class _InfoCardState extends State<InfoCard> {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('+ ', style: Theme.of(context).textTheme.bodySmall),
+                          Text('— ', style: Theme.of(context).textTheme.bodySmall),
                           Flexible(
                             child: Text(e, style: Theme.of(context).textTheme.bodySmall),
                           ),

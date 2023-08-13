@@ -1,0 +1,4 @@
+Envirement that you reflect on during your life connects to your desire for addictive things. For example, if you want to smoke when you drink morning coffee, you may be triggered by a coffee smell the next day after quitting. Or sitting at a familiar bus stop can trigger you because you always smoke on that bench. Each of your five senses can deliver unpleasant carvings. That's fine, and you can bear with that. It will not be that way for too long.
+
+There are a lot of natural pauses in the daily deals that trigger you. Try to sort them out; even "going to bed" will do. We may consider it Boredom, people every moment of life want to do something. Funny idea that you will never be awake because of addiction power. Only consciousness can drive you into carvings. 
+_Patients with coma waken up to have a smoke break was never mentioned in medical history._

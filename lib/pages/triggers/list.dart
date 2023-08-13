@@ -4,7 +4,6 @@ import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/pages/triggers/impulse.dart';
 import 'package:dependencecoping/pages/triggers/modals/personal.dart';
 import 'package:dependencecoping/provider/login/login.dart';
-import 'package:dependencecoping/provider/theme/fonts.dart';
 import 'package:dependencecoping/provider/trigger/trigger.dart';
 import 'package:dependencecoping/storage/trigger.dart';
 import 'package:dependencecoping/tokens/icons.dart';
@@ -23,12 +22,7 @@ class TriggerList extends StatefulWidget {
   State<TriggerList> createState() => _TriggerListState();
 }
 
-class _TriggerListState extends State<TriggerList> with TickerProviderStateMixin {
-  late final _c = AnimationController(
-    duration: const Duration(seconds: 3),
-    vsync: this,
-  )..repeat();
-
+class _TriggerListState extends State<TriggerList> {
   var situation = TextEditingController();
   var thought = TextEditingController();
   int impulse = 3;
@@ -92,64 +86,86 @@ class _TriggerListState extends State<TriggerList> with TickerProviderStateMixin
                 )),
       );
 
-  Padding triggerModal(final Trigger t) {
-    final g = LinearGradient(colors: [
-      Theme.of(context).colorScheme.primary,
-      Theme.of(context).colorScheme.primary,
-      Theme.of(context).colorScheme.tertiary,
-    ]);
+  Padding triggerModal(final Trigger t) => Padding(
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          children: [
+            HighText(text: t.labels[Localizations.localeOf(context).languageCode] ?? t.labels['en'] ?? '[...]'),
+            Input(title: AppLocalizations.of(context)!.personalTriggerSituation, ctrl: situation, autocorrect: true),
+            const SizedBox(height: 8),
+            Input(title: AppLocalizations.of(context)!.personalTriggerThought, ctrl: thought, autocorrect: true),
+            const SizedBox(height: 8 * 4),
+            ImpulseSlider(
+              title: AppLocalizations.of(context)!.personalTriggerImpulse,
+              callback: (final i) => setState(() => impulse = i.round()),
+            ),
+            Flexible(child: ListView()),
+            FilledButton(
+              onPressed: () {
+                final navigator = Navigator.of(context);
 
-    return Padding(
-      padding: const EdgeInsets.all(8),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 8, bottom: 8 * 4),
-            child: Center(
-              child: AnimatedBuilder(
-                animation: _c,
-                child: Text(
-                  t.labels[Localizations.localeOf(context).languageCode] ?? t.labels['en'] ?? '[...]',
-                  style: fAccent(
-                    textStyle: Theme.of(context).textTheme.displaySmall,
-                  ).copyWith(fontWeight: FontWeight.w900),
-                ),
-                builder: (final context, final child) => ShaderMask(
-                  blendMode: BlendMode.srcIn,
-                  shaderCallback: (final bounds) => g.createShader(
-                    Rect.fromLTWH((bounds.width) * (1 - (_c.value * 2)).abs(), 0, bounds.width / 2, bounds.height),
-                  ),
-                  child: child,
-                ),
+                if (navigator.canPop()) {
+                  final p = context.read<LoginCubit>().state;
+                  if (p != null) unawaited(context.read<TriggersCubit>().send(p.auth, t, situation.value.text, thought.value.text, impulse));
+                  navigator.pop();
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(AppLocalizations.of(context)!.personalTriggerSubmit),
               ),
             ),
-          ),
-          Input(title: AppLocalizations.of(context)!.personalTriggerSituation, ctrl: situation, autocorrect: true),
-          const SizedBox(height: 8),
-          Input(title: AppLocalizations.of(context)!.personalTriggerThought, ctrl: thought, autocorrect: true),
-          const SizedBox(height: 8 * 4),
-          ImpulseSlider(
-            title: AppLocalizations.of(context)!.personalTriggerImpulse,
-            callback: (final i) => setState(() => impulse = i.round()),
-          ),
-          Flexible(child: ListView()),
-          FilledButton(
-            onPressed: () {
-              final navigator = Navigator.of(context);
+          ],
+        ),
+      );
+}
 
-              if (navigator.canPop()) {
-                final p = context.read<LoginCubit>().state;
-                if (p != null) unawaited(context.read<TriggersCubit>().send(p.auth, t, situation.value.text, thought.value.text, impulse));
-                navigator.pop();
-              }
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(AppLocalizations.of(context)!.personalTriggerSubmit),
+class HighText extends StatefulWidget {
+  const HighText({
+    required this.text,
+    super.key,
+  });
+
+  final String text;
+
+  @override
+  State<HighText> createState() => _HighTextState();
+}
+
+class _HighTextState extends State<HighText> with TickerProviderStateMixin {
+  late final _c = AnimationController(
+    duration: const Duration(seconds: 3),
+    vsync: this,
+  )..repeat();
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(final BuildContext context) => Padding(
+        padding: const EdgeInsets.only(top: 8, bottom: 8 * 4),
+        child: Center(
+          child: AnimatedBuilder(
+            animation: _c,
+            child: Text(
+              widget.text,
+              style: Theme.of(context).textTheme.displaySmall!.copyWith(fontWeight: FontWeight.w900),
+            ),
+            builder: (final context, final child) => ShaderMask(
+              blendMode: BlendMode.srcIn,
+              shaderCallback: (final bounds) => LinearGradient(colors: [
+                Theme.of(context).colorScheme.primary,
+                Theme.of(context).colorScheme.primary,
+                Theme.of(context).colorScheme.tertiary,
+              ]).createShader(
+                Rect.fromLTWH((bounds.width) * (1 - (_c.value * 2)).abs(), 0, bounds.width / 2, bounds.height),
+              ),
+              child: child,
             ),
           ),
-        ],
-      ),
-    );
-  }
+        ),
+      );
 }

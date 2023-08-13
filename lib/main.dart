@@ -61,6 +61,7 @@ class _AppState extends State<App> with AssetsInitializer, TickerProviderStateMi
     duration: const Duration(seconds: 1),
   );
   bool _spinnerActive = true;
+  ThemeData? _themeData;
 
   @override
   void dispose() {
@@ -71,9 +72,9 @@ class _AppState extends State<App> with AssetsInitializer, TickerProviderStateMi
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(milliseconds: 100), () {
+    _spinnerController.repeat();
+    Timer(const Duration(milliseconds: 200), () {
       WidgetsBinding.instance.addPostFrameCallback((final _) {
-        _spinnerController.repeat();
         if (tryLock()) {
           unawaited(init(() {
             setState(() {
@@ -91,7 +92,6 @@ class _AppState extends State<App> with AssetsInitializer, TickerProviderStateMi
         debugShowCheckedModeBanner: false,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        themeAnimationDuration: const Duration(seconds: 2),
         title: 'Coping',
         home: Container(
           color: Colors.black,
@@ -127,6 +127,7 @@ class _AppState extends State<App> with AssetsInitializer, TickerProviderStateMi
                   if (profile != null && profile!.color != null) {
                     themeCubit.setColor(findThemeColor(profile!.color!));
                   }
+                  _themeData = themeCubit.state.data;
 
                   final countdownTimerCubit = CountdownTimerCubit();
                   if (resets != null) {
@@ -174,11 +175,16 @@ class _AppState extends State<App> with AssetsInitializer, TickerProviderStateMi
                           }));
                         });
                       },
-                      child: BlocBuilder<ThemeCubit, ThemeState>(
-                        builder: (final context, final state) => Theme(
-                          data: state.data,
-                          child: BlocBuilder<LoginCubit, Profile?>(
-                            builder: (final context, final u) => Navigator(
+                      child: BlocListener<ThemeCubit, ThemeState>(
+                        listener: (final context, final state) => setState(() {
+                          _themeData = state.data;
+                        }),
+                        child: BlocBuilder<LoginCubit, Profile?>(
+                          builder: (final context, final u) => AnimatedTheme(
+                            data: _themeData!,
+                            curve: Curves.slowMiddle,
+                            duration: const Duration(milliseconds: 100),
+                            child: Navigator(
                               onGenerateRoute: (final settings) => MaterialPageRoute(
                                 settings: settings,
                                 builder: (final context) => u == null ? const Onboarding() : const Home(),

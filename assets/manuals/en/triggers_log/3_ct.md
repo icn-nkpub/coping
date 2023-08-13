@@ -1,0 +1,1 @@
+__Counter-thought__ is the idea you want to have when facing a trigger instead of obeying. It must make you rational in resistance. That is extremely important to think intensely against your addiction. Not thinking that "you will do it next time", but rational proof that you can improve.

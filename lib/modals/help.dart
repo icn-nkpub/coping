@@ -1,6 +1,9 @@
 import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/modals/help_pages/buttons.dart';
 import 'package:dependencecoping/modals/help_pages/intro.dart';
+import 'package:dependencecoping/modals/help_pages/triggers.dart';
+import 'package:dependencecoping/modals/help_pages/triggers_journal.dart';
+import 'package:dependencecoping/modals/help_pages/triggers_log.dart';
 import 'package:dependencecoping/tokens/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -77,6 +80,9 @@ class HelpModal extends StatelessWidget {
                     children: const [
                       HelpPageContainer(helpPage: IntroHelpPage()),
                       HelpPageContainer(helpPage: ControlButtonsHelpPage()),
+                      HelpPageContainer(helpPage: TriggersHelpPage()),
+                      HelpPageContainer(helpPage: TriggersLogHelpPage()),
+                      HelpPageContainer(helpPage: TriggersJournalHelpPage()),
                     ],
                   ),
                 ),

@@ -30,7 +30,7 @@ class ThemeState {
     const shadow = Colors.transparent;
 
     data = data.copyWith(
-      textTheme: fBody(data.textTheme),
+      textTheme: fBodyTextTheme(data.textTheme),
       iconTheme: data.iconTheme.copyWith(
         color: data.colorScheme.onPrimaryContainer,
       ),

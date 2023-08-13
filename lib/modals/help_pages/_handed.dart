@@ -11,12 +11,14 @@ class Handed extends StatefulWidget {
     required this.computeLeft,
     required this.duration,
     required this.child,
+    this.noMargin = false,
     super.key,
   });
 
   final double Function(double s, double av) computeTop;
   final double Function(double s, double av) computeLeft;
   final Duration duration;
+  final bool noMargin;
   final Widget child;
 
   @override
@@ -58,11 +60,13 @@ class _HandedState extends State<Handed> with TickerProviderStateMixin {
           final leftOffsetPercentage = l / childWidth;
           final r = (topOffsetPercentage < .5 ? pi + (pi * (leftOffsetPercentage - .5) / 4) : -(pi * (leftOffsetPercentage - .5) / 4));
 
+          final double m = widget.noMargin ? 0 : 16;
+
           return Stack(
             clipBehavior: Clip.none,
             children: [
               Padding(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(m),
                 child: Measurable(
                   reportHeight: (final h) {
                     setState(() => childHeight = h);
@@ -74,8 +78,8 @@ class _HandedState extends State<Handed> with TickerProviderStateMixin {
                 ),
               ),
               Positioned(
-                top: 16 + t - (s / 2),
-                left: 16 + l - (s / 2),
+                top: m + t - (s / 2),
+                left: m + l - (s / 2),
                 child: Container(
                   width: s,
                   height: s,
@@ -93,8 +97,8 @@ class _HandedState extends State<Handed> with TickerProviderStateMixin {
                 ),
               ),
               Positioned(
-                top: 16 + t - (s / 4),
-                left: 16 + l - (s / 4),
+                top: m + t - (s / 4),
+                left: m + l - (s / 4),
                 child: Transform.rotate(
                   angle: r,
                   child: SvgPicture.asset(

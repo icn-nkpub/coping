@@ -88,10 +88,12 @@ flutter:
     - assets/icons/
     - assets/opaqring.png
     - assets/guy/
-    - assets/manuals/en/buttons/
+ 
     - assets/manuals/en/clock/
-    - assets/manuals/ru/buttons/
-    - assets/manuals/ru/clock/
+    - assets/manuals/en/buttons/
+    - assets/manuals/en/triggers/
+    - assets/manuals/en/triggers_log/
+    - assets/manuals/en/triggers_journal/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
