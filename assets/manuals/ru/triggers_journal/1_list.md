@@ -1,0 +1,3 @@
+__Triggers journal__ is the perfect tool to track your impulse accumulation, power of triggers and frequent triggers you can avoid. That helps you to reflect on your movement towards an independent life and prepare for the next trigger.
+
+_Killer counter-addiction trick: you can never commit to addiction resistance failure; instead, you should split failure into steps. For example, your impulse will often decay when going to a shop to buy the next pack of cigs. Learn to pause when you fail resistance. Add a meta-trigger like "bought new cig" to track your movement. With that pauses to reflect, you can always change your mind on the way, which is __not__ considered a failure but a great honorous win._

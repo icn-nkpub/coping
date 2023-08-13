@@ -1,0 +1,1 @@
+You can select what you want to know, and they will appear on the screen with a stopwatch when you tap the "save" button.

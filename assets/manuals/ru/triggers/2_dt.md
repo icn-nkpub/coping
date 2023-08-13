@@ -1,0 +1,1 @@
+You can discover common triggers to kickstart your work on yourself. There is the __Discover trigger__ section for you.

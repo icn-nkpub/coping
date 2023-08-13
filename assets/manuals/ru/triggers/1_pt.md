@@ -1,0 +1,1 @@
+__Personal triggers__ are a list of things that trigger you the most while attempting to quit. It could be related to any of your five senses and also your thoughts. Some event that makes you keen towards surrender to resist addiction. Like seeing your friend smoke.

@@ -1,0 +1,1 @@
+Also, since everyone is different, you can _and must_ list your own triggers. To find them, think about situations that remind you about your cravings. Usually, your brain is busy, but something can distract you from the outside to remember that you want something you are addicted to.

@@ -1,0 +1,1 @@
+You can see your timer events in this modal. The icon highlights the stop and start events, respectively.
