@@ -1,3 +1,3 @@
-__Impulse__ is a metric that defines the level of your carving power. Impulse grows each time you face a trigger, except if you are working on the ability to quit and resist all challenges.
+__Импульс__ - это метрика, определяющая уровень вашей силы желания. Импульс растет каждый раз, когда вы сталкиваетесь с триггером, за исключением тех случаев, когда вы работаете над развитием силы воли и сопротивляетесь всем препятствиям.
 
-_Remember: It's never something irresistible; instead, it has characteristics called impulse: How much are you keen to fail to avoid the addiction trap this time_
+_Запомните: никогда не бывает чего-то непреодолимого; вместо этого у него есть характеристика, называемая импульсом: насколько сильно вы стремитесь к провалу._

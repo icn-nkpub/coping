@@ -1,1 +1,1 @@
-__Personal triggers__ are a list of things that trigger you the most while attempting to quit. It could be related to any of your five senses and also your thoughts. Some event that makes you keen towards surrender to resist addiction. Like seeing your friend smoke.
+__Ваши триггеры__ - это список вещей, которые вызывают у вас наибольшее раздражение при попытке бросить курить. Это может быть связано с любым из ваших пяти чувств, а также с вашими мыслями. Какое-то событие, которое заставляет вас стремиться к пагубной привычке. Например, вы увидели, что ваш друг курит.

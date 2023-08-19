@@ -1,1 +1,1 @@
-__The Start__ button starts the Stopwatch, which counts how long you are independent.
+__Кнопка "Старт"__ запускает секундомер, который отсчитывает время, в течение которого вы не зависите от пагубных привычек.

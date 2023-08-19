@@ -1,1 +1,1 @@
-__The Goals__ button will open the modal with a list of goals with information about your changes while resisting your addiction. It can help with motivation.
+Кнопка __Цели__ откроет модальное окно со списком целей, содержащим информацию о ваших изменениях в процессе противостояния пагубной привычке. Это может помочь с мотивацией.

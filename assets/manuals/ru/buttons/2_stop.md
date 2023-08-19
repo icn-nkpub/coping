@@ -1,1 +1,1 @@
-__The Stop__ button stops the Stopwatch. Press it when you can't handle the impulse to stop resisting. If you can resist, go to the trigger screen and try to work on impulse with self-reflection, and meditation on the meditation screen.
+__Кнопка Стоп__ останавливает секундомер. Нажмите ее, когда вы не можете справиться с импульсом, чтобы прекратить сопротивление. Если вы можете сопротивляться, перейдите на экран триггера и попробуйте поработать с импульсом с помощью самоанализа и медитации на экране медитации.

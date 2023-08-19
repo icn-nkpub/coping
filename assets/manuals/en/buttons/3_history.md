@@ -1,1 +1,1 @@
-__The History__ button will open the modal with your Stopwatch resets and restarts the events journal.
+__The History__ button will open the modal with your Stopwatch events journal: list of resets and restarts.

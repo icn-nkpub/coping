@@ -1,1 +1,1 @@
-Describe __the situation__. You can omit this field in case if trigger label is well descriptive. Nevertheless, consider putting effort into trying to understand the exact trigger situation in detail. Working on independence will payoff.
+Опишите __ситуацию__. Это поле можно опустить в том случае, если метка триггера хорошо описывает ситуацию. Тем не менее, подумайте о том, чтобы попытаться детально разобраться в ситуации, вызвавшей срабатывание триггера. Работа над независимостью принесет свои плоды.

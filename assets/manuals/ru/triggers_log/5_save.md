@@ -1,1 +1,1 @@
-Review your work and press save to submit. All information will be available on screen with triggers.
+Просмотрите свою работу и нажмите кнопку сохранения для ввода. Вся информация будет доступна на экране с триггерами.

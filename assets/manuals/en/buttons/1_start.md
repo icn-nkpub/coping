@@ -1,1 +1,1 @@
-__The Start__ button starts the Stopwatch, which counts how long you are independent.
+__The Start__ button starts the Stopwatch, which counts how long you are independent of addictions.

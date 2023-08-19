@@ -1,1 +1,1 @@
-__The trigger button__ will open the modal form to submit the trigger event. Something that drives your carvings right now.
+__The trigger button__ will open the modal form to submit the trigger event. Something that drives your cravings right now.

@@ -1,1 +1,1 @@
-__The History__ button will open the modal with your Stopwatch resets and restarts the events journal.
+Кнопка __История__ откроет модальное окно с журналом событий секундомера: список сбросов и перезапусков.

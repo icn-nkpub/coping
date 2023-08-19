@@ -1,1 +1,1 @@
-You can select what you want to know, and they will appear on the screen with a stopwatch when you tap the "save" button.
+Вы можете выбрать интересующие вас сведения, и они появятся на экране с секундомером при нажатии кнопки "сохранить".

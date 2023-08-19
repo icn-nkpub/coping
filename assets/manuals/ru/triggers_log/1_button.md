@@ -1,1 +1,1 @@
-__The trigger button__ will open the modal form to submit the trigger event. Something that drives your carvings right now.
+__Кнопка триггера__ откроет модальную форму для отправки события триггера. Нечто, что вызывает у вас тягу в данный момент.

@@ -1,1 +1,1 @@
-You can discover common triggers to kickstart your work on yourself. There is the __Discover trigger__ section for you.
+Вы можете обнаружить общие триггеры, чтобы начать работу над собой. Для этого существует раздел __Популярные триггеры__.
