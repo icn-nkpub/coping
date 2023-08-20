@@ -129,6 +129,7 @@ class _TopBarState extends State<TopBar> {
                     children.add(NavButton(AppLocalizations.of(context)!.screenRegister, onPressed: goTo(1)));
                   } else {
                     children.add(NavButton(AppLocalizations.of(context)!.screenProfile, onPressed: goTo(2)));
+                    children.add(NavButton(AppLocalizations.of(context)!.screenLogin, onPressed: goTo(0)));
                     children.add(NavButton(AppLocalizations.of(context)!.screenLogout, onPressed: goTo(3)));
                   }
 

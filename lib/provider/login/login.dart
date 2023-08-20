@@ -30,6 +30,7 @@ class LoginCubit extends Cubit<Profile?> {
       return;
     }
 
+    await clearCredentials();
     await storeAuthInfo(auth);
     await OneSignal.shared.setExternalUserId(auth.id);
 

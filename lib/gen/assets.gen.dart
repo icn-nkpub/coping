@@ -77,6 +77,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/cognition.svg
   String get cognition => 'assets/icons/cognition.svg';
 
+  /// File path: assets/icons/content_copy.svg
+  String get contentCopy => 'assets/icons/content_copy.svg';
+
   /// File path: assets/icons/dark_mode.svg
   String get darkMode => 'assets/icons/dark_mode.svg';
 
@@ -177,6 +180,7 @@ class $AssetsIconsGen {
         checklist,
         close,
         cognition,
+        contentCopy,
         darkMode,
         delete,
         developerGuide,
@@ -209,34 +213,11 @@ class $AssetsIconsGen {
       ];
 }
 
-class $AssetsManualsGen {
-  const $AssetsManualsGen();
-
-  $AssetsManualsEnGen get en => const $AssetsManualsEnGen();
-}
-
-class $AssetsManualsEnGen {
-  const $AssetsManualsEnGen();
-
-  $AssetsManualsEnButtonsGen get buttons => const $AssetsManualsEnButtonsGen();
-}
-
-class $AssetsManualsEnButtonsGen {
-  const $AssetsManualsEnButtonsGen();
-
-  /// File path: assets/manuals/en/buttons/start.md
-  String get start => 'assets/manuals/en/buttons/start.md';
-
-  /// List of all assets
-  List<String> get values => [start];
-}
-
 class Assets {
   Assets._();
 
   static const $AssetsGuyGen guy = $AssetsGuyGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
-  static const $AssetsManualsGen manuals = $AssetsManualsGen();
   static const AssetGenImage opaqring = AssetGenImage('assets/opaqring.png');
 
   /// List of all assets

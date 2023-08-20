@@ -8,6 +8,7 @@
     "screenMeditation": "Медитация",
     "screenManual": "Руководство",
     "hello": "Привет",
+    "copied": "Скопировано",
     "loginEmail": "Электронная почта",
     "loginPassword": "Пароль",
     "loginLogin": "Войти",
@@ -67,7 +68,7 @@
         }
     },
     "meditationHowTo10": "Следуйте по кругу",
-    "helpSwipeAction": "Проведите влево для следующей страницы",
+    "helpSwipeAction": "Проведите влево для следующей",
     "helpManuals": "assets/manuals/ru/{section}/{fragment}.md",
     "helpIntro": "Введение",
     "helpButtons": "Кнопки управления",
