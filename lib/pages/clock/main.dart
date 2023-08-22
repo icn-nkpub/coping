@@ -32,15 +32,10 @@ class _CountdownState extends State<Countdown> {
   bool debug = false;
 
   @override
-  Widget build(final BuildContext context) => Expanded(
+  Widget build(final BuildContext context) => const Expanded(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: ListView(
-            shrinkWrap: true,
-            children: const [
-              CountdownDisplay(),
-            ],
-          ),
+          padding: EdgeInsets.symmetric(horizontal: 8.0),
+          child: CountdownDisplay(),
         ),
       );
 }

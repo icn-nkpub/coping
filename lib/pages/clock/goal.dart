@@ -1,7 +1,47 @@
 import 'package:dependencecoping/gen/assets.gen.dart';
+import 'package:dependencecoping/provider/countdown/countdown.dart';
+import 'package:dependencecoping/provider/goal/goal.dart';
 import 'package:dependencecoping/tokens/icons.dart';
 import 'package:dependencecoping/tokens/measurable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+// void Function() _gotoShop(final BuildContext context) => () => openModal(
+//       context,
+//       BlocBuilder<LoginCubit, Profile?>(
+//         builder: (final context, final u) => Modal(
+//           title: AppLocalizations.of(context)!.modalGoals,
+//           child: GoalModal(auth: u?.auth),
+//         ),
+//       ),
+//     );
+
+class GoalsList extends StatelessWidget {
+  const GoalsList({
+    required this.splits, super.key,
+  });
+
+  final Splits? splits;
+
+  @override
+  Widget build(final BuildContext context) => BlocBuilder<GoalsCubit, Goals?>(builder: (final BuildContext context, final Goals? goals) {
+      final gs = (goals?.data ?? []).toList();
+      gs.sort((final a, final b) => a.rate.compareTo(b.rate));
+
+      return Column(
+        children: gs
+            .map((final g) => GoalCard(
+                  key: GlobalKey(debugLabel: '${g.id} ${g.iconName}'),
+                  from: splits?.last ?? DateTime.now(),
+                  iconName: g.iconName,
+                  titles: g.titles,
+                  descriptions: g.descriptions,
+                  rate: g.rate,
+                ))
+            .toList(),
+      );
+    });
+}
 
 class GoalCard extends StatefulWidget {
   const GoalCard({

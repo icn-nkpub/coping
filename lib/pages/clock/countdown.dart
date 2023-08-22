@@ -2,14 +2,13 @@ import 'dart:async';
 
 import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/notifications.dart';
-import 'package:dependencecoping/pages/clock/goal.dart';
 import 'package:dependencecoping/pages/clock/locker.dart';
-import 'package:dependencecoping/pages/clock/modals/goal_manager.dart';
 import 'package:dependencecoping/pages/clock/modals/time_manager.dart';
 import 'package:dependencecoping/provider/countdown/countdown.dart';
-import 'package:dependencecoping/provider/goal/goal.dart';
 import 'package:dependencecoping/provider/login/login.dart';
+import 'package:dependencecoping/provider/theme/colors.dart';
 import 'package:dependencecoping/provider/theme/fonts.dart';
+import 'package:dependencecoping/provider/theme/theme.dart';
 import 'package:dependencecoping/tokens/icons.dart';
 import 'package:dependencecoping/tokens/modal.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +28,46 @@ class CountdownDisplay extends StatelessWidget {
 
             return Column(
               children: [
-                const SizedBox(height: 8 * 4),
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: BlocBuilder<ThemeCubit, ThemeState>(
+                      builder: (final context, final state) => Container(
+                        height: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primaryContainer,
+                          borderRadius: BorderRadius.circular(16),
+                          image: DecorationImage(
+                            image: NetworkImage(matchingImage(state.color, state.mode)),
+                            fit: BoxFit.cover,
+                            alignment: Alignment.bottomCenter,
+                          ),
+                        ),
+                        clipBehavior: Clip.antiAlias,
+                        child: SizedBox(width: double.infinity),
+                        // child: Align(
+                        //   alignment: Alignment.bottomCenter,
+                        //   child: Container(
+                        //     width: double.infinity,
+                        //     height: 100,
+                        //     decoration: BoxDecoration(
+                        //       gradient: LinearGradient(
+                        //         begin: Alignment.topCenter,
+                        //         end: Alignment.bottomCenter,
+                        //         stops: const [0, .9],
+                        //         colors: [
+                        //           Theme.of(context).scaffoldBackgroundColor.withOpacity(0),
+                        //           Theme.of(context).scaffoldBackgroundColor,
+                        //         ],
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8 * 3),
                 Stopwatch(
                   from: splits?.last,
                   frozen: paused,
@@ -37,7 +75,7 @@ class CountdownDisplay extends StatelessWidget {
                 const SizedBox(height: 8),
                 Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * .12),
                   child: FittedBox(
                       child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -53,24 +91,7 @@ class CountdownDisplay extends StatelessWidget {
                     ],
                   )),
                 ),
-                const SizedBox(height: 8 * 3),
-                BlocBuilder<GoalsCubit, Goals?>(builder: (final BuildContext context, final Goals? goals) {
-                  final gs = (goals?.data ?? []).toList();
-                  gs.sort((final a, final b) => a.rate.compareTo(b.rate));
-
-                  return Column(
-                    children: gs
-                        .map((final g) => GoalCard(
-                              key: GlobalKey(debugLabel: '${g.id} ${g.iconName}'),
-                              from: splits?.last ?? DateTime.now(),
-                              iconName: g.iconName,
-                              titles: g.titles,
-                              descriptions: g.descriptions,
-                              rate: g.rate,
-                            ))
-                        .toList(),
-                  );
-                }),
+                const SizedBox(height: 8 * 4),
               ],
             );
           },
@@ -110,13 +131,13 @@ class CountdownDisplay extends StatelessWidget {
             color: Theme.of(context).colorScheme.onPrimaryContainer,
           ),
         ),
-        IconButton.filledTonal(
-          onPressed: _gotoShop(context),
-          icon: SvgIcon(
-            assetPath: Assets.icons.checklist,
-            color: Theme.of(context).colorScheme.onPrimaryContainer,
-          ),
-        ),
+        // IconButton.filledTonal(
+        //   onPressed: _gotoShop(context),
+        //   icon: SvgIcon(
+        //     assetPath: Assets.icons.checklist,
+        //     color: Theme.of(context).colorScheme.onPrimaryContainer,
+        //   ),
+        // ),
       ];
 
   Future<void> startNotifications(final AppLocalizations al) async {
@@ -140,16 +161,6 @@ class CountdownDisplay extends StatelessWidget {
       await unscheduleNotification(i);
     }
   }
-
-  void Function() _gotoShop(final BuildContext context) => () => openModal(
-        context,
-        BlocBuilder<LoginCubit, Profile?>(
-          builder: (final context, final u) => Modal(
-            title: AppLocalizations.of(context)!.modalGoals,
-            child: GoalModal(auth: u?.auth),
-          ),
-        ),
-      );
 
   void Function() _gotoTime(final BuildContext context) => () => openModal(
         context,
