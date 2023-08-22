@@ -131,6 +131,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/more.svg
   String get more => 'assets/icons/more.svg';
 
+  /// File path: assets/icons/no_encryption.svg
+  String get noEncryption => 'assets/icons/no_encryption.svg';
+
   /// File path: assets/icons/palette.svg
   String get palette => 'assets/icons/palette.svg';
 
@@ -173,6 +176,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/timer_off.svg
   String get timerOff => 'assets/icons/timer_off.svg';
 
+  /// File path: assets/icons/trophy.svg
+  String get trophy => 'assets/icons/trophy.svg';
+
   /// File path: assets/icons/verified.svg
   String get verified => 'assets/icons/verified.svg';
 
@@ -207,6 +213,7 @@ class $AssetsIconsGen {
         lockOpen,
         mindfulness,
         more,
+        noEncryption,
         palette,
         playArrow,
         playCircle,
@@ -221,6 +228,7 @@ class $AssetsIconsGen {
         stopCircle,
         timer,
         timerOff,
+        trophy,
         verified
       ];
 }

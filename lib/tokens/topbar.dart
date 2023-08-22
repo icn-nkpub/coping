@@ -86,16 +86,22 @@ class _TopBarState extends State<TopBar> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: RichText(
-                      text: TextSpan(
-                        text: AppLocalizations.of(context)!.hello,
-                        style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w600),
-                        children: [
-                          if ((u?.profile?.firstName ?? '') != '')
-                            TextSpan(
-                              text: ', ${u?.profile?.firstName ?? ''}',
-                            ),
-                        ],
-                      ),
+                      text: TextSpan(children: [
+                        TextSpan(
+                          text: 'Coping',
+                          style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w900),
+                        ),
+                        // TextSpan(
+                        //   text: AppLocalizations.of(context)!.hello,
+                        //   style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w600),
+                        //   children: [
+                        //     if ((u?.profile?.firstName ?? '') != '')
+                        //       TextSpan(
+                        //         text: ' ${u?.profile?.firstName ?? ''}',
+                        //       ),
+                        //   ],
+                        // )
+                      ]),
                     ),
                   ),
                   IconButton(

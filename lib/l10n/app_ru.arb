@@ -18,6 +18,7 @@
     "profileSecondName": "Фамилия",
     "profileAddictionLabel": "Зависимость",
     "profileAddictionSuggestions": "Вейп, Одноразки, Сигареты",
+    "profileCredentials": "Данные для входа",
     "profileSave": "Сохранить",
     "registerEmail": "Электронная почта",
     "registerPassword": "Пароль",

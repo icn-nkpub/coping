@@ -11,71 +11,80 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileModal extends StatelessWidget {
-  const ProfileModal({
+  const ProfileModal({super.key});
+
+  @override
+  Widget build(final BuildContext context) => BlocBuilder<LoginCubit, Profile?>(
+      builder: (final context, final u) => ProfileModalContent(
+            firstName: u?.profile?.firstName ?? '',
+            secondName: u?.profile?.secondName ?? '',
+            addictionLabel: u?.profile?.addictionLabel ?? '',
+          ));
+}
+
+class ProfileModalContent extends StatefulWidget {
+  const ProfileModalContent({
+    required this.firstName,
+    required this.secondName,
+    required this.addictionLabel,
     super.key,
   });
 
-  @override
-  Widget build(final BuildContext context) => BlocBuilder<LoginCubit, Profile?>(builder: (final context, final u) {
-        final cFirstName = TextEditingController(text: u?.profile?.firstName ?? '');
-        final cSecondName = TextEditingController(text: u?.profile?.secondName ?? '');
-        final cAddictionLabel = TextEditingController(text: u?.profile?.addictionLabel ?? '');
+  final String firstName;
+  final String secondName;
+  final String addictionLabel;
 
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Form(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                FutureBuilder(
-                  // ignore: discarded_futures
-                  future: restoreCredentials(),
-                  builder: (final context, final snapshot) =>
-                      snapshot.data != null && snapshot.data!.isNotNull() ? CredentialsRemider(cred: snapshot.data!) : const SizedBox(),
-                ),
-                Input(title: AppLocalizations.of(context)!.profileFirstName, ctrl: cFirstName, autocorrect: true),
-                const SizedBox(height: 8),
-                Input(title: AppLocalizations.of(context)!.profileSecondName, ctrl: cSecondName, autocorrect: true),
-                const SizedBox(height: 8),
-                Input(title: AppLocalizations.of(context)!.profileAddictionLabel, ctrl: cAddictionLabel, autocorrect: true),
-                const SizedBox(height: 8),
-                Wrap(
-                  spacing: 4,
-                  children: AppLocalizations.of(context)!
-                      .profileAddictionSuggestions
-                      .split(', ')
-                      .map((final e) => FilledButton.tonal(
-                            onPressed: () {
-                              cAddictionLabel.text = e;
-                            },
-                            child: Text(e),
-                          ))
-                      .toList(),
-                ),
-                Flexible(child: ListView()),
-                Center(
-                  child: FilledButton(
-                    onPressed: () {
-                      if (Navigator.of(context).canPop()) {
-                        unawaited(context.read<LoginCubit>().saveProfile(
-                              cFirstName.text,
-                              cSecondName.text,
-                              cAddictionLabel.text,
-                            ));
-                        Navigator.of(context).pop();
-                      }
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(AppLocalizations.of(context)!.profileSave),
-                    ),
+  @override
+  State<ProfileModalContent> createState() => _ProfileModalContentState();
+}
+
+class _ProfileModalContentState extends State<ProfileModalContent> {
+  late final cFirstName = TextEditingController(text: widget.firstName);
+  late final cSecondName = TextEditingController(text: widget.secondName);
+  late final cAddictionLabel = TextEditingController(text: widget.addictionLabel);
+
+  @override
+  Widget build(final BuildContext context) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Form(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              FutureBuilder(
+                // ignore: discarded_futures
+                future: restoreCredentials(),
+                builder: (final context, final snapshot) =>
+                    snapshot.data != null && snapshot.data!.isNotNull() ? CredentialsRemider(cred: snapshot.data!) : const SizedBox(),
+              ),
+              const SizedBox(height: 8),
+              Input(title: AppLocalizations.of(context)!.profileFirstName, ctrl: cFirstName, autocorrect: true),
+              const SizedBox(height: 8),
+              Input(title: AppLocalizations.of(context)!.profileSecondName, ctrl: cSecondName, autocorrect: true),
+              const SizedBox(height: 8),
+              Input(title: AppLocalizations.of(context)!.profileAddictionLabel, ctrl: cAddictionLabel, autocorrect: true),
+              Flexible(child: ListView()),
+              Center(
+                child: FilledButton(
+                  onPressed: () {
+                    if (Navigator.of(context).canPop()) {
+                      unawaited(context.read<LoginCubit>().saveProfile(
+                            cFirstName.text,
+                            cSecondName.text,
+                            cAddictionLabel.text,
+                          ));
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(AppLocalizations.of(context)!.profileSave),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        );
-      });
+        ),
+      );
 }
 
 class CredentialsRemider extends StatelessWidget {
@@ -87,35 +96,42 @@ class CredentialsRemider extends StatelessWidget {
   final Credentials cred;
 
   @override
-  Widget build(final BuildContext context) => Padding(
-        padding: const EdgeInsets.only(bottom: 32.0),
+  Widget build(final BuildContext context) => Card(
+        elevation: 1,
+        margin: EdgeInsets.zero,
         child: Container(
-          decoration: BoxDecoration(
-              border: Border(
-                  bottom: BorderSide(
-            color: Theme.of(context).colorScheme.primary.withOpacity(.25),
-          ))),
+          padding: const EdgeInsets.all(8),
+          width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 11),
-                child: Text(
-                  AppLocalizations.of(context)!.loginEmail,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
+                padding: const EdgeInsets.only(left: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.loginEmail,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    Copier(title: cred.email ?? '•••••@coping.new', content: cred.email),
+                  ],
                 ),
               ),
-              Copier(title: cred.email ?? '•••••@coping.new', content: cred.email),
-              const SizedBox(height: 4),
+              Container(decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Theme.of(context).colorScheme.primary.withOpacity(.2))))),
               Padding(
-                padding: const EdgeInsets.only(left: 11),
-                child: Text(
-                  AppLocalizations.of(context)!.loginPassword,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
+                padding: const EdgeInsets.only(left: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.loginPassword,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    Copier(title: '•••••••••••••••', content: cred.password),
+                  ],
                 ),
               ),
-              Copier(title: '•••••••••••••••', content: cred.password),
-              const SizedBox(height: 8),
             ],
           ),
         ),

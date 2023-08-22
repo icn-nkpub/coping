@@ -35,22 +35,24 @@ class CountdownDisplay extends StatelessWidget {
                   frozen: paused,
                 ),
                 const SizedBox(height: 8),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Row(
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: FittedBox(
+                      child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ...controlls(context, paused: paused),
-                      const SizedBox(width: 16),
                       BlocBuilder<CountdownTimerCubit, CountdownTimer?>(
                         builder: (final context, final ct) =>
                             ScoreCard(score: NumberFormat.decimalPattern().format(splits?.score ?? 0).replaceAll('0', 'O')),
                       ),
+                      const SizedBox(width: 4),
+                      ...controlls(context, paused: paused),
+                      const SizedBox(width: 4),
+                      const LockerCard(),
                     ],
-                  ),
+                  )),
                 ),
-                const SizedBox(height: 8 * 3),
-                const Locker(),
                 const SizedBox(height: 8 * 3),
                 BlocBuilder<GoalsCubit, Goals?>(builder: (final BuildContext context, final Goals? goals) {
                   final gs = (goals?.data ?? []).toList();

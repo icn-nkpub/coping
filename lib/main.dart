@@ -7,6 +7,7 @@ import 'package:dependencecoping/notifications.dart';
 import 'package:dependencecoping/onboarding.dart';
 import 'package:dependencecoping/provider/countdown/countdown.dart';
 import 'package:dependencecoping/provider/goal/goal.dart';
+import 'package:dependencecoping/provider/locker/locker.dart';
 import 'package:dependencecoping/provider/login/login.dart';
 import 'package:dependencecoping/provider/static/static.dart';
 import 'package:dependencecoping/provider/theme/colors.dart';
@@ -148,6 +149,11 @@ class _AppState extends State<App> with AssetsInitializer, TickerProviderStateMi
                     }
                   }
 
+                  final lockerCubit = LockerCubit();
+                  if (lockerDuration != null) {
+                    lockerCubit.overwrite(lockerStart ?? DateTime.now(), lockerDuration!);
+                  }
+
                   return MultiBlocProvider(
                     providers: [
                       BlocProvider(create: (final _) => loginCubit),
@@ -156,6 +162,7 @@ class _AppState extends State<App> with AssetsInitializer, TickerProviderStateMi
                       BlocProvider(create: (final _) => countdownTimerCubit),
                       BlocProvider(create: (final _) => goalsCubit),
                       BlocProvider(create: (final _) => triggersCubit),
+                      BlocProvider(create: (final _) => lockerCubit),
                     ],
                     child: BlocListener<LoginCubit, Profile?>(
                       listenWhen: (final p, final c) => p?.auth.id != c?.auth.id,

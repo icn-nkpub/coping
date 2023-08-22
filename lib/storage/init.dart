@@ -6,6 +6,7 @@ import 'package:dependencecoping/auth/auth.dart';
 import 'package:dependencecoping/provider/static/static.dart';
 import 'package:dependencecoping/storage/goal.dart';
 import 'package:dependencecoping/storage/local.dart';
+import 'package:dependencecoping/storage/locker.dart';
 import 'package:dependencecoping/storage/profiles.dart';
 import 'package:dependencecoping/storage/reset_log.dart';
 import 'package:dependencecoping/storage/static.dart';
@@ -24,6 +25,8 @@ mixin AssetsInitializer<T extends StatefulWidget> on State<T> {
   User? user;
   ProfileRecord? profile;
   List<CountdownReset>? resets;
+  DateTime? lockerStart;
+  Duration? lockerDuration;
   List<Goal>? goals;
   List<Trigger>? triggers;
   List<TriggerLog>? triggersLog;
@@ -119,6 +122,9 @@ mixin AssetsInitializer<T extends StatefulWidget> on State<T> {
     final triggersLogFuture = getTriggersLog(user!, 'smoking');
     waitGroup.add(triggersLogFuture);
 
+    final lockerSets = getLockerSets(user!);
+    waitGroup.add(lockerSets);
+
     await Future.wait(waitGroup, eagerError: true);
 
     final vProfile = await profileFuture;
@@ -129,6 +135,10 @@ mixin AssetsInitializer<T extends StatefulWidget> on State<T> {
     final vTriggers = await triggersFuture;
     final vTriggersLog = await triggersLogFuture;
 
+    final vLockerSets = await lockerSets;
+    vLockerSets.sort((final a, final b) => b.compareTo(a));
+    final LockerSet? vLockerSet = vLockerSets.isEmpty ? null : vLockerSets[0];
+
     setState(() {
       profile = vProfile;
       statics.goals = vStaticsGoals;
@@ -137,6 +147,9 @@ mixin AssetsInitializer<T extends StatefulWidget> on State<T> {
       goals = vGoals;
       triggers = vTriggers;
       triggersLog = vTriggersLog;
+      lockerStart = vLockerSet?.start;
+      lockerDuration = vLockerSet?.end.difference(vLockerSet.start) ?? Duration.zero;
+
       loadingState = LoadingProgress.done;
     });
 
