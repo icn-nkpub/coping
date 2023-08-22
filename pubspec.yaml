@@ -88,6 +88,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/opaqring.png
+    - assets/nkpub.svg
     - assets/guy/
  
     - assets/manuals/en/clock/

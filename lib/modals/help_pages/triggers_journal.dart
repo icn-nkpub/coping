@@ -45,7 +45,7 @@ class TriggersJournalHelpPage extends StatelessWidget {
               ),
               const Padding(
                 padding: EdgeInsets.all(16),
-                child: MarkdownManual(section: 'triggers_journal', fragment: '1_list'),
+                child: MarkdownManual(section: 'triggers_journal', fragment: 'm1_list'),
               ),
             ],
           ),

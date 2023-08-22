@@ -41,7 +41,7 @@ class TriggersLogHelpPage extends StatelessWidget {
               ),
               const Padding(
                 padding: EdgeInsets.all(16),
-                child: MarkdownManual(section: 'triggers_log', fragment: '1_button'),
+                child: MarkdownManual(section: 'triggers_log', fragment: 'm1_button'),
               ),
               ModalContainer(
                 title: AppLocalizations.of(context)!.modalLogTrigger,
@@ -67,7 +67,7 @@ class TriggersLogHelpPage extends StatelessWidget {
               ),
               const Padding(
                 padding: EdgeInsets.all(16),
-                child: MarkdownManual(section: 'triggers_log', fragment: '2_situation'),
+                child: MarkdownManual(section: 'triggers_log', fragment: 'm2_situation'),
               ),
               ModalContainer(
                 title: AppLocalizations.of(context)!.modalLogTrigger,
@@ -96,7 +96,7 @@ class TriggersLogHelpPage extends StatelessWidget {
               ),
               const Padding(
                 padding: EdgeInsets.all(16),
-                child: MarkdownManual(section: 'triggers_log', fragment: '3_ct'),
+                child: MarkdownManual(section: 'triggers_log', fragment: 'm3_ct'),
               ),
               ModalContainer(
                 title: AppLocalizations.of(context)!.modalLogTrigger,
@@ -128,7 +128,7 @@ class TriggersLogHelpPage extends StatelessWidget {
               ),
               const Padding(
                 padding: EdgeInsets.all(16),
-                child: MarkdownManual(section: 'triggers_log', fragment: '4_impulse'),
+                child: MarkdownManual(section: 'triggers_log', fragment: 'm4_impulse'),
               ),
               ModalContainer(
                 title: AppLocalizations.of(context)!.modalLogTrigger,
@@ -168,7 +168,7 @@ class TriggersLogHelpPage extends StatelessWidget {
               ),
               const Padding(
                 padding: EdgeInsets.all(16),
-                child: MarkdownManual(section: 'triggers_log', fragment: '5_save'),
+                child: MarkdownManual(section: 'triggers_log', fragment: 'm5_save'),
               ),
             ],
           ),

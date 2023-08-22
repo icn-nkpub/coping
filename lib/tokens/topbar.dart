@@ -90,7 +90,7 @@ class _TopBarState extends State<TopBar> {
                         text: AppLocalizations.of(context)!.hello,
                         style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w600),
                         children: [
-                          if (u?.profile?.firstName != null)
+                          if ((u?.profile?.firstName ?? '') != '')
                             TextSpan(
                               text: ', ${u?.profile?.firstName ?? ''}',
                             ),

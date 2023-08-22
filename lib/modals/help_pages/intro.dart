@@ -32,7 +32,7 @@ class IntroHelpPage extends StatelessWidget {
                 ),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: MarkdownManual(section: 'clock', fragment: '1_clock'),
+                  child: MarkdownManual(section: 'clock', fragment: 'm1_clock'),
                 ),
                 Handed(
                   computeTop: (final s, final av) => s - (av * 4),
@@ -47,7 +47,7 @@ class IntroHelpPage extends StatelessWidget {
                 ),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: MarkdownManual(section: 'clock', fragment: '2_score'),
+                  child: MarkdownManual(section: 'clock', fragment: 'm2_score'),
                 ),
               ],
             ),

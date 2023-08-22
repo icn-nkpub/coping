@@ -30,17 +30,17 @@ class ControlButtonsHelpPage extends StatelessWidget {
               Center(child: handedControls(context, 1, paused: true)),
               const Padding(
                 padding: EdgeInsets.all(16),
-                child: MarkdownManual(section: 'buttons', fragment: '1_start'),
+                child: MarkdownManual(section: 'buttons', fragment: 'm1_start'),
               ),
               Center(child: handedControls(context, 1)),
               const Padding(
                 padding: EdgeInsets.all(16),
-                child: MarkdownManual(section: 'buttons', fragment: '2_stop'),
+                child: MarkdownManual(section: 'buttons', fragment: 'm2_stop'),
               ),
               Center(child: handedControls(context, 2.15, paused: true)),
               const Padding(
                 padding: EdgeInsets.all(16),
-                child: MarkdownManual(section: 'buttons', fragment: '3_history'),
+                child: MarkdownManual(section: 'buttons', fragment: 'm3_history'),
               ),
               ModalContainer(
                 title: AppLocalizations.of(context)!.modalTimerEvents,
@@ -68,12 +68,12 @@ class ControlButtonsHelpPage extends StatelessWidget {
               ),
               const Padding(
                 padding: EdgeInsets.all(16),
-                child: MarkdownManual(section: 'buttons', fragment: '4_history_modal'),
+                child: MarkdownManual(section: 'buttons', fragment: 'm4_history_modal'),
               ),
               Center(child: handedControls(context, 3.2, paused: true)),
               const Padding(
                 padding: EdgeInsets.all(16),
-                child: MarkdownManual(section: 'buttons', fragment: '5_goals'),
+                child: MarkdownManual(section: 'buttons', fragment: 'm5_goals'),
               ),
               ModalContainer(
                 title: AppLocalizations.of(context)!.modalGoals,
@@ -88,7 +88,7 @@ class ControlButtonsHelpPage extends StatelessWidget {
               ),
               const Padding(
                 padding: EdgeInsets.all(16),
-                child: MarkdownManual(section: 'buttons', fragment: '6_goals_modal'),
+                child: MarkdownManual(section: 'buttons', fragment: 'm6_goals_modal'),
               ),
             ],
           ),

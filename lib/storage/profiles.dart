@@ -27,7 +27,14 @@ Future<ProfileRecord?> getProfile(final User user) async {
       );
 
   if (data.isEmpty) {
-    return null;
+    return ProfileRecord(
+      firstName: '',
+      secondName: '',
+      breathingTime: 6,
+      addictionLabel: '',
+      color: null,
+      isLight: null,
+    );
   }
 
   final record = data[0];

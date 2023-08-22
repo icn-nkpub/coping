@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/notifications.dart';
 import 'package:dependencecoping/pages/clock/goal.dart';
+import 'package:dependencecoping/pages/clock/locker.dart';
 import 'package:dependencecoping/pages/clock/modals/goal_manager.dart';
 import 'package:dependencecoping/pages/clock/modals/time_manager.dart';
 import 'package:dependencecoping/provider/countdown/countdown.dart';
@@ -48,6 +49,8 @@ class CountdownDisplay extends StatelessWidget {
                     ],
                   ),
                 ),
+                const SizedBox(height: 8 * 3),
+                const Locker(),
                 const SizedBox(height: 8 * 3),
                 BlocBuilder<GoalsCubit, Goals?>(builder: (final BuildContext context, final Goals? goals) {
                   final gs = (goals?.data ?? []).toList();
@@ -243,7 +246,7 @@ class Stopwatch extends StatelessWidget {
 class Ticker extends StatelessWidget {
   const Ticker({
     required this.child,
-    required this.small,
+    this.small = false,
     super.key,
   });
 

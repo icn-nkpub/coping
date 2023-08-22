@@ -51,7 +51,7 @@ class TriggersHelpPage extends StatelessWidget {
                 ),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: MarkdownManual(section: 'triggers', fragment: '1_pt'),
+                  child: MarkdownManual(section: 'triggers', fragment: 'm1_pt'),
                 ),
                 Card(
                   margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -80,7 +80,7 @@ class TriggersHelpPage extends StatelessWidget {
                 ),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: MarkdownManual(section: 'triggers', fragment: '2_dt'),
+                  child: MarkdownManual(section: 'triggers', fragment: 'm2_dt'),
                 ),
                 Wrap(
                   children: [
@@ -103,7 +103,7 @@ class TriggersHelpPage extends StatelessWidget {
                 ),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: MarkdownManual(section: 'triggers', fragment: '3_plus'),
+                  child: MarkdownManual(section: 'triggers', fragment: 'm3_plus'),
                 ),
                 ModalContainer(
                   title: AppLocalizations.of(context)!.modalAddPersonalTrigger,
@@ -129,7 +129,7 @@ class TriggersHelpPage extends StatelessWidget {
                 ),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: MarkdownManual(section: 'triggers', fragment: '4_add'),
+                  child: MarkdownManual(section: 'triggers', fragment: 'm4_add'),
                 ),
               ],
             ),

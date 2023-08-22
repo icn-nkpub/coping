@@ -91,7 +91,9 @@ mixin AssetsInitializer<T extends StatefulWidget> on State<T> {
       }
 
       await storeAuthInfo(auth);
-      user = auth;
+      setState(() {
+        user = auth;
+      });
     }
 
     final List<Future> waitGroup = [];

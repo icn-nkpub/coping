@@ -36,7 +36,7 @@ class ThemeState {
       ),
       scaffoldBackgroundColor: isLightMode() ? Colors.white : ElevationOverlay.applySurfaceTint(bc, pc, .5),
       appBarTheme: data.appBarTheme.copyWith(
-        color: ElevationOverlay.applySurfaceTint(bc, pc, 2),
+        color: ElevationOverlay.applySurfaceTint(bc, pc, 4),
         shadowColor: shadow,
       ),
       shadowColor: shadow,

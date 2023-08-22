@@ -119,6 +119,12 @@ class $AssetsIconsGen {
   /// File path: assets/icons/light_mode.svg
   String get lightMode => 'assets/icons/light_mode.svg';
 
+  /// File path: assets/icons/lock.svg
+  String get lock => 'assets/icons/lock.svg';
+
+  /// File path: assets/icons/lock_open.svg
+  String get lockOpen => 'assets/icons/lock_open.svg';
+
   /// File path: assets/icons/mindfulness.svg
   String get mindfulness => 'assets/icons/mindfulness.svg';
 
@@ -142,6 +148,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/psychology_alt.svg
   String get psychologyAlt => 'assets/icons/psychology_alt.svg';
+
+  /// File path: assets/icons/punch_clock.svg
+  String get punchClock => 'assets/icons/punch_clock.svg';
 
   /// File path: assets/icons/relax.svg
   String get relax => 'assets/icons/relax.svg';
@@ -194,6 +203,8 @@ class $AssetsIconsGen {
         humidityPercentage,
         info,
         lightMode,
+        lock,
+        lockOpen,
         mindfulness,
         more,
         palette,
@@ -202,6 +213,7 @@ class $AssetsIconsGen {
         psychiatry,
         psychology,
         psychologyAlt,
+        punchClock,
         relax,
         settings,
         stickyNote2,
@@ -213,15 +225,230 @@ class $AssetsIconsGen {
       ];
 }
 
+class $AssetsManualsGen {
+  const $AssetsManualsGen();
+
+  $AssetsManualsEnGen get en => const $AssetsManualsEnGen();
+  $AssetsManualsRuGen get ru => const $AssetsManualsRuGen();
+}
+
+class $AssetsManualsEnGen {
+  const $AssetsManualsEnGen();
+
+  $AssetsManualsEnButtonsGen get buttons => const $AssetsManualsEnButtonsGen();
+  $AssetsManualsEnClockGen get clock => const $AssetsManualsEnClockGen();
+  $AssetsManualsEnTriggersGen get triggers =>
+      const $AssetsManualsEnTriggersGen();
+  $AssetsManualsEnTriggersJournalGen get triggersJournal =>
+      const $AssetsManualsEnTriggersJournalGen();
+  $AssetsManualsEnTriggersLogGen get triggersLog =>
+      const $AssetsManualsEnTriggersLogGen();
+}
+
+class $AssetsManualsRuGen {
+  const $AssetsManualsRuGen();
+
+  $AssetsManualsRuButtonsGen get buttons => const $AssetsManualsRuButtonsGen();
+  $AssetsManualsRuClockGen get clock => const $AssetsManualsRuClockGen();
+  $AssetsManualsRuTriggersGen get triggers =>
+      const $AssetsManualsRuTriggersGen();
+  $AssetsManualsRuTriggersJournalGen get triggersJournal =>
+      const $AssetsManualsRuTriggersJournalGen();
+  $AssetsManualsRuTriggersLogGen get triggersLog =>
+      const $AssetsManualsRuTriggersLogGen();
+}
+
+class $AssetsManualsEnButtonsGen {
+  const $AssetsManualsEnButtonsGen();
+
+  /// File path: assets/manuals/en/buttons/m1_start.md
+  String get m1Start => 'assets/manuals/en/buttons/m1_start.md';
+
+  /// File path: assets/manuals/en/buttons/m2_stop.md
+  String get m2Stop => 'assets/manuals/en/buttons/m2_stop.md';
+
+  /// File path: assets/manuals/en/buttons/m3_history.md
+  String get m3History => 'assets/manuals/en/buttons/m3_history.md';
+
+  /// File path: assets/manuals/en/buttons/m4_history_modal.md
+  String get m4HistoryModal => 'assets/manuals/en/buttons/m4_history_modal.md';
+
+  /// File path: assets/manuals/en/buttons/m5_goals.md
+  String get m5Goals => 'assets/manuals/en/buttons/m5_goals.md';
+
+  /// File path: assets/manuals/en/buttons/m6_goals_modal.md
+  String get m6GoalsModal => 'assets/manuals/en/buttons/m6_goals_modal.md';
+
+  /// List of all assets
+  List<String> get values =>
+      [m1Start, m2Stop, m3History, m4HistoryModal, m5Goals, m6GoalsModal];
+}
+
+class $AssetsManualsEnClockGen {
+  const $AssetsManualsEnClockGen();
+
+  /// File path: assets/manuals/en/clock/m1_clock.md
+  String get m1Clock => 'assets/manuals/en/clock/m1_clock.md';
+
+  /// File path: assets/manuals/en/clock/m2_score.md
+  String get m2Score => 'assets/manuals/en/clock/m2_score.md';
+
+  /// List of all assets
+  List<String> get values => [m1Clock, m2Score];
+}
+
+class $AssetsManualsEnTriggersGen {
+  const $AssetsManualsEnTriggersGen();
+
+  /// File path: assets/manuals/en/triggers/m1_pt.md
+  String get m1Pt => 'assets/manuals/en/triggers/m1_pt.md';
+
+  /// File path: assets/manuals/en/triggers/m2_dt.md
+  String get m2Dt => 'assets/manuals/en/triggers/m2_dt.md';
+
+  /// File path: assets/manuals/en/triggers/m3_plus.md
+  String get m3Plus => 'assets/manuals/en/triggers/m3_plus.md';
+
+  /// File path: assets/manuals/en/triggers/m4_add.md
+  String get m4Add => 'assets/manuals/en/triggers/m4_add.md';
+
+  /// List of all assets
+  List<String> get values => [m1Pt, m2Dt, m3Plus, m4Add];
+}
+
+class $AssetsManualsEnTriggersJournalGen {
+  const $AssetsManualsEnTriggersJournalGen();
+
+  /// File path: assets/manuals/en/triggers_journal/m1_list.md
+  String get m1List => 'assets/manuals/en/triggers_journal/m1_list.md';
+
+  /// List of all assets
+  List<String> get values => [m1List];
+}
+
+class $AssetsManualsEnTriggersLogGen {
+  const $AssetsManualsEnTriggersLogGen();
+
+  /// File path: assets/manuals/en/triggers_log/m1_button.md
+  String get m1Button => 'assets/manuals/en/triggers_log/m1_button.md';
+
+  /// File path: assets/manuals/en/triggers_log/m2_situation.md
+  String get m2Situation => 'assets/manuals/en/triggers_log/m2_situation.md';
+
+  /// File path: assets/manuals/en/triggers_log/m3_ct.md
+  String get m3Ct => 'assets/manuals/en/triggers_log/m3_ct.md';
+
+  /// File path: assets/manuals/en/triggers_log/m4_impulse.md
+  String get m4Impulse => 'assets/manuals/en/triggers_log/m4_impulse.md';
+
+  /// File path: assets/manuals/en/triggers_log/m5_save.md
+  String get m5Save => 'assets/manuals/en/triggers_log/m5_save.md';
+
+  /// List of all assets
+  List<String> get values => [m1Button, m2Situation, m3Ct, m4Impulse, m5Save];
+}
+
+class $AssetsManualsRuButtonsGen {
+  const $AssetsManualsRuButtonsGen();
+
+  /// File path: assets/manuals/ru/buttons/m1_start.md
+  String get m1Start => 'assets/manuals/ru/buttons/m1_start.md';
+
+  /// File path: assets/manuals/ru/buttons/m2_stop.md
+  String get m2Stop => 'assets/manuals/ru/buttons/m2_stop.md';
+
+  /// File path: assets/manuals/ru/buttons/m3_history.md
+  String get m3History => 'assets/manuals/ru/buttons/m3_history.md';
+
+  /// File path: assets/manuals/ru/buttons/m4_history_modal.md
+  String get m4HistoryModal => 'assets/manuals/ru/buttons/m4_history_modal.md';
+
+  /// File path: assets/manuals/ru/buttons/m5_goals.md
+  String get m5Goals => 'assets/manuals/ru/buttons/m5_goals.md';
+
+  /// File path: assets/manuals/ru/buttons/m6_goals_modal.md
+  String get m6GoalsModal => 'assets/manuals/ru/buttons/m6_goals_modal.md';
+
+  /// List of all assets
+  List<String> get values =>
+      [m1Start, m2Stop, m3History, m4HistoryModal, m5Goals, m6GoalsModal];
+}
+
+class $AssetsManualsRuClockGen {
+  const $AssetsManualsRuClockGen();
+
+  /// File path: assets/manuals/ru/clock/m1_clock.md
+  String get m1Clock => 'assets/manuals/ru/clock/m1_clock.md';
+
+  /// File path: assets/manuals/ru/clock/m2_score.md
+  String get m2Score => 'assets/manuals/ru/clock/m2_score.md';
+
+  /// List of all assets
+  List<String> get values => [m1Clock, m2Score];
+}
+
+class $AssetsManualsRuTriggersGen {
+  const $AssetsManualsRuTriggersGen();
+
+  /// File path: assets/manuals/ru/triggers/m1_pt.md
+  String get m1Pt => 'assets/manuals/ru/triggers/m1_pt.md';
+
+  /// File path: assets/manuals/ru/triggers/m2_dt.md
+  String get m2Dt => 'assets/manuals/ru/triggers/m2_dt.md';
+
+  /// File path: assets/manuals/ru/triggers/m3_plus.md
+  String get m3Plus => 'assets/manuals/ru/triggers/m3_plus.md';
+
+  /// File path: assets/manuals/ru/triggers/m4_add.md
+  String get m4Add => 'assets/manuals/ru/triggers/m4_add.md';
+
+  /// List of all assets
+  List<String> get values => [m1Pt, m2Dt, m3Plus, m4Add];
+}
+
+class $AssetsManualsRuTriggersJournalGen {
+  const $AssetsManualsRuTriggersJournalGen();
+
+  /// File path: assets/manuals/ru/triggers_journal/m1_list.md
+  String get m1List => 'assets/manuals/ru/triggers_journal/m1_list.md';
+
+  /// List of all assets
+  List<String> get values => [m1List];
+}
+
+class $AssetsManualsRuTriggersLogGen {
+  const $AssetsManualsRuTriggersLogGen();
+
+  /// File path: assets/manuals/ru/triggers_log/m1_button.md
+  String get m1Button => 'assets/manuals/ru/triggers_log/m1_button.md';
+
+  /// File path: assets/manuals/ru/triggers_log/m2_situation.md
+  String get m2Situation => 'assets/manuals/ru/triggers_log/m2_situation.md';
+
+  /// File path: assets/manuals/ru/triggers_log/m3_ct.md
+  String get m3Ct => 'assets/manuals/ru/triggers_log/m3_ct.md';
+
+  /// File path: assets/manuals/ru/triggers_log/m4_impulse.md
+  String get m4Impulse => 'assets/manuals/ru/triggers_log/m4_impulse.md';
+
+  /// File path: assets/manuals/ru/triggers_log/m5_save.md
+  String get m5Save => 'assets/manuals/ru/triggers_log/m5_save.md';
+
+  /// List of all assets
+  List<String> get values => [m1Button, m2Situation, m3Ct, m4Impulse, m5Save];
+}
+
 class Assets {
   Assets._();
 
   static const $AssetsGuyGen guy = $AssetsGuyGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
+  static const $AssetsManualsGen manuals = $AssetsManualsGen();
+  static const String nkpub = 'assets/nkpub.svg';
   static const AssetGenImage opaqring = AssetGenImage('assets/opaqring.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [opaqring];
+  List<dynamic> get values => [nkpub, opaqring];
 }
 
 class AssetGenImage {
