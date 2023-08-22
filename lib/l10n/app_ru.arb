@@ -73,6 +73,7 @@
     "helpManuals": "assets/manuals/ru/{section}/{fragment}.md",
     "helpIntro": "Введение",
     "helpButtons": "Кнопки управления",
+    "helpLocker": "Сундук",
     "helpTriggers": "Триггеры",
     "helpTriggersLog": "Запись триггера",
     "helpTriggersJournal": "Журнал триггеров",

@@ -73,6 +73,7 @@
     "helpManuals": "assets/manuals/en/{section}/{fragment}.md",
     "helpIntro": "Intro",
     "helpButtons": "Control buttons",
+    "helpLocker": "Locker",
     "helpTriggers": "Triggers",
     "helpTriggersLog": "Triggers log",
     "helpTriggersJournal": "Triggers journal",
