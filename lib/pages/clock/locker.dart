@@ -103,7 +103,8 @@ class _LockerCardState extends State<LockerCard> {
               minutes = PageController(initialPage: minutes.page!.toInt());
 
               unawaited(context.read<LockerCubit>().start(p!.auth, dt, d));
-              if (!state.positive) unawaited(context.read<CountdownTimerCubit>().resume(p.auth, dt));
+              final ctc = context.read<CountdownTimerCubit>();
+              if (ctc.state?.resumed == null) unawaited(ctc.resume(p.auth, dt));
             },
             icon: SvgIcon(assetPath: Assets.icons.lockOpen),
           ),
