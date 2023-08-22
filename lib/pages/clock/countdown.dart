@@ -9,6 +9,7 @@ import 'package:dependencecoping/provider/login/login.dart';
 import 'package:dependencecoping/provider/theme/colors.dart';
 import 'package:dependencecoping/provider/theme/fonts.dart';
 import 'package:dependencecoping/provider/theme/theme.dart';
+import 'package:dependencecoping/tokens/animation.dart';
 import 'package:dependencecoping/tokens/icons.dart';
 import 'package:dependencecoping/tokens/modal.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,7 @@ class CountdownDisplay extends StatelessWidget {
                           ),
                         ),
                         clipBehavior: Clip.antiAlias,
-                        child: SizedBox(width: double.infinity),
+                        child: const SizedBox(width: double.infinity),
                         // child: Align(
                         //   alignment: Alignment.bottomCenter,
                         //   child: Container(
@@ -196,13 +197,18 @@ class ScoreCard extends StatelessWidget {
                 sizeOffset: 6,
               ),
             ),
-            Padding(
+            Container(
+              clipBehavior: Clip.antiAlias,
+              decoration: const BoxDecoration(),
               padding: const EdgeInsets.only(right: 16, left: 8, top: 8, bottom: 8),
-              child: Text(
-                score,
-                style: fAccent(textStyle: Theme.of(context).textTheme.bodyLarge).copyWith(
-                  color: Theme.of(context).colorScheme.onTertiaryContainer,
-                  fontWeight: FontWeight.bold,
+              child: AnimatedCountedUp(
+                child: Text(
+                  score,
+                  key: ValueKey(score),
+                  style: fAccent(textStyle: Theme.of(context).textTheme.bodyLarge).copyWith(
+                    color: Theme.of(context).colorScheme.onTertiaryContainer,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
@@ -275,6 +281,8 @@ class Ticker extends StatelessWidget {
               elevation: 2,
               color: Theme.of(context).colorScheme.secondaryContainer,
               child: Container(
+                clipBehavior: Clip.antiAlias,
+                decoration: const BoxDecoration(),
                 alignment: Alignment.center,
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 child: child,
@@ -314,13 +322,17 @@ class _ClockHandState extends State<ClockHand> {
   @override
   Widget build(final BuildContext context) {
     if (!widget.frozen) scheduleRefresh();
+    final v = value();
 
     return FittedBox(
       fit: BoxFit.scaleDown,
-      child: Text(
-        value(),
-        style: widget.style.copyWith(fontSize: 160),
-        textAlign: TextAlign.center,
+      child: AnimatedCountedUp(
+        child: Text(
+          v,
+          key: ValueKey<String>(v),
+          style: widget.style.copyWith(fontSize: 160),
+          textAlign: TextAlign.center,
+        ),
       ),
     );
   }

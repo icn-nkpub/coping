@@ -6,6 +6,7 @@ import 'package:dependencecoping/provider/countdown/countdown.dart';
 import 'package:dependencecoping/provider/locker/locker.dart';
 import 'package:dependencecoping/provider/login/login.dart';
 import 'package:dependencecoping/provider/theme/fonts.dart';
+import 'package:dependencecoping/tokens/animation.dart';
 import 'package:dependencecoping/tokens/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -93,13 +94,16 @@ class _LockerCardState extends State<LockerCard> {
                 hours: hourOpts[hours.page!.toInt()],
                 minutes: minuteOpts[minutes.page!.toInt()],
               );
+
+              if (d == Duration.zero) return;
+
               hours.dispose();
               minutes.dispose();
               hours = PageController(initialPage: hours.page!.toInt());
               minutes = PageController(initialPage: minutes.page!.toInt());
 
               unawaited(context.read<LockerCubit>().start(p!.auth, dt, d));
-              unawaited(context.read<CountdownTimerCubit>().resume(p.auth, dt));
+              if (!state.positive) unawaited(context.read<CountdownTimerCubit>().resume(p.auth, dt));
             },
             icon: SvgIcon(assetPath: Assets.icons.lockOpen),
           ),
@@ -221,20 +225,25 @@ class Number extends StatelessWidget {
           color: alternate ? Theme.of(context).colorScheme.tertiaryContainer : Theme.of(context).colorScheme.secondaryContainer,
           child: Container(
             alignment: Alignment.center,
+            clipBehavior: Clip.antiAlias,
+            decoration: const BoxDecoration(),
             padding: const EdgeInsets.all(10),
             child: FittedBox(
               fit: BoxFit.scaleDown,
-              child: Text(
-                label.padLeft(2, 'O').replaceAll('0', 'O'),
-                style: fAccent(
-                  textStyle: Theme.of(context).textTheme.displaySmall,
-                )
-                    .copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: alternate ? Theme.of(context).colorScheme.onTertiaryContainer : Theme.of(context).colorScheme.onSecondaryContainer,
-                    )
-                    .copyWith(fontSize: 160),
-                textAlign: TextAlign.center,
+              child: AnimatedCountedUp(
+                child: Text(
+                  label.padLeft(2, 'O').replaceAll('0', 'O'),
+                  key: ValueKey(label),
+                  style: fAccent(
+                    textStyle: Theme.of(context).textTheme.displaySmall,
+                  )
+                      .copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: alternate ? Theme.of(context).colorScheme.onTertiaryContainer : Theme.of(context).colorScheme.onSecondaryContainer,
+                      )
+                      .copyWith(fontSize: 160),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ),
