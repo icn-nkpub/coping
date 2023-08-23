@@ -1,1 +1,1 @@
-Перед вами будет прогресс взлома замка - это дает вам время подумать и передумать. Вы можете оставить замок, либо дождаться и открыть. Передумать можно даже когда взлом завершен.
+You will have the progress of picking the lock in front of you - this gives you time to think and change your mind. You can leave the lock, or you can wait and open it. You can change your mind even when the lock picking is complete.

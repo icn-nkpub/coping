@@ -1,1 +1,1 @@
-Для того чтобы выбрать время, насколько долго вы хотите установить таймер, вы можете скроллить вверх и вниз показатель минут и часов.
+To select how long you want to set the timer, you can scroll up and down the minutes and hours indicator.

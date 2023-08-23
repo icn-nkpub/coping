@@ -1,1 +1,1 @@
-Когда вы уверены – нажмите записать и события поподёт в ваш дневник триггеров.
+When you're sure - tap the confirmation button, and the events will go into your trigger journal.

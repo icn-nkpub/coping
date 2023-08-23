@@ -1,1 +1,1 @@
-Когда вы чувствуете что хотите сорваться, постарайтесь понять что вызывает у вас реакцию. Выберите или создайте при помощи кнопки плюс триггер. При нажатии на кнопку триггер откроется окно.
+When you feel like you want to derail, try to understand what triggers your reaction. Select or create a trigger with the plus button. Tapping on the trigger button will open a window.

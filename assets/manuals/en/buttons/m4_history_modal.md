@@ -1,1 +1,1 @@
-История представляет список в новом окне, его тоже можно листать. Каждая запись имеет иконку стоп или запуск и время события.
+The history presents the list in a new window, and it can be scrolled too. Each record has a stop or start icon and the time of the event.

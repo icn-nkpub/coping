@@ -1,1 +1,1 @@
-Запущенный таймер выделен цветом и отсчитывает время. Как только он достигнет нуля - вы справились.
+The running timer is highlighted in color and counts down the time. As soon as it reaches zero - you have succeeded.

@@ -1,1 +1,1 @@
-Функция блокировки позволяет установить таймер насколько вы хотите запретить себе то, что вызывает вашу зависимость.
+The locker allows you to set a timer as far as how much you want to ban yourself from things that trigger your addiction.

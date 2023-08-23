@@ -1,1 +1,1 @@
-В случае если у вас не удается противостоять зависимости, перед тем как сорваться, нажмите на кнопку для разблокировки. Это даст вам шанс ещё раз подумать действительно ли ваша зависимость настолько непреодолима.
+In the event that you are unable to resist your addiction, press the button to unlock it before breaking down. This will give you a chance to think again about whether your addiction is really so overwhelming.

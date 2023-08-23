@@ -1,1 +1,1 @@
-Также отображается ваш счёт. Это метрика показывает насколько сильно ваша зависимость. При первом запуске приложения отображается ноль, но со временем это число будет расти. Это метрика нужна, чтобы вы могли понять насколько сильная зависимость.
+It also displays your score. This metric shows how strong your addiction is. The first time you run the app, it displays zero, but this number will increase over time. This metric is needed so that you can understand how strong the addiction is.

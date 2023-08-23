@@ -1,1 +1,1 @@
-Для того чтобы остановить отсчёт времени нажмите кнопку стоп. Кнопка запуска и кнопка стоп расположены на одном месте, то какая перед вами зависит от состояния часов.
+To stop the countdown, press the stop button. The start button and the stop button are in the same place. Which one you see depends on the state of the clock.

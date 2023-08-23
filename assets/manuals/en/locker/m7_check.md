@@ -1,1 +1,1 @@
-В случае если вы сопротивлялись зависимости все отведённое время, то на иконке появится галочка; если вы сорвались то нет.
+If you resisted the addiction for the entire allotted time, a checkmark will appear on the icon; if you derail, no checkmark will appear.

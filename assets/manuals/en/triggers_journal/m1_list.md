@@ -1,1 +1,1 @@
-Дневник триггеров на экране триггеров показывает список событий. Каждая события имеет время и категорию трекер а также импульс в выражении от 1 до 10. Для того чтобы открыть детали - вы можете нажать на круглый элемент, на котором написано мощность импульса триггера.
+The Trigger Diary on the Triggers screen shows a list of events. Each event has a time and category tracker and an impulse in the expression from 1 to 10. To open the details, tap the round element on which the trigger pulse power is written.

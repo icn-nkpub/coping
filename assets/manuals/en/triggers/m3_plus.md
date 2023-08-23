@@ -1,1 +1,1 @@
-Популярные триггеры нужны только для того, чтобы ускорить начало работы над собой. Рекомендуется подумать над тем что вас тригеррит, и добавить их самостоятельно для этого есть кнопка плюс. 
+Popular triggers are only necessary to speed up the start of your work on yourself. Please think about what triggers you and add them yourself. For this, there is a plus button.

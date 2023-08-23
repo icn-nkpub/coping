@@ -1,3 +1,3 @@
-__Добро пожаловать в интерактивное обучение как пользоваться приложением. Обучение состоит из нескольких страниц. Эти страницы можно листать влево-вправо, и скроллить снизу-вверх.__
+__Welcome to the interactive training on how to use the application. The tutorial consists of several pages. These pages can be navigated from left to right and scrolled from bottom to top.__
 
-На этих страницах представлены ключевые элементы приложения и пояснения к ним. Приступим!
+These pages present the key elements of the application and explain them. Let's get started!

@@ -1,1 +1,1 @@
-Также на этом экране есть популярные триггеры, те которые чаще всего встречаются в повседневной жизни. Вы можете начать с них. Для того чтобы добавить популярные треки список своих триггеров на него нужно нажать.
+Also on this screen are popular triggers, those that are most common in everyday life. You can start with them. To add popular tracks to your trigger list, you need to click on it.

@@ -1,1 +1,1 @@
-В этом окне укажите ситуацию: опишите детали, которые вам кажутся существенными. Это должно быть безэмоциональное описание. Например: проснулся и выпил кофе, вспомнил о привычке курить после кофе.
+In this window, specify the situation: describe the details that seem essential to you. It should be an unemotional description. For example, I woke up, drank coffee, and remembered my smoking habit.

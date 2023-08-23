@@ -1,1 +1,1 @@
-На главном экране часы, которые показывают сколько времени вы противостоите зависимости.
+The main screen has a clock that shows how long you've been resisting addiction.

@@ -1,1 +1,1 @@
-Для начала отсчета времени нажмите кнопку запуска. Она расположена прямо под часами.
+Press the start button to start the countdown. It is located directly below the clock.
