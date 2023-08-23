@@ -56,10 +56,10 @@ class ThemeCubit extends Cubit<ThemeState> {
   ThemeCubit()
       : super(ThemeState(
           mode: ThemeMode.system,
-          color: ColorValue.ocean,
+          color: ColorValue.midnight,
           data: ThemeData(
             colorScheme: ColorScheme.fromSeed(
-              seedColor: ColorValue.ocean.primary,
+              seedColor: ColorValue.midnight.primary,
               brightness: ThemeMode.system == ThemeMode.light ? Brightness.light : Brightness.dark,
             ),
             useMaterial3: true,

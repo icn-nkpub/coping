@@ -18,6 +18,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -29,6 +30,9 @@ Future<void> main() async {
   );
 
   await notifications();
+
+  final WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   final app = App();
 
@@ -81,6 +85,7 @@ class _AppState extends State<App> with AssetsInitializer, TickerProviderStateMi
             setState(() {
               _spinnerActive = false;
             });
+            FlutterNativeSplash.remove();
           }));
         }
       });

@@ -19,7 +19,7 @@ enum ColorValue {
   Color get primary => HSLColor.fromColor(canvas).withLightness(.1).withSaturation(.1).toColor();
 }
 
-ColorValue findThemeColor(final String c) => ColorValue.values.where((final v) => v.name == c).firstOrNull ?? ColorValue.ocean;
+ColorValue findThemeColor(final String c) => ColorValue.values.where((final v) => v.name == c).firstOrNull ?? ColorValue.midnight;
 
 String matchingImage(final ColorValue color, final ThemeMode mode) {
   String url;
