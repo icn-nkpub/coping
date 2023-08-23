@@ -57,7 +57,7 @@ class _LockerHelpPageState extends State<LockerHelpPage> with SingleTickerProvid
                 ),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: MarkdownManual(section: 'buttons', fragment: 'm1_start'),
+                  child: MarkdownManual(section: 'locker', fragment: 'm1_intro'),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -133,7 +133,7 @@ class _LockerHelpPageState extends State<LockerHelpPage> with SingleTickerProvid
                 ),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: MarkdownManual(section: 'buttons', fragment: 'm1_start'),
+                  child: MarkdownManual(section: 'locker', fragment: 'm2_scroll'),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -152,7 +152,7 @@ class _LockerHelpPageState extends State<LockerHelpPage> with SingleTickerProvid
                 ),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: MarkdownManual(section: 'buttons', fragment: 'm1_start'),
+                  child: MarkdownManual(section: 'locker', fragment: 'm3_start'),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -174,7 +174,7 @@ class _LockerHelpPageState extends State<LockerHelpPage> with SingleTickerProvid
                 ),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: MarkdownManual(section: 'buttons', fragment: 'm1_start'),
+                  child: MarkdownManual(section: 'locker', fragment: 'm4_started'),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -196,7 +196,30 @@ class _LockerHelpPageState extends State<LockerHelpPage> with SingleTickerProvid
                 ),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: MarkdownManual(section: 'buttons', fragment: 'm1_start'),
+                  child: MarkdownManual(section: 'locker', fragment: 'm5_stop'),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Handed(
+                      noMargin: true,
+                      computeTop: (final s, final av) => s * .9,
+                      computeLeft: (final s, final av) => (s * .3) + (s * .4 * av),
+                      duration: const Duration(seconds: 6),
+                      child: Lockpicking(
+                        postAnimitationStart: (final lac) {
+                          lac.stop();
+                          lac.reset();
+                          lac.repeat(period: const Duration(seconds: 10), reverse: true);
+                          return const LockerMagicCurve();
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(16),
+                  child: MarkdownManual(section: 'locker', fragment: 'm6_lockpick'),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -223,7 +246,7 @@ class _LockerHelpPageState extends State<LockerHelpPage> with SingleTickerProvid
                 ),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: MarkdownManual(section: 'buttons', fragment: 'm1_start'),
+                  child: MarkdownManual(section: 'locker', fragment: 'm7_check'),
                 ),
                 const SizedBox(height: 50),
               ],
@@ -285,4 +308,11 @@ class LockerCardMock extends StatelessWidget {
           icon: SvgIcon(assetPath: Assets.icons.lock),
         ),
       ];
+}
+
+class LockerMagicCurve extends Curve {
+  const LockerMagicCurve();
+
+  @override
+  double transformInternal(final double t) => (t * 1.25).clamp(0, 1);
 }

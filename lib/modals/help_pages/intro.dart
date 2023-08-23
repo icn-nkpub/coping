@@ -20,7 +20,10 @@ class IntroHelpPage extends StatelessWidget {
           Expanded(
             child: ListView(
               children: [
-                const SizedBox(height: 16),
+                const Padding(
+                  padding: EdgeInsets.all(16),
+                  child: MarkdownManual(section: 'clock', fragment: 'm0_about'),
+                ),
                 Handed(
                   computeTop: (final s, final av) => 0,
                   computeLeft: (final s, final av) => 16 + ((s - 32) * av),

@@ -1,1 +1,1 @@
-You can see your timer events in this modal. The icon highlights the stop and start events, respectively.
+История представляет список в новом окне, его тоже можно листать. Каждая запись имеет иконку стоп или запуск и время события.

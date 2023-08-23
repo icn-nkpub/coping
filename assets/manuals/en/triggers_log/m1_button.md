@@ -1,1 +1,1 @@
-__The trigger button__ will open the modal form to submit the trigger event. Something that drives your cravings right now.
+Когда вы чувствуете что хотите сорваться, постарайтесь понять что вызывает у вас реакцию. Выберите или создайте при помощи кнопки плюс триггер. При нажатии на кнопку триггер откроется окно.

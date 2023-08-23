@@ -1,1 +1,1 @@
-Describe __the situation__. You can omit this field in case if trigger label is well descriptive. Nevertheless, consider putting effort into trying to understand the exact trigger situation in detail. Working on independence will payoff.
+В этом окне укажите ситуацию: опишите детали, которые вам кажутся существенными. Это должно быть безэмоциональное описание. Например: проснулся и выпил кофе, вспомнил о привычке курить после кофе.

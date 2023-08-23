@@ -1,1 +1,1 @@
-You can discover common triggers to kickstart your work on yourself. There is the __Discover trigger__ section for you.
+Также на этом экране есть популярные триггеры, те которые чаще всего встречаются в повседневной жизни. Вы можете начать с них. Для того чтобы добавить популярные треки список своих триггеров на него нужно нажать.

@@ -96,11 +96,13 @@ flutter:
     - assets/manuals/en/triggers/
     - assets/manuals/en/triggers_log/
     - assets/manuals/en/triggers_journal/
+    - assets/manuals/en/locker/
     - assets/manuals/ru/clock/
     - assets/manuals/ru/buttons/
     - assets/manuals/ru/triggers/
     - assets/manuals/ru/triggers_log/
     - assets/manuals/ru/triggers_journal/
+    - assets/manuals/ru/locker/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

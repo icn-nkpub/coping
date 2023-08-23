@@ -1,1 +1,1 @@
-__The History__ button will open the modal with your Stopwatch events journal: list of resets and restarts.
+Рядом с ними кнопка истории, при нажатии отобразит историю остановок и запусков с таймера.

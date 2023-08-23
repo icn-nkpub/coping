@@ -1,1 +1,1 @@
-Review your work and press save to submit. All information will be available on screen with triggers.
+Когда вы уверены – нажмите записать и события поподёт в ваш дневник триггеров.

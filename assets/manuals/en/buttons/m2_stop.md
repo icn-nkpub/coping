@@ -1,1 +1,1 @@
-__The Stop__ button stops the Stopwatch. Press it when you can't handle the impulse to stop resisting. If you can resist, go to the trigger screen and try to work on impulse with self-reflection and meditation on the meditation screen.
+Для того чтобы остановить отсчёт времени нажмите кнопку стоп. Кнопка запуска и кнопка стоп расположены на одном месте, то какая перед вами зависит от состояния часов.

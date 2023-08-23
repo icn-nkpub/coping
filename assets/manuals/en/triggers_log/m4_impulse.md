@@ -1,3 +1,1 @@
-__Impulse__ is a metric that defines the level of your craving power. Impulse grows each time you face a trigger, except if you are working on the ability to quit and resist all challenges.
-
-_Remember: It's never something irresistible; instead, it has a characteristic called impulse: How much are you keen to fail?_
+Импульс - это метрика, которая показывает насколько сильны ваше желание сорваться после того как вы встретили триггер, описали ситуацию и подумали над решением. Импульс как правило угасает довольно быстро при правильной работе, но при этом он имеет эффект накопления, и если контр мысль не было в яблочко, то импульс будет только расти. Это нормально только после долгой работы над собой вы сможете вначале жить с импульсом, а потом победить зависимость. То есть не аккумулировать импульсы вообще, а также игнорировать триггеры.

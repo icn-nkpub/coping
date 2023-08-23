@@ -1,1 +1,1 @@
-__The Stopwatch__ is counting your progress since the last time you became independent. It's seconds, minutes, hours and days, respectively. You should not believe in quitting just the first time. There is nothing terrible about quitting after some work. And the app encourages you to work on yourself. It's not a solution to all problems with addictions. But sincerely, we know you can do it!
+На главном экране часы, которые показывают сколько времени вы противостоите зависимости.

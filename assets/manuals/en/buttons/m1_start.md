@@ -1,1 +1,1 @@
-__The Start__ button starts the Stopwatch, which counts how long you are independent of addictions.
+Для начала отсчета времени нажмите кнопку запуска. Она расположена прямо под часами.

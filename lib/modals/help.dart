@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/modals/help_pages/buttons.dart';
 import 'package:dependencecoping/modals/help_pages/intro.dart';
@@ -9,10 +11,28 @@ import 'package:dependencecoping/tokens/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class HelpModal extends StatelessWidget {
+class HelpModal extends StatefulWidget {
   const HelpModal({
     super.key,
   });
+
+  @override
+  State<HelpModal> createState() => _HelpModalState();
+}
+
+class _HelpModalState extends State<HelpModal> {
+  final pc = PageController();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((final _) {
+      pc.jumpTo(MediaQuery.of(context).size.width / 3);
+      Timer(const Duration(milliseconds: 200), () {
+        unawaited(pc.animateToPage(0, duration: const Duration(seconds: 1), curve: Curves.bounceOut));
+      });
+    });
+  }
 
   @override
   Widget build(final BuildContext context) {
@@ -78,6 +98,7 @@ class HelpModal extends StatelessWidget {
                 child: SizedBox(
                   width: double.maxFinite,
                   child: PageView(
+                    controller: pc,
                     children: const [
                       HelpPageContainer(helpPage: IntroHelpPage()),
                       HelpPageContainer(helpPage: ControlButtonsHelpPage()),

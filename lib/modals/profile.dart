@@ -114,7 +114,7 @@ class CredentialsRemider extends StatelessWidget {
                       AppLocalizations.of(context)!.loginEmail,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
                     ),
-                    Copier(title: cred.email ?? '•••••@coping.new', content: cred.email),
+                    Copier(title: 'user-•••••@coping.new', content: cred.email),
                   ],
                 ),
               ),
