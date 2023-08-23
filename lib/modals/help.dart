@@ -27,9 +27,11 @@ class _HelpModalState extends State<HelpModal> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((final _) {
-      pc.jumpTo(MediaQuery.of(context).size.width / 3);
-      Timer(const Duration(milliseconds: 200), () {
-        unawaited(pc.animateToPage(0, duration: const Duration(seconds: 1), curve: Curves.bounceOut));
+      Timer(const Duration(seconds: 1), () {
+        unawaited(pc.animateTo(MediaQuery.of(context).size.width / 4, duration: const Duration(seconds: 1), curve: Curves.ease));
+        Timer(const Duration(seconds: 1), () {
+          unawaited(pc.animateToPage(0, duration: const Duration(seconds: 1), curve: Curves.bounceOut));
+        });
       });
     });
   }

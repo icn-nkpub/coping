@@ -1,21 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-
-Widget markdownAsset(final BuildContext context, final String path) {
-  String data = '';
-
-  return StatefulBuilder(builder: (final BuildContext context, final StateSetter setState) {
-    if (data == '') {
-      unawaited(rootBundle.loadString(path).then((final v) => setState(() => data = v)));
-    }
-
-    return MarkdownBody(data: data);
-  });
-}
 
 class MarkdownManual extends StatelessWidget {
   const MarkdownManual({
@@ -28,5 +14,10 @@ class MarkdownManual extends StatelessWidget {
   final String fragment;
 
   @override
-  Widget build(final BuildContext context) => markdownAsset(context, AppLocalizations.of(context)!.helpManuals(fragment, section));
+  Widget build(final BuildContext context) => FutureBuilder(
+        // ignore: discarded_futures
+        future: rootBundle.loadString(AppLocalizations.of(context)!.helpManuals(fragment, section)),
+        builder: (final context, final snapshot) =>
+            snapshot.connectionState == ConnectionState.done ? MarkdownBody(data: snapshot.requireData) : const Text('[...]'),
+      );
 }

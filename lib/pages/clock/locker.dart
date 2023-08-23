@@ -14,6 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+const varyCurve = false;
+
 const hourOpts = [0, 1, 2, 3, 4, 5, 6, 9, 12, 18, 24, 36, 48, 96, 99];
 const minuteOpts = [0, 1, 5, 10, 15, 20, 25, 30, 35, 45, 50, 55, 59];
 
@@ -173,7 +175,7 @@ class _LockpickingState extends State<Lockpicking> with SingleTickerProviderStat
 
   @override
   void initState() {
-    if (widget.postAnimitationStart == null) {
+    if (varyCurve && widget.postAnimitationStart == null) {
       final rng = Random(DateTime.now().microsecondsSinceEpoch).nextInt(6);
       dev.log('rng = $rng', name: 'locker._LockpickingState');
 
