@@ -19,7 +19,9 @@ class Guy extends StatelessWidget {
     return Container(
       width: double.maxFinite,
       decoration: BoxDecoration(
-        color: t.colorScheme.tertiaryContainer,
+        border: Border(
+          bottom: BorderSide(color: t.colorScheme.tertiaryContainer),
+        ),
       ),
       clipBehavior: Clip.antiAlias,
       child: Row(

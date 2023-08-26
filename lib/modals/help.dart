@@ -27,9 +27,33 @@ class _HelpModalState extends State<HelpModal> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((final _) {
+      var overrideAnimation = false;
+
+      void listener() {
+        if (!overrideAnimation) overrideAnimation = true;
+      }
+
+      pc.addListener(listener);
+
       Timer(const Duration(seconds: 1), () {
-        unawaited(pc.animateTo(MediaQuery.of(context).size.width / 4, duration: const Duration(seconds: 1), curve: Curves.ease));
+        if (overrideAnimation) {
+          pc.removeListener(listener);
+          return;
+        }
+        unawaited(pc
+            .animateTo(
+              MediaQuery.of(context).size.width / 4,
+              duration: const Duration(seconds: 1),
+              curve: Curves.ease,
+            )
+            .then((final _) => overrideAnimation = false));
+
         Timer(const Duration(seconds: 1), () {
+          pc.removeListener(listener);
+
+          if (overrideAnimation) {
+            return;
+          }
           unawaited(pc.animateToPage(0, duration: const Duration(seconds: 1), curve: Curves.bounceOut));
         });
       });
