@@ -89,6 +89,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/developer_guide.svg
   String get developerGuide => 'assets/icons/developer_guide.svg';
 
+  /// File path: assets/icons/diversity_1.svg
+  String get diversity1 => 'assets/icons/diversity_1.svg';
+
   /// File path: assets/icons/done.svg
   String get done => 'assets/icons/done.svg';
 
@@ -118,6 +121,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/light_mode.svg
   String get lightMode => 'assets/icons/light_mode.svg';
+
+  /// File path: assets/icons/live_help.svg
+  String get liveHelp => 'assets/icons/live_help.svg';
 
   /// File path: assets/icons/lock.svg
   String get lock => 'assets/icons/lock.svg';
@@ -199,6 +205,7 @@ class $AssetsIconsGen {
         darkMode,
         delete,
         developerGuide,
+        diversity1,
         done,
         edit,
         expandMore,
@@ -209,6 +216,7 @@ class $AssetsIconsGen {
         humidityPercentage,
         info,
         lightMode,
+        liveHelp,
         lock,
         lockOpen,
         mindfulness,
@@ -245,6 +253,7 @@ class $AssetsManualsEnGen {
 
   $AssetsManualsEnButtonsGen get buttons => const $AssetsManualsEnButtonsGen();
   $AssetsManualsEnClockGen get clock => const $AssetsManualsEnClockGen();
+  $AssetsManualsEnLockerGen get locker => const $AssetsManualsEnLockerGen();
   $AssetsManualsEnTriggersGen get triggers =>
       const $AssetsManualsEnTriggersGen();
   $AssetsManualsEnTriggersJournalGen get triggersJournal =>
@@ -258,6 +267,7 @@ class $AssetsManualsRuGen {
 
   $AssetsManualsRuButtonsGen get buttons => const $AssetsManualsRuButtonsGen();
   $AssetsManualsRuClockGen get clock => const $AssetsManualsRuClockGen();
+  $AssetsManualsRuLockerGen get locker => const $AssetsManualsRuLockerGen();
   $AssetsManualsRuTriggersGen get triggers =>
       const $AssetsManualsRuTriggersGen();
   $AssetsManualsRuTriggersJournalGen get triggersJournal =>
@@ -281,19 +291,15 @@ class $AssetsManualsEnButtonsGen {
   /// File path: assets/manuals/en/buttons/m4_history_modal.md
   String get m4HistoryModal => 'assets/manuals/en/buttons/m4_history_modal.md';
 
-  /// File path: assets/manuals/en/buttons/m5_goals.md
-  String get m5Goals => 'assets/manuals/en/buttons/m5_goals.md';
-
-  /// File path: assets/manuals/en/buttons/m6_goals_modal.md
-  String get m6GoalsModal => 'assets/manuals/en/buttons/m6_goals_modal.md';
-
   /// List of all assets
-  List<String> get values =>
-      [m1Start, m2Stop, m3History, m4HistoryModal, m5Goals, m6GoalsModal];
+  List<String> get values => [m1Start, m2Stop, m3History, m4HistoryModal];
 }
 
 class $AssetsManualsEnClockGen {
   const $AssetsManualsEnClockGen();
+
+  /// File path: assets/manuals/en/clock/m0_about.md
+  String get m0About => 'assets/manuals/en/clock/m0_about.md';
 
   /// File path: assets/manuals/en/clock/m1_clock.md
   String get m1Clock => 'assets/manuals/en/clock/m1_clock.md';
@@ -302,7 +308,36 @@ class $AssetsManualsEnClockGen {
   String get m2Score => 'assets/manuals/en/clock/m2_score.md';
 
   /// List of all assets
-  List<String> get values => [m1Clock, m2Score];
+  List<String> get values => [m0About, m1Clock, m2Score];
+}
+
+class $AssetsManualsEnLockerGen {
+  const $AssetsManualsEnLockerGen();
+
+  /// File path: assets/manuals/en/locker/m1_intro.md
+  String get m1Intro => 'assets/manuals/en/locker/m1_intro.md';
+
+  /// File path: assets/manuals/en/locker/m2_scroll.md
+  String get m2Scroll => 'assets/manuals/en/locker/m2_scroll.md';
+
+  /// File path: assets/manuals/en/locker/m3_start.md
+  String get m3Start => 'assets/manuals/en/locker/m3_start.md';
+
+  /// File path: assets/manuals/en/locker/m4_started.md
+  String get m4Started => 'assets/manuals/en/locker/m4_started.md';
+
+  /// File path: assets/manuals/en/locker/m5_stop.md
+  String get m5Stop => 'assets/manuals/en/locker/m5_stop.md';
+
+  /// File path: assets/manuals/en/locker/m6_lockpick.md
+  String get m6Lockpick => 'assets/manuals/en/locker/m6_lockpick.md';
+
+  /// File path: assets/manuals/en/locker/m7_check.md
+  String get m7Check => 'assets/manuals/en/locker/m7_check.md';
+
+  /// List of all assets
+  List<String> get values =>
+      [m1Intro, m2Scroll, m3Start, m4Started, m5Stop, m6Lockpick, m7Check];
 }
 
 class $AssetsManualsEnTriggersGen {
@@ -371,19 +406,15 @@ class $AssetsManualsRuButtonsGen {
   /// File path: assets/manuals/ru/buttons/m4_history_modal.md
   String get m4HistoryModal => 'assets/manuals/ru/buttons/m4_history_modal.md';
 
-  /// File path: assets/manuals/ru/buttons/m5_goals.md
-  String get m5Goals => 'assets/manuals/ru/buttons/m5_goals.md';
-
-  /// File path: assets/manuals/ru/buttons/m6_goals_modal.md
-  String get m6GoalsModal => 'assets/manuals/ru/buttons/m6_goals_modal.md';
-
   /// List of all assets
-  List<String> get values =>
-      [m1Start, m2Stop, m3History, m4HistoryModal, m5Goals, m6GoalsModal];
+  List<String> get values => [m1Start, m2Stop, m3History, m4HistoryModal];
 }
 
 class $AssetsManualsRuClockGen {
   const $AssetsManualsRuClockGen();
+
+  /// File path: assets/manuals/ru/clock/m0_about.md
+  String get m0About => 'assets/manuals/ru/clock/m0_about.md';
 
   /// File path: assets/manuals/ru/clock/m1_clock.md
   String get m1Clock => 'assets/manuals/ru/clock/m1_clock.md';
@@ -392,7 +423,36 @@ class $AssetsManualsRuClockGen {
   String get m2Score => 'assets/manuals/ru/clock/m2_score.md';
 
   /// List of all assets
-  List<String> get values => [m1Clock, m2Score];
+  List<String> get values => [m0About, m1Clock, m2Score];
+}
+
+class $AssetsManualsRuLockerGen {
+  const $AssetsManualsRuLockerGen();
+
+  /// File path: assets/manuals/ru/locker/m1_intro.md
+  String get m1Intro => 'assets/manuals/ru/locker/m1_intro.md';
+
+  /// File path: assets/manuals/ru/locker/m2_scroll.md
+  String get m2Scroll => 'assets/manuals/ru/locker/m2_scroll.md';
+
+  /// File path: assets/manuals/ru/locker/m3_start.md
+  String get m3Start => 'assets/manuals/ru/locker/m3_start.md';
+
+  /// File path: assets/manuals/ru/locker/m4_started.md
+  String get m4Started => 'assets/manuals/ru/locker/m4_started.md';
+
+  /// File path: assets/manuals/ru/locker/m5_stop.md
+  String get m5Stop => 'assets/manuals/ru/locker/m5_stop.md';
+
+  /// File path: assets/manuals/ru/locker/m6_lockpick.md
+  String get m6Lockpick => 'assets/manuals/ru/locker/m6_lockpick.md';
+
+  /// File path: assets/manuals/ru/locker/m7_check.md
+  String get m7Check => 'assets/manuals/ru/locker/m7_check.md';
+
+  /// List of all assets
+  List<String> get values =>
+      [m1Intro, m2Scroll, m3Start, m4Started, m5Stop, m6Lockpick, m7Check];
 }
 
 class $AssetsManualsRuTriggersGen {

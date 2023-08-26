@@ -5,7 +5,7 @@ import 'dart:io';
 // dart run ./_load.dart
 
 Future<void> main() async {
-  const style = 'wght700grad200fill1';
+  const style = 'wght500';
   print('starting');
 
   final Directory dir = Directory('.');

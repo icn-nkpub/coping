@@ -108,8 +108,10 @@ class _LockerCardState extends State<LockerCard> {
               minutes = PageController(initialPage: minutes.page!.toInt());
 
               unawaited(context.read<LockerCubit>().start(p!.auth, dt, d));
+
+              final al = AppLocalizations.of(context)!;
               final ctc = context.read<CountdownTimerCubit>();
-              if (ctc.state?.resumed == null) unawaited(ctc.resume(p.auth, dt));
+              if (ctc.state?.resumed == null) unawaited(ctc.resume(p.auth, al, dt));
             },
             icon: SvgIcon(assetPath: Assets.icons.lockOpen),
           ),
@@ -132,8 +134,9 @@ class _LockerCardState extends State<LockerCard> {
                       const SizedBox(width: double.infinity, height: 0),
                       Lockpicking(
                         unlock: () {
+                          final al = AppLocalizations.of(context)!;
                           unawaited(context.read<LockerCubit>().stop(p!.auth).then((final _) => animateCells()));
-                          unawaited(context.read<CountdownTimerCubit>().pause(p.auth));
+                          unawaited(context.read<CountdownTimerCubit>().pause(p.auth, al));
                         },
                       ),
                       SizedBox(height: MediaQuery.of(context).size.height / 20),

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dependencecoping/discord/discord.dart';
 import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/modals/help.dart';
 import 'package:dependencecoping/provider/login/login.dart';
@@ -12,6 +13,7 @@ import 'package:dependencecoping/tokens/modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class NullTopBar extends StatelessWidget {
   const NullTopBar({
@@ -74,14 +76,35 @@ class _TopBarState extends State<TopBar> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  IconButton(
-                    onPressed: () {
-                      openModal(
-                        context,
-                        const HelpModal(),
-                      );
-                    },
-                    icon: SvgIcon(assetPath: Assets.icons.developerGuide),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          openModal(
+                            context,
+                            const HelpModal(),
+                          );
+                        },
+                        icon: SvgIcon(assetPath: Assets.icons.liveHelp),
+                      ),
+                      FutureBuilder(
+                        // ignore: discarded_futures
+                        future: discordObtainInvite(),
+                        builder: (final context, final snapshot) => Badge(
+                          alignment: Alignment.topRight,
+                          offset: const Offset(-4, 6),
+                          largeSize: 8,
+                          padding: EdgeInsets.zero,
+                          label: const SizedBox.square(dimension: 8),
+                          child: IconButton(
+                            onPressed: () {
+                              unawaited(launchUrlString(snapshot.data.toString()));
+                            },
+                            icon: SvgIcon(assetPath: Assets.icons.diversity1),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -104,17 +127,28 @@ class _TopBarState extends State<TopBar> {
                       ]),
                     ),
                   ),
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        expandMenu = !expandMenu;
-                      });
-                    },
-                    icon: AnimatedRotation(
-                      duration: const Duration(milliseconds: 100),
-                      turns: expandMenu ? 0.5 : 0,
-                      child: SvgIcon(assetPath: Assets.icons.expandMore),
-                    ),
+                  Row(
+                    children: [
+                      Opacity(
+                        opacity: 0,
+                        child: IconButton(
+                          onPressed: () {},
+                          icon: SvgIcon(assetPath: Assets.icons.bolt),
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            expandMenu = !expandMenu;
+                          });
+                        },
+                        icon: AnimatedRotation(
+                          duration: const Duration(milliseconds: 100),
+                          turns: expandMenu ? 0.5 : 0,
+                          child: SvgIcon(assetPath: Assets.icons.expandMore),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

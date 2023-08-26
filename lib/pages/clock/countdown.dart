@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:dependencecoping/gen/assets.gen.dart';
-import 'package:dependencecoping/notifications.dart';
 import 'package:dependencecoping/pages/clock/locker.dart';
 import 'package:dependencecoping/pages/clock/modals/time_manager.dart';
 import 'package:dependencecoping/provider/countdown/countdown.dart';
@@ -105,8 +104,7 @@ class CountdownDisplay extends StatelessWidget {
                 onPressed: () async {
                   final al = AppLocalizations.of(context)!;
                   final auth = context.read<LoginCubit>().state!.auth;
-                  await context.read<CountdownTimerCubit>().resume(auth, DateTime.now());
-                  await startNotifications(al);
+                  await context.read<CountdownTimerCubit>().resume(auth, al, DateTime.now());
                 },
                 icon: SvgIcon(
                   assetPath: Assets.icons.playCircle,
@@ -117,8 +115,7 @@ class CountdownDisplay extends StatelessWidget {
                 onPressed: () async {
                   final al = AppLocalizations.of(context)!;
                   final auth = context.read<LoginCubit>().state!.auth;
-                  await context.read<CountdownTimerCubit>().pause(auth);
-                  await stopNotifications(al);
+                  await context.read<CountdownTimerCubit>().pause(auth, al);
                 },
                 icon: SvgIcon(
                   assetPath: Assets.icons.stopCircle,
@@ -140,28 +137,6 @@ class CountdownDisplay extends StatelessWidget {
         //   ),
         // ),
       ];
-
-  Future<void> startNotifications(final AppLocalizations al) async {
-    await unscheduleNotification(121);
-    await unscheduleNotification(122);
-
-    await scheduleNotification(101, const Duration(hours: 1), al.notificationsTimerEvent, al.notificationsPass_1);
-    await scheduleNotification(102, const Duration(hours: 2), al.notificationsTimerEvent, al.notificationsPass_2);
-    await scheduleNotification(103, const Duration(hours: 24), al.notificationsTimerEvent, al.notificationsPass_24);
-    await scheduleNotification(104, const Duration(hours: 48), al.notificationsTimerEvent, al.notificationsPass_48);
-    await scheduleNotification(105, const Duration(hours: 72), al.notificationsTimerEvent, al.notificationsPass_72);
-    await scheduleNotification(106, const Duration(hours: 96), al.notificationsTimerEvent, al.notificationsPass_96);
-    await scheduleNotification(107, const Duration(hours: 168), al.notificationsTimerEvent, al.notificationsPass_168);
-  }
-
-  Future<void> stopNotifications(final AppLocalizations al) async {
-    await scheduleNotification(121, const Duration(hours: 1), al.notificationsTimerEvent, al.notificationsHourPassReset);
-    await scheduleNotification(122, const Duration(hours: 24), al.notificationsTimerEvent, al.notificationsDayPassReset);
-
-    for (var i = 100; i < 110; i++) {
-      await unscheduleNotification(i);
-    }
-  }
 
   void Function() _gotoTime(final BuildContext context) => () => openModal(
         context,
