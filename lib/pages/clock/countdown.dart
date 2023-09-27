@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dependencecoping/gen/assets.gen.dart';
+import 'package:dependencecoping/pages/clock/chart.dart';
 import 'package:dependencecoping/pages/clock/locker.dart';
 import 'package:dependencecoping/pages/clock/modals/time_manager.dart';
 import 'package:dependencecoping/provider/countdown/countdown.dart';
@@ -44,7 +45,8 @@ class CountdownDisplay extends StatelessWidget {
                           ),
                         ),
                         clipBehavior: Clip.antiAlias,
-                        child: const SizedBox(width: double.infinity),
+                        child: const ResetsChart(),
+                        // child: const SizedBox(width: double.infinity),
                         // child: Align(
                         //   alignment: Alignment.bottomCenter,
                         //   child: Container(
