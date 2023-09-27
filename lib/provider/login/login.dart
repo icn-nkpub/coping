@@ -4,7 +4,6 @@ import 'package:dependencecoping/auth/auth.dart';
 import 'package:dependencecoping/storage/local.dart';
 import 'package:dependencecoping/storage/profiles.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Profile {
@@ -32,7 +31,6 @@ class LoginCubit extends Cubit<Profile?> {
 
     await clearCredentials();
     await storeAuthInfo(auth);
-    await OneSignal.shared.setExternalUserId(auth.id);
 
     final p = await getProfile(auth);
 
@@ -49,8 +47,6 @@ class LoginCubit extends Cubit<Profile?> {
     if (auth == null) {
       return;
     }
-
-    await OneSignal.shared.setExternalUserId(auth.id);
 
     await signIn(email, password);
   }
@@ -157,8 +153,6 @@ class LoginCubit extends Cubit<Profile?> {
     final User auth,
     final ProfileRecord? profile,
   ) {
-    unawaited(OneSignal.shared.setExternalUserId(auth.id));
-
     emit(Profile(
       id: auth.id,
       email: auth.email ?? '',
