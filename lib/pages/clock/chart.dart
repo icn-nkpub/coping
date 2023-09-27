@@ -10,70 +10,79 @@ class ResetsChart extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     final gradientColors = [
-      Theme.of(context).colorScheme.primary.withOpacity(.5),
-      Theme.of(context).colorScheme.tertiary.withOpacity(.5),
+      Theme.of(context).colorScheme.primaryContainer.withOpacity(.8),
+      Theme.of(context).colorScheme.primary.withOpacity(.8),
     ];
 
-    final List<FlSpot> data = [];
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: BlocBuilder<CountdownTimerCubit, CountdownTimer?>(builder: (final context, final ct) {
+        final List<FlSpot> data = [];
 
-    final tc = BlocProvider.of<CountdownTimerCubit>(context);
-    final List<CountdownReset> resets = tc.state?.resets ?? [];
-    if (resets.isNotEmpty) {
-      DateTime lastResume = resets[0].resetTime;
-      for (final element in resets) {
-        if (element.resumeTime == null) continue;
-        final dur = element.resetTime.difference(lastResume);
-        lastResume = element.resumeTime!;
-        final since = element.resetTime.difference(DateTime.now());
-        final value = FlSpot(since.inDays / 1, dur.inMinutes.abs() / 60);
-        data.add(value);
-      }
-    }
+        final List<CountdownReset> resets = ct?.sortedCopy() ?? [];
 
-    final maxY = data.reduce((final curr, final next) => curr.y > next.y ? curr : next).y;
-    final minX = data.reduce((final curr, final next) => curr.x < next.x ? curr : next).x;
+        if (resets.isEmpty) {
+          return const SizedBox(width: double.infinity);
+        }
 
-    return Stack(
-      children: <Widget>[
-        LineChart(
-          LineChartData(
-            gridData: const FlGridData(
-              show: false,
-            ),
-            titlesData: const FlTitlesData(
-              rightTitles: AxisTitles(),
-              topTitles: AxisTitles(),
-              bottomTitles: AxisTitles(),
-              leftTitles: AxisTitles(),
-            ),
-            borderData: FlBorderData(show: false),
-            minX: minX,
-            maxX: 0,
-            minY: 0,
-            maxY: maxY * 2,
-            lineBarsData: [
-              LineChartBarData(
-                spots: data,
-                isCurved: true,
-                gradient: LinearGradient(
-                  colors: gradientColors,
-                ),
-                barWidth: 3,
-                isStrokeCapRound: true,
-                dotData: const FlDotData(
+        for (final element in resets) {
+          if (element.resumeTime == null) {
+            data.add(FlSpot.zero);
+            continue;
+          }
+
+          final dur = element.resetTime.difference(element.resumeTime!);
+          final since = element.resumeTime!.difference(DateTime.now());
+          final value = FlSpot(since.inMinutes / 60 / 24, dur.inMinutes.abs() / 60);
+          data.add(value);
+        }
+
+        final maxY = data.reduce((final curr, final next) => curr.y > next.y ? curr : next).y;
+        final minX = data.reduce((final curr, final next) => curr.x < next.x ? curr : next).x;
+
+        return Stack(
+          children: <Widget>[
+            LineChart(
+              LineChartData(
+                gridData: const FlGridData(
                   show: false,
                 ),
-                belowBarData: BarAreaData(
-                  show: true,
-                  gradient: LinearGradient(
-                    colors: gradientColors.map((final color) => color.withOpacity(0.2)).toList(),
-                  ),
+                titlesData: const FlTitlesData(
+                  rightTitles: AxisTitles(),
+                  topTitles: AxisTitles(),
+                  bottomTitles: AxisTitles(),
+                  leftTitles: AxisTitles(),
                 ),
+                borderData: FlBorderData(show: false),
+                minX: minX,
+                maxX: 0,
+                minY: 0,
+                maxY: maxY * 6,
+                lineBarsData: [
+                  LineChartBarData(
+                    spots: data,
+                    isCurved: true,
+                    gradient: LinearGradient(
+                      colors: gradientColors,
+                    ),
+                    barWidth: 3,
+                    isStrokeCapRound: true,
+                    dotData: const FlDotData(
+                      show: false,
+                    ),
+                    belowBarData: BarAreaData(
+                      show: true,
+                      gradient: LinearGradient(
+                        colors: gradientColors.map((final color) => color.withOpacity(0.9)).toList(),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-      ],
+            ),
+          ],
+        );
+      }),
     );
   }
 }
