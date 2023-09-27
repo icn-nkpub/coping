@@ -14,7 +14,7 @@ class ResetsChart extends StatelessWidget {
       Theme.of(context).colorScheme.tertiary.withOpacity(.5),
     ];
 
-    final List<FlSpot> spots2 = [];
+    final List<FlSpot> data = [];
 
     final tc = BlocProvider.of<CountdownTimerCubit>(context);
     final List<CountdownReset> resets = tc.state?.resets ?? [];
@@ -26,12 +26,12 @@ class ResetsChart extends StatelessWidget {
         lastResume = element.resumeTime!;
         final since = element.resetTime.difference(DateTime.now());
         final value = FlSpot(since.inDays / 1, dur.inMinutes.abs() / 60);
-        spots2.add(value);
+        data.add(value);
       }
     }
 
-    final maxY = spots2.reduce((final curr, final next) => curr.y > next.y ? curr : next).y;
-    final minX = spots2.reduce((final curr, final next) => curr.x < next.x ? curr : next).x;
+    final maxY = data.reduce((final curr, final next) => curr.y > next.y ? curr : next).y;
+    final minX = data.reduce((final curr, final next) => curr.x < next.x ? curr : next).x;
 
     return Stack(
       children: <Widget>[
@@ -53,7 +53,7 @@ class ResetsChart extends StatelessWidget {
             maxY: maxY * 2,
             lineBarsData: [
               LineChartBarData(
-                spots: spots2,
+                spots: data,
                 isCurved: true,
                 gradient: LinearGradient(
                   colors: gradientColors,
