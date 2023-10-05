@@ -136,7 +136,7 @@ class _LockerCardState extends State<LockerCard> {
                         unlock: () {
                           final al = AppLocalizations.of(context)!;
                           unawaited(context.read<LockerCubit>().stop(p!.auth).then((final _) => animateCells()));
-                          unawaited(context.read<CountdownTimerCubit>().pause(p.auth, al));
+                          unawaited(context.read<CountdownTimerCubit>().pause(p.auth, al, DateTime.now()));
                         },
                       ),
                       SizedBox(height: MediaQuery.of(context).size.height / 20),

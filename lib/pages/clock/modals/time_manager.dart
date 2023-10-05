@@ -2,7 +2,6 @@ import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/provider/countdown/countdown.dart';
 import 'package:dependencecoping/provider/static/static.dart';
 import 'package:dependencecoping/provider/theme/fonts.dart';
-import 'package:dependencecoping/storage/reset_log.dart';
 import 'package:dependencecoping/tokens/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,46 +24,37 @@ class TimeModal extends StatefulWidget {
 }
 
 class _TimeModalState extends State<TimeModal> {
-  List<CountdownReset> resets = [];
+  List<CountdownEvent> events = [];
 
   @override
   void initState() {
     final settings = BlocProvider.of<CountdownTimerCubit>(context);
-    if (settings.state != null) resets.addAll(settings.state!.resets);
+    if (settings.state != null) events.addAll(settings.state?.getEvents() ?? []);
     super.initState();
   }
 
   @override
-  Widget build(final BuildContext context) {
-    final List<CountdownEvent> c = [];
-
-    for (final element in resets.reversed) {
-      if (element.resumeTime != null) c.add(CountdownEvent(id: element.id, resume: true, time: element.resumeTime!));
-      c.add(CountdownEvent(id: element.id, resume: false, time: element.resetTime));
-    }
-
-    return BlocBuilder<StaticCubit, StaticRecords?>(
-        builder: (final context, final staticRec) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Column(children: [
-                Flexible(
-                  child: ListView(
-                    children: c.map(record).toList(),
-                  ),
+  Widget build(final BuildContext context) => BlocBuilder<StaticCubit, StaticRecords?>(
+      builder: (final context, final staticRec) => Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Column(children: [
+              Flexible(
+                child: ListView(
+                  children: events.map(record).toList(),
                 ),
-                if (enableEdit)
-                  FilledButton(
-                    onPressed: () {
-                      if (Navigator.of(context).canPop() && widget.auth != null) {
-                        context.read<CountdownTimerCubit>().overwrite(resets);
-                        Navigator.of(context).pop();
-                      }
-                    },
-                    child: Text(AppLocalizations.of(context)!.timeManagerSave),
-                  ),
-              ]),
-            ));
-  }
+              ),
+              if (enableEdit)
+                FilledButton(
+                  onPressed: () {
+                    if (Navigator.of(context).canPop() && widget.auth != null) {
+                      // context.read<CountdownTimerCubit>().overwrite([...]);
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  child: Text(AppLocalizations.of(context)!.timeManagerSave),
+                ),
+            ]),
+          ));
 
   Widget record(final CountdownEvent r) => TimerJournalCard(
         resume: r.resume,
@@ -155,16 +145,4 @@ class TimerJournalCard extends StatelessWidget {
       ),
     );
   }
-}
-
-class CountdownEvent {
-  const CountdownEvent({
-    required this.id,
-    required this.resume,
-    required this.time,
-  });
-
-  final int id;
-  final bool resume;
-  final DateTime time;
 }

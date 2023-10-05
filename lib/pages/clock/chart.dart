@@ -1,88 +1,96 @@
 import 'package:dependencecoping/provider/countdown/countdown.dart';
-import 'package:dependencecoping/storage/reset_log.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ResetsChart extends StatelessWidget {
-  const ResetsChart({super.key});
+  const ResetsChart({required this.enabled, super.key});
+
+  final bool enabled;
 
   @override
-  Widget build(final BuildContext context) {
-    final gradientColors = [
-      Theme.of(context).colorScheme.primaryContainer.withOpacity(.8),
-      Theme.of(context).colorScheme.primary.withOpacity(.8),
-    ];
+  Widget build(final BuildContext context) => !enabled
+      ? const SizedBox(width: double.infinity)
+      : Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: BlocBuilder<CountdownTimerCubit, CountdownTimer?>(builder: (final context, final ct) {
+            final List<BarChartGroupData> data = [];
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: BlocBuilder<CountdownTimerCubit, CountdownTimer?>(builder: (final context, final ct) {
-        final List<FlSpot> data = [];
+            final List<CountdownEvent> events = ct?.getEvents() ?? [];
 
-        final List<CountdownReset> resets = ct?.sortedCopy() ?? [];
+            if (events.isEmpty) {
+              return const SizedBox(width: double.infinity);
+            }
 
-        if (resets.isEmpty) {
-          return const SizedBox(width: double.infinity);
-        }
+            int i = 10;
+            double maxY = 0;
+            DateTime? lastReset;
+            DateTime? lastResume;
 
-        for (final element in resets) {
-          if (element.resumeTime == null) {
-            data.add(FlSpot.zero);
-            continue;
-          }
+            for (final event in events) {
+              if (lastReset != null && lastResume != null && !event.resume) {
+                // 1- last reset
+                // 2- last resume
+                // 3- current reset
 
-          final dur = element.resetTime.difference(element.resumeTime!);
-          final since = element.resumeTime!.difference(DateTime.now());
-          final value = FlSpot(since.inMinutes / 60 / 24, dur.inMinutes.abs() / 60);
-          data.add(value);
-        }
+                final off = lastReset.difference(lastResume).inMinutes.toDouble().abs();
+                final on = lastResume.difference(event.time).inMinutes.toDouble().abs();
 
-        final maxY = data.reduce((final curr, final next) => curr.y > next.y ? curr : next).y;
-        final minX = data.reduce((final curr, final next) => curr.x < next.x ? curr : next).x;
+                final y = off + on;
+                if (y == 0) continue;
 
-        return Stack(
-          children: <Widget>[
-            LineChart(
-              LineChartData(
-                gridData: const FlGridData(
-                  show: false,
-                ),
-                titlesData: const FlTitlesData(
-                  rightTitles: AxisTitles(),
-                  topTitles: AxisTitles(),
-                  bottomTitles: AxisTitles(),
-                  leftTitles: AxisTitles(),
-                ),
-                borderData: FlBorderData(show: false),
-                minX: minX,
-                maxX: 0,
-                minY: 0,
-                maxY: maxY * 6,
-                lineBarsData: [
-                  LineChartBarData(
-                    spots: data,
-                    isCurved: true,
-                    gradient: LinearGradient(
-                      colors: gradientColors,
-                    ),
-                    barWidth: 3,
-                    isStrokeCapRound: true,
-                    dotData: const FlDotData(
+                data.add(BarChartGroupData(x: i, barRods: [
+                  BarChartRodData(
+                      toY: y,
+                      width: 16,
+                      color: Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(0.3),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(5),
+                        topRight: Radius.circular(5),
+                      ),
+                      rodStackItems: [
+                        BarChartRodStackItem(0, off * 1, Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(.5)),
+                        // BarChartRodStackItem(off, on, Colors.green, BorderSide(color: Colors.green)),
+                      ]),
+                ]));
+
+                if (y > maxY) maxY = y;
+                i--;
+                if (i < 0) {
+                  break;
+                }
+              }
+
+              if (event.resume) {
+                lastResume = event.time;
+              } else {
+                lastReset = event.time;
+              }
+            }
+
+            return Stack(
+              children: <Widget>[
+                BarChart(
+                  BarChartData(
+                    gridData: const FlGridData(
                       show: false,
                     ),
-                    belowBarData: BarAreaData(
-                      show: true,
-                      gradient: LinearGradient(
-                        colors: gradientColors.map((final color) => color.withOpacity(0.9)).toList(),
-                      ),
+                    titlesData: const FlTitlesData(
+                      rightTitles: AxisTitles(),
+                      topTitles: AxisTitles(),
+                      bottomTitles: AxisTitles(),
+                      leftTitles: AxisTitles(),
                     ),
+                    borderData: FlBorderData(show: false),
+                    // minX: minX,
+                    // maxX: 0,
+                    minY: 0,
+                    maxY: maxY * 1.5,
+                    barGroups: data,
                   ),
-                ],
-              ),
-            ),
-          ],
+                ),
+              ],
+            );
+          }),
         );
-      }),
-    );
-  }
 }

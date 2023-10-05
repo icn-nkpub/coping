@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dependencecoping/auth/auth.dart';
+import 'package:dependencecoping/notifications.dart';
 import 'package:dependencecoping/storage/local.dart';
 import 'package:dependencecoping/storage/profiles.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,6 +53,10 @@ class LoginCubit extends Cubit<Profile?> {
   }
 
   Future<void> signOut() async {
+    for (var i = 100; i < 110; i++) {
+      await unscheduleNotification(i);
+    }
+
     await clearLocalStorage();
     emit(null);
   }

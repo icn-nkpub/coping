@@ -53,7 +53,6 @@ Future<void> main() async {
 class App extends StatefulWidget {
   App({super.key});
 
-  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   final GlobalKey<NavigatorState> mainNavigatorKey = GlobalKey<NavigatorState>();
 
   @override

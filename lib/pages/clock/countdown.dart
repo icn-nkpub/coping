@@ -17,8 +17,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
-class CountdownDisplay extends StatelessWidget {
+class CountdownDisplay extends StatefulWidget {
   const CountdownDisplay({super.key});
+
+  @override
+  State<CountdownDisplay> createState() => _CountdownDisplayState();
+}
+
+class _CountdownDisplayState extends State<CountdownDisplay> {
+  bool showChart = false;
 
   @override
   Widget build(final BuildContext context) => BlocBuilder<LoginCubit, Profile?>(
@@ -30,41 +37,31 @@ class CountdownDisplay extends StatelessWidget {
             return Column(
               children: [
                 Flexible(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: BlocBuilder<ThemeCubit, ThemeState>(
-                      builder: (final context, final state) => Container(
-                        height: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.primaryContainer,
-                          borderRadius: BorderRadius.circular(16),
-                          image: DecorationImage(
-                            image: NetworkImage(matchingImage(state.color, state.mode)),
-                            fit: BoxFit.cover,
-                            alignment: Alignment.bottomCenter,
+                  child: GestureDetector(
+                    onTap: () => setState(() {
+                      showChart = !showChart;
+                    }),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: BlocBuilder<ThemeCubit, ThemeState>(
+                        builder: (final context, final state) => Container(
+                          height: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.primaryContainer,
+                            borderRadius: BorderRadius.circular(16),
+                            image: showChart
+                                ? null
+                                : DecorationImage(
+                                    image: NetworkImage(matchingImage(state.color, state.mode)),
+                                    fit: BoxFit.cover,
+                                    alignment: Alignment.bottomCenter,
+                                  ),
+                          ),
+                          clipBehavior: Clip.antiAlias,
+                          child: IgnorePointer(
+                            child: ResetsChart(enabled: showChart),
                           ),
                         ),
-                        clipBehavior: Clip.antiAlias,
-                        child: const ResetsChart(),
-                        // child: const SizedBox(width: double.infinity),
-                        // child: Align(
-                        //   alignment: Alignment.bottomCenter,
-                        //   child: Container(
-                        //     width: double.infinity,
-                        //     height: 100,
-                        //     decoration: BoxDecoration(
-                        //       gradient: LinearGradient(
-                        //         begin: Alignment.topCenter,
-                        //         end: Alignment.bottomCenter,
-                        //         stops: const [0, .9],
-                        //         colors: [
-                        //           Theme.of(context).scaffoldBackgroundColor.withOpacity(0),
-                        //           Theme.of(context).scaffoldBackgroundColor,
-                        //         ],
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
                       ),
                     ),
                   ),
@@ -117,7 +114,7 @@ class CountdownDisplay extends StatelessWidget {
                 onPressed: () async {
                   final al = AppLocalizations.of(context)!;
                   final auth = context.read<LoginCubit>().state!.auth;
-                  await context.read<CountdownTimerCubit>().pause(auth, al);
+                  await context.read<CountdownTimerCubit>().pause(auth, al, DateTime.now());
                 },
                 icon: SvgIcon(
                   assetPath: Assets.icons.stopCircle,
