@@ -53,7 +53,6 @@ dependencies:
   flutter_native_splash: ^2.3.2
   http: ^1.1.0
   url_launcher: ^6.1.12
-  fl_chart: ^0.63.0
 
 dev_dependencies:
   build_runner:
@@ -85,7 +84,7 @@ flutter:
     - assets/opaqring.png
     - assets/nkpub.svg
     - assets/guy/
- 
+
     - assets/manuals/en/clock/
     - assets/manuals/en/buttons/
     - assets/manuals/en/triggers/
@@ -134,13 +133,13 @@ flutter_icons:
   ios: true
   image_path_ios: "assets/logo-pb.png"
   remove_alpha_ios: true
-  
+
   android: false
   image_path_android: "assets/opaqring.png"
   adaptive_icon_background: "#000000"
   adaptive_icon_foreground: "assets/logo.png"
   min_sdk_android: 21
-  
+
   windows:
     generate: true
     image_path: "assets/logo.png"

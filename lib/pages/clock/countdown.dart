@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:dependencecoping/gen/assets.gen.dart';
-import 'package:dependencecoping/pages/clock/chart.dart';
 import 'package:dependencecoping/pages/clock/locker.dart';
 import 'package:dependencecoping/pages/clock/modals/time_manager.dart';
 import 'package:dependencecoping/provider/countdown/countdown.dart';
@@ -17,19 +16,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
-class CountdownDisplay extends StatefulWidget {
+class CountdownDisplay extends StatelessWidget {
   const CountdownDisplay({super.key});
 
   @override
-  State<CountdownDisplay> createState() => _CountdownDisplayState();
-}
-
-class _CountdownDisplayState extends State<CountdownDisplay> {
-  bool showChart = false;
-
-  @override
   Widget build(final BuildContext context) => BlocBuilder<LoginCubit, Profile?>(
-        builder: (final context, final u) => BlocBuilder<CountdownTimerCubit, CountdownTimer?>(
+        builder: (final context, final u) =>
+            BlocBuilder<CountdownTimerCubit, CountdownTimer?>(
           builder: (final context, final ct) {
             final splits = ct?.splits();
             final paused = ct?.resumed == null;
@@ -37,30 +30,24 @@ class _CountdownDisplayState extends State<CountdownDisplay> {
             return Column(
               children: [
                 Flexible(
-                  child: GestureDetector(
-                    onTap: () => setState(() {
-                      showChart = !showChart;
-                    }),
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: BlocBuilder<ThemeCubit, ThemeState>(
-                        builder: (final context, final state) => Container(
-                          height: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.primaryContainer,
-                            borderRadius: BorderRadius.circular(16),
-                            image: showChart
-                                ? null
-                                : DecorationImage(
-                                    image: NetworkImage(matchingImage(state.color, state.mode)),
-                                    fit: BoxFit.cover,
-                                    alignment: Alignment.bottomCenter,
-                                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: BlocBuilder<ThemeCubit, ThemeState>(
+                      builder: (final context, final state) => Container(
+                        height: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primaryContainer,
+                          borderRadius: BorderRadius.circular(16),
+                          image: DecorationImage(
+                            image: NetworkImage(
+                                matchingImage(state.color, state.mode)),
+                            fit: BoxFit.cover,
+                            alignment: Alignment.bottomCenter,
                           ),
-                          clipBehavior: Clip.antiAlias,
-                          child: IgnorePointer(
-                            child: ResetsChart(enabled: showChart),
-                          ),
+                        ),
+                        clipBehavior: Clip.antiAlias,
+                        child: const IgnorePointer(
+                          child: Center(),
                         ),
                       ),
                     ),
@@ -74,14 +61,17 @@ class _CountdownDisplayState extends State<CountdownDisplay> {
                 const SizedBox(height: 8),
                 Container(
                   width: double.infinity,
-                  padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * .12),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width * .12),
                   child: FittedBox(
                       child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       BlocBuilder<CountdownTimerCubit, CountdownTimer?>(
-                        builder: (final context, final ct) =>
-                            ScoreCard(score: NumberFormat.decimalPattern().format(splits?.score ?? 0).replaceAll('0', 'O')),
+                        builder: (final context, final ct) => ScoreCard(
+                            score: NumberFormat.decimalPattern()
+                                .format(splits?.score ?? 0)
+                                .replaceAll('0', 'O')),
                       ),
                       const SizedBox(width: 4),
                       ...controlls(context, paused: paused),
@@ -97,13 +87,17 @@ class _CountdownDisplayState extends State<CountdownDisplay> {
         ),
       );
 
-  List<IconButton> controlls(final BuildContext context, {final bool paused = false}) => [
+  List<IconButton> controlls(final BuildContext context,
+          {final bool paused = false}) =>
+      [
         paused
             ? IconButton.filledTonal(
                 onPressed: () async {
                   final al = AppLocalizations.of(context)!;
                   final auth = context.read<LoginCubit>().state!.auth;
-                  await context.read<CountdownTimerCubit>().resume(auth, al, DateTime.now());
+                  await context
+                      .read<CountdownTimerCubit>()
+                      .resume(auth, al, DateTime.now());
                 },
                 icon: SvgIcon(
                   assetPath: Assets.icons.playCircle,
@@ -114,7 +108,9 @@ class _CountdownDisplayState extends State<CountdownDisplay> {
                 onPressed: () async {
                   final al = AppLocalizations.of(context)!;
                   final auth = context.read<LoginCubit>().state!.auth;
-                  await context.read<CountdownTimerCubit>().pause(auth, al, DateTime.now());
+                  await context
+                      .read<CountdownTimerCubit>()
+                      .pause(auth, al, DateTime.now());
                 },
                 icon: SvgIcon(
                   assetPath: Assets.icons.stopCircle,
@@ -174,12 +170,15 @@ class ScoreCard extends StatelessWidget {
             Container(
               clipBehavior: Clip.antiAlias,
               decoration: const BoxDecoration(),
-              padding: const EdgeInsets.only(right: 16, left: 8, top: 8, bottom: 8),
+              padding:
+                  const EdgeInsets.only(right: 16, left: 8, top: 8, bottom: 8),
               child: AnimatedCountedUp(
                 child: Text(
                   score,
                   key: ValueKey(score),
-                  style: fAccent(textStyle: Theme.of(context).textTheme.bodyLarge).copyWith(
+                  style:
+                      fAccent(textStyle: Theme.of(context).textTheme.bodyLarge)
+                          .copyWith(
                     color: Theme.of(context).colorScheme.onTertiaryContainer,
                     fontWeight: FontWeight.bold,
                   ),
@@ -206,13 +205,18 @@ class Stopwatch extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     final tsm = fAccent(
-      textStyle: small ? Theme.of(context).textTheme.titleMedium : Theme.of(context).textTheme.displaySmall,
+      textStyle: small
+          ? Theme.of(context).textTheme.titleMedium
+          : Theme.of(context).textTheme.displaySmall,
     ).copyWith(
       fontWeight: FontWeight.bold,
       color: Theme.of(context).colorScheme.onSecondaryContainer,
     );
 
-    final ts = (small ? Theme.of(context).textTheme.titleMedium : Theme.of(context).textTheme.displaySmall)?.copyWith(
+    final ts = (small
+            ? Theme.of(context).textTheme.titleMedium
+            : Theme.of(context).textTheme.displaySmall)
+        ?.copyWith(
       fontWeight: FontWeight.w100,
       color: Theme.of(context).colorScheme.onSecondaryContainer,
     );
@@ -223,13 +227,25 @@ class Stopwatch extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Ticker(small: small, child: ClockHand(ClockHandType.days, from: from, frozen: frozen, style: tsm)),
+          Ticker(
+              small: small,
+              child: ClockHand(ClockHandType.days,
+                  from: from, frozen: frozen, style: tsm)),
           Text(':', style: ts),
-          Ticker(small: small, child: ClockHand(ClockHandType.hours, from: from, frozen: frozen, style: tsm)),
+          Ticker(
+              small: small,
+              child: ClockHand(ClockHandType.hours,
+                  from: from, frozen: frozen, style: tsm)),
           Text(':', style: ts),
-          Ticker(small: small, child: ClockHand(ClockHandType.minutes, from: from, frozen: frozen, style: tsm)),
+          Ticker(
+              small: small,
+              child: ClockHand(ClockHandType.minutes,
+                  from: from, frozen: frozen, style: tsm)),
           Text(':', style: ts),
-          Ticker(small: small, child: ClockHand(ClockHandType.seconds, from: from, frozen: frozen, style: tsm)),
+          Ticker(
+              small: small,
+              child: ClockHand(ClockHandType.seconds,
+                  from: from, frozen: frozen, style: tsm)),
         ],
       ),
     );
@@ -258,7 +274,8 @@ class Ticker extends StatelessWidget {
                 clipBehavior: Clip.antiAlias,
                 decoration: const BoxDecoration(),
                 alignment: Alignment.center,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 child: child,
               ),
             ),
