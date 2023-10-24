@@ -43,7 +43,8 @@ class TriggerLogCard extends StatelessWidget {
                   openModal(
                       context,
                       Modal(
-                        title: AppLocalizations.of(context)!.modalTriggerLogEvent,
+                        title:
+                            AppLocalizations.of(context)!.modalTriggerLogEvent,
                         child: TriggerLogEventModal(tl: tl),
                       ));
                 },
@@ -56,8 +57,14 @@ class TriggerLogCard extends StatelessWidget {
               Expanded(
                 child: Center(
                   child: Text(
-                    tl.labels[Localizations.localeOf(context).languageCode] ?? tl.labels['en'] ?? '[...]',
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w900),
+                    tl.labels[Localizations.localeOf(context).languageCode] ??
+                        tl.labels['en'] ??
+                        '[...]',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(fontWeight: FontWeight.w900),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ),
@@ -65,7 +72,9 @@ class TriggerLogCard extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Text(
-                    DateFormat('dd.MM.yyyy HH:mm').format(tl.time).replaceAll('0', 'O'),
+                    DateFormat('dd.MM.yyyy HH:mm')
+                        .format(tl.time)
+                        .replaceAll('0', 'O'),
                     style: fAccent(
                       textStyle: Theme.of(context).textTheme.bodyMedium,
                     ).copyWith(fontWeight: FontWeight.w100),

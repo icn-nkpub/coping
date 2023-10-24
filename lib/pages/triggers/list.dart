@@ -65,10 +65,13 @@ class _TriggerListState extends State<TriggerList> {
                                     child: triggerModal(t)),
                               );
                             },
-                            child: Text(t.labels[Localizations.localeOf(context)
-                                    .languageCode] ??
-                                t.labels['en'] ??
-                                '[...]'),
+                            child: Text(
+                              t.labels[Localizations.localeOf(context)
+                                      .languageCode] ??
+                                  t.labels['en'] ??
+                                  '[...]',
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ),
                       );
@@ -110,9 +113,10 @@ class _TriggerListState extends State<TriggerList> {
         child: Column(
           children: [
             HighText(
-                text: t.labels[Localizations.localeOf(context).languageCode] ??
-                    t.labels['en'] ??
-                    '[...]'),
+              text: t.labels[Localizations.localeOf(context).languageCode] ??
+                  t.labels['en'] ??
+                  '[...]',
+            ),
             Input(
                 title: AppLocalizations.of(context)!.personalTriggerSituation,
                 ctrl: situation,
@@ -188,6 +192,7 @@ class _HighTextState extends State<HighText> with TickerProviderStateMixin {
                   .textTheme
                   .displaySmall!
                   .copyWith(fontWeight: FontWeight.w900),
+              textAlign: TextAlign.center,
             ),
             builder: (final context, final child) => ShaderMask(
               blendMode: BlendMode.srcIn,
