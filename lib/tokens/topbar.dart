@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:dependencecoping/discord/discord.dart';
 import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/modals/help.dart';
 import 'package:dependencecoping/provider/login/login.dart';
@@ -13,7 +12,6 @@ import 'package:dependencecoping/tokens/modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class NullTopBar extends StatelessWidget {
   const NullTopBar({
@@ -66,94 +64,99 @@ class _TopBarState extends State<TopBar> {
         });
       };
 
-  BlocBuilder<LoginCubit, Profile?> head(final BuildContext context) => BlocBuilder<LoginCubit, Profile?>(
-      builder: (final _, final u) => Material(
-            color: Theme.of(context).appBarTheme.backgroundColor,
-            shadowColor: Theme.of(context).appBarTheme.shadowColor,
-            elevation: 2,
-            child: Container(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
+  BlocBuilder<LoginCubit, Profile?> head(final BuildContext context) =>
+      BlocBuilder<LoginCubit, Profile?>(
+          builder: (final _, final u) => Material(
+                color: Theme.of(context).appBarTheme.backgroundColor,
+                shadowColor: Theme.of(context).appBarTheme.shadowColor,
+                elevation: 2,
+                child: Container(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButton(
-                        onPressed: () {
-                          openModal(
-                            context,
-                            const HelpModal(),
-                          );
-                        },
-                        icon: SvgIcon(assetPath: Assets.icons.liveHelp),
-                      ),
-                      FutureBuilder(
-                        // ignore: discarded_futures
-                        future: discordObtainInvite(),
-                        builder: (final context, final snapshot) => Badge(
-                          alignment: Alignment.topRight,
-                          offset: const Offset(-4, 6),
-                          largeSize: 8,
-                          padding: EdgeInsets.zero,
-                          label: const SizedBox.square(dimension: 8),
-                          child: IconButton(
+                      Row(
+                        children: [
+                          IconButton(
                             onPressed: () {
-                              unawaited(launchUrlString(snapshot.data.toString()));
+                              openModal(
+                                context,
+                                const HelpModal(),
+                              );
                             },
-                            icon: SvgIcon(assetPath: Assets.icons.diversity1),
+                            icon: SvgIcon(assetPath: Assets.icons.liveHelp),
                           ),
+                          // FutureBuilder(
+                          //   // ignore: discarded_futures
+                          //   future: discordObtainInvite(),
+                          //   builder: (final context, final snapshot) => Badge(
+                          //     alignment: Alignment.topRight,
+                          //     offset: const Offset(-4, 6),
+                          //     largeSize: 8,
+                          //     padding: EdgeInsets.zero,
+                          //     label: const SizedBox.square(dimension: 8),
+                          //     child: IconButton(
+                          //       onPressed: () {
+                          //         unawaited(launchUrlString(snapshot.data.toString()));
+                          //       },
+                          //       icon: SvgIcon(assetPath: Assets.icons.diversity1),
+                          //     ),
+                          //   ),
+                          // ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: RichText(
+                          text: TextSpan(children: [
+                            TextSpan(
+                              text: 'Coping',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(fontWeight: FontWeight.w900),
+                            ),
+                            // TextSpan(
+                            //   text: AppLocalizations.of(context)!.hello,
+                            //   style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w600),
+                            //   children: [
+                            //     if ((u?.profile?.firstName ?? '') != '')
+                            //       TextSpan(
+                            //         text: ' ${u?.profile?.firstName ?? ''}',
+                            //       ),
+                            //   ],
+                            // )
+                          ]),
                         ),
+                      ),
+                      Row(
+                        children: [
+                          // Opacity(
+                          //   opacity: 0,
+                          //   child: IconButton(
+                          //     onPressed: () {},
+                          //     icon: SvgIcon(assetPath: Assets.icons.bolt),
+                          //   ),
+                          // ),
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                expandMenu = !expandMenu;
+                              });
+                            },
+                            icon: AnimatedRotation(
+                              duration: const Duration(milliseconds: 100),
+                              turns: expandMenu ? 0.5 : 0,
+                              child:
+                                  SvgIcon(assetPath: Assets.icons.expandMore),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: RichText(
-                      text: TextSpan(children: [
-                        TextSpan(
-                          text: 'Coping',
-                          style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w900),
-                        ),
-                        // TextSpan(
-                        //   text: AppLocalizations.of(context)!.hello,
-                        //   style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w600),
-                        //   children: [
-                        //     if ((u?.profile?.firstName ?? '') != '')
-                        //       TextSpan(
-                        //         text: ' ${u?.profile?.firstName ?? ''}',
-                        //       ),
-                        //   ],
-                        // )
-                      ]),
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Opacity(
-                        opacity: 0,
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: SvgIcon(assetPath: Assets.icons.bolt),
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          setState(() {
-                            expandMenu = !expandMenu;
-                          });
-                        },
-                        icon: AnimatedRotation(
-                          duration: const Duration(milliseconds: 100),
-                          turns: expandMenu ? 0.5 : 0,
-                          child: SvgIcon(assetPath: Assets.icons.expandMore),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ));
+                ),
+              ));
 
   Widget body() => Shrinkable(
         expanded: expandMenu,
@@ -161,16 +164,27 @@ class _TopBarState extends State<TopBar> {
           cards: [
             RopedCard(
               children: [
-                BlocBuilder<LoginCubit, Profile?>(builder: (final context, final u) {
+                BlocBuilder<LoginCubit, Profile?>(
+                    builder: (final context, final u) {
                   final List<Widget> children = [];
 
                   if (u == null) {
-                    children.add(NavButton(AppLocalizations.of(context)!.screenLogin, onPressed: goTo(0)));
-                    children.add(NavButton(AppLocalizations.of(context)!.screenRegister, onPressed: goTo(1)));
+                    children.add(NavButton(
+                        AppLocalizations.of(context)!.screenLogin,
+                        onPressed: goTo(0)));
+                    children.add(NavButton(
+                        AppLocalizations.of(context)!.screenRegister,
+                        onPressed: goTo(1)));
                   } else {
-                    children.add(NavButton(AppLocalizations.of(context)!.screenProfile, onPressed: goTo(2)));
-                    children.add(NavButton(AppLocalizations.of(context)!.screenLogin, onPressed: goTo(0)));
-                    children.add(NavButton(AppLocalizations.of(context)!.screenLogout, onPressed: goTo(3)));
+                    children.add(NavButton(
+                        AppLocalizations.of(context)!.screenProfile,
+                        onPressed: goTo(2)));
+                    children.add(NavButton(
+                        AppLocalizations.of(context)!.screenLogin,
+                        onPressed: goTo(0)));
+                    children.add(NavButton(
+                        AppLocalizations.of(context)!.screenLogout,
+                        onPressed: goTo(3)));
                   }
 
                   return Wrap(
@@ -201,18 +215,23 @@ class ThemeChanger extends StatelessWidget {
   });
 
   @override
-  Widget build(final BuildContext context) => BlocBuilder<ThemeCubit, ThemeState>(
+  Widget build(final BuildContext context) =>
+      BlocBuilder<ThemeCubit, ThemeState>(
         builder: (final context, final t) => Row(
           children: [
             FilledButton.tonal(
               style: Theme.of(context).filledButtonTheme.style,
               onPressed: () {
                 // '!' (NOT) because we just fliped but yet refreshed.
-                unawaited(context.read<LoginCubit>().setTheme(t.color.name, isLight: !t.isLightMode()));
+                unawaited(context
+                    .read<LoginCubit>()
+                    .setTheme(t.color.name, isLight: !t.isLightMode()));
                 unawaited(context.read<ThemeCubit>().flipBrightness());
               },
               child: SvgIcon(
-                assetPath: t.isLightMode() ? Assets.icons.lightMode : Assets.icons.darkMode,
+                assetPath: t.isLightMode()
+                    ? Assets.icons.lightMode
+                    : Assets.icons.darkMode,
               ),
             ),
             Flexible(
@@ -227,10 +246,13 @@ class ThemeChanger extends StatelessWidget {
             ),
             FilledButton.tonal(
               onPressed: () {
-                final next = (ColorValue.values.indexOf(t.color) + 1) % (ColorValue.values.length);
+                final next = (ColorValue.values.indexOf(t.color) + 1) %
+                    (ColorValue.values.length);
                 final selected = ColorValue.values[next];
                 context.read<ThemeCubit>().setColor(selected);
-                unawaited(context.read<LoginCubit>().setTheme(selected.name, isLight: t.isLightMode()));
+                unawaited(context
+                    .read<LoginCubit>()
+                    .setTheme(selected.name, isLight: t.isLightMode()));
               },
               child: SvgIcon(assetPath: Assets.icons.palette),
             ),

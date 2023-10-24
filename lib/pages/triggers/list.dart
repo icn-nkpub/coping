@@ -31,7 +31,8 @@ class _TriggerListState extends State<TriggerList> {
   Widget build(final BuildContext context) => Padding(
         padding: const EdgeInsets.all(8.0),
         child: BlocBuilder<LoginCubit, Profile?>(
-            builder: (final context, final p) => BlocBuilder<TriggersCubit, Triggers?>(
+            builder: (final context, final p) =>
+                BlocBuilder<TriggersCubit, Triggers?>(
                   builder: (final context, final triggers) {
                     final List<Widget> children = [];
 
@@ -40,20 +41,34 @@ class _TriggerListState extends State<TriggerList> {
                         triggers.templates.map(
                           (final t) => FilledButton.tonal(
                             style: ButtonStyle(
-                              backgroundColor: MaterialStatePropertyAll(Theme.of(context).colorScheme.tertiaryContainer),
+                              backgroundColor: MaterialStatePropertyAll(
+                                  Theme.of(context)
+                                      .colorScheme
+                                      .tertiaryContainer),
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              padding: const MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 8 * 2)),
+                              padding: const MaterialStatePropertyAll(
+                                  EdgeInsets.symmetric(horizontal: 8 * 2)),
                             ),
                             onLongPress: () {
-                              if (p?.auth != null) unawaited(context.read<TriggersCubit>().removePersonal(p!.auth, t.id));
+                              if (p?.auth != null) {
+                                unawaited(context
+                                    .read<TriggersCubit>()
+                                    .removePersonal(p!.auth, t.id));
+                              }
                             },
                             onPressed: () {
                               openModal(
                                 context,
-                                Modal(title: AppLocalizations.of(context)!.modalLogTrigger, child: triggerModal(t)),
+                                Modal(
+                                    title: AppLocalizations.of(context)!
+                                        .modalLogTrigger,
+                                    child: triggerModal(t)),
                               );
                             },
-                            child: Text(t.labels[Localizations.localeOf(context).languageCode] ?? t.labels['en'] ?? '[...]'),
+                            child: Text(t.labels[Localizations.localeOf(context)
+                                    .languageCode] ??
+                                t.labels['en'] ??
+                                '[...]'),
                           ),
                         ),
                       );
@@ -63,12 +78,16 @@ class _TriggerListState extends State<TriggerList> {
                       IconButton.filledTonal(
                         style: const ButtonStyle(
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 8 * 2)),
+                          padding: MaterialStatePropertyAll(
+                              EdgeInsets.symmetric(horizontal: 8 * 2)),
                         ),
                         onPressed: () {
                           openModal(
                             context,
-                            Modal(title: AppLocalizations.of(context)!.modalAddPersonalTrigger, child: const PersonalTriggerFormModal()),
+                            Modal(
+                                title: AppLocalizations.of(context)!
+                                    .modalAddPersonalTrigger,
+                                child: const PersonalTriggerFormModal()),
                           );
                         },
                         icon: SvgIcon(
@@ -90,10 +109,19 @@ class _TriggerListState extends State<TriggerList> {
         padding: const EdgeInsets.all(8),
         child: Column(
           children: [
-            HighText(text: t.labels[Localizations.localeOf(context).languageCode] ?? t.labels['en'] ?? '[...]'),
-            Input(title: AppLocalizations.of(context)!.personalTriggerSituation, ctrl: situation, autocorrect: true),
+            HighText(
+                text: t.labels[Localizations.localeOf(context).languageCode] ??
+                    t.labels['en'] ??
+                    '[...]'),
+            Input(
+                title: AppLocalizations.of(context)!.personalTriggerSituation,
+                ctrl: situation,
+                autocorrect: true),
             const SizedBox(height: 8),
-            Input(title: AppLocalizations.of(context)!.personalTriggerThought, ctrl: thought, autocorrect: true),
+            Input(
+                title: AppLocalizations.of(context)!.personalTriggerThought,
+                ctrl: thought,
+                autocorrect: true),
             const SizedBox(height: 8 * 4),
             ImpulseSlider(
               title: AppLocalizations.of(context)!.personalTriggerImpulse,
@@ -106,13 +134,17 @@ class _TriggerListState extends State<TriggerList> {
 
                 if (navigator.canPop()) {
                   final p = context.read<LoginCubit>().state;
-                  if (p != null) unawaited(context.read<TriggersCubit>().send(p.auth, t, situation.value.text, thought.value.text, impulse));
+                  if (p != null) {
+                    unawaited(context.read<TriggersCubit>().send(p.auth, t,
+                        situation.value.text, thought.value.text, impulse));
+                  }
                   navigator.pop();
                 }
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(AppLocalizations.of(context)!.personalTriggerSubmit),
+                child:
+                    Text(AppLocalizations.of(context)!.personalTriggerSubmit),
               ),
             ),
           ],
@@ -152,7 +184,10 @@ class _HighTextState extends State<HighText> with TickerProviderStateMixin {
             animation: _c,
             child: Text(
               widget.text,
-              style: Theme.of(context).textTheme.displaySmall!.copyWith(fontWeight: FontWeight.w900),
+              style: Theme.of(context)
+                  .textTheme
+                  .displaySmall!
+                  .copyWith(fontWeight: FontWeight.w900),
             ),
             builder: (final context, final child) => ShaderMask(
               blendMode: BlendMode.srcIn,
@@ -161,7 +196,8 @@ class _HighTextState extends State<HighText> with TickerProviderStateMixin {
                 Theme.of(context).colorScheme.primary,
                 Theme.of(context).colorScheme.tertiary,
               ]).createShader(
-                Rect.fromLTWH((bounds.width) * (1 - (_c.value * 2)).abs(), 0, bounds.width / 2, bounds.height),
+                Rect.fromLTWH((bounds.width) * (1 - (_c.value * 2)).abs(), 0,
+                    bounds.width / 2, bounds.height),
               ),
               child: child,
             ),

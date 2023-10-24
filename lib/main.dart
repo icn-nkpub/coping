@@ -31,7 +31,8 @@ Future<void> main() async {
 
   await notifications();
 
-  final WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  final WidgetsBinding widgetsBinding =
+      WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   final app = App();
@@ -43,7 +44,8 @@ Future<void> main() async {
   }
 
   await SentryFlutter.init((final options) {
-    options.dsn = 'https://ffce3775524c43269e47662942503a06@o4505302255665152.ingest.sentry.io/4505302260449280';
+    options.dsn =
+        'https://ffce3775524c43269e47662942503a06@o4505302255665152.ingest.sentry.io/4505302260449280';
     // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
     // We recommend adjusting this value in production.
     options.tracesSampleRate = 1;
@@ -53,13 +55,15 @@ Future<void> main() async {
 class App extends StatefulWidget {
   App({super.key});
 
-  final GlobalKey<NavigatorState> mainNavigatorKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> mainNavigatorKey =
+      GlobalKey<NavigatorState>();
 
   @override
   State<App> createState() => _AppState();
 }
 
-class _AppState extends State<App> with AssetsInitializer, TickerProviderStateMixin {
+class _AppState extends State<App>
+    with AssetsInitializer, TickerProviderStateMixin {
   late final AnimationController _spinnerController = AnimationController(
     vsync: this,
     duration: const Duration(seconds: 1),
@@ -105,10 +109,13 @@ class _AppState extends State<App> with AssetsInitializer, TickerProviderStateMi
                   child: AnimatedBuilder(
                     animation: _spinnerController,
                     builder: (final context, final _) => Opacity(
-                      opacity: ((final double x) => (x <= .5 ? x : 1 - x) * 2)(_spinnerController.value),
+                      opacity: ((final double x) =>
+                          (x <= .5 ? x : 1 - x) * 2)(_spinnerController.value),
                       child: ColorFiltered(
-                        colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcATop),
-                        child: Image.asset(Assets.opaqring.path, width: 148, height: 148),
+                        colorFilter: const ColorFilter.mode(
+                            Colors.grey, BlendMode.srcATop),
+                        child: Image.asset(Assets.opaqring.path,
+                            width: 148, height: 148),
                       ),
                     ),
                   ),
@@ -124,10 +131,14 @@ class _AppState extends State<App> with AssetsInitializer, TickerProviderStateMi
                     staticCubit.overwrite(statics);
                   }
 
-                  final tcb = MediaQuery.of(context).platformBrightness == Brightness.light ? ThemeMode.light : ThemeMode.dark;
+                  final tcb = MediaQuery.of(context).platformBrightness ==
+                          Brightness.light
+                      ? ThemeMode.light
+                      : ThemeMode.dark;
                   final themeCubit = ThemeCubit()..setBrightness(tcb);
                   if (profile != null && profile!.isLight != null) {
-                    themeCubit.setBrightness(profile!.isLight! ? ThemeMode.light : ThemeMode.dark);
+                    themeCubit.setBrightness(
+                        profile!.isLight! ? ThemeMode.light : ThemeMode.dark);
                   }
                   if (profile != null && profile!.color != null) {
                     themeCubit.setColor(findThemeColor(profile!.color!));
@@ -149,13 +160,15 @@ class _AppState extends State<App> with AssetsInitializer, TickerProviderStateMi
                     if (triggersLog == null) {
                       triggersCubit.overwrite(Triggers(triggers!, []));
                     } else {
-                      triggersCubit.overwrite(Triggers(triggers!, triggersLog!));
+                      triggersCubit
+                          .overwrite(Triggers(triggers!, triggersLog!));
                     }
                   }
 
                   final lockerCubit = LockerCubit();
                   if (lockerDuration != null) {
-                    lockerCubit.overwrite(lockerStart ?? DateTime.now(), lockerDuration!);
+                    lockerCubit.overwrite(
+                        lockerStart ?? DateTime.now(), lockerDuration!);
                   }
 
                   return MultiBlocProvider(
@@ -169,7 +182,8 @@ class _AppState extends State<App> with AssetsInitializer, TickerProviderStateMi
                       BlocProvider(create: (final _) => lockerCubit),
                     ],
                     child: BlocListener<LoginCubit, Profile?>(
-                      listenWhen: (final p, final c) => p?.auth.id != c?.auth.id,
+                      listenWhen: (final p, final c) =>
+                          p?.auth.id != c?.auth.id,
                       listener: (final context, final state) {
                         _spinnerController.reset();
                         setState(() {
@@ -196,9 +210,12 @@ class _AppState extends State<App> with AssetsInitializer, TickerProviderStateMi
                             curve: Curves.slowMiddle,
                             duration: const Duration(milliseconds: 100),
                             child: Navigator(
-                              onGenerateRoute: (final settings) => MaterialPageRoute(
+                              onGenerateRoute: (final settings) =>
+                                  MaterialPageRoute(
                                 settings: settings,
-                                builder: (final context) => u == null ? const Onboarding() : const Home(),
+                                builder: (final context) => u == null
+                                    ? const Onboarding()
+                                    : const Home(),
                               ),
                             ),
                           ),

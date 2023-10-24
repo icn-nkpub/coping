@@ -46,8 +46,28 @@ class CountdownDisplay extends StatelessWidget {
                           ),
                         ),
                         clipBehavior: Clip.antiAlias,
-                        child: const IgnorePointer(
-                          child: Center(),
+                        child: IgnorePointer(
+                          child: Container(
+                            width: double.infinity,
+                            alignment: Alignment.topRight,
+                            padding: const EdgeInsets.all(26),
+                            child: Wrap(
+                              spacing: 8,
+                              direction: Axis.vertical,
+                              crossAxisAlignment: WrapCrossAlignment.end,
+                              children: [
+                                scoreTrophyBadge(),
+                                // Badge(
+                                //   icon: Assets.icons.cognition,
+                                //   label: 'Dedication',
+                                // ),
+                                // Badge(
+                                //   icon: Assets.icons.psychiatry,
+                                //   label: 'Meditation',
+                                // ),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -70,7 +90,7 @@ class CountdownDisplay extends StatelessWidget {
                       BlocBuilder<CountdownTimerCubit, CountdownTimer?>(
                         builder: (final context, final ct) => ScoreCard(
                             score: NumberFormat.decimalPattern()
-                                .format(splits?.score ?? 0)
+                                .format(ct?.splits().score ?? 0)
                                 .replaceAll('0', 'O')),
                       ),
                       const SizedBox(width: 4),
@@ -85,6 +105,43 @@ class CountdownDisplay extends StatelessWidget {
             );
           },
         ),
+      );
+
+  BlocBuilder<CountdownTimerCubit, CountdownTimer?> scoreTrophyBadge() =>
+      BlocBuilder<CountdownTimerCubit, CountdownTimer?>(
+        builder: (final context, final ct) {
+          final s = ct?.splits().score ?? 0;
+
+          if (s > 1000) {
+            return Badge(
+              icon: Assets.icons.trophy,
+              label: 'Top 50%',
+            );
+          }
+
+          if (s > 2000) {
+            return Badge(
+              icon: Assets.icons.trophy,
+              label: 'Top 35%',
+            );
+          }
+
+          if (s > 5000) {
+            return Badge(
+              icon: Assets.icons.trophy,
+              label: 'Top 5%',
+            );
+          }
+
+          if (s > 20000) {
+            return Badge(
+              icon: Assets.icons.trophy,
+              label: 'Top 1%',
+            );
+          }
+
+          return const SizedBox();
+        },
       );
 
   List<IconButton> controlls(final BuildContext context,
@@ -140,6 +197,42 @@ class CountdownDisplay extends StatelessWidget {
             title: AppLocalizations.of(context)!.modalTimerEvents,
             child: TimeModal(auth: u?.auth),
           ),
+        ),
+      );
+}
+
+class Badge extends StatelessWidget {
+  const Badge({
+    required this.icon,
+    required this.label,
+    super.key,
+  });
+
+  final String icon;
+  final String label;
+
+  @override
+  Widget build(final BuildContext context) => Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: Theme.of(context).colorScheme.onPrimaryContainer,
+        ),
+        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SvgIcon(
+              assetPath: icon,
+              color: Theme.of(context).colorScheme.primaryContainer,
+            ),
+            const SizedBox(width: 8),
+            Text(
+              label,
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                  ),
+            ),
+          ],
         ),
       );
 }
