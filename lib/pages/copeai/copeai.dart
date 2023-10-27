@@ -50,6 +50,7 @@ class Messanger extends StatefulWidget {
 }
 
 class _MessangerState extends State<Messanger> {
+  var scroll = ScrollController();
   List<Message> messages = [];
   late final Random r;
 
@@ -65,9 +66,11 @@ class _MessangerState extends State<Messanger> {
           Expanded(
             child: ListView(
               reverse: true,
-              children: messages
+              controller: scroll,
+              children: messages.reversed
                   .map(
                     (final e) => Card(
+                      key: Key(e.hashCode.toString()),
                       margin: const EdgeInsets.all(16),
                       elevation: 2,
                       child: Container(
@@ -80,7 +83,7 @@ class _MessangerState extends State<Messanger> {
                               opacity: .5,
                               child: Text('— ${e.prompt}'),
                             ),
-                            Text(e.message),
+                            Typer(e.message),
                           ],
                         ),
                       ),
@@ -89,27 +92,25 @@ class _MessangerState extends State<Messanger> {
                   .toList(),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Row(
+          Container(
+            padding: const EdgeInsets.all(16),
+            width: double.infinity,
+            alignment: Alignment.centerLeft,
+            child: Wrap(
+                spacing: 8,
                 children: widget.b.map(
-              (final e) {
-                final p = e['p']!;
-                final kp = r.nextInt(p.length);
+                  (final e) {
+                    final p = e['p']!;
+                    final kp = r.nextInt(p.length);
 
-                return Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(4),
-                    child: OutlinedButton(
+                    return OutlinedButton(
                       onPressed: () {
                         final a = e['a']!;
 
                         setState(() {
-                          messages.insert(
-                              0,
-                              Message()
-                                ..prompt = p[kp]
-                                ..message = a[r.nextInt(a.length)]);
+                          messages.add(Message()
+                            ..prompt = p[kp]
+                            ..message = a[r.nextInt(a.length)]);
                         });
                       },
                       child: Text(
@@ -117,12 +118,55 @@ class _MessangerState extends State<Messanger> {
                         softWrap: false,
                         overflow: TextOverflow.fade,
                       ),
-                    ),
-                  ),
-                );
-              },
-            ).toList()),
+                    );
+                  },
+                ).toList()),
           ),
         ],
       );
+}
+
+class Typer extends StatefulWidget {
+  const Typer(
+    this.data, {
+    super.key,
+  });
+
+  final String data;
+
+  @override
+  State<Typer> createState() => _TyperState();
+}
+
+class _TyperState extends State<Typer> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    _controller = AnimationController(
+      duration: Duration(milliseconds: widget.data.length * 33),
+      vsync: this,
+    );
+    _controller.forward();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(final BuildContext context) => AnimatedBuilder(
+      animation: _controller,
+      builder: (final BuildContext context, final Widget? child) => RichText(
+            text: TextSpan(
+              text: widget.data.substring(
+                0,
+                (widget.data.length * _controller.value).round(),
+              ),
+              children: [if (_controller.value < 1) TextSpan(text: " -")],
+            ),
+          ));
 }
