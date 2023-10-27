@@ -32,7 +32,10 @@ class _TriggersScreenState extends State<TriggersScreen> {
   Widget build(final BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TopBar(setPage: widget.setPage),
+          TopBar(
+            setPage: widget.setPage,
+            subTitle: AppLocalizations.of(context)!.screenTriggers,
+          ),
           Expanded(
             child: BlocBuilder<TriggersCubit, Triggers?>(
               builder: (final context, final ts) => ListView(

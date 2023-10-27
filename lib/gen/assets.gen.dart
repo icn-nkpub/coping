@@ -510,13 +510,14 @@ class Assets {
   Assets._();
 
   static const $AssetsGuyGen guy = $AssetsGuyGen();
+  static const String guyhead = 'assets/guyhead.svg';
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsManualsGen manuals = $AssetsManualsGen();
   static const String nkpub = 'assets/nkpub.svg';
   static const AssetGenImage opaqring = AssetGenImage('assets/opaqring.png');
 
   /// List of all assets
-  List<dynamic> get values => [nkpub, opaqring];
+  List<dynamic> get values => [guyhead, nkpub, opaqring];
 }
 
 class AssetGenImage {

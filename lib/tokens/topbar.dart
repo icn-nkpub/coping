@@ -33,10 +33,12 @@ class NullTopBar extends StatelessWidget {
 class TopBar extends StatefulWidget {
   const TopBar({
     required this.setPage,
+    required this.subTitle,
     super.key,
   });
 
   final void Function(int) setPage;
+  final String subTitle;
 
   @override
   State<TopBar> createState() => _TopBarState();
@@ -107,26 +109,30 @@ class _TopBarState extends State<TopBar> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: RichText(
-                          text: TextSpan(children: [
-                            TextSpan(
-                              text: 'Coping',
+                        child: Row(
+                          children: [
+                            Text(
+                              'Coping ',
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium!
-                                  .copyWith(fontWeight: FontWeight.w900),
+                                  .copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                             ),
-                            // TextSpan(
-                            //   text: AppLocalizations.of(context)!.hello,
-                            //   style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w600),
-                            //   children: [
-                            //     if ((u?.profile?.firstName ?? '') != '')
-                            //       TextSpan(
-                            //         text: ' ${u?.profile?.firstName ?? ''}',
-                            //       ),
-                            //   ],
-                            // )
-                          ]),
+                            Opacity(
+                              opacity: .6,
+                              child: Text(
+                                widget.subTitle,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Row(

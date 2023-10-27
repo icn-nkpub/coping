@@ -1,6 +1,7 @@
 import 'package:dependencecoping/pages/clock/countdown.dart';
 import 'package:dependencecoping/tokens/topbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ClockScreen extends StatelessWidget {
   const ClockScreen({
@@ -13,7 +14,10 @@ class ClockScreen extends StatelessWidget {
   @override
   Widget build(final BuildContext context) => Column(
         children: [
-          TopBar(setPage: setPage),
+          TopBar(
+            setPage: setPage,
+            subTitle: AppLocalizations.of(context)!.screenClock,
+          ),
           const Countdown(),
         ],
       );

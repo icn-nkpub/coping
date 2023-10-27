@@ -1,5 +1,6 @@
 import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/pages/clock/main.dart';
+import 'package:dependencecoping/pages/copeai/copeai.dart';
 import 'package:dependencecoping/pages/meditation/meditation.dart';
 import 'package:dependencecoping/pages/triggers/triggers.dart';
 import 'package:dependencecoping/paginator.dart';
@@ -21,37 +22,42 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(final BuildContext context) => Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 0,
-        surfaceTintColor: Theme.of(context).appBarTheme.backgroundColor,
-        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-      ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: currentPageIndex,
-        onDestinationSelected: (final int index) {
-          setState(() {
-            currentPageIndex = index;
-          });
-        },
-        destinations: [
-          NavigationDestination(
-            icon: SvgIcon(assetPath: Assets.icons.timer),
-            label: AppLocalizations.of(context)!.screenClock,
-          ),
-          NavigationDestination(
-            icon: SvgIcon(assetPath: Assets.icons.mindfulness),
-            label: AppLocalizations.of(context)!.screenTriggers,
-          ),
-          NavigationDestination(
-            icon: SvgIcon(assetPath: Assets.icons.relax),
-            label: AppLocalizations.of(context)!.screenMeditation,
-          ),
-        ],
-      ),
-      body: [
-        ClockScreen(setPage: pagginator(context)),
-        TriggersScreen(setPage: pagginator(context)),
-        const MeditationScreen(),
-      ][currentPageIndex],
-    );
+        appBar: AppBar(
+          toolbarHeight: 0,
+          surfaceTintColor: Theme.of(context).appBarTheme.backgroundColor,
+          backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        ),
+        bottomNavigationBar: NavigationBar(
+          selectedIndex: currentPageIndex,
+          onDestinationSelected: (final int index) {
+            setState(() {
+              currentPageIndex = index;
+            });
+          },
+          destinations: [
+            NavigationDestination(
+              icon: SvgIcon(assetPath: Assets.icons.timer),
+              label: AppLocalizations.of(context)!.screenClock,
+            ),
+            NavigationDestination(
+              icon: SvgIcon(assetPath: Assets.icons.mindfulness),
+              label: AppLocalizations.of(context)!.screenTriggers,
+            ),
+            NavigationDestination(
+              icon: const SvgIcon(assetPath: Assets.guyhead),
+              label: AppLocalizations.of(context)!.screenAssistant,
+            ),
+            NavigationDestination(
+              icon: SvgIcon(assetPath: Assets.icons.relax),
+              label: AppLocalizations.of(context)!.screenMeditation,
+            ),
+          ],
+        ),
+        body: [
+          ClockScreen(setPage: pagginator(context)),
+          TriggersScreen(setPage: pagginator(context)),
+          CopeScreen(setPage: pagginator(context)),
+          const MeditationScreen(),
+        ][currentPageIndex],
+      );
 }
