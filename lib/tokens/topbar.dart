@@ -59,7 +59,7 @@ class _TopBarState extends State<TopBar> {
         ),
       );
 
-  Null Function() goTo(final int pageKey) => () {
+  void Function() goTo(final int pageKey) => () {
         widget.setPage(pageKey);
         setState(() {
           expandMenu = !expandMenu;
@@ -68,100 +68,97 @@ class _TopBarState extends State<TopBar> {
 
   BlocBuilder<LoginCubit, Profile?> head(final BuildContext context) =>
       BlocBuilder<LoginCubit, Profile?>(
-          builder: (final _, final u) => Material(
-                color: Theme.of(context).appBarTheme.backgroundColor,
-                shadowColor: Theme.of(context).appBarTheme.shadowColor,
-                elevation: 2,
-                child: Container(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              openModal(
-                                context,
-                                const HelpModal(),
-                              );
-                            },
-                            icon: SvgIcon(Assets.icons.liveHelp),
-                          ),
-                          // FutureBuilder(
-                          //   // ignore: discarded_futures
-                          //   future: discordObtainInvite(),
-                          //   builder: (final context, final snapshot) => Badge(
-                          //     alignment: Alignment.topRight,
-                          //     offset: const Offset(-4, 6),
-                          //     largeSize: 8,
-                          //     padding: EdgeInsets.zero,
-                          //     label: const SizedBox.square(dimension: 8),
-                          //     child: IconButton(
-                          //       onPressed: () {
-                          //         unawaited(launchUrlString(snapshot.data.toString()));
-                          //       },
-                          //       icon: SvgIcon( Assets.icons.diversity1),
-                          //     ),
-                          //   ),
-                          // ),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Row(
-                          children: [
-                            Text(
-                              'Coping ',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                            ),
-                            Opacity(
-                              opacity: .6,
-                              child: Text(
-                                widget.subTitle,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleMedium!
-                                    .copyWith(
-                                      fontWeight: FontWeight.w300,
-                                    ),
-                              ),
-                            ),
-                          ],
+        builder: (final _, final u) => Material(
+          color: Theme.of(context).appBarTheme.backgroundColor,
+          shadowColor: Theme.of(context).appBarTheme.shadowColor,
+          elevation: 2,
+          child: headContent(context),
+        ),
+      );
+
+  Widget headContent(final BuildContext context) => Container(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    openModal(
+                      context,
+                      const HelpModal(),
+                    );
+                  },
+                  icon: SvgIcon(Assets.icons.liveHelp),
+                ),
+                // FutureBuilder(
+                //   // ignore: discarded_futures
+                //   future: discordObtainInvite(),
+                //   builder: (final context, final snapshot) => Badge(
+                //     alignment: Alignment.topRight,
+                //     offset: const Offset(-4, 6),
+                //     largeSize: 8,
+                //     padding: EdgeInsets.zero,
+                //     label: const SizedBox.square(dimension: 8),
+                //     child: IconButton(
+                //       onPressed: () {
+                //         unawaited(launchUrlString(snapshot.data.toString()));
+                //       },
+                //       icon: SvgIcon( Assets.icons.diversity1),
+                //     ),
+                //   ),
+                // ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Row(
+                children: [
+                  Text(
+                    'Coping ',
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                          fontWeight: FontWeight.w700,
                         ),
-                      ),
-                      Row(
-                        children: [
-                          // Opacity(
-                          //   opacity: 0,
-                          //   child: IconButton(
-                          //     onPressed: () {},
-                          //     icon: SvgIcon( Assets.icons.bolt),
-                          //   ),
-                          // ),
-                          IconButton(
-                            onPressed: () {
-                              setState(() {
-                                expandMenu = !expandMenu;
-                              });
-                            },
-                            icon: AnimatedRotation(
-                              duration: const Duration(milliseconds: 100),
-                              turns: expandMenu ? 0.5 : 0,
-                              child: SvgIcon(Assets.icons.expandMore),
-                            ),
+                  ),
+                  Opacity(
+                    opacity: .6,
+                    child: Text(
+                      widget.subTitle,
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                            fontWeight: FontWeight.w300,
                           ),
-                        ],
-                      ),
-                    ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Row(
+              children: [
+                // Opacity(
+                //   opacity: 0,
+                //   child: IconButton(
+                //     onPressed: () {},
+                //     icon: SvgIcon( Assets.icons.bolt),
+                //   ),
+                // ),
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      expandMenu = !expandMenu;
+                    });
+                  },
+                  icon: AnimatedRotation(
+                    duration: const Duration(milliseconds: 100),
+                    turns: expandMenu ? 0.5 : 0,
+                    child: SvgIcon(Assets.icons.expandMore),
                   ),
                 ),
-              ));
+              ],
+            ),
+          ],
+        ),
+      );
 
   Widget body() => Shrinkable(
         expanded: expandMenu,

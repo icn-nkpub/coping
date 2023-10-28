@@ -32,14 +32,14 @@ class CountdownDisplay extends StatelessWidget {
             return Column(
               children: [
                 Flexible(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: BlocBuilder<ThemeCubit, ThemeState>(
-                      builder: (final context, final state) => Container(
+                  child: BlocBuilder<ThemeCubit, ThemeState>(
+                    builder: (final context, final state) {
+                      final c = Theme.of(context).scaffoldBackgroundColor;
+                      return Container(
                         height: double.infinity,
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.primaryContainer,
-                          borderRadius: BorderRadius.circular(16),
+                          // borderRadius: BorderRadius.circular(16),
                           image: DecorationImage(
                             image: NetworkImage(
                                 matchingImage(state.color, state.mode)),
@@ -48,47 +48,69 @@ class CountdownDisplay extends StatelessWidget {
                           ),
                         ),
                         clipBehavior: Clip.antiAlias,
-                        child: IgnorePointer(
-                          child: Container(
-                            width: double.infinity,
-                            alignment: Alignment.topRight,
-                            padding: const EdgeInsets.all(26),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Expanded(
-                                  child: Wrap(
-                                    spacing: 8,
-                                    direction: Axis.vertical,
-                                    crossAxisAlignment: WrapCrossAlignment.end,
-                                    children: [
-                                      scoreTrophyBadge(),
+                        child: Stack(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    stops: const [0, 0.6, 0.95, 1],
+                                    colors: <Color>[
+                                      c.withOpacity(0),
+                                      c.withOpacity(0),
+                                      c,
+                                      c,
                                     ],
                                   ),
                                 ),
-                                const Row(
-                                  children: [
-                                    Motivation(),
-                                  ],
-                                )
-                              ],
+                              ),
                             ),
-                          ),
+                            IgnorePointer(
+                              child: Container(
+                                width: double.infinity,
+                                alignment: Alignment.topRight,
+                                padding: const EdgeInsets.all(26),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Expanded(
+                                      child: Wrap(
+                                        spacing: 8,
+                                        direction: Axis.vertical,
+                                        crossAxisAlignment:
+                                            WrapCrossAlignment.end,
+                                        children: [
+                                          scoreTrophyBadge(),
+                                        ],
+                                      ),
+                                    ),
+                                    const Row(
+                                      children: [Motivation()],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ),
+                      );
+                    },
                   ),
                 ),
                 const SizedBox(height: 8 * 3),
-                Stopwatch(
-                  from: splits?.last,
-                  frozen: paused,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Stopwatch(
+                    from: splits?.last,
+                    frozen: paused,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 Container(
                   width: double.infinity,
-                  padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width * .12),
+                  padding: const EdgeInsets.symmetric(horizontal: 8 * 8),
                   child: FittedBox(
                       child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -227,27 +249,14 @@ class Motivation extends StatelessWidget {
     final theme = Theme.of(context);
     return Container(
       alignment: Alignment.bottomLeft,
-      width: MediaQuery.of(context).size.width * .35,
-      child: Stack(
-        children: [
-          Typer(
-            t,
-            textAlign: TextAlign.left,
-            style: theme.textTheme.bodyMedium!.copyWith(
-              shadows: outline(1, 3, theme.colorScheme.primaryContainer),
-              fontWeight: FontWeight.w500,
-              color: Colors.transparent,
-            ),
-          ),
-          Typer(
-            t,
-            textAlign: TextAlign.left,
-            style: theme.textTheme.bodyMedium!.copyWith(
-              color: theme.colorScheme.onPrimaryContainer,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
+      width: MediaQuery.of(context).size.width * .65,
+      child: Typer(
+        t,
+        textAlign: TextAlign.left,
+        style: theme.textTheme.titleLarge!.copyWith(
+          color: theme.colorScheme.onSurface,
+          fontWeight: FontWeight.w900,
+        ),
       ),
     );
   }

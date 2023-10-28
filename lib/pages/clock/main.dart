@@ -12,13 +12,18 @@ class ClockScreen extends StatelessWidget {
   final void Function(int) setPage;
 
   @override
-  Widget build(final BuildContext context) => Column(
+  Widget build(final BuildContext context) => Stack(
+        alignment: Alignment.topCenter,
         children: [
-          TopBar(
-            setPage: setPage,
-            subTitle: AppLocalizations.of(context)!.screenClock,
-          ),
           const Countdown(),
+          Column(
+            children: [
+              TopBar(
+                setPage: setPage,
+                subTitle: AppLocalizations.of(context)!.screenClock,
+              ),
+            ],
+          ),
         ],
       );
 }
@@ -37,9 +42,6 @@ class _CountdownState extends State<Countdown> {
 
   @override
   Widget build(final BuildContext context) => const Expanded(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8.0),
-          child: CountdownDisplay(),
-        ),
+        child: CountdownDisplay(),
       );
 }
