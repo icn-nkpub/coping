@@ -50,20 +50,18 @@ class CountdownDisplay extends StatelessWidget {
                         clipBehavior: Clip.antiAlias,
                         child: Stack(
                           children: [
-                            Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                    stops: const [0, 0.6, 0.95, 1],
-                                    colors: <Color>[
-                                      c.withOpacity(0),
-                                      c.withOpacity(0),
-                                      c,
-                                      c,
-                                    ],
-                                  ),
+                            Container(
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  stops: const [0, 0.6, 0.95, 1],
+                                  colors: <Color>[
+                                    c.withOpacity(0),
+                                    c.withOpacity(0),
+                                    c,
+                                    c,
+                                  ],
                                 ),
                               ),
                             ),

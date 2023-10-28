@@ -188,10 +188,10 @@ class _HighTextState extends State<HighText> with TickerProviderStateMixin {
             animation: _c,
             child: Text(
               widget.text,
-              style: Theme.of(context)
-                  .textTheme
-                  .displaySmall!
-                  .copyWith(fontWeight: FontWeight.w900),
+              style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                    fontFamily: 'FiraMono',
+                    fontWeight: FontWeight.w700,
+                  ),
               textAlign: TextAlign.center,
             ),
             builder: (final context, final child) => ShaderMask(

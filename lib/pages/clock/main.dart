@@ -41,7 +41,5 @@ class _CountdownState extends State<Countdown> {
   bool debug = false;
 
   @override
-  Widget build(final BuildContext context) => const Expanded(
-        child: CountdownDisplay(),
-      );
+  Widget build(final BuildContext context) => const CountdownDisplay();
 }
