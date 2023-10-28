@@ -41,7 +41,8 @@ class ProfileModalContent extends StatefulWidget {
 class _ProfileModalContentState extends State<ProfileModalContent> {
   late final cFirstName = TextEditingController(text: widget.firstName);
   late final cSecondName = TextEditingController(text: widget.secondName);
-  late final cAddictionLabel = TextEditingController(text: widget.addictionLabel);
+  late final cAddictionLabel =
+      TextEditingController(text: widget.addictionLabel);
 
   @override
   Widget build(final BuildContext context) => Padding(
@@ -54,14 +55,25 @@ class _ProfileModalContentState extends State<ProfileModalContent> {
                 // ignore: discarded_futures
                 future: restoreCredentials(),
                 builder: (final context, final snapshot) =>
-                    snapshot.data != null && snapshot.data!.isNotNull() ? CredentialsRemider(cred: snapshot.data!) : const SizedBox(),
+                    snapshot.data != null && snapshot.data!.isNotNull()
+                        ? CredentialsRemider(cred: snapshot.data!)
+                        : const SizedBox(),
               ),
               const SizedBox(height: 8),
-              Input(title: AppLocalizations.of(context)!.profileFirstName, ctrl: cFirstName, autocorrect: true),
+              Input(
+                  title: AppLocalizations.of(context)!.profileFirstName,
+                  ctrl: cFirstName,
+                  autocorrect: true),
               const SizedBox(height: 8),
-              Input(title: AppLocalizations.of(context)!.profileSecondName, ctrl: cSecondName, autocorrect: true),
+              Input(
+                  title: AppLocalizations.of(context)!.profileSecondName,
+                  ctrl: cSecondName,
+                  autocorrect: true),
               const SizedBox(height: 8),
-              Input(title: AppLocalizations.of(context)!.profileAddictionLabel, ctrl: cAddictionLabel, autocorrect: true),
+              Input(
+                  title: AppLocalizations.of(context)!.profileAddictionLabel,
+                  ctrl: cAddictionLabel,
+                  autocorrect: true),
               Flexible(child: ListView()),
               Center(
                 child: FilledButton(
@@ -112,13 +124,23 @@ class CredentialsRemider extends StatelessWidget {
                   children: [
                     Text(
                       AppLocalizations.of(context)!.loginEmail,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(fontWeight: FontWeight.bold),
                     ),
                     Copier(title: 'user-•••••@coping.new', content: cred.email),
                   ],
                 ),
               ),
-              Container(decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Theme.of(context).colorScheme.primary.withOpacity(.2))))),
+              Container(
+                  decoration: BoxDecoration(
+                      border: Border(
+                          bottom: BorderSide(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primary
+                                  .withOpacity(.2))))),
               Padding(
                 padding: const EdgeInsets.only(left: 8),
                 child: Row(
@@ -126,7 +148,10 @@ class CredentialsRemider extends StatelessWidget {
                   children: [
                     Text(
                       AppLocalizations.of(context)!.loginPassword,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(fontWeight: FontWeight.bold),
                     ),
                     Copier(title: '•••••••••••••••', content: cred.password),
                   ],
@@ -165,7 +190,9 @@ class Copier extends StatelessWidget {
           onPressed: () {
             tooltipkey.currentState?.ensureTooltipVisible();
 
-            if (content != null) unawaited(Clipboard.setData(ClipboardData(text: content!)));
+            if (content != null) {
+              unawaited(Clipboard.setData(ClipboardData(text: content!)));
+            }
           },
           icon: Text(
             title,
@@ -173,7 +200,7 @@ class Copier extends StatelessWidget {
           label: Opacity(
             opacity: .5,
             child: SvgIcon(
-              assetPath: Assets.icons.contentCopy,
+              Assets.icons.contentCopy,
               sizeOffset: 8,
               color: Theme.of(context).colorScheme.primary,
             ),

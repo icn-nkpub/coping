@@ -73,7 +73,7 @@ class _TriggersScreenState extends State<TriggersScreen> {
                           AnimatedRotation(
                             duration: const Duration(milliseconds: 100),
                             turns: expandDiscovery ? 0.5 : 0,
-                            child: SvgIcon(assetPath: Assets.icons.expandMore),
+                            child: SvgIcon(Assets.icons.expandMore),
                           ),
                         ],
                       ),

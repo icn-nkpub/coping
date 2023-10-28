@@ -1,5 +1,4 @@
 import 'package:dependencecoping/pages/triggers/modals/log_event.dart';
-import 'package:dependencecoping/provider/theme/fonts.dart';
 import 'package:dependencecoping/storage/trigger_log.dart';
 import 'package:dependencecoping/tokens/modal.dart';
 import 'package:flutter/material.dart';
@@ -75,9 +74,9 @@ class TriggerLogCard extends StatelessWidget {
                     DateFormat('dd.MM.yyyy HH:mm')
                         .format(tl.time)
                         .replaceAll('0', 'O'),
-                    style: fAccent(
-                      textStyle: Theme.of(context).textTheme.bodyMedium,
-                    ).copyWith(fontWeight: FontWeight.w100),
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          fontFamily: 'FiraMono',
+                        ),
                   ),
                 ),
               ),

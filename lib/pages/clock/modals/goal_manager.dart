@@ -32,11 +32,14 @@ class _GoalModalState extends State<GoalModal> {
   }
 
   @override
-  Widget build(final BuildContext context) => BlocBuilder<StaticCubit, StaticRecords?>(builder: (final context, final staticRec) {
+  Widget build(final BuildContext context) =>
+      BlocBuilder<StaticCubit, StaticRecords?>(
+          builder: (final context, final staticRec) {
         final List<Widget> widgets = [];
         final sortedGoals = [...staticRec!.goals];
         sortedGoals.sort((final g1, final g2) => g1.rate.compareTo(g2.rate));
-        widgets.addAll(sortedGoals.map((final g) => _togglableGoal(context, g)));
+        widgets
+            .addAll(sortedGoals.map((final g) => _togglableGoal(context, g)));
 
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -49,7 +52,9 @@ class _GoalModalState extends State<GoalModal> {
             FilledButton(
                 onPressed: () {
                   if (Navigator.of(context).canPop() && widget.auth != null) {
-                    unawaited(context.read<GoalsCubit>().set(widget.auth!, Goals(goals)));
+                    unawaited(context
+                        .read<GoalsCubit>()
+                        .set(widget.auth!, Goals(goals)));
                     Navigator.of(context).pop();
                   }
                 },
@@ -61,18 +66,26 @@ class _GoalModalState extends State<GoalModal> {
   Widget _togglableGoal(final BuildContext context, final Goal g) {
     String title = g.titles['en']!;
     for (final t in g.titles.entries) {
-      if (t.key == Localizations.localeOf(context).languageCode) title = t.value;
+      if (t.key == Localizations.localeOf(context).languageCode) {
+        title = t.value;
+      }
     }
 
     final onChanged = _toggle(g);
-    final currentValue = goals.where((final element) => element.id == g.id).isNotEmpty;
+    final currentValue =
+        goals.where((final element) => element.id == g.id).isNotEmpty;
 
     final goalIconPath = 'assets/icons/${g.iconName}.svg';
 
-    return GoalToggleCard(currentValue: currentValue, onChanged: onChanged, title: title, goalIconPath: goalIconPath);
+    return GoalToggleCard(
+        currentValue: currentValue,
+        onChanged: onChanged,
+        title: title,
+        goalIconPath: goalIconPath);
   }
 
-  Null Function({bool? checkState}) _toggle(final Goal g) => ({final bool? checkState}) {
+  Null Function({bool? checkState}) _toggle(final Goal g) =>
+      ({final bool? checkState}) {
         if (checkState == null) {
           return;
         }
@@ -95,7 +108,10 @@ class _GoalModalState extends State<GoalModal> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               name,
-              style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineSmall!
+                  .copyWith(fontWeight: FontWeight.bold),
             ),
           ),
           const SizedBox(
@@ -136,7 +152,7 @@ class GoalToggleCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(16),
               child: SvgIcon(
-                assetPath: goalIconPath,
+                goalIconPath,
                 color: Theme.of(context).colorScheme.primary.withOpacity(.5),
               ),
             ),

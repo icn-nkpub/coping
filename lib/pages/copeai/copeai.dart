@@ -1,5 +1,7 @@
 import 'dart:math';
+import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/pages/copeai/data.dart';
+import 'package:dependencecoping/tokens/icons.dart';
 import 'package:dependencecoping/tokens/topbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -16,7 +18,10 @@ class CopeScreen extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final b = brain[Localizations.localeOf(context).languageCode] ?? [];
+    final Map<String, List<String>> b = {};
+    final lc = Localizations.localeOf(context).languageCode;
+    b[Assets.guy.smart] = nos[lc] ?? [];
+    b[Assets.guy.positive] = cheers[lc] ?? [];
 
     return Column(
       children: [
@@ -43,7 +48,7 @@ class Messanger extends StatefulWidget {
     super.key,
   });
 
-  final List<Map<String, List<String>>> b;
+  final Map<String, List<String>> b;
 
   @override
   State<Messanger> createState() => _MessangerState();
@@ -61,78 +66,86 @@ class _MessangerState extends State<Messanger> {
   }
 
   @override
-  Widget build(final BuildContext context) => Column(
-        children: [
-          Expanded(
-            child: ListView(
-              reverse: true,
-              controller: scroll,
-              children: messages.reversed
-                  .map(
-                    (final e) => Card(
-                      key: Key(e.hashCode.toString()),
-                      margin: const EdgeInsets.all(16),
-                      elevation: 2,
-                      child: Container(
-                        padding: const EdgeInsets.all(16),
-                        width: double.infinity,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Opacity(
-                              opacity: .5,
-                              child: Text('— ${e.prompt}'),
+  Widget build(final BuildContext context) {
+    final List<Widget> children = [];
+
+    for (final e in widget.b.entries) {
+      children.add(
+        IconButton.outlined(
+          onPressed: () {
+            setState(() {
+              messages.add(Message()
+                ..prompt = e.key
+                ..message = e.value[r.nextInt(e.value.length)]);
+            });
+          },
+          icon: SvgIcon(
+            e.key,
+            sizeOffset: -22,
+          ),
+        ),
+      );
+    }
+
+    return Column(
+      children: [
+        Expanded(
+          child: ListView(
+            reverse: true,
+            controller: scroll,
+            children: messages.reversed
+                .map(
+                  (final e) => Card(
+                    key: Key(e.hashCode.toString()),
+                    margin: const EdgeInsets.all(16),
+                    elevation: 2,
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Opacity(
+                            opacity: .5,
+                            child: SvgIcon(
+                              e.prompt,
+                              sizeOffset: -22,
                             ),
-                            Typer(e.message),
-                          ],
-                        ),
+                          ),
+                          Typer(e.message),
+                        ],
                       ),
                     ),
-                  )
-                  .toList(),
-            ),
+                  ),
+                )
+                .toList(),
           ),
-          Container(
-            padding: const EdgeInsets.all(16),
-            width: double.infinity,
-            alignment: Alignment.centerLeft,
-            child: Wrap(
-                spacing: 8,
-                children: widget.b.map(
-                  (final e) {
-                    final p = e['p']!;
-                    final kp = r.nextInt(p.length);
-
-                    return OutlinedButton(
-                      onPressed: () {
-                        final a = e['a']!;
-
-                        setState(() {
-                          messages.add(Message()
-                            ..prompt = p[kp]
-                            ..message = a[r.nextInt(a.length)]);
-                        });
-                      },
-                      child: Text(
-                        p[kp],
-                        softWrap: false,
-                        overflow: TextOverflow.fade,
-                      ),
-                    );
-                  },
-                ).toList()),
+        ),
+        Container(
+          padding: const EdgeInsets.all(16),
+          width: double.infinity,
+          alignment: Alignment.centerLeft,
+          child: Wrap(
+            spacing: 8,
+            children: children,
           ),
-        ],
-      );
+        ),
+      ],
+    );
+  }
 }
 
 class Typer extends StatefulWidget {
   const Typer(
     this.data, {
     super.key,
+    this.textAlign,
+    this.style,
   });
 
   final String data;
+  final TextAlign? textAlign;
+  final TextStyle? style;
 
   @override
   State<Typer> createState() => _TyperState();
@@ -161,12 +174,14 @@ class _TyperState extends State<Typer> with SingleTickerProviderStateMixin {
   Widget build(final BuildContext context) => AnimatedBuilder(
       animation: _controller,
       builder: (final BuildContext context, final Widget? child) => RichText(
+            textAlign: widget.textAlign ?? TextAlign.start,
             text: TextSpan(
+              style: widget.style,
               text: widget.data.substring(
                 0,
                 (widget.data.length * _controller.value).round(),
               ),
-              children: [if (_controller.value < 1) TextSpan(text: " -")],
+              children: [if (_controller.value < 1) const TextSpan(text: '')],
             ),
           ));
 }

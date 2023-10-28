@@ -20,20 +20,23 @@ class ModalDecoration extends StatelessWidget {
             IconButton(
               onPressed: () {},
               icon: SvgIcon(
-                assetPath: Assets.icons.arrowBack,
+                Assets.icons.arrowBack,
                 sizeOffset: 4,
               ),
             ),
             Text(
               title,
-              style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium!
+                  .copyWith(fontWeight: FontWeight.bold),
             ),
             Opacity(
               opacity: 0,
               child: IconButton(
                 onPressed: () {},
                 icon: SvgIcon(
-                  assetPath: Assets.icons.arrowBack,
+                  Assets.icons.arrowBack,
                   sizeOffset: 4,
                 ),
               ),

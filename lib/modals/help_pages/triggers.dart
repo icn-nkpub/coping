@@ -19,7 +19,9 @@ class TriggersHelpPage extends StatelessWidget {
   Widget build(final BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Guy(text: AppLocalizations.of(context)!.helpTriggersJournal, face: Assets.guy.smart),
+          Guy(
+              text: AppLocalizations.of(context)!.helpTriggersJournal,
+              face: Assets.guy.smart),
           Expanded(
             child: ListView(
               children: [
@@ -36,14 +38,19 @@ class TriggersHelpPage extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 14),
                           child: Text(
-                            AppLocalizations.of(context)!.triggerPersonalTriggers,
-                            style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
+                            AppLocalizations.of(context)!
+                                .triggerPersonalTriggers,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(fontWeight: FontWeight.bold),
                           ),
                         ),
                         Wrap(
                           runSpacing: 4,
                           spacing: 4,
-                          children: getRandomButtons(context, withPlus: true, tertiary: true),
+                          children: getRandomButtons(context,
+                              withPlus: true, tertiary: true),
                         ),
                       ],
                     ),
@@ -65,8 +72,12 @@ class TriggersHelpPage extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 14),
                           child: Text(
-                            AppLocalizations.of(context)!.triggerDiscoverTriggers,
-                            style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
+                            AppLocalizations.of(context)!
+                                .triggerDiscoverTriggers,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(fontWeight: FontWeight.bold),
                           ),
                         ),
                         Wrap(
@@ -91,11 +102,12 @@ class TriggersHelpPage extends StatelessWidget {
                       child: IconButton.filledTonal(
                         style: const ButtonStyle(
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 8 * 2)),
+                          padding: MaterialStatePropertyAll(
+                              EdgeInsets.symmetric(horizontal: 8 * 2)),
                         ),
                         onPressed: () {},
                         icon: SvgIcon(
-                          assetPath: Assets.icons.add,
+                          Assets.icons.add,
                         ),
                       ),
                     ),
@@ -103,13 +115,18 @@ class TriggersHelpPage extends StatelessWidget {
                 ),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: MarkdownManual(section: 'triggers', fragment: 'm3_plus'),
+                  child:
+                      MarkdownManual(section: 'triggers', fragment: 'm3_plus'),
                 ),
                 ModalContainer(
                   title: AppLocalizations.of(context)!.modalAddPersonalTrigger,
                   child: Column(
                     children: [
-                      Input(title: AppLocalizations.of(context)!.triggerPersonalLabel, ctrl: TextEditingController(), autocorrect: true),
+                      Input(
+                          title: AppLocalizations.of(context)!
+                              .triggerPersonalLabel,
+                          ctrl: TextEditingController(),
+                          autocorrect: true),
                       const SizedBox(height: 8),
                       Handed(
                         computeLeft: (final s, final av) => s * .7,
@@ -120,7 +137,8 @@ class TriggersHelpPage extends StatelessWidget {
                           onPressed: () async {},
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text(AppLocalizations.of(context)!.triggerPersonalAddTrigger),
+                            child: Text(AppLocalizations.of(context)!
+                                .triggerPersonalAddTrigger),
                           ),
                         ),
                       ),
@@ -129,7 +147,8 @@ class TriggersHelpPage extends StatelessWidget {
                 ),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: MarkdownManual(section: 'triggers', fragment: 'm4_add'),
+                  child:
+                      MarkdownManual(section: 'triggers', fragment: 'm4_add'),
                 ),
               ],
             ),
@@ -137,20 +156,22 @@ class TriggersHelpPage extends StatelessWidget {
         ],
       );
 
-  List<Widget> getRandomButtons(final BuildContext context, {final bool withPlus = false, final bool tertiary = false}) {
+  List<Widget> getRandomButtons(final BuildContext context,
+      {final bool withPlus = false, final bool tertiary = false}) {
     final List<Widget> list = [];
-    randomTexts().map((final e) => TriggerBadge(tertiary: tertiary, text: e)).forEach(list.add);
+    randomTexts()
+        .map((final e) => TriggerBadge(tertiary: tertiary, text: e))
+        .forEach(list.add);
     if (withPlus) {
       list.add(
         IconButton.filledTonal(
           style: const ButtonStyle(
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            padding: MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 8 * 2)),
+            padding: MaterialStatePropertyAll(
+                EdgeInsets.symmetric(horizontal: 8 * 2)),
           ),
           onPressed: () {},
-          icon: SvgIcon(
-            assetPath: Assets.icons.add,
-          ),
+          icon: SvgIcon(Assets.icons.add),
         ),
       );
     }
@@ -172,9 +193,13 @@ class TriggerBadge extends StatelessWidget {
   @override
   Widget build(final BuildContext context) => FilledButton.tonal(
         style: ButtonStyle(
-          backgroundColor: tertiary ? MaterialStatePropertyAll(Theme.of(context).colorScheme.tertiaryContainer) : null,
+          backgroundColor: tertiary
+              ? MaterialStatePropertyAll(
+                  Theme.of(context).colorScheme.tertiaryContainer)
+              : null,
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          padding: const MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 8 * 2)),
+          padding: const MaterialStatePropertyAll(
+              EdgeInsets.symmetric(horizontal: 8 * 2)),
         ),
         onPressed: () {},
         child: Text(text),

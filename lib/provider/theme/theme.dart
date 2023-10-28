@@ -1,5 +1,4 @@
 import 'package:dependencecoping/provider/theme/colors.dart';
-import 'package:dependencecoping/provider/theme/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,6 +15,7 @@ class ThemeState {
 
   void resetThemeData() {
     data = ThemeData(
+      fontFamily: 'Jost',
       colorScheme: ColorScheme.fromSeed(
         seedColor: color.primary,
         brightness: isLightMode() ? Brightness.light : Brightness.dark,
@@ -30,11 +30,12 @@ class ThemeState {
     const shadow = Colors.transparent;
 
     data = data.copyWith(
-      textTheme: fBodyTextTheme(data.textTheme),
       iconTheme: data.iconTheme.copyWith(
         color: data.colorScheme.onPrimaryContainer,
       ),
-      scaffoldBackgroundColor: isLightMode() ? Colors.white : ElevationOverlay.applySurfaceTint(bc, pc, .5),
+      scaffoldBackgroundColor: isLightMode()
+          ? Colors.white
+          : ElevationOverlay.applySurfaceTint(bc, pc, .5),
       appBarTheme: data.appBarTheme.copyWith(
         color: ElevationOverlay.applySurfaceTint(bc, pc, 4),
         shadowColor: shadow,
@@ -60,10 +61,14 @@ class ThemeCubit extends Cubit<ThemeState> {
           data: ThemeData(
             colorScheme: ColorScheme.fromSeed(
               seedColor: ColorValue.midnight.primary,
-              brightness: ThemeMode.system == ThemeMode.light ? Brightness.light : Brightness.dark,
+              brightness: ThemeMode.system == ThemeMode.light
+                  ? Brightness.light
+                  : Brightness.dark,
             ),
             useMaterial3: true,
-            brightness: ThemeMode.system == ThemeMode.light ? Brightness.light : Brightness.dark,
+            brightness: ThemeMode.system == ThemeMode.light
+                ? Brightness.light
+                : Brightness.dark,
           ),
         ));
 

@@ -86,7 +86,7 @@ class _TopBarState extends State<TopBar> {
                                 const HelpModal(),
                               );
                             },
-                            icon: SvgIcon(assetPath: Assets.icons.liveHelp),
+                            icon: SvgIcon(Assets.icons.liveHelp),
                           ),
                           // FutureBuilder(
                           //   // ignore: discarded_futures
@@ -101,7 +101,7 @@ class _TopBarState extends State<TopBar> {
                           //       onPressed: () {
                           //         unawaited(launchUrlString(snapshot.data.toString()));
                           //       },
-                          //       icon: SvgIcon(assetPath: Assets.icons.diversity1),
+                          //       icon: SvgIcon( Assets.icons.diversity1),
                           //     ),
                           //   ),
                           // ),
@@ -117,7 +117,7 @@ class _TopBarState extends State<TopBar> {
                                   .textTheme
                                   .titleMedium!
                                   .copyWith(
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w700,
                                   ),
                             ),
                             Opacity(
@@ -128,7 +128,7 @@ class _TopBarState extends State<TopBar> {
                                     .textTheme
                                     .titleMedium!
                                     .copyWith(
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w300,
                                     ),
                               ),
                             ),
@@ -141,7 +141,7 @@ class _TopBarState extends State<TopBar> {
                           //   opacity: 0,
                           //   child: IconButton(
                           //     onPressed: () {},
-                          //     icon: SvgIcon(assetPath: Assets.icons.bolt),
+                          //     icon: SvgIcon( Assets.icons.bolt),
                           //   ),
                           // ),
                           IconButton(
@@ -153,8 +153,7 @@ class _TopBarState extends State<TopBar> {
                             icon: AnimatedRotation(
                               duration: const Duration(milliseconds: 100),
                               turns: expandMenu ? 0.5 : 0,
-                              child:
-                                  SvgIcon(assetPath: Assets.icons.expandMore),
+                              child: SvgIcon(Assets.icons.expandMore),
                             ),
                           ),
                         ],
@@ -235,7 +234,7 @@ class ThemeChanger extends StatelessWidget {
                 unawaited(context.read<ThemeCubit>().flipBrightness());
               },
               child: SvgIcon(
-                assetPath: t.isLightMode()
+                t.isLightMode()
                     ? Assets.icons.lightMode
                     : Assets.icons.darkMode,
               ),
@@ -260,7 +259,7 @@ class ThemeChanger extends StatelessWidget {
                     .read<LoginCubit>()
                     .setTheme(selected.name, isLight: t.isLightMode()));
               },
-              child: SvgIcon(assetPath: Assets.icons.palette),
+              child: SvgIcon(Assets.icons.palette),
             ),
           ],
         ),

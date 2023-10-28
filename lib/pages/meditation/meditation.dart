@@ -65,14 +65,19 @@ class CanvasDrawer extends Funvas {
     if (!muted) _drawCircle(primary, pt, w, h, slide);
   }
 
-  void _drawParticles(final double pt, final double w, final double h, final double cycle, final double t, final double slide) {
+  void _drawParticles(final double pt, final double w, final double h,
+      final double cycle, final double t, final double slide) {
     for (int round = 0; round < rounds; round++) {
       final rCycle = round / rounds;
-      final r = (4 * pt) + ((((muted ? 0 : cycle) * 3.85) + 1) * rCycle * 16 * pt) / 3;
+      final r = (4 * pt) +
+          ((((muted ? 0 : cycle) * 3.85) + 1) * rCycle * 16 * pt) / 3;
 
       final angleSkew = (13.1 + (t / 31)) * ((round + 1) * 14);
 
-      double alpha = max(0, (min(max((t / fullCycleDuration) - .25, 0), round / rounds) / 2) - 0.05);
+      double alpha = max(
+          0,
+          (min(max((t / fullCycleDuration) - .25, 0), round / rounds) / 2) -
+              0.05);
 
       if (windDownTime > -1) {
         alpha = max(0, alpha - (t - windDownTime));
@@ -90,7 +95,8 @@ class CanvasDrawer extends Funvas {
         var y1 = lr * sin(angle * pi / 180);
         y1 = y1 - slide;
 
-        final col = (i % 5 != 0 ? primary : secondary).withAlpha(alpha).toColor();
+        final col =
+            (i % 5 != 0 ? primary : secondary).withAlpha(alpha).toColor();
 
         c.drawCircle(
           Offset(w + x1, h - y1),
@@ -101,7 +107,8 @@ class CanvasDrawer extends Funvas {
     }
   }
 
-  void _drawGuideLine(final HSLColor color, final double pt, final double w, final double h) {
+  void _drawGuideLine(
+      final HSLColor color, final double pt, final double w, final double h) {
     final pointPaint = Paint();
     pointPaint.color = color.toColor().withAlpha(25);
     pointPaint.strokeCap = StrokeCap.round;
@@ -113,7 +120,8 @@ class CanvasDrawer extends Funvas {
     );
   }
 
-  void _drawCircle(final HSLColor color, final double pt, final double w, final double h, final double slide) {
+  void _drawCircle(final HSLColor color, final double pt, final double w,
+      final double h, final double slide) {
     final circlePaint = Paint();
     circlePaint.color = color.toColor();
     circlePaint.strokeCap = StrokeCap.round;
@@ -148,7 +156,8 @@ class MeditationScreen extends StatelessWidget {
   const MeditationScreen({super.key});
 
   @override
-  Widget build(final BuildContext context) => BlocBuilder<LoginCubit, Profile?>(builder: (final context, final u) {
+  Widget build(final BuildContext context) =>
+      BlocBuilder<LoginCubit, Profile?>(builder: (final context, final u) {
         final breathingTime = u?.profile?.breathingTime ?? 6.0;
 
         final cd = CanvasDrawer(
@@ -229,7 +238,9 @@ class _InfoCardState extends State<InfoCard> {
                   _expandInfo = !_expandInfo;
                 });
               },
-              icon: _expandInfo ? SvgIcon(assetPath: Assets.icons.close) : SvgIcon(assetPath: Assets.icons.expandMore),
+              icon: _expandInfo
+                  ? SvgIcon(Assets.icons.close)
+                  : SvgIcon(Assets.icons.expandMore),
             ),
           ),
           Shrinkable(
@@ -274,9 +285,11 @@ class _InfoCardState extends State<InfoCard> {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('— ', style: Theme.of(context).textTheme.bodySmall),
+                          Text('— ',
+                              style: Theme.of(context).textTheme.bodySmall),
                           Flexible(
-                            child: Text(e, style: Theme.of(context).textTheme.bodySmall),
+                            child: Text(e,
+                                style: Theme.of(context).textTheme.bodySmall),
                           ),
                         ],
                       ),

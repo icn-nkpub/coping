@@ -94,7 +94,7 @@ class _TriggerListState extends State<TriggerList> {
                           );
                         },
                         icon: SvgIcon(
-                          assetPath: Assets.icons.add,
+                          Assets.icons.add,
                         ),
                       ),
                     );

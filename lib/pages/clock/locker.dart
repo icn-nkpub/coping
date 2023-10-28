@@ -6,7 +6,6 @@ import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/provider/countdown/countdown.dart';
 import 'package:dependencecoping/provider/locker/locker.dart';
 import 'package:dependencecoping/provider/login/login.dart';
-import 'package:dependencecoping/provider/theme/fonts.dart';
 import 'package:dependencecoping/tokens/animation.dart';
 import 'package:dependencecoping/tokens/icons.dart';
 import 'package:dependencecoping/tokens/modal.dart';
@@ -47,8 +46,10 @@ class _LockerCardState extends State<LockerCard> {
 
   void animateCells() {
     try {
-      unawaited(hours.animateToPage(0, duration: const Duration(seconds: 1), curve: Curves.bounceOut));
-      unawaited(minutes.animateToPage(0, duration: const Duration(seconds: 1), curve: Curves.bounceOut));
+      unawaited(hours.animateToPage(0,
+          duration: const Duration(seconds: 1), curve: Curves.bounceOut));
+      unawaited(minutes.animateToPage(0,
+          duration: const Duration(seconds: 1), curve: Curves.bounceOut));
       // ignore: avoid_catching_errors
     } on AssertionError catch (e) {
       dev.log(e.toString(), name: 'locker.animate_cells');
@@ -61,7 +62,9 @@ class _LockerCardState extends State<LockerCard> {
           if (state.positive) Timer.run(animateCells);
           final w = Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: state.duration == Duration.zero ? _unlocked(state) : _locked(state),
+            children: state.duration == Duration.zero
+                ? _unlocked(state)
+                : _locked(state),
           );
 
           return Card(
@@ -69,9 +72,10 @@ class _LockerCardState extends State<LockerCard> {
             margin: EdgeInsets.zero,
             child: state.positive
                 ? Badge(
-                    backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
+                    backgroundColor:
+                        Theme.of(context).colorScheme.tertiaryContainer,
                     label: SvgIcon(
-                      assetPath: Assets.icons.done,
+                      Assets.icons.done,
                       sizeOffset: 8,
                       color: Theme.of(context).colorScheme.onTertiaryContainer,
                     ),
@@ -111,9 +115,11 @@ class _LockerCardState extends State<LockerCard> {
 
               final al = AppLocalizations.of(context)!;
               final ctc = context.read<CountdownTimerCubit>();
-              if (ctc.state?.resumed == null) unawaited(ctc.resume(p.auth, al, dt));
+              if (ctc.state?.resumed == null) {
+                unawaited(ctc.resume(p.auth, al, dt));
+              }
             },
-            icon: SvgIcon(assetPath: Assets.icons.lockOpen),
+            icon: SvgIcon(Assets.icons.lockOpen),
           ),
         ),
       ];
@@ -135,8 +141,13 @@ class _LockerCardState extends State<LockerCard> {
                       Lockpicking(
                         unlock: () {
                           final al = AppLocalizations.of(context)!;
-                          unawaited(context.read<LockerCubit>().stop(p!.auth).then((final _) => animateCells()));
-                          unawaited(context.read<CountdownTimerCubit>().pause(p.auth, al, DateTime.now()));
+                          unawaited(context
+                              .read<LockerCubit>()
+                              .stop(p!.auth)
+                              .then((final _) => animateCells()));
+                          unawaited(context
+                              .read<CountdownTimerCubit>()
+                              .pause(p.auth, al, DateTime.now()));
                         },
                       ),
                       SizedBox(height: MediaQuery.of(context).size.height / 20),
@@ -145,7 +156,7 @@ class _LockerCardState extends State<LockerCard> {
                 ),
               );
             },
-            icon: SvgIcon(assetPath: Assets.icons.lock),
+            icon: SvgIcon(Assets.icons.lock),
           ),
         ),
       ];
@@ -169,7 +180,8 @@ class Lockpicking extends StatefulWidget {
   State<Lockpicking> createState() => _LockpickingState();
 }
 
-class _LockpickingState extends State<Lockpicking> with SingleTickerProviderStateMixin {
+class _LockpickingState extends State<Lockpicking>
+    with SingleTickerProviderStateMixin {
   late final ac = AnimationController(
     duration: Duration(seconds: widget.count * widget.secondsPerEach),
     vsync: this,
@@ -219,18 +231,22 @@ class _LockpickingState extends State<Lockpicking> with SingleTickerProviderStat
           child: AnimatedBuilder(
             animation: ac,
             builder: (final context, final child) {
-              final double v = ((CurveTween(curve: c).animate(ac).value * 6) - i).clamp(0, 1);
+              final double v =
+                  ((CurveTween(curve: c).animate(ac).value * 6) - i)
+                      .clamp(0, 1);
               return Stack(
                 alignment: Alignment.center,
                 children: [
                   CircularProgressIndicator(
-                    backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                    backgroundColor:
+                        Theme.of(context).colorScheme.primaryContainer,
                     color: Theme.of(context).colorScheme.primary,
                     value: v,
                   ),
                   Opacity(
                     opacity: v,
-                    child: SvgIcon(assetPath: v == 1 ? Assets.icons.lockOpen : Assets.icons.lock),
+                    child: SvgIcon(
+                        v == 1 ? Assets.icons.lockOpen : Assets.icons.lock),
                   ),
                 ],
               );
@@ -267,7 +283,9 @@ class _LockpickingState extends State<Lockpicking> with SingleTickerProviderStat
                   setState(() => c = Curves.linear);
                   ac.animateBack(0, duration: const Duration(seconds: 1));
                   Timer(const Duration(seconds: 1), () {
-                    if (Navigator.of(context).canPop()) Navigator.of(context).pop();
+                    if (Navigator.of(context).canPop()) {
+                      Navigator.of(context).pop();
+                    }
                   });
                 },
                 child: Text(AppLocalizations.of(context)!.lockpickingCancel),
@@ -276,7 +294,8 @@ class _LockpickingState extends State<Lockpicking> with SingleTickerProviderStat
               AnimatedBuilder(
                 animation: ac,
                 builder: (final context, final child) => Opacity(
-                  opacity: (CurveTween(curve: c).animate(ac).value + 0.2).clamp(0, 1),
+                  opacity: (CurveTween(curve: c).animate(ac).value + 0.2)
+                      .clamp(0, 1),
                   child: CurveTween(curve: c).animate(ac).value >= 1
                       ? FilledButton.tonal(
                           onPressed: () {
@@ -285,13 +304,17 @@ class _LockpickingState extends State<Lockpicking> with SingleTickerProviderStat
                             }
 
                             widget.unlock!();
-                            if (Navigator.of(context).canPop()) Navigator.of(context).pop();
+                            if (Navigator.of(context).canPop()) {
+                              Navigator.of(context).pop();
+                            }
                           },
-                          child: Text(AppLocalizations.of(context)!.lockpickingProceed),
+                          child: Text(
+                              AppLocalizations.of(context)!.lockpickingProceed),
                         )
                       : OutlinedButton(
                           onPressed: () {},
-                          child: Text(AppLocalizations.of(context)!.lockpickingProceed),
+                          child: Text(
+                              AppLocalizations.of(context)!.lockpickingProceed),
                         ),
                 ),
               )
@@ -320,7 +343,8 @@ class TimerClock extends StatefulWidget {
 class _TimerClockState extends State<TimerClock> {
   @override
   Widget build(final BuildContext context) {
-    Duration left = widget.start.add(widget.duration).difference(DateTime.now());
+    Duration left =
+        widget.start.add(widget.duration).difference(DateTime.now());
     if (left.isNegative) {
       left = Duration.zero;
 
@@ -401,7 +425,9 @@ class Number extends StatelessWidget {
   Widget build(final BuildContext context) => Center(
         child: Card(
           elevation: 2,
-          color: alternate ? Theme.of(context).colorScheme.tertiaryContainer : Theme.of(context).colorScheme.secondaryContainer,
+          color: alternate
+              ? Theme.of(context).colorScheme.tertiaryContainer
+              : Theme.of(context).colorScheme.secondaryContainer,
           child: Container(
             alignment: Alignment.center,
             clipBehavior: Clip.antiAlias,
@@ -413,12 +439,17 @@ class Number extends StatelessWidget {
                 child: Text(
                   label.padLeft(2, 'O').replaceAll('0', 'O'),
                   key: ValueKey(label),
-                  style: fAccent(
-                    textStyle: Theme.of(context).textTheme.displaySmall,
-                  )
+                  style: Theme.of(context)
+                      .textTheme
+                      .displaySmall!
                       .copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: alternate ? Theme.of(context).colorScheme.onTertiaryContainer : Theme.of(context).colorScheme.onSecondaryContainer,
+                        fontFamily: 'FiraMono',
+                        fontWeight: FontWeight.w400,
+                        color: alternate
+                            ? Theme.of(context).colorScheme.onTertiaryContainer
+                            : Theme.of(context)
+                                .colorScheme
+                                .onSecondaryContainer,
                       )
                       .copyWith(fontSize: 160),
                   textAlign: TextAlign.center,

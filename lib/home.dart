@@ -1,6 +1,6 @@
 import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/pages/clock/main.dart';
-import 'package:dependencecoping/pages/copeai/copeai.dart';
+// import 'package:dependencecoping/pages/copeai/copeai.dart';
 import 'package:dependencecoping/pages/meditation/meditation.dart';
 import 'package:dependencecoping/pages/triggers/triggers.dart';
 import 'package:dependencecoping/paginator.dart';
@@ -36,19 +36,19 @@ class _HomeState extends State<Home> {
           },
           destinations: [
             NavigationDestination(
-              icon: SvgIcon(assetPath: Assets.icons.timer),
+              icon: SvgIcon(Assets.icons.timer),
               label: AppLocalizations.of(context)!.screenClock,
             ),
             NavigationDestination(
-              icon: SvgIcon(assetPath: Assets.icons.mindfulness),
+              icon: SvgIcon(Assets.icons.mindfulness),
               label: AppLocalizations.of(context)!.screenTriggers,
             ),
+            // NavigationDestination(
+            //   icon: const SvgIcon( Assets.guyhead),
+            //   label: AppLocalizations.of(context)!.screenAssistant,
+            // ),
             NavigationDestination(
-              icon: const SvgIcon(assetPath: Assets.guyhead),
-              label: AppLocalizations.of(context)!.screenAssistant,
-            ),
-            NavigationDestination(
-              icon: SvgIcon(assetPath: Assets.icons.relax),
+              icon: SvgIcon(Assets.icons.relax),
               label: AppLocalizations.of(context)!.screenMeditation,
             ),
           ],
@@ -56,7 +56,7 @@ class _HomeState extends State<Home> {
         body: [
           ClockScreen(setPage: pagginator(context)),
           TriggersScreen(setPage: pagginator(context)),
-          CopeScreen(setPage: pagginator(context)),
+          // CopeScreen(setPage: pagginator(context)),
           const MeditationScreen(),
         ][currentPageIndex],
       );

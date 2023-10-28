@@ -19,7 +19,8 @@ class LockerHelpPage extends StatefulWidget {
   State<LockerHelpPage> createState() => _LockerHelpPageState();
 }
 
-class _LockerHelpPageState extends State<LockerHelpPage> with SingleTickerProviderStateMixin {
+class _LockerHelpPageState extends State<LockerHelpPage>
+    with SingleTickerProviderStateMixin {
   late final ac = AnimationController(
     duration: const Duration(seconds: 2),
     vsync: this,
@@ -35,7 +36,9 @@ class _LockerHelpPageState extends State<LockerHelpPage> with SingleTickerProvid
   Widget build(final BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Guy(text: AppLocalizations.of(context)!.helpLocker, face: Assets.guy.sceptic),
+          Guy(
+              text: AppLocalizations.of(context)!.helpLocker,
+              face: Assets.guy.sceptic),
           Expanded(
             child: ListView(
               children: [
@@ -57,7 +60,8 @@ class _LockerHelpPageState extends State<LockerHelpPage> with SingleTickerProvid
                 ),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: MarkdownManual(section: 'locker', fragment: 'm1_intro'),
+                  child:
+                      MarkdownManual(section: 'locker', fragment: 'm1_intro'),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -68,7 +72,8 @@ class _LockerHelpPageState extends State<LockerHelpPage> with SingleTickerProvid
 
                       Timer(
                         const Duration(seconds: 1),
-                        () => Timer.periodic(const Duration(seconds: 1), (final t) async {
+                        () => Timer.periodic(const Duration(seconds: 1),
+                            (final t) async {
                           try {
                             await minutes.animateToPage(
                               ((minutes.page! + 1) % 2).toInt(),
@@ -104,7 +109,8 @@ class _LockerHelpPageState extends State<LockerHelpPage> with SingleTickerProvid
 
                       Timer(
                         const Duration(seconds: 1),
-                        () => Timer.periodic(const Duration(seconds: 1), (final t) async {
+                        () => Timer.periodic(const Duration(seconds: 1),
+                            (final t) async {
                           try {
                             await hours.animateToPage(
                               ((hours.page! + 1) % 2).toInt(),
@@ -133,7 +139,8 @@ class _LockerHelpPageState extends State<LockerHelpPage> with SingleTickerProvid
                 ),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: MarkdownManual(section: 'locker', fragment: 'm2_scroll'),
+                  child:
+                      MarkdownManual(section: 'locker', fragment: 'm2_scroll'),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -152,7 +159,8 @@ class _LockerHelpPageState extends State<LockerHelpPage> with SingleTickerProvid
                 ),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: MarkdownManual(section: 'locker', fragment: 'm3_start'),
+                  child:
+                      MarkdownManual(section: 'locker', fragment: 'm3_start'),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -174,7 +182,8 @@ class _LockerHelpPageState extends State<LockerHelpPage> with SingleTickerProvid
                 ),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: MarkdownManual(section: 'locker', fragment: 'm4_started'),
+                  child:
+                      MarkdownManual(section: 'locker', fragment: 'm4_started'),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -204,13 +213,16 @@ class _LockerHelpPageState extends State<LockerHelpPage> with SingleTickerProvid
                     Handed(
                       noMargin: true,
                       computeTop: (final s, final av) => s * .9,
-                      computeLeft: (final s, final av) => (s * .3) + (s * .4 * av),
+                      computeLeft: (final s, final av) =>
+                          (s * .3) + (s * .4 * av),
                       duration: const Duration(seconds: 6),
                       child: Lockpicking(
                         postAnimitationStart: (final lac) {
                           lac.stop();
                           lac.reset();
-                          lac.repeat(period: const Duration(seconds: 10), reverse: true);
+                          lac.repeat(
+                              period: const Duration(seconds: 10),
+                              reverse: true);
                           return const LockerMagicCurve();
                         },
                       ),
@@ -219,7 +231,8 @@ class _LockerHelpPageState extends State<LockerHelpPage> with SingleTickerProvid
                 ),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: MarkdownManual(section: 'locker', fragment: 'm6_lockpick'),
+                  child: MarkdownManual(
+                      section: 'locker', fragment: 'm6_lockpick'),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -246,7 +259,8 @@ class _LockerHelpPageState extends State<LockerHelpPage> with SingleTickerProvid
                 ),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: MarkdownManual(section: 'locker', fragment: 'm7_check'),
+                  child:
+                      MarkdownManual(section: 'locker', fragment: 'm7_check'),
                 ),
                 const SizedBox(height: 50),
               ],
@@ -257,7 +271,11 @@ class _LockerHelpPageState extends State<LockerHelpPage> with SingleTickerProvid
 }
 
 class LockerCardMock extends StatelessWidget {
-  const LockerCardMock({required this.state, required this.hours, required this.minutes, super.key});
+  const LockerCardMock(
+      {required this.state,
+      required this.hours,
+      required this.minutes,
+      super.key});
 
   final Locker state;
   final PageController hours;
@@ -267,7 +285,8 @@ class LockerCardMock extends StatelessWidget {
   Widget build(final BuildContext context) {
     final w = Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: state.duration == Duration.zero ? _unlocked(state) : _locked(state),
+      children:
+          state.duration == Duration.zero ? _unlocked(state) : _locked(state),
     );
 
     return Card(
@@ -277,7 +296,7 @@ class LockerCardMock extends StatelessWidget {
           ? Badge(
               backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
               label: SvgIcon(
-                assetPath: Assets.icons.done,
+                Assets.icons.done,
                 sizeOffset: 8,
                 color: Theme.of(context).colorScheme.onTertiaryContainer,
               ),
@@ -297,7 +316,7 @@ class LockerCardMock extends StatelessWidget {
         ),
         IconButton(
           onPressed: () {},
-          icon: SvgIcon(assetPath: Assets.icons.lockOpen),
+          icon: SvgIcon(Assets.icons.lockOpen),
         ),
       ];
 
@@ -305,7 +324,7 @@ class LockerCardMock extends StatelessWidget {
         TimerClock(start: state.start!, duration: state.duration),
         IconButton(
           onPressed: () {},
-          icon: SvgIcon(assetPath: Assets.icons.lock),
+          icon: SvgIcon(Assets.icons.lock),
         ),
       ];
 }

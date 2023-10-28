@@ -27,21 +27,28 @@ class Modal extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: () {
-                    if (Navigator.of(context).canPop()) Navigator.of(context).pop();
+                    if (Navigator.of(context).canPop()) {
+                      Navigator.of(context).pop();
+                    }
                   },
-                  icon: SvgIcon(assetPath: Assets.icons.arrowBack),
+                  icon: SvgIcon(Assets.icons.arrowBack),
                 ),
                 Text(
                   title,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.bold),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium!
+                      .copyWith(fontWeight: FontWeight.bold),
                 ),
                 Opacity(
                   opacity: 0,
                   child: IconButton(
                     onPressed: () {
-                      if (Navigator.of(context).canPop()) Navigator.of(context).pop();
+                      if (Navigator.of(context).canPop()) {
+                        Navigator.of(context).pop();
+                      }
                     },
-                    icon: SvgIcon(assetPath: Assets.icons.arrowBack),
+                    icon: SvgIcon(Assets.icons.arrowBack),
                   ),
                 ),
               ],
@@ -101,7 +108,9 @@ void openModal(final BuildContext parentContext, final Widget content) {
       //     opacity: anim1,
       //   ),
       // ),
-      transitionsBuilder: (final context, final animation, final _, final child) => SlideTransition(
+      transitionsBuilder:
+          (final context, final animation, final _, final child) =>
+              SlideTransition(
         position: Tween<Offset>(
           begin: const Offset(0, 1),
           end: Offset.zero,
@@ -112,7 +121,8 @@ void openModal(final BuildContext parentContext, final Widget content) {
         child: Container(
           key: GlobalKey(),
           child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 8 * animation.value, sigmaY: 8 * animation.value),
+            filter: ImageFilter.blur(
+                sigmaX: 8 * animation.value, sigmaY: 8 * animation.value),
             child: child,
           ),
         ),

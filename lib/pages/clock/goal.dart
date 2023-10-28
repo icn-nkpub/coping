@@ -18,29 +18,31 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GoalsList extends StatelessWidget {
   const GoalsList({
-    required this.splits, super.key,
+    required this.splits,
+    super.key,
   });
 
   final Splits? splits;
 
   @override
-  Widget build(final BuildContext context) => BlocBuilder<GoalsCubit, Goals?>(builder: (final BuildContext context, final Goals? goals) {
-      final gs = (goals?.data ?? []).toList();
-      gs.sort((final a, final b) => a.rate.compareTo(b.rate));
+  Widget build(final BuildContext context) => BlocBuilder<GoalsCubit, Goals?>(
+          builder: (final BuildContext context, final Goals? goals) {
+        final gs = (goals?.data ?? []).toList();
+        gs.sort((final a, final b) => a.rate.compareTo(b.rate));
 
-      return Column(
-        children: gs
-            .map((final g) => GoalCard(
-                  key: GlobalKey(debugLabel: '${g.id} ${g.iconName}'),
-                  from: splits?.last ?? DateTime.now(),
-                  iconName: g.iconName,
-                  titles: g.titles,
-                  descriptions: g.descriptions,
-                  rate: g.rate,
-                ))
-            .toList(),
-      );
-    });
+        return Column(
+          children: gs
+              .map((final g) => GoalCard(
+                    key: GlobalKey(debugLabel: '${g.id} ${g.iconName}'),
+                    from: splits?.last ?? DateTime.now(),
+                    iconName: g.iconName,
+                    titles: g.titles,
+                    descriptions: g.descriptions,
+                    rate: g.rate,
+                  ))
+              .toList(),
+        );
+      });
 }
 
 class GoalCard extends StatefulWidget {
@@ -68,7 +70,9 @@ class _GoalCardState extends State<GoalCard> {
 
   @override
   Widget build(final BuildContext context) {
-    final double value = DateTime.now().difference(widget.from).inSeconds.toDouble() / widget.rate.inSeconds.toDouble();
+    final double value =
+        DateTime.now().difference(widget.from).inSeconds.toDouble() /
+            widget.rate.inSeconds.toDouble();
     final bool finished = value > 1 ? true : false;
     final segments = widget.rate.inDays.clamp(1, 7 * 4);
 
@@ -83,11 +87,13 @@ class _GoalCardState extends State<GoalCard> {
                   Container(
                     padding: const EdgeInsets.only(top: 8),
                     child: Container(
-                      padding: const EdgeInsets.only(left: 4, right: 4, top: 8, bottom: 4),
+                      padding: const EdgeInsets.only(
+                          left: 4, right: 4, top: 8, bottom: 4),
                       decoration: BoxDecoration(
                         border: Border(
                           top: BorderSide(
-                            color: Theme.of(context).dividerColor.withOpacity(.2),
+                            color:
+                                Theme.of(context).dividerColor.withOpacity(.2),
                           ),
                         ),
                       ),
@@ -96,7 +102,7 @@ class _GoalCardState extends State<GoalCard> {
                           Padding(
                             padding: const EdgeInsets.only(right: 12),
                             child: SvgIcon(
-                              assetPath: 'assets/icons/${widget.iconName}.svg',
+                              'assets/icons/${widget.iconName}.svg',
                               color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
@@ -116,15 +122,26 @@ class _GoalCardState extends State<GoalCard> {
     );
   }
 
-  Widget _desc(final BuildContext context, final bool finished, final double value) {
-    String description = widget.descriptions['en'] ?? widget.descriptions['0'] ?? widget.descriptions['0.0'] ?? '[...]';
+  Widget _desc(
+      final BuildContext context, final bool finished, final double value) {
+    String description = widget.descriptions['en'] ??
+        widget.descriptions['0'] ??
+        widget.descriptions['0.0'] ??
+        '[...]';
     for (final d in widget.descriptions.entries) {
-      if (d.key == Localizations.localeOf(context).languageCode) description = d.value;
+      if (d.key == Localizations.localeOf(context).languageCode) {
+        description = d.value;
+      }
     }
 
-    String title = widget.titles['en'] ?? widget.titles['0'] ?? widget.titles['0.0'] ?? '[...]';
+    String title = widget.titles['en'] ??
+        widget.titles['0'] ??
+        widget.titles['0.0'] ??
+        '[...]';
     for (final t in widget.titles.entries) {
-      if (t.key == Localizations.localeOf(context).languageCode) title = t.value;
+      if (t.key == Localizations.localeOf(context).languageCode) {
+        title = t.value;
+      }
     }
 
     final c = Color.alphaBlend(
@@ -152,7 +169,7 @@ class _GoalCardState extends State<GoalCard> {
                         color: c,
                       ),
                       child: SvgIcon(
-                        assetPath: Assets.icons.done,
+                        Assets.icons.done,
                         sizeOffset: 8,
                       ),
                     ),
@@ -167,7 +184,7 @@ class _GoalCardState extends State<GoalCard> {
                         color: c,
                       ),
                       child: SvgIcon(
-                        assetPath: 'assets/icons/${widget.iconName}.svg',
+                        'assets/icons/${widget.iconName}.svg',
                         sizeOffset: 8,
                       ),
                     ),
@@ -180,7 +197,7 @@ class _GoalCardState extends State<GoalCard> {
                 AnimatedRotation(
                   duration: const Duration(milliseconds: 100),
                   turns: expanded ? 0.5 : 0,
-                  child: SvgIcon(assetPath: Assets.icons.expandMore),
+                  child: SvgIcon(Assets.icons.expandMore),
                 )
               ],
             ),
@@ -228,7 +245,8 @@ class Meter extends StatelessWidget {
             margin: const EdgeInsets.all(1),
             child: LinearProgressIndicator(
               minHeight: 8,
-              backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(.2),
+              backgroundColor:
+                  Theme.of(context).colorScheme.primary.withOpacity(.2),
               color: Theme.of(context).colorScheme.primary.withOpacity(.5),
               value: ((value * segments) - i).clamp(0, 1),
             ),

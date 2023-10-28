@@ -1,12 +1,14 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/pages/clock/locker.dart';
 import 'package:dependencecoping/pages/clock/modals/time_manager.dart';
+import 'package:dependencecoping/pages/copeai/copeai.dart';
+import 'package:dependencecoping/pages/copeai/data.dart' as aidata;
 import 'package:dependencecoping/provider/countdown/countdown.dart';
 import 'package:dependencecoping/provider/login/login.dart';
 import 'package:dependencecoping/provider/theme/colors.dart';
-import 'package:dependencecoping/provider/theme/fonts.dart';
 import 'package:dependencecoping/provider/theme/theme.dart';
 import 'package:dependencecoping/tokens/animation.dart';
 import 'package:dependencecoping/tokens/icons.dart';
@@ -51,20 +53,24 @@ class CountdownDisplay extends StatelessWidget {
                             width: double.infinity,
                             alignment: Alignment.topRight,
                             padding: const EdgeInsets.all(26),
-                            child: Wrap(
-                              spacing: 8,
-                              direction: Axis.vertical,
-                              crossAxisAlignment: WrapCrossAlignment.end,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                scoreTrophyBadge(),
-                                // Badge(
-                                //   icon: Assets.icons.cognition,
-                                //   label: 'Dedication',
-                                // ),
-                                // Badge(
-                                //   icon: Assets.icons.psychiatry,
-                                //   label: 'Meditation',
-                                // ),
+                                Expanded(
+                                  child: Wrap(
+                                    spacing: 8,
+                                    direction: Axis.vertical,
+                                    crossAxisAlignment: WrapCrossAlignment.end,
+                                    children: [
+                                      scoreTrophyBadge(),
+                                    ],
+                                  ),
+                                ),
+                                const Row(
+                                  children: [
+                                    Motivation(),
+                                  ],
+                                )
                               ],
                             ),
                           ),
@@ -157,7 +163,7 @@ class CountdownDisplay extends StatelessWidget {
                       .resume(auth, al, DateTime.now());
                 },
                 icon: SvgIcon(
-                  assetPath: Assets.icons.playCircle,
+                  Assets.icons.playCircle,
                   color: Theme.of(context).colorScheme.onPrimaryContainer,
                 ),
               )
@@ -170,21 +176,21 @@ class CountdownDisplay extends StatelessWidget {
                       .pause(auth, al, DateTime.now());
                 },
                 icon: SvgIcon(
-                  assetPath: Assets.icons.stopCircle,
+                  Assets.icons.stopCircle,
                   color: Theme.of(context).colorScheme.onPrimaryContainer,
                 ),
               ),
         IconButton.filledTonal(
           onPressed: _gotoTime(context),
           icon: SvgIcon(
-            assetPath: Assets.icons.history,
+            Assets.icons.history,
             color: Theme.of(context).colorScheme.onPrimaryContainer,
           ),
         ),
         // IconButton.filledTonal(
         //   onPressed: _gotoShop(context),
         //   icon: SvgIcon(
-        //     assetPath: Assets.icons.checklist,
+        //      Assets.icons.checklist,
         //     color: Theme.of(context).colorScheme.onPrimaryContainer,
         //   ),
         // ),
@@ -199,6 +205,70 @@ class CountdownDisplay extends StatelessWidget {
           ),
         ),
       );
+}
+
+class Motivation extends StatelessWidget {
+  const Motivation({
+    super.key,
+  });
+
+  @override
+  Widget build(final BuildContext context) {
+    final n = DateTime.now();
+    final r = Random(n.year + n.month + n.day + n.hour);
+
+    final lc = Localizations.localeOf(context).languageCode;
+    final List<String> messages = [];
+    messages.addAll(aidata.nos[lc] ?? []);
+    messages.addAll(aidata.cheers[lc] ?? []);
+
+    final t = messages[r.nextInt(messages.length)];
+
+    final theme = Theme.of(context);
+    return Container(
+      alignment: Alignment.bottomLeft,
+      width: MediaQuery.of(context).size.width * .35,
+      child: Stack(
+        children: [
+          Typer(
+            t,
+            textAlign: TextAlign.left,
+            style: theme.textTheme.bodyMedium!.copyWith(
+              shadows: outline(1, 3, theme.colorScheme.primaryContainer),
+              fontWeight: FontWeight.w500,
+              color: Colors.transparent,
+            ),
+          ),
+          Typer(
+            t,
+            textAlign: TextAlign.left,
+            style: theme.textTheme.bodyMedium!.copyWith(
+              color: theme.colorScheme.onPrimaryContainer,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  List<Shadow> outline(
+      final double offset, final double blur, final Color color) {
+    final List<Offset> offsets = [];
+    for (var x = -offset; x <= offset; x++) {
+      for (var y = -offset; y <= offset; y++) {
+        offsets.add(Offset(x, y));
+      }
+    }
+
+    return offsets
+        .map((final o) => Shadow(
+              color: color,
+              offset: o,
+              blurRadius: blur,
+            ))
+        .toList();
+  }
 }
 
 class Badge extends StatelessWidget {
@@ -222,7 +292,7 @@ class Badge extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             SvgIcon(
-              assetPath: icon,
+              icon,
               color: Theme.of(context).colorScheme.primaryContainer,
             ),
             const SizedBox(width: 8),
@@ -255,7 +325,7 @@ class ScoreCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 14),
               child: SvgIcon(
-                assetPath: Assets.icons.bolt,
+                Assets.icons.bolt,
                 color: Theme.of(context).colorScheme.onTertiaryContainer,
                 sizeOffset: 6,
               ),
@@ -269,12 +339,11 @@ class ScoreCard extends StatelessWidget {
                 child: Text(
                   score,
                   key: ValueKey(score),
-                  style:
-                      fAccent(textStyle: Theme.of(context).textTheme.bodyLarge)
-                          .copyWith(
-                    color: Theme.of(context).colorScheme.onTertiaryContainer,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        fontFamily: 'FiraMono',
+                        color:
+                            Theme.of(context).colorScheme.onTertiaryContainer,
+                      ),
                 ),
               ),
             ),
@@ -297,12 +366,12 @@ class Stopwatch extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final tsm = fAccent(
-      textStyle: small
-          ? Theme.of(context).textTheme.titleMedium
-          : Theme.of(context).textTheme.displaySmall,
-    ).copyWith(
-      fontWeight: FontWeight.bold,
+    final tsm = (small
+            ? Theme.of(context).textTheme.titleMedium
+            : Theme.of(context).textTheme.displaySmall)!
+        .copyWith(
+      fontFamily: 'FiraMono',
+      fontWeight: FontWeight.w500,
       color: Theme.of(context).colorScheme.onSecondaryContainer,
     );
 

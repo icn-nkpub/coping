@@ -18,7 +18,9 @@ class ControlButtonsHelpPage extends StatelessWidget {
   Widget build(final BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Guy(text: AppLocalizations.of(context)!.helpButtons, face: Assets.guy.positive),
+          Guy(
+              text: AppLocalizations.of(context)!.helpButtons,
+              face: Assets.guy.positive),
           Expanded(
             child: ListView(
               children: [
@@ -26,17 +28,20 @@ class ControlButtonsHelpPage extends StatelessWidget {
                 Center(child: handedControls(context, 1, paused: true)),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: MarkdownManual(section: 'buttons', fragment: 'm1_start'),
+                  child:
+                      MarkdownManual(section: 'buttons', fragment: 'm1_start'),
                 ),
                 Center(child: handedControls(context, 1)),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: MarkdownManual(section: 'buttons', fragment: 'm2_stop'),
+                  child:
+                      MarkdownManual(section: 'buttons', fragment: 'm2_stop'),
                 ),
                 Center(child: handedControls(context, 2.15, paused: true)),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: MarkdownManual(section: 'buttons', fragment: 'm3_history'),
+                  child: MarkdownManual(
+                      section: 'buttons', fragment: 'm3_history'),
                 ),
                 ModalContainer(
                   title: AppLocalizations.of(context)!.modalTimerEvents,
@@ -46,17 +51,22 @@ class ControlButtonsHelpPage extends StatelessWidget {
                     children: [
                       TimerJournalCard(
                         resume: false,
-                        dateText: DateFormat('dd.MM.yyyy HH:mm:ss').format(DateTime.now()),
+                        dateText: DateFormat('dd.MM.yyyy HH:mm:ss')
+                            .format(DateTime.now()),
                         onEditPressed: () async {},
                       ),
                       TimerJournalCard(
                         resume: true,
-                        dateText: DateFormat('dd.MM.yyyy HH:mm:ss').format(DateTime.now().add(const Duration(hours: -8, minutes: 2, seconds: 8))),
+                        dateText: DateFormat('dd.MM.yyyy HH:mm:ss').format(
+                            DateTime.now().add(const Duration(
+                                hours: -8, minutes: 2, seconds: 8))),
                         onEditPressed: () async {},
                       ),
                       TimerJournalCard(
                         resume: false,
-                        dateText: DateFormat('dd.MM.yyyy HH:mm:ss').format(DateTime.now().add(const Duration(hours: -9, minutes: 46, seconds: 17))),
+                        dateText: DateFormat('dd.MM.yyyy HH:mm:ss').format(
+                            DateTime.now().add(const Duration(
+                                hours: -9, minutes: 46, seconds: 17))),
                         onEditPressed: () async {},
                       ),
                     ],
@@ -64,7 +74,8 @@ class ControlButtonsHelpPage extends StatelessWidget {
                 ),
                 const Padding(
                   padding: EdgeInsets.all(16),
-                  child: MarkdownManual(section: 'buttons', fragment: 'm4_history_modal'),
+                  child: MarkdownManual(
+                      section: 'buttons', fragment: 'm4_history_modal'),
                 ),
               ],
             ),
@@ -72,7 +83,9 @@ class ControlButtonsHelpPage extends StatelessWidget {
         ],
       );
 
-  Handed handedControls(final BuildContext context, final double i, {final bool paused = false}) => Handed(
+  Handed handedControls(final BuildContext context, final double i,
+          {final bool paused = false}) =>
+      Handed(
         computeTop: (final s, final av) => s - 4 * av,
         computeLeft: (final s, final av) => (2 * i - 1) * (s / 4),
         duration: const Duration(seconds: 1),
@@ -83,21 +96,21 @@ class ControlButtonsHelpPage extends StatelessWidget {
                 ? IconButton.filledTonal(
                     onPressed: () {},
                     icon: SvgIcon(
-                      assetPath: Assets.icons.playCircle,
+                      Assets.icons.playCircle,
                       color: Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
                   )
                 : IconButton.filledTonal(
                     onPressed: () {},
                     icon: SvgIcon(
-                      assetPath: Assets.icons.stopCircle,
+                      Assets.icons.stopCircle,
                       color: Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
                   ),
             IconButton.filledTonal(
               onPressed: () {},
               icon: SvgIcon(
-                assetPath: Assets.icons.history,
+                Assets.icons.history,
                 color: Theme.of(context).colorScheme.onPrimaryContainer,
               ),
             ),

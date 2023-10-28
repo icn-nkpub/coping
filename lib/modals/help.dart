@@ -54,7 +54,8 @@ class _HelpModalState extends State<HelpModal> {
           if (overrideAnimation) {
             return;
           }
-          unawaited(pc.animateToPage(0, duration: const Duration(seconds: 1), curve: Curves.bounceOut));
+          unawaited(pc.animateToPage(0,
+              duration: const Duration(seconds: 1), curve: Curves.bounceOut));
         });
       });
     });
@@ -93,10 +94,12 @@ class _HelpModalState extends State<HelpModal> {
                   children: [
                     IconButton(
                       onPressed: () {
-                        if (Navigator.of(context).canPop()) Navigator.of(context).pop();
+                        if (Navigator.of(context).canPop()) {
+                          Navigator.of(context).pop();
+                        }
                       },
                       icon: SvgIcon(
-                        assetPath: Assets.icons.arrowBack,
+                        Assets.icons.arrowBack,
                         color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
@@ -111,9 +114,11 @@ class _HelpModalState extends State<HelpModal> {
                       opacity: 0,
                       child: IconButton(
                         onPressed: () {
-                          if (Navigator.of(context).canPop()) Navigator.of(context).pop();
+                          if (Navigator.of(context).canPop()) {
+                            Navigator.of(context).pop();
+                          }
                         },
-                        icon: SvgIcon(assetPath: Assets.icons.arrowBack),
+                        icon: SvgIcon(Assets.icons.arrowBack),
                       ),
                     ),
                   ],
@@ -158,7 +163,9 @@ class HelpPageContainer extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.surface,
-            border: Border.all(color: Theme.of(context).colorScheme.tertiaryContainer, width: 4),
+            border: Border.all(
+                color: Theme.of(context).colorScheme.tertiaryContainer,
+                width: 4),
             borderRadius: BorderRadius.circular(16),
           ),
           clipBehavior: Clip.antiAlias,
