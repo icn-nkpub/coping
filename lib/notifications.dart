@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
@@ -9,11 +10,29 @@ Future<void> notifications() async {
   tz.initializeTimeZones();
 
   fnp = FlutterLocalNotificationsPlugin();
-  await fnp!.initialize(InitializationSettings(
-    iOS: DarwinInitializationSettings(
-      onDidReceiveLocalNotification: (final id, final title, final body, final _) => log('$id - $title', name: 'silence notificaion'),
-    ),
-  ));
+
+  if (Platform.isAndroid) {
+    final notPlugAndroid = FlutterLocalNotificationsPlugin();
+    await notPlugAndroid
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.requestPermission();
+  }
+
+  try {
+    await fnp!.initialize(InitializationSettings(
+      iOS: DarwinInitializationSettings(
+        onDidReceiveLocalNotification:
+            (final id, final title, final body, final _) =>
+                log('$id - $title', name: 'silence notificaion'),
+      ),
+    ));
+
+    // ignore: avoid_catches_without_on_clauses
+  } catch (e) {
+    fnp = null;
+    log(e.toString());
+  }
 }
 
 Future<void> scheduleNotification(
@@ -34,7 +53,8 @@ Future<void> scheduleNotification(
     tz.TZDateTime.now(tz.local).add(after),
     const NotificationDetails(),
     androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-    uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+    uiLocalNotificationDateInterpretation:
+        UILocalNotificationDateInterpretation.absoluteTime,
   );
 }
 
