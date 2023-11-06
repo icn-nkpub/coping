@@ -130,10 +130,10 @@ flutter_icons:
   image_path_ios: "assets/logo-pb.png"
   remove_alpha_ios: true
 
-  android: false
-  image_path_android: "assets/opaqring.png"
-  adaptive_icon_background: "#000000"
-  adaptive_icon_foreground: "assets/logo.png"
+  android: true
+  image_path_android: "assets/logo-pb.png"
+  adaptive_icon_background: "assets/logo-opa-bg.png"
+  adaptive_icon_foreground: "assets/logo-opa.png"
   min_sdk_android: 21
 
   windows:
