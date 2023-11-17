@@ -24,7 +24,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.nkpub.firstapp"
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 33
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -42,7 +42,8 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.meetcoping.droid"
+        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+        applicationId "com.nkpub.firstapp"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion flutter.minSdkVersion
@@ -69,4 +70,5 @@ dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
     implementation 'androidx.window:window:1.0.0'
     implementation 'androidx.window:window-java:1.0.0'
+    implementation 'com.google.android.material:material:1.10.0'
 }

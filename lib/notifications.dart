@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -11,14 +12,6 @@ Future<void> notifications() async {
 
   fnp = FlutterLocalNotificationsPlugin();
 
-  if (Platform.isAndroid) {
-    final notPlugAndroid = FlutterLocalNotificationsPlugin();
-    await notPlugAndroid
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
-        ?.requestPermission();
-  }
-
   try {
     await fnp!.initialize(InitializationSettings(
       iOS: DarwinInitializationSettings(
@@ -26,12 +19,25 @@ Future<void> notifications() async {
             (final id, final title, final body, final _) =>
                 log('$id - $title', name: 'silence notificaion'),
       ),
+      android: const AndroidInitializationSettings('@mipmap/ic_launcher'),
     ));
 
     // ignore: avoid_catches_without_on_clauses
   } catch (e) {
     fnp = null;
-    log(e.toString());
+    await Sentry.captureException(e);
+  }
+
+  if (Platform.isAndroid) {
+    final notPlugAndroid = FlutterLocalNotificationsPlugin();
+    await notPlugAndroid
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.requestNotificationsPermission();
+    await notPlugAndroid
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.requestExactAlarmsPermission();
   }
 }
 
@@ -51,7 +57,9 @@ Future<void> scheduleNotification(
     title,
     body,
     tz.TZDateTime.now(tz.local).add(after),
-    const NotificationDetails(),
+    const NotificationDetails(
+      android: AndroidNotificationDetails('Coping', 'Coping'),
+    ),
     androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     uiLocalNotificationDateInterpretation:
         UILocalNotificationDateInterpretation.absoluteTime,
