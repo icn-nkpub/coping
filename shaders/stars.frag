@@ -1,39 +1,26 @@
 #include <flutter/runtime_effect.glsl>
 
-uniform float u_time; // Time in seconds since load
-uniform vec2 u_resolution;
+uniform float iTime;
+uniform vec3 iResolution;
 
-out vec4 fragColor; // output colour for Flutter, like gl_FragColor
+out vec4 fragColor;
 
-//https://iquilezles.org/articles/palettes/
-vec3 palette( float t ) {
-    vec3 a = vec3(0.5, 0.5, 0.5);
-    vec3 b = vec3(0.5, 0.5, 0.5);
-    vec3 c = vec3(1.0, 1.0, 1.0);
-    vec3 d = vec3(0.263,0.416,0.557);
+vec2 fragCoord = FlutterFragCoord().xy;
 
-    return a + b*cos( 6.28318*(c*t+d) );
-}
+//////////////////////////////
 
-void main() {
-    vec2 uv = (FlutterFragCoord().xy * 2.0 - u_resolution.xy) / u_resolution.y;
-    vec2 uv0 = uv;
-    vec3 finalColor = vec3(0.0);
-
-    for (float i = 0.0; i < 2.0; i++) {
-        uv = fract(uv * 1.5) - 0.5;
-
-        float d = length(uv) * exp(-length(uv0));
-
-        vec3 col = palette(length(uv0) + i*.4 + u_time*.4);
-
-        d = sin(d*8. + u_time)/8.;
-        d = abs(d);
-
-        d = pow(0.01 / d, 1.2);
-
-        finalColor += col * d;
-    }
-
-    fragColor = vec4(finalColor, 1.0);
+void main(){
+	vec3 c;
+	float l,z=iTime;
+	for(int i=0;i<3;i++) {
+		vec2 uv,p=fragCoord.xy/iResolution.xy;
+		uv=p;
+		p-=.5;
+		p.x*=iResolution.x/iResolution.y;
+		z+=.07;
+		l=length(p);
+		uv+=p/l*(sin(z)+1.)*abs(sin(l*9.-z-z));
+		c[i]=.01/length(mod(uv,1.)-.5);
+	}
+	fragColor=vec4(c/l,iTime);
 }
