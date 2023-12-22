@@ -4,7 +4,6 @@ import 'dart:core';
 import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/home.dart';
 import 'package:dependencecoping/notifications.dart';
-import 'package:dependencecoping/onboarding.dart';
 import 'package:dependencecoping/provider/countdown/countdown.dart';
 import 'package:dependencecoping/provider/goal/goal.dart';
 import 'package:dependencecoping/provider/locker/locker.dart';
@@ -214,7 +213,7 @@ class _AppState extends State<App>
                                   MaterialPageRoute(
                                 settings: settings,
                                 builder: (final context) => u == null
-                                    ? const Onboarding()
+                                    ? const Placeholder()
                                     : const Home(),
                               ),
                             ),

@@ -1,155 +1,41 @@
 import 'dart:core';
-import 'dart:math';
+import 'dart:ui';
 
 import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/provider/login/login.dart';
+import 'package:dependencecoping/shaders/shaders.dart';
 import 'package:dependencecoping/tokens/icons.dart';
 import 'package:dependencecoping/tokens/measurable.dart';
 import 'package:dependencecoping/tokens/topbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:funvas/funvas.dart';
 
-class CanvasDrawer extends Funvas {
-  CanvasDrawer({
-    required this.primary,
-    required this.secondary,
-    required this.backdrop,
-    required this.fullCycleDuration,
-    required this.scale,
-    required this.slideDist,
-    required this.rounds,
-    this.muted = false,
-  });
-  HSLColor primary;
-  HSLColor secondary;
-  Color backdrop;
-  final double fullCycleDuration;
-  final double scale;
-  final double slideDist;
-  final int rounds;
-  bool windDown = false;
-  double windDownTime = -1;
-  final bool muted;
+Future<FragmentProgram> loadMyShader() =>
+    FragmentProgram.fromAsset('shaders/stars.frag');
 
-  @override
-  void u(double t) {
-    if (muted) t += fullCycleDuration;
-    if (!muted) t = max(0, t - 1);
+void updateShader(
+    final Canvas canvas, final Rect rect, final FragmentProgram program) {
+  final shader = program.fragmentShader();
+  shader.setFloat(0, 42.0);
+  canvas.drawRect(rect, Paint()..shader = shader);
+}
 
-    final w = x.width / 2;
-    final h = x.height / 2;
-    final s = x.width < x.height ? x.width : x.height;
-    final pt = (s * scale) / 64;
+void paint(final Canvas canvas, final Size size, final FragmentShader shader) {
+  // Draws a rectangle with the shader used as a color source.
+  canvas.drawRect(
+    Rect.fromLTWH(0, 0, size.width, size.height),
+    Paint()..shader = shader,
+  );
 
-    if (windDownTime > -1) {
-      double cycle = graph(windDownTime);
-      cycle = max(0, cycle - (t - windDownTime));
-      final slide = slideDist * pt - (cycle * (slideDist * pt));
-
-      _drawCircle(primary, pt, w, h, slide);
-      _drawParticles(pt, w, h, cycle, t, slide);
-
-      return;
-    }
-    if (windDown) {
-      windDownTime = t;
-    }
-
-    final double cycle = graph(t);
-    final slide = slideDist * pt - (cycle * (slideDist * pt));
-
-    _drawParticles(pt, w, h, cycle, t, slide);
-    if (!muted) _drawGuideLine(primary, pt, w, h);
-    if (!muted) _drawCircle(primary, pt, w, h, slide);
-  }
-
-  void _drawParticles(final double pt, final double w, final double h,
-      final double cycle, final double t, final double slide) {
-    for (int round = 0; round < rounds; round++) {
-      final rCycle = round / rounds;
-      final r = (4 * pt) +
-          ((((muted ? 0 : cycle) * 3.85) + 1) * rCycle * 16 * pt) / 3;
-
-      final angleSkew = (13.1 + (t / 31)) * ((round + 1) * 14);
-
-      double alpha = max(
-          0,
-          (min(max((t / fullCycleDuration) - .25, 0), round / rounds) / 2) -
-              0.05);
-
-      if (windDownTime > -1) {
-        alpha = max(0, alpha - (t - windDownTime));
-      }
-
-      for (double i = 0; i < 360; i += 360 / (rounds + (round * 4))) {
-        final iCycle = (1 + sin((pow(i + 1, 2) * (round + 1)) + t * 2)) / 2;
-        final v = iCycle * pt / 2;
-
-        final angle = (i + 1) * (pi / 2) + angleSkew;
-
-        final lr = r + (v * 8);
-
-        final x1 = lr * cos(angle * pi / 180);
-        var y1 = lr * sin(angle * pi / 180);
-        y1 = y1 - slide;
-
-        final col =
-            (i % 5 != 0 ? primary : secondary).withAlpha(alpha).toColor();
-
-        c.drawCircle(
-          Offset(w + x1, h - y1),
-          v,
-          Paint()..color = Color.alphaBlend(col, backdrop),
-        );
-      }
-    }
-  }
-
-  void _drawGuideLine(
-      final HSLColor color, final double pt, final double w, final double h) {
-    final pointPaint = Paint();
-    pointPaint.color = color.toColor().withAlpha(25);
-    pointPaint.strokeCap = StrokeCap.round;
-    pointPaint.strokeWidth = pt / 4;
-    c.drawLine(
-      Offset(w, h),
-      Offset(w, h + (slideDist * pt)),
-      pointPaint,
-    );
-  }
-
-  void _drawCircle(final HSLColor color, final double pt, final double w,
-      final double h, final double slide) {
-    final circlePaint = Paint();
-    circlePaint.color = color.toColor();
-    circlePaint.strokeCap = StrokeCap.round;
-    circlePaint.strokeWidth = pt / 4;
-    c.drawCircle(
-      Offset(w, h + slide),
-      pt,
-      circlePaint,
-    );
-  }
-
-  double graph(final double t) {
-    final x = 1 - ((t % fullCycleDuration) / fullCycleDuration);
-
-    final fnUp = bezFn(x, 3, 0);
-    final fnDown = bezFn(x, -1.5, -1);
-
-    final cycle = x < 1 / 3 ? fnUp : fnDown;
-    return cycle;
-  }
-
-  double bezFn(final double x, final double compression, final double offset) {
-    final v = compression * (x + offset);
-
-    final y = pow(v, 2) / (2 * (pow(v, 2) - v) + 1);
-
-    return y;
-  }
+  // Draws a stroked rectangle with the shader only applied to the fragments
+  // that lie within the stroke.
+  canvas.drawRect(
+    Rect.fromLTWH(0, 0, size.width, size.height),
+    Paint()
+      ..style = PaintingStyle.stroke
+      ..shader = shader,
+  );
 }
 
 class MeditationScreen extends StatelessWidget {
@@ -160,23 +46,14 @@ class MeditationScreen extends StatelessWidget {
       BlocBuilder<LoginCubit, Profile?>(builder: (final context, final u) {
         final breathingTime = u?.profile?.breathingTime ?? 6.0;
 
-        final cd = CanvasDrawer(
-          backdrop: Theme.of(context).scaffoldBackgroundColor,
-          primary: HSLColor.fromColor(Theme.of(context).colorScheme.primary),
-          secondary: HSLColor.fromColor(Theme.of(context).colorScheme.tertiary),
-          fullCycleDuration: breathingTime,
-          scale: 1.3,
-          rounds: 12,
-          slideDist: 12,
-        );
         return Stack(
           alignment: Alignment.center,
           children: [
-            SizedBox(
+            const SizedBox(
               width: double.infinity,
               height: double.infinity,
-              child: FunvasContainer(
-                funvas: cd,
+              child: DrawFrag(
+                frag: 'stars',
               ),
             ),
             SizedBox(
@@ -190,7 +67,7 @@ class MeditationScreen extends StatelessWidget {
                   });
                 },
                 changingSpeed: () {
-                  cd.windDown = true;
+                  // cd.windDown = true;
                 },
               ),
             )

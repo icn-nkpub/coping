@@ -119,6 +119,9 @@ flutter:
         - asset: fonts/Jost/Jost-Italic-VariableFont_wght.ttf
           style: italic
 
+  shaders:
+    - shaders/stars.frag
+
 
 
 flutter_native_splash:
