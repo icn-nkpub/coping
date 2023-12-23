@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 class DrawFrag extends StatefulWidget {
   const DrawFrag({
     required this.frag,
+    required this.duration,
     super.key,
   });
 
   final String frag;
+  final Duration duration;
 
   @override
   State<DrawFrag> createState() => _DrawFragState();
@@ -18,7 +20,7 @@ class _DrawFragState extends State<DrawFrag>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     vsync: this,
-    duration: const Duration(seconds: 6),
+    duration: widget.duration,
   );
 
   @override
@@ -36,7 +38,7 @@ class _DrawFragState extends State<DrawFrag>
   @override
   Widget build(final BuildContext context) => FutureBuilder<FragmentShader>(
         // ignore: discarded_futures
-        future: _load(widget.frag),
+        future: loadFrag(widget.frag),
         builder: (final context, final snapshot) {
           if (snapshot.hasData) {
             final shader = snapshot.data!;
@@ -77,7 +79,7 @@ class ShaderPainter extends CustomPainter {
       oldDelegate != this;
 }
 
-Future<FragmentShader> _load(final String name) async {
+Future<FragmentShader> loadFrag(final String name) async {
   final FragmentProgram program =
       await FragmentProgram.fromAsset('shaders/$name.frag');
   return program.fragmentShader();
