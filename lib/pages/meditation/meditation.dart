@@ -64,24 +64,15 @@ class CanvasDrawer extends Funvas {
     final double cycle = graph(t);
     final slide = slideDist * pt - (cycle * (slideDist * pt));
 
-    shader.setFloat(0, 3.2 - (cycle * 2));
-    shader.setFloat(4, (cycle * (slideDist * pt)) - pt);
+    shader.setFloat(0, 3 - (cycle * 2));
+    shader.setFloat(4, (cycle * (slideDist * pt)) - (pt / 2));
 
     c.drawRect(
       Rect.fromLTWH(0, 0, x.width, x.height),
       Paint()
         ..shader = shader
         ..colorFilter = ColorFilter.mode(
-          secondary.withLightness(.1).toColor().withOpacity(.5),
-          BlendMode.modulate,
-        ),
-    );
-    c.drawRect(
-      Rect.fromLTWH(0, 0, x.width, x.height),
-      Paint()
-        ..shader = shader
-        ..colorFilter = ColorFilter.mode(
-          primary.withLightness(.3).toColor().withOpacity(.5),
+          primary.withLightness(.2).toColor(),
           BlendMode.modulate,
         ),
     );

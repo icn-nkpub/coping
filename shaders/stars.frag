@@ -21,7 +21,7 @@ void main() {
 		vec2 uv = p;
 		p -= .5;
 		p.x *= iResolution.x / iResolution.y;
-		z += .04;
+		z += .01;
 		l = length(p);
 		uv += p / l * (sin(z) + 1.0) * abs(sin(l * 9.0 - z - z));
 		c[i] = 0.01 / length(mod(uv, 1.0) - 0.5);
