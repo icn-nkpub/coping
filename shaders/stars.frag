@@ -9,18 +9,21 @@ vec2 fragCoord = FlutterFragCoord().xy;
 
 //////////////////////////////
 
-void main(){
+void main() {
 	vec3 c;
-	float l,z=iTime;
-	for(int i=0;i<3;i++) {
-		vec2 uv,p=fragCoord.xy/iResolution.xy;
-		uv=p;
-		p-=.5;
-		p.x*=iResolution.x/iResolution.y;
-		z+=.07;
-		l=length(p);
-		uv+=p/l*(sin(z)+1.)*abs(sin(l*9.-z-z));
-		c[i]=.01/length(mod(uv,1.)-.5);
+	float z = iTime;
+	float l;
+
+	for (int i = 0; i < 3; i++) {
+		vec2 p = fragCoord.xy / iResolution.xy;
+		vec2 uv = p;
+		p -= .5;
+		p.x *= iResolution.x / iResolution.y;
+		z += .02;
+		l = length(p);
+		uv += p / l * (sin(z) + 1.0) * abs(sin(l * 9.0 - z - z));
+		c[i] = 0.01 / length(mod(uv, 1.0) - 0.5);
 	}
-	fragColor=vec4(c/l,iTime);
+
+	fragColor = vec4(c / l, iTime);
 }

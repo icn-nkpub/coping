@@ -42,11 +42,12 @@ class _DrawFragState extends State<DrawFrag>
             final shader = snapshot.data!;
             shader.setFloat(1, MediaQuery.of(context).size.width);
             shader.setFloat(2, MediaQuery.of(context).size.height);
+
             return AnimatedBuilder(
               animation:
                   _controller.drive(CurveTween(curve: Curves.bounceInOut)),
               builder: (final bc, final child) {
-                shader.setFloat(0, _controller.value * 2);
+                shader.setFloat(0, (_controller.value - 2) * 4);
                 return CustomPaint(
                   painter: ShaderPainter(shader),
                 );

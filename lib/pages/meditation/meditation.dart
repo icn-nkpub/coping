@@ -49,11 +49,17 @@ class MeditationScreen extends StatelessWidget {
         return Stack(
           alignment: Alignment.center,
           children: [
-            const SizedBox(
+            SizedBox(
               width: double.infinity,
               height: double.infinity,
-              child: DrawFrag(
-                frag: 'stars',
+              child: ColorFiltered(
+                colorFilter: ColorFilter.mode(
+                  Theme.of(context).colorScheme.primary,
+                  BlendMode.modulate,
+                ),
+                child: const DrawFrag(
+                  frag: 'stars',
+                ),
               ),
             ),
             SizedBox(
