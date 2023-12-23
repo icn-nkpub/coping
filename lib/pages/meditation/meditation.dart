@@ -65,7 +65,9 @@ class CanvasDrawer extends Funvas {
     final slide = slideDist * pt - (cycle * (slideDist * pt));
 
     shader.setFloat(0, 3 - (cycle * 2));
-    shader.setFloat(4, (cycle * (slideDist * pt)) - (pt / 2));
+    shader.setFloat(1, x.width);
+    shader.setFloat(2, x.height);
+    shader.setFloat(4, -slide);
 
     c.drawRect(
       Rect.fromLTWH(0, 0, x.width, x.height),
@@ -185,10 +187,6 @@ class MeditationScreen extends StatelessWidget {
             builder: (final context, final u) {
               final breathingTime = u?.profile?.breathingTime ?? 6.0;
 
-              final shader = snapshot.requireData;
-              shader.setFloat(1, MediaQuery.of(context).size.width);
-              shader.setFloat(2, MediaQuery.of(context).size.height);
-
               final cd = CanvasDrawer(
                 backdrop: Theme.of(context).scaffoldBackgroundColor,
                 primary:
@@ -199,7 +197,7 @@ class MeditationScreen extends StatelessWidget {
                 scale: 1.3,
                 rounds: 12,
                 slideDist: 12,
-                shader: shader,
+                shader: snapshot.requireData,
               );
 
               return Stack(
