@@ -64,7 +64,7 @@ class CanvasDrawer extends Funvas {
     final double cycle = graph(t);
     final slide = slideDist * pt - (cycle * (slideDist * pt));
 
-    shader.setFloat(0, 3 - (cycle * 2));
+    shader.setFloat(0, 3.44 - (cycle * 2));
     shader.setFloat(1, x.width);
     shader.setFloat(2, x.height);
     shader.setFloat(4, -slide);
@@ -74,14 +74,32 @@ class CanvasDrawer extends Funvas {
       Paint()
         ..shader = shader
         ..colorFilter = ColorFilter.mode(
-          primary.withLightness(.2).toColor(),
+          primary.toColor(),
           BlendMode.modulate,
+        )
+        ..imageFilter = ImageFilter.blur(
+          sigmaX: 1.2,
+          sigmaY: 1.2,
+        ),
+    );
+    shader.setFloat(0, 3.2 - (cycle * 1.5));
+    c.drawRect(
+      Rect.fromLTWH(0, 0, x.width, x.height),
+      Paint()
+        ..shader = shader
+        ..colorFilter = ColorFilter.mode(
+          secondary.toColor(),
+          BlendMode.modulate,
+        )
+        ..imageFilter = ImageFilter.blur(
+          sigmaX: 1.2,
+          sigmaY: 1.2,
         ),
     );
 
     // _drawParticles(pt, w, h, cycle, t, slide);
     if (!muted) _drawGuideLine(primary, pt, w, h);
-    if (!muted) _drawCircle(primary, pt, w, h, slide);
+    if (!muted) _drawCircle(secondary, pt, w, h, slide);
   }
 
   void _drawParticles(final double pt, final double w, final double h,
@@ -147,7 +165,7 @@ class CanvasDrawer extends Funvas {
     circlePaint.strokeWidth = pt / 4;
     c.drawCircle(
       Offset(w, h + slide),
-      pt,
+      pt / 2,
       circlePaint,
     );
   }
@@ -180,7 +198,10 @@ class MeditationScreen extends StatelessWidget {
         future: loadFrag('stars'),
         builder: (final context, final snapshot) {
           if (!snapshot.hasData) {
-            return const Placeholder();
+            return const SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+            );
           }
 
           return BlocBuilder<LoginCubit, Profile?>(
