@@ -162,49 +162,55 @@ class _TopBarState extends State<TopBar> {
 
   Widget body() => Shrinkable(
         expanded: expandMenu,
-        child: CardRope(
-          cards: [
-            RopedCard(
-              children: [
-                BlocBuilder<LoginCubit, Profile?>(
-                    builder: (final context, final u) {
-                  final List<Widget> children = [];
+        child: Container(
+          alignment: Alignment.topRight,
+          child: Container(
+            constraints: const BoxConstraints(maxWidth: 640),
+            child: CardRope(
+              cards: [
+                RopedCard(
+                  children: [
+                    BlocBuilder<LoginCubit, Profile?>(
+                        builder: (final context, final u) {
+                      final List<Widget> children = [];
 
-                  if (u == null) {
-                    children.add(NavButton(
-                        AppLocalizations.of(context)!.screenLogin,
-                        onPressed: goTo(0)));
-                    children.add(NavButton(
-                        AppLocalizations.of(context)!.screenRegister,
-                        onPressed: goTo(1)));
-                  } else {
-                    children.add(NavButton(
-                        AppLocalizations.of(context)!.screenProfile,
-                        onPressed: goTo(2)));
-                    children.add(NavButton(
-                        AppLocalizations.of(context)!.screenLogin,
-                        onPressed: goTo(0)));
-                    children.add(NavButton(
-                        AppLocalizations.of(context)!.screenLogout,
-                        onPressed: goTo(3)));
-                  }
+                      if (u == null) {
+                        children.add(NavButton(
+                            AppLocalizations.of(context)!.screenLogin,
+                            onPressed: goTo(0)));
+                        children.add(NavButton(
+                            AppLocalizations.of(context)!.screenRegister,
+                            onPressed: goTo(1)));
+                      } else {
+                        children.add(NavButton(
+                            AppLocalizations.of(context)!.screenProfile,
+                            onPressed: goTo(2)));
+                        children.add(NavButton(
+                            AppLocalizations.of(context)!.screenLogin,
+                            onPressed: goTo(0)));
+                        children.add(NavButton(
+                            AppLocalizations.of(context)!.screenLogout,
+                            onPressed: goTo(3)));
+                      }
 
-                  return Wrap(
-                    runSpacing: 8,
-                    children: children,
-                  );
-                }),
+                      return Wrap(
+                        runSpacing: 8,
+                        children: children,
+                      );
+                    }),
+                  ],
+                ),
+                RopedCard(
+                  children: [
+                    _themeSettings(),
+                  ],
+                ),
+                const SizedBox(
+                  height: 0,
+                ),
               ],
             ),
-            RopedCard(
-              children: [
-                _themeSettings(),
-              ],
-            ),
-            const SizedBox(
-              height: 0,
-            ),
-          ],
+          ),
         ),
       );
 

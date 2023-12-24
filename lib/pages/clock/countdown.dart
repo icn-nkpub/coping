@@ -29,6 +29,12 @@ class CountdownDisplay extends StatelessWidget {
             final splits = ct?.splits();
             final paused = ct?.resumed == null;
 
+            var clockWidth = double.infinity;
+            final ms = MediaQuery.of(context).size;
+            if (ms.width * 1.25 > ms.height) {
+              clockWidth = ms.height * 0.7;
+            }
+
             return Column(
               children: [
                 Flexible(
@@ -98,7 +104,8 @@ class CountdownDisplay extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8 * 3),
-                Padding(
+                Container(
+                  width: clockWidth,
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Stopwatch(
                     from: splits?.last,
@@ -107,24 +114,25 @@ class CountdownDisplay extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Container(
-                  width: double.infinity,
+                  width: clockWidth,
                   padding: const EdgeInsets.symmetric(horizontal: 8 * 8),
                   child: FittedBox(
-                      child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      BlocBuilder<CountdownTimerCubit, CountdownTimer?>(
-                        builder: (final context, final ct) => ScoreCard(
-                            score: NumberFormat.decimalPattern()
-                                .format(ct?.splits().score ?? 0)
-                                .replaceAll('0', 'O')),
-                      ),
-                      const SizedBox(width: 4),
-                      ...controlls(context, paused: paused),
-                      const SizedBox(width: 4),
-                      const LockerCard(),
-                    ],
-                  )),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        BlocBuilder<CountdownTimerCubit, CountdownTimer?>(
+                          builder: (final context, final ct) => ScoreCard(
+                              score: NumberFormat.decimalPattern()
+                                  .format(ct?.splits().score ?? 0)
+                                  .replaceAll('0', 'O')),
+                        ),
+                        const SizedBox(width: 4),
+                        ...controlls(context, paused: paused),
+                        const SizedBox(width: 4),
+                        const LockerCard(),
+                      ],
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 8 * 4),
               ],
