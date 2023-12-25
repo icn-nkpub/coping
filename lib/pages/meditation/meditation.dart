@@ -47,12 +47,17 @@ class CanvasDrawer extends Funvas {
     final s = x.width < x.height ? x.width : x.height;
     final pt = (s * scale) / 64;
 
+    final circleColor = Color.alphaBlend(
+      primary.toColor().withOpacity(.5),
+      secondary.toColor().withOpacity(.5),
+    );
+
     if (windDownTime > -1) {
       double cycle = graph(windDownTime);
       cycle = max(0, cycle - (t - windDownTime));
       final slide = slideDist * pt - (cycle * (slideDist * pt));
 
-      _drawCircle(primary, pt, w, h, slide);
+      _drawCircle(circleColor, pt, w, h, slide);
       _drawParticles(pt, w, h, cycle, t, slide);
 
       return;
@@ -64,11 +69,22 @@ class CanvasDrawer extends Funvas {
     final double cycle = graph(t);
     final slide = slideDist * pt - (cycle * (slideDist * pt));
 
-    shader.setFloat(0, 3.44 - (cycle * 2));
+    shader.setFloat(0, 5 - (cycle * (.27)));
     shader.setFloat(1, x.width);
     shader.setFloat(2, x.height);
     shader.setFloat(4, -slide);
+    shader.setFloat(5, cycle);
+    shader.setFloat(6, 15);
 
+    c.drawRect(
+      Rect.fromLTWH(0, 0, x.width, x.height),
+      Paint()
+        ..shader = shader
+        ..colorFilter = ColorFilter.mode(
+          primary.toColor(),
+          BlendMode.modulate,
+        ),
+    );
     c.drawRect(
       Rect.fromLTWH(0, 0, x.width, x.height),
       Paint()
@@ -78,11 +94,13 @@ class CanvasDrawer extends Funvas {
           BlendMode.modulate,
         )
         ..imageFilter = ImageFilter.blur(
-          sigmaX: 1.2,
-          sigmaY: 1.2,
+          sigmaX: 5,
+          sigmaY: 5,
         ),
     );
-    shader.setFloat(0, 3.2 - (cycle * 1.5));
+
+    shader.setFloat(0, 4.59 - (cycle * (.38)));
+    shader.setFloat(5, cycle);
     c.drawRect(
       Rect.fromLTWH(0, 0, x.width, x.height),
       Paint()
@@ -92,14 +110,23 @@ class CanvasDrawer extends Funvas {
           BlendMode.modulate,
         )
         ..imageFilter = ImageFilter.blur(
-          sigmaX: 1.2,
-          sigmaY: 1.2,
+          sigmaX: 5,
+          sigmaY: 5,
+        ),
+    );
+    c.drawRect(
+      Rect.fromLTWH(0, 0, x.width, x.height),
+      Paint()
+        ..shader = shader
+        ..colorFilter = ColorFilter.mode(
+          secondary.toColor(),
+          BlendMode.modulate,
         ),
     );
 
     // _drawParticles(pt, w, h, cycle, t, slide);
     if (!muted) _drawGuideLine(primary, pt, w, h);
-    if (!muted) _drawCircle(secondary, pt, w, h, slide);
+    if (!muted) _drawCircle(circleColor, pt, w, h, slide);
   }
 
   void _drawParticles(final double pt, final double w, final double h,
@@ -157,16 +184,25 @@ class CanvasDrawer extends Funvas {
     );
   }
 
-  void _drawCircle(final HSLColor color, final double pt, final double w,
+  void _drawCircle(final Color color, final double pt, final double w,
       final double h, final double slide) {
     final circlePaint = Paint();
-    circlePaint.color = color.toColor();
+    circlePaint.color = color;
     circlePaint.strokeCap = StrokeCap.round;
     circlePaint.strokeWidth = pt / 4;
     c.drawCircle(
       Offset(w, h + slide),
-      pt / 2,
+      pt,
       circlePaint,
+    );
+    c.drawCircle(
+      Offset(w, h + slide),
+      pt * 1.2,
+      circlePaint
+        ..imageFilter = ImageFilter.blur(
+          sigmaX: 5,
+          sigmaY: 5,
+        ),
     );
   }
 
@@ -208,12 +244,27 @@ class MeditationScreen extends StatelessWidget {
             builder: (final context, final u) {
               final breathingTime = u?.profile?.breathingTime ?? 6.0;
 
+              HSLColor primC;
+              HSLColor secC;
+              if (Theme.of(context).brightness == Brightness.dark) {
+                primC =
+                    HSLColor.fromColor(Theme.of(context).colorScheme.primary);
+                primC = primC.withLightness(primC.lightness * 0.95);
+                secC =
+                    HSLColor.fromColor(Theme.of(context).colorScheme.tertiary);
+                secC = secC.withLightness(primC.lightness * 0.95);
+              } else {
+                primC = HSLColor.fromColor(
+                    Theme.of(context).colorScheme.primaryContainer);
+                primC = primC.withLightness(primC.lightness * 0.75);
+                secC = HSLColor.fromColor(
+                    Theme.of(context).colorScheme.tertiaryContainer);
+                secC = secC.withLightness(secC.lightness * 0.75);
+              }
               final cd = CanvasDrawer(
                 backdrop: Theme.of(context).scaffoldBackgroundColor,
-                primary:
-                    HSLColor.fromColor(Theme.of(context).colorScheme.primary),
-                secondary:
-                    HSLColor.fromColor(Theme.of(context).colorScheme.tertiary),
+                primary: primC,
+                secondary: secC,
                 fullCycleDuration: breathingTime,
                 scale: 1.3,
                 rounds: 12,
