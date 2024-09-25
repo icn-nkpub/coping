@@ -32,7 +32,7 @@
      inkscape:window-x="80"
      inkscape:window-y="37"
      inkscape:window-maximized="0"
-     inkscape:current-layer="svg5">
+     inkscape:current-layer="layer2">
     <inkscape:grid
        type="xygrid"
        id="grid9"
@@ -308,10 +308,38 @@
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="cosmetic"
-     style="display:none">
+     style="display:inline">
     <path
-       style="display:inline;opacity:1;fill:#ff0000;stroke:none;stroke-width:40;stroke-linecap:square;stroke-linejoin:round;stroke-dasharray:none;stop-color:#000000"
-       d="M 140,360 H 460 L 300,520 Z"
-       id="path4197" />
+       style="display:none;opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:40;stroke-linecap:square;stroke-linejoin:miter;stroke-dasharray:none;stop-color:#000000"
+       d="m 440,380 c 0,0 -20,120 -140,120 -120,0 -140,-120 -140,-120 0,0 27.02335,3.06337 40,0 14.50834,-3.42495 25.49166,-16.57505 40,-20 6.48833,-1.53169 13.51167,-1.53169 20,0 14.50834,3.42495 25.49166,16.57505 40,20 45.41829,10.7218 140,0 140,0 z"
+       id="path4197"
+       inkscape:label="mask"
+       sodipodi:nodetypes="czcaaaac" />
+    <g
+       id="g4605"
+       inkscape:label="square"
+       style="display:none">
+      <rect
+         style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:40;stroke-linecap:square;stroke-linejoin:miter;stroke-dasharray:none;stop-color:#000000"
+         id="rect4492"
+         width="120"
+         height="120"
+         x="100"
+         y="240" />
+      <rect
+         style="display:inline;fill:none;fill-opacity:1;stroke:#000000;stroke-width:40;stroke-linecap:square;stroke-linejoin:miter;stroke-dasharray:none;stop-color:#000000"
+         id="rect4492-0"
+         width="120"
+         height="120"
+         x="280"
+         y="240" />
+    </g>
+    <circle
+       style="display:none;fill:#ffb380;stroke:#ff6600;stroke-width:40;stroke-linecap:square;stroke-linejoin:round;stroke-dasharray:none;stop-color:#000000"
+       id="path4035-4-4-8"
+       cx="240"
+       cy="200"
+       r="60"
+       inkscape:label="3rd-eye" />
   </g>
 </svg>
