@@ -237,8 +237,9 @@ class MeditationScreen extends StatelessWidget {
                     child: InfoCard(
                       speed: breathingTime,
                       setSpeed: (final s) {
+                        final lc = context.read<LoginCubit>();
                         Future.delayed(const Duration(seconds: 1), () async {
-                          await context.read<LoginCubit>().setBreathingTime(s);
+                          await lc.setBreathingTime(s);
                         });
                       },
                       changingSpeed: () {

@@ -45,7 +45,7 @@ class $AssetsIconsGen {
   const $AssetsIconsGen();
 
   /// File path: assets/icons/_load.dart
-  String get load => 'assets/icons/_load.dart';
+  String get aLoad => 'assets/icons/_load.dart';
 
   /// File path: assets/icons/add.svg
   String get add => 'assets/icons/add.svg';
@@ -190,7 +190,7 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<String> get values => [
-        load,
+        aLoad,
         add,
         arrowBack,
         assignmentTurnedIn,
@@ -244,20 +244,34 @@ class $AssetsIconsGen {
 class $AssetsManualsGen {
   const $AssetsManualsGen();
 
+  /// Directory path: assets/manuals/en
   $AssetsManualsEnGen get en => const $AssetsManualsEnGen();
+
+  /// Directory path: assets/manuals/ru
   $AssetsManualsRuGen get ru => const $AssetsManualsRuGen();
 }
 
 class $AssetsManualsEnGen {
   const $AssetsManualsEnGen();
 
+  /// Directory path: assets/manuals/en/buttons
   $AssetsManualsEnButtonsGen get buttons => const $AssetsManualsEnButtonsGen();
+
+  /// Directory path: assets/manuals/en/clock
   $AssetsManualsEnClockGen get clock => const $AssetsManualsEnClockGen();
+
+  /// Directory path: assets/manuals/en/locker
   $AssetsManualsEnLockerGen get locker => const $AssetsManualsEnLockerGen();
+
+  /// Directory path: assets/manuals/en/triggers
   $AssetsManualsEnTriggersGen get triggers =>
       const $AssetsManualsEnTriggersGen();
+
+  /// Directory path: assets/manuals/en/triggers_journal
   $AssetsManualsEnTriggersJournalGen get triggersJournal =>
       const $AssetsManualsEnTriggersJournalGen();
+
+  /// Directory path: assets/manuals/en/triggers_log
   $AssetsManualsEnTriggersLogGen get triggersLog =>
       const $AssetsManualsEnTriggersLogGen();
 }
@@ -265,13 +279,24 @@ class $AssetsManualsEnGen {
 class $AssetsManualsRuGen {
   const $AssetsManualsRuGen();
 
+  /// Directory path: assets/manuals/ru/buttons
   $AssetsManualsRuButtonsGen get buttons => const $AssetsManualsRuButtonsGen();
+
+  /// Directory path: assets/manuals/ru/clock
   $AssetsManualsRuClockGen get clock => const $AssetsManualsRuClockGen();
+
+  /// Directory path: assets/manuals/ru/locker
   $AssetsManualsRuLockerGen get locker => const $AssetsManualsRuLockerGen();
+
+  /// Directory path: assets/manuals/ru/triggers
   $AssetsManualsRuTriggersGen get triggers =>
       const $AssetsManualsRuTriggersGen();
+
+  /// Directory path: assets/manuals/ru/triggers_journal
   $AssetsManualsRuTriggersJournalGen get triggersJournal =>
       const $AssetsManualsRuTriggersJournalGen();
+
+  /// Directory path: assets/manuals/ru/triggers_log
   $AssetsManualsRuTriggersLogGen get triggersLog =>
       const $AssetsManualsRuTriggersLogGen();
 }
@@ -517,13 +542,20 @@ class Assets {
   static const AssetGenImage opaqring = AssetGenImage('assets/opaqring.png');
 
   /// List of all assets
-  List<dynamic> get values => [guyhead, nkpub, opaqring];
+  static List<dynamic> get values => [guyhead, nkpub, opaqring];
 }
 
 class AssetGenImage {
-  const AssetGenImage(this._assetName);
+  const AssetGenImage(
+    this._assetName, {
+    this.size,
+    this.flavors = const {},
+  });
 
   final String _assetName;
+
+  final Size? size;
+  final Set<String> flavors;
 
   Image image({
     Key? key,

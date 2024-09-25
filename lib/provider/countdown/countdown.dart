@@ -96,7 +96,7 @@ class CountdownEvent {
 class CountdownTimerCubit extends Cubit<CountdownTimer?> {
   CountdownTimerCubit() : super(null);
 
-  Future<void> resume(final User auth, final AppLocalizations al, final DateTime dt) async {
+  Future<void> resume(final User auth, final AppLocalizations? al, final DateTime dt) async {
     if (state == null) return;
 
     final id = await logCountdownResume(auth, 'smoking', dt);
@@ -116,7 +116,9 @@ class CountdownTimerCubit extends Cubit<CountdownTimer?> {
       );
     }
 
-    await startNotifications(al);
+    if (al != null) {
+      await startNotifications(al);
+    }
 
     emit(CountdownTimer(
       resumed: dt,
@@ -125,7 +127,7 @@ class CountdownTimerCubit extends Cubit<CountdownTimer?> {
     ));
   }
 
-  Future<void> pause(final User auth, final AppLocalizations al, final DateTime dt) async {
+  Future<void> pause(final User auth, final AppLocalizations? al, final DateTime dt) async {
     if (state == null) return;
 
     final resets = state!.sortedCopy();
@@ -137,7 +139,9 @@ class CountdownTimerCubit extends Cubit<CountdownTimer?> {
       resumeTime: null,
     ));
 
-    await stopNotifications(al);
+    if (al != null) {
+      await stopNotifications(al);
+    }
 
     emit(CountdownTimer(
       resumed: null,
