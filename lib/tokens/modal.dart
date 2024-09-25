@@ -80,7 +80,7 @@ class MetaModal extends StatelessWidget {
         body: Container(
           margin: const EdgeInsets.only(top: 8 * 10, left: 8, right: 8),
           decoration: BoxDecoration(
-            color: color ?? Theme.of(context).colorScheme.background,
+            color: color ?? Theme.of(context).colorScheme.surface,
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(8 * 3),
               topRight: Radius.circular(8 * 3),

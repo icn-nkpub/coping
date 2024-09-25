@@ -64,7 +64,7 @@ class _HelpModalState extends State<HelpModal> {
   @override
   Widget build(final BuildContext context) {
     final localSurface = ElevationOverlay.applySurfaceTint(
-      Theme.of(context).colorScheme.background,
+      Theme.of(context).colorScheme.surface,
       Theme.of(context).colorScheme.primary,
       1,
     );

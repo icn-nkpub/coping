@@ -41,12 +41,12 @@ class _TriggerListState extends State<TriggerList> {
                         triggers.templates.map(
                           (final t) => FilledButton.tonal(
                             style: ButtonStyle(
-                              backgroundColor: MaterialStatePropertyAll(
+                              backgroundColor: WidgetStatePropertyAll(
                                   Theme.of(context)
                                       .colorScheme
                                       .tertiaryContainer),
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              padding: const MaterialStatePropertyAll(
+                              padding: const WidgetStatePropertyAll(
                                   EdgeInsets.symmetric(horizontal: 8 * 2)),
                             ),
                             onLongPress: () {
@@ -81,7 +81,7 @@ class _TriggerListState extends State<TriggerList> {
                       IconButton.filledTonal(
                         style: const ButtonStyle(
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          padding: MaterialStatePropertyAll(
+                          padding: WidgetStatePropertyAll(
                               EdgeInsets.symmetric(horizontal: 8 * 2)),
                         ),
                         onPressed: () {

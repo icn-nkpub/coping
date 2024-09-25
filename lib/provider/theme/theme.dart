@@ -24,7 +24,7 @@ class ThemeState {
       brightness: isLightMode() ? Brightness.light : Brightness.dark,
     );
 
-    final bc = data.colorScheme.background;
+    final bc = data.colorScheme.surface;
     final pc = data.colorScheme.surfaceTint;
 
     const shadow = Colors.transparent;

@@ -113,7 +113,7 @@ class _LockerCardState extends State<LockerCard> {
 
               unawaited(context.read<LockerCubit>().start(p!.auth, dt, d));
 
-              final al = AppLocalizations.of(context)!;
+              final al = AppLocalizations.of(context);
               final ctc = context.read<CountdownTimerCubit>();
               if (ctc.state?.resumed == null) {
                 unawaited(ctc.resume(p.auth, al, dt));
@@ -140,7 +140,7 @@ class _LockerCardState extends State<LockerCard> {
                       const SizedBox(width: double.infinity, height: 0),
                       Lockpicking(
                         unlock: () {
-                          final al = AppLocalizations.of(context)!;
+                          final al = AppLocalizations.of(context);
                           unawaited(context
                               .read<LockerCubit>()
                               .stop(p!.auth)

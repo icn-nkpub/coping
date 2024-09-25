@@ -102,7 +102,7 @@ class TriggersHelpPage extends StatelessWidget {
                       child: IconButton.filledTonal(
                         style: const ButtonStyle(
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          padding: MaterialStatePropertyAll(
+                          padding: WidgetStatePropertyAll(
                               EdgeInsets.symmetric(horizontal: 8 * 2)),
                         ),
                         onPressed: () {},
@@ -167,7 +167,7 @@ class TriggersHelpPage extends StatelessWidget {
         IconButton.filledTonal(
           style: const ButtonStyle(
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            padding: MaterialStatePropertyAll(
+            padding: WidgetStatePropertyAll(
                 EdgeInsets.symmetric(horizontal: 8 * 2)),
           ),
           onPressed: () {},
@@ -194,11 +194,11 @@ class TriggerBadge extends StatelessWidget {
   Widget build(final BuildContext context) => FilledButton.tonal(
         style: ButtonStyle(
           backgroundColor: tertiary
-              ? MaterialStatePropertyAll(
+              ? WidgetStatePropertyAll(
                   Theme.of(context).colorScheme.tertiaryContainer)
               : null,
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          padding: const MaterialStatePropertyAll(
+          padding: const WidgetStatePropertyAll(
               EdgeInsets.symmetric(horizontal: 8 * 2)),
         ),
         onPressed: () {},

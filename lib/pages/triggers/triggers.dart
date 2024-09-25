@@ -129,7 +129,7 @@ class ComunityFolder extends StatelessWidget {
                           (final t) => FilledButton.tonal(
                             style: const ButtonStyle(
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              padding: MaterialStatePropertyAll(
+                              padding: WidgetStatePropertyAll(
                                   EdgeInsets.symmetric(horizontal: 8 * 2)),
                             ),
                             onPressed: () {

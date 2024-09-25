@@ -176,7 +176,7 @@ class CountdownDisplay extends StatelessWidget {
         paused
             ? IconButton.filledTonal(
                 onPressed: () async {
-                  final al = AppLocalizations.of(context)!;
+                  final al = AppLocalizations.of(context);
                   final auth = context.read<LoginCubit>().state!.auth;
                   await context
                       .read<CountdownTimerCubit>()
@@ -189,7 +189,7 @@ class CountdownDisplay extends StatelessWidget {
               )
             : IconButton.filledTonal(
                 onPressed: () async {
-                  final al = AppLocalizations.of(context)!;
+                  final al = AppLocalizations.of(context);
                   final auth = context.read<LoginCubit>().state!.auth;
                   await context
                       .read<CountdownTimerCubit>()
