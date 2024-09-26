@@ -64,7 +64,7 @@ class CanvasDrawer extends Funvas {
     final double cycle = graph(t);
     final slide = slideDist * pt - (cycle * (slideDist * pt));
 
-    shader.setFloat(0, 3.44 - (cycle * 2));
+    shader.setFloat(0, 3.44 - (cycle / 2));
     shader.setFloat(1, x.width);
     shader.setFloat(2, x.height);
     shader.setFloat(4, -slide);
@@ -77,12 +77,8 @@ class CanvasDrawer extends Funvas {
           primary.toColor(),
           BlendMode.modulate,
         )
-        ..imageFilter = ImageFilter.blur(
-          sigmaX: 1.2,
-          sigmaY: 1.2,
-        ),
     );
-    shader.setFloat(0, 3.2 - (cycle * 1.5));
+    shader.setFloat(0, 3.2 - (cycle / 2));
     c.drawRect(
       Rect.fromLTWH(0, 0, x.width, x.height),
       Paint()
@@ -91,10 +87,6 @@ class CanvasDrawer extends Funvas {
           secondary.toColor(),
           BlendMode.modulate,
         )
-        ..imageFilter = ImageFilter.blur(
-          sigmaX: 1.2,
-          sigmaY: 1.2,
-        ),
     );
 
     // _drawParticles(pt, w, h, cycle, t, slide);

@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:dependencecoping/gen/assets.gen.dart';
-import 'package:dependencecoping/pages/copeai/data.dart';
+import 'package:dependencecoping/pages/copingdao/data.dart';
 import 'package:dependencecoping/tokens/icons.dart';
 import 'package:dependencecoping/tokens/topbar.dart';
 import 'package:flutter/material.dart';
