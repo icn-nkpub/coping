@@ -18,7 +18,8 @@ class TriggerLog {
   final DateTime time;
 }
 
-Future<void> logTrigger(final User user, final Trigger t, final String situation, final String thought, final int impulse) async {
+Future<void> logTrigger(final User user, final Trigger t,
+    final String situation, final String thought, final int impulse) async {
   await query().insert({
     'user_id': user.id,
     'meta_id': t.id,
@@ -30,8 +31,12 @@ Future<void> logTrigger(final User user, final Trigger t, final String situation
   });
 }
 
-Future<List<TriggerLog>> getTriggersLog(final User user, final String type) async {
-  final data = await query().select<PostgrestList>().eq('user_id', user.id).eq('addiction_type', type);
+Future<List<TriggerLog>> getTriggersLog(
+    final User user, final String type) async {
+  final data = await query()
+      .select<PostgrestList>()
+      .eq('user_id', user.id)
+      .eq('addiction_type', type);
 
   final List<TriggerLog> result = [];
   for (final r in data) {

@@ -19,7 +19,9 @@ class TriggersJournalHelpPage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Guy(text: AppLocalizations.of(context)!.helpTriggersJournal, face: Assets.guy.happy),
+        Guy(
+            text: AppLocalizations.of(context)!.helpTriggersJournal,
+            face: Assets.guy.happy),
         Expanded(
           child: ListView(
             children: [
@@ -45,7 +47,8 @@ class TriggersJournalHelpPage extends StatelessWidget {
               ),
               const Padding(
                 padding: EdgeInsets.all(16),
-                child: MarkdownManual(section: 'triggers_journal', fragment: 'm1_list'),
+                child: MarkdownManual(
+                    section: 'triggers_journal', fragment: 'm1_list'),
               ),
             ],
           ),

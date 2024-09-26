@@ -30,8 +30,12 @@ class CountdownReset {
   }
 }
 
-Future<List<CountdownReset>> getCountdownResets(final User user, final String type) async {
-  final data = await query().select<PostgrestList>().eq('user_id', user.id).eq('addiction_type', type);
+Future<List<CountdownReset>> getCountdownResets(
+    final User user, final String type) async {
+  final data = await query()
+      .select<PostgrestList>()
+      .eq('user_id', user.id)
+      .eq('addiction_type', type);
 
   if (data.isEmpty) {
     return [];
@@ -55,8 +59,13 @@ Future<List<CountdownReset>> getCountdownResets(final User user, final String ty
   return crs;
 }
 
-Future<int> logCountdownResume(final User user, final String type, final DateTime time) async {
-  final data = await query().select<PostgrestList>().eq('user_id', user.id).eq('addiction_type', type).is_('resume_time', null);
+Future<int> logCountdownResume(
+    final User user, final String type, final DateTime time) async {
+  final data = await query()
+      .select<PostgrestList>()
+      .eq('user_id', user.id)
+      .eq('addiction_type', type)
+      .is_('resume_time', null);
 
   if (data.isEmpty) {
     final List<dynamic> d = await query().insert({
@@ -83,7 +92,8 @@ Future<int> logCountdownResume(final User user, final String type, final DateTim
   return int.parse(data[0]['id'].toString());
 }
 
-Future<int> logCountdownReset(final User user, final String type, final DateTime time) async {
+Future<int> logCountdownReset(
+    final User user, final String type, final DateTime time) async {
   final List<dynamic> d = await query().insert({
     'user_id': user.id,
     'reset_time': time.toUtc().toIso8601String(),
@@ -95,7 +105,8 @@ Future<int> logCountdownReset(final User user, final String type, final DateTime
   return int.parse(v['id'].toString());
 }
 
-Future<void> editCountdownReset(final User user, final int id, final DateTime time) async {
+Future<void> editCountdownReset(
+    final User user, final int id, final DateTime time) async {
   await query()
       .update({
         'id': id,
@@ -108,7 +119,8 @@ Future<void> editCountdownReset(final User user, final int id, final DateTime ti
   return;
 }
 
-Future<void> editCountdownResume(final User user, final int id, final DateTime time) async {
+Future<void> editCountdownResume(
+    final User user, final int id, final DateTime time) async {
   await query()
       .update({
         'id': id,
@@ -121,4 +133,5 @@ Future<void> editCountdownResume(final User user, final int id, final DateTime t
   return;
 }
 
-SupabaseQueryBuilder query() => Supabase.instance.client.from('addiction_reset_log');
+SupabaseQueryBuilder query() =>
+    Supabase.instance.client.from('addiction_reset_log');

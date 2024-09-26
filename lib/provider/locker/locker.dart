@@ -20,7 +20,8 @@ class Locker {
 class LockerCubit extends Cubit<Locker> {
   LockerCubit() : super(const Locker());
 
-  Future<void> start(final User user, final DateTime start, final Duration duration) async {
+  Future<void> start(
+      final User user, final DateTime start, final Duration duration) async {
     emit(Locker(
       start: start,
       duration: duration,

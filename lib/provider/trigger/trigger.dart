@@ -9,7 +9,8 @@ class Triggers {
   List<Trigger> templates;
   List<TriggerLog> triggerLog;
 
-  List<TriggerLog> get log => triggerLog.toList()..sort((final a, final b) => b.time.compareTo(a.time));
+  List<TriggerLog> get log =>
+      triggerLog.toList()..sort((final a, final b) => b.time.compareTo(a.time));
 
   @override
   bool operator ==(final Object other) => false; // ignore: hash_and_equals
@@ -55,7 +56,10 @@ class TriggersCubit extends Cubit<Triggers?> {
         d.add(t);
       }
 
-      d.add(Trigger(id: 'personal/$label', labels: {'en': label}, relatedAddiction: 'smoking'));
+      d.add(Trigger(
+          id: 'personal/$label',
+          labels: {'en': label},
+          relatedAddiction: 'smoking'));
 
       final log = state!.triggerLog;
 
@@ -85,7 +89,8 @@ class TriggersCubit extends Cubit<Triggers?> {
     }
   }
 
-  Future<void> send(final User user, final Trigger trigger, final String situation, final String thought, final int impulse) async {
+  Future<void> send(final User user, final Trigger trigger,
+      final String situation, final String thought, final int impulse) async {
     if (state != null) {
       final List<Trigger> d = [];
       final Set<String> seen = {};

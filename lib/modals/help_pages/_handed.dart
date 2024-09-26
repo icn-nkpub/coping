@@ -58,7 +58,9 @@ class _HandedState extends State<Handed> with TickerProviderStateMixin {
 
           final topOffsetPercentage = t / childHeight;
           final leftOffsetPercentage = l / childWidth;
-          final r = (topOffsetPercentage < .5 ? pi + (pi * (leftOffsetPercentage - .5) / 4) : -(pi * (leftOffsetPercentage - .5) / 4));
+          final r = (topOffsetPercentage < .5
+              ? pi + (pi * (leftOffsetPercentage - .5) / 4)
+              : -(pi * (leftOffsetPercentage - .5) / 4));
 
           final double m = widget.noMargin ? 0 : 16;
 
@@ -87,8 +89,14 @@ class _HandedState extends State<Handed> with TickerProviderStateMixin {
                     gradient: RadialGradient(
                       colors: [
                         Theme.of(context).colorScheme.tertiaryContainer,
-                        Theme.of(context).colorScheme.tertiaryContainer.withOpacity(0.5),
-                        Theme.of(context).colorScheme.tertiaryContainer.withOpacity(0),
+                        Theme.of(context)
+                            .colorScheme
+                            .tertiaryContainer
+                            .withOpacity(0.5),
+                        Theme.of(context)
+                            .colorScheme
+                            .tertiaryContainer
+                            .withOpacity(0),
                       ],
                       stops: const [0.2, 0.6, 1],
                     ),

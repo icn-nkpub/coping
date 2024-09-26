@@ -16,8 +16,11 @@ class MarkdownManual extends StatelessWidget {
   @override
   Widget build(final BuildContext context) => FutureBuilder(
         // ignore: discarded_futures
-        future: rootBundle.loadString(AppLocalizations.of(context)!.helpManuals(fragment, section)),
+        future: rootBundle.loadString(
+            AppLocalizations.of(context)!.helpManuals(fragment, section)),
         builder: (final context, final snapshot) =>
-            snapshot.connectionState == ConnectionState.done ? MarkdownBody(data: snapshot.requireData) : const Text('[...]'),
+            snapshot.connectionState == ConnectionState.done
+                ? MarkdownBody(data: snapshot.requireData)
+                : const Text('[...]'),
       );
 }

@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 
 class Input extends StatelessWidget {
   const Input({
-    required this.title, required this.ctrl, required this.autocorrect, super.key,
+    required this.title,
+    required this.ctrl,
+    required this.autocorrect,
+    super.key,
     this.obscureText = false,
   });
 
@@ -22,17 +25,18 @@ class Input extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: ValueListenableBuilder<TextEditingValue>(
             valueListenable: ctrl,
-            builder: (final context, final value, final child) => value.text.isNotEmpty
-                  ? Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        title,
-                        style: t.textTheme.bodySmall!.copyWith(
-                          color: t.hintColor,
+            builder: (final context, final value, final child) =>
+                value.text.isNotEmpty
+                    ? Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          title,
+                          style: t.textTheme.bodySmall!.copyWith(
+                            color: t.hintColor,
+                          ),
                         ),
-                      ),
-                    )
-                  : const SizedBox(),
+                      )
+                    : const SizedBox(),
           ),
         ),
         Container(

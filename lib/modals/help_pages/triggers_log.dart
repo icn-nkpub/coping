@@ -24,7 +24,9 @@ class TriggersLogHelpPage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Guy(text: AppLocalizations.of(context)!.helpTriggersLog, face: Assets.guy.deceptive),
+        Guy(
+            text: AppLocalizations.of(context)!.helpTriggersLog,
+            face: Assets.guy.deceptive),
         Expanded(
           child: ListView(
             children: [
@@ -41,7 +43,8 @@ class TriggersLogHelpPage extends StatelessWidget {
               ),
               const Padding(
                 padding: EdgeInsets.all(16),
-                child: MarkdownManual(section: 'triggers_log', fragment: 'm1_button'),
+                child: MarkdownManual(
+                    section: 'triggers_log', fragment: 'm1_button'),
               ),
               ModalContainer(
                 title: AppLocalizations.of(context)!.modalLogTrigger,
@@ -53,13 +56,22 @@ class TriggersLogHelpPage extends StatelessWidget {
                       computeLeft: (final s, final av) => s * .05 + 48 * av,
                       computeTop: (final s, final av) => s * .1,
                       noMargin: true,
-                      child: Input(title: AppLocalizations.of(context)!.personalTriggerSituation, ctrl: TextEditingController(), autocorrect: true),
+                      child: Input(
+                          title: AppLocalizations.of(context)!
+                              .personalTriggerSituation,
+                          ctrl: TextEditingController(),
+                          autocorrect: true),
                     ),
                     const SizedBox(height: 4),
-                    Input(title: AppLocalizations.of(context)!.personalTriggerThought, ctrl: TextEditingController(), autocorrect: true),
+                    Input(
+                        title: AppLocalizations.of(context)!
+                            .personalTriggerThought,
+                        ctrl: TextEditingController(),
+                        autocorrect: true),
                     const SizedBox(height: 8 * 2),
                     ImpulseSlider(
-                      title: AppLocalizations.of(context)!.personalTriggerImpulse,
+                      title:
+                          AppLocalizations.of(context)!.personalTriggerImpulse,
                       callback: (final i) {},
                     ),
                   ],
@@ -67,7 +79,8 @@ class TriggersLogHelpPage extends StatelessWidget {
               ),
               const Padding(
                 padding: EdgeInsets.all(16),
-                child: MarkdownManual(section: 'triggers_log', fragment: 'm2_situation'),
+                child: MarkdownManual(
+                    section: 'triggers_log', fragment: 'm2_situation'),
               ),
               ModalContainer(
                 title: AppLocalizations.of(context)!.modalLogTrigger,
@@ -75,7 +88,8 @@ class TriggersLogHelpPage extends StatelessWidget {
                   children: [
                     HighText(text: triggers[0]),
                     Input(
-                        title: AppLocalizations.of(context)!.personalTriggerSituation,
+                        title: AppLocalizations.of(context)!
+                            .personalTriggerSituation,
                         ctrl: TextEditingController(text: triggers[1]),
                         autocorrect: true),
                     const SizedBox(height: 4),
@@ -84,11 +98,16 @@ class TriggersLogHelpPage extends StatelessWidget {
                       computeLeft: (final s, final av) => s * .05 + 48 * av,
                       computeTop: (final s, final av) => s * .1,
                       noMargin: true,
-                      child: Input(title: AppLocalizations.of(context)!.personalTriggerThought, ctrl: TextEditingController(), autocorrect: true),
+                      child: Input(
+                          title: AppLocalizations.of(context)!
+                              .personalTriggerThought,
+                          ctrl: TextEditingController(),
+                          autocorrect: true),
                     ),
                     const SizedBox(height: 8 * 2),
                     ImpulseSlider(
-                      title: AppLocalizations.of(context)!.personalTriggerImpulse,
+                      title:
+                          AppLocalizations.of(context)!.personalTriggerImpulse,
                       callback: (final i) {},
                     ),
                   ],
@@ -96,7 +115,8 @@ class TriggersLogHelpPage extends StatelessWidget {
               ),
               const Padding(
                 padding: EdgeInsets.all(16),
-                child: MarkdownManual(section: 'triggers_log', fragment: 'm3_ct'),
+                child:
+                    MarkdownManual(section: 'triggers_log', fragment: 'm3_ct'),
               ),
               ModalContainer(
                 title: AppLocalizations.of(context)!.modalLogTrigger,
@@ -104,12 +124,14 @@ class TriggersLogHelpPage extends StatelessWidget {
                   children: [
                     HighText(text: triggers[0]),
                     Input(
-                        title: AppLocalizations.of(context)!.personalTriggerSituation,
+                        title: AppLocalizations.of(context)!
+                            .personalTriggerSituation,
                         ctrl: TextEditingController(text: triggers[1]),
                         autocorrect: true),
                     const SizedBox(height: 4),
                     Input(
-                        title: AppLocalizations.of(context)!.personalTriggerThought,
+                        title: AppLocalizations.of(context)!
+                            .personalTriggerThought,
                         ctrl: TextEditingController(text: triggers[2]),
                         autocorrect: true),
                     const SizedBox(height: 8 * 2),
@@ -119,7 +141,8 @@ class TriggersLogHelpPage extends StatelessWidget {
                       computeTop: (final s, final av) => s * .55,
                       noMargin: true,
                       child: ImpulseSlider(
-                        title: AppLocalizations.of(context)!.personalTriggerImpulse,
+                        title: AppLocalizations.of(context)!
+                            .personalTriggerImpulse,
                         callback: (final i) {},
                       ),
                     ),
@@ -128,7 +151,8 @@ class TriggersLogHelpPage extends StatelessWidget {
               ),
               const Padding(
                 padding: EdgeInsets.all(16),
-                child: MarkdownManual(section: 'triggers_log', fragment: 'm4_impulse'),
+                child: MarkdownManual(
+                    section: 'triggers_log', fragment: 'm4_impulse'),
               ),
               ModalContainer(
                 title: AppLocalizations.of(context)!.modalLogTrigger,
@@ -136,17 +160,20 @@ class TriggersLogHelpPage extends StatelessWidget {
                   children: [
                     HighText(text: triggers[0]),
                     Input(
-                        title: AppLocalizations.of(context)!.personalTriggerSituation,
+                        title: AppLocalizations.of(context)!
+                            .personalTriggerSituation,
                         ctrl: TextEditingController(text: triggers[1]),
                         autocorrect: true),
                     const SizedBox(height: 4),
                     Input(
-                        title: AppLocalizations.of(context)!.personalTriggerThought,
+                        title: AppLocalizations.of(context)!
+                            .personalTriggerThought,
                         ctrl: TextEditingController(text: triggers[2]),
                         autocorrect: true),
                     const SizedBox(height: 8 * 2),
                     ImpulseSlider(
-                      title: AppLocalizations.of(context)!.personalTriggerImpulse,
+                      title:
+                          AppLocalizations.of(context)!.personalTriggerImpulse,
                       callback: (final i) {},
                     ),
                     const SizedBox(height: 8 * 2),
@@ -159,7 +186,8 @@ class TriggersLogHelpPage extends StatelessWidget {
                         onPressed: () {},
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(AppLocalizations.of(context)!.personalTriggerSubmit),
+                          child: Text(AppLocalizations.of(context)!
+                              .personalTriggerSubmit),
                         ),
                       ),
                     ),
@@ -168,7 +196,8 @@ class TriggersLogHelpPage extends StatelessWidget {
               ),
               const Padding(
                 padding: EdgeInsets.all(16),
-                child: MarkdownManual(section: 'triggers_log', fragment: 'm5_save'),
+                child: MarkdownManual(
+                    section: 'triggers_log', fragment: 'm5_save'),
               ),
             ],
           ),

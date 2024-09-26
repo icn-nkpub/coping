@@ -44,7 +44,7 @@ class _HomeState extends State<Home> {
               label: AppLocalizations.of(context)!.screenTriggers,
             ),
             NavigationDestination(
-              icon: const SvgIcon( Assets.guyhead),
+              icon: const SvgIcon(Assets.guyhead),
               label: AppLocalizations.of(context)!.screenAssistant,
             ),
             NavigationDestination(

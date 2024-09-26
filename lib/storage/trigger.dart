@@ -27,7 +27,8 @@ Future<void> syncTriggers(final User user, final List<Trigger> triggers) async {
       'related_addiction': t.relatedAddiction,
     };
 
-    final existant = data.where((final element) => element['meta_id'] == t.id).firstOrNull;
+    final existant =
+        data.where((final element) => element['meta_id'] == t.id).firstOrNull;
 
     if (existant != null) {
       await query().update(rec).eq('user_id', user.id).eq('meta_id', t.id);
@@ -40,14 +41,19 @@ Future<void> syncTriggers(final User user, final List<Trigger> triggers) async {
     await query().insert(rec);
   }
 
-  final nonExistant = data.where((final src) => triggers.where((final t) => src['meta_id'] == t.id).firstOrNull == null);
+  final nonExistant = data.where((final src) =>
+      triggers.where((final t) => src['meta_id'] == t.id).firstOrNull == null);
   for (final element in nonExistant) {
-    await query().delete().eq('user_id', user.id).eq('meta_id', element['meta_id']);
+    await query()
+        .delete()
+        .eq('user_id', user.id)
+        .eq('meta_id', element['meta_id']);
   }
 }
 
 Future<List<Trigger>> getTriggers(final User user) async {
-  final data = await query().select<PostgrestList>().eq('related_addiction', 'smoking');
+  final data =
+      await query().select<PostgrestList>().eq('related_addiction', 'smoking');
 
   if (data.isEmpty) {
     return [];

@@ -19,7 +19,8 @@ Future<void> main() async {
 }
 
 Future<void> loadIcon(final String icon, final String style) async {
-  final url = 'https://fonts.gstatic.com/s/i/short-term/release/materialsymbolsoutlined/$icon/$style/40px.svg';
+  final url =
+      'https://fonts.gstatic.com/s/i/short-term/release/materialsymbolsoutlined/$icon/$style/40px.svg';
 
   final request = await HttpClient().getUrl(Uri.parse(url));
   final response = await request.close();

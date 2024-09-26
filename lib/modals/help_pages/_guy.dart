@@ -31,7 +31,8 @@ class Guy extends StatelessWidget {
               child: Center(
             child: Text(
               text,
-              style: t.textTheme.headlineSmall!.copyWith(color: t.colorScheme.onTertiaryContainer),
+              style: t.textTheme.headlineSmall!
+                  .copyWith(color: t.colorScheme.onTertiaryContainer),
             ),
           )),
           SvgPicture.asset(

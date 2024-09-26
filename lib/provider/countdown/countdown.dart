@@ -50,7 +50,8 @@ class CountdownTimer {
     }
 
     return Splits(
-      DateTime(last.year, last.month, last.day, last.hour, last.minute, last.second),
+      DateTime(
+          last.year, last.month, last.day, last.hour, last.minute, last.second),
       score,
     );
   }
@@ -61,8 +62,12 @@ class CountdownTimer {
     final r = sortedCopy();
 
     for (final element in r.reversed) {
-      if (element.resumeTime != null) events.add(CountdownEvent(id: element.id, resume: true, time: element.resumeTime!));
-      events.add(CountdownEvent(id: element.id, resume: false, time: element.resetTime));
+      if (element.resumeTime != null) {
+        events.add(CountdownEvent(
+            id: element.id, resume: true, time: element.resumeTime!));
+      }
+      events.add(CountdownEvent(
+          id: element.id, resume: false, time: element.resetTime));
     }
 
     events.sort((final a, final b) => a.time.compareTo(b.time));
@@ -96,7 +101,8 @@ class CountdownEvent {
 class CountdownTimerCubit extends Cubit<CountdownTimer?> {
   CountdownTimerCubit() : super(null);
 
-  Future<void> resume(final User auth, final AppLocalizations? al, final DateTime dt) async {
+  Future<void> resume(
+      final User auth, final AppLocalizations? al, final DateTime dt) async {
     if (state == null) return;
 
     final id = await logCountdownResume(auth, 'smoking', dt);
@@ -127,7 +133,8 @@ class CountdownTimerCubit extends Cubit<CountdownTimer?> {
     ));
   }
 
-  Future<void> pause(final User auth, final AppLocalizations? al, final DateTime dt) async {
+  Future<void> pause(
+      final User auth, final AppLocalizations? al, final DateTime dt) async {
     if (state == null) return;
 
     final resets = state!.sortedCopy();
@@ -150,13 +157,17 @@ class CountdownTimerCubit extends Cubit<CountdownTimer?> {
     ));
   }
 
-  Future<void> editReset(final User user, final int id, final DateTime time) async {
+  Future<void> editReset(
+      final User user, final int id, final DateTime time) async {
     await editCountdownReset(user, id, time);
 
     final resets = state!.sortedCopy();
     for (var i = 0; i < resets.length; i++) {
       final r = resets[i];
-      if (r.id == id) resets[i] = CountdownReset(id: r.id, resetTime: time, resumeTime: r.resumeTime);
+      if (r.id == id) {
+        resets[i] =
+            CountdownReset(id: r.id, resetTime: time, resumeTime: r.resumeTime);
+      }
     }
 
     emit(CountdownTimer(
@@ -166,13 +177,17 @@ class CountdownTimerCubit extends Cubit<CountdownTimer?> {
     ));
   }
 
-  Future<void> editResume(final User user, final int id, final DateTime time) async {
+  Future<void> editResume(
+      final User user, final int id, final DateTime time) async {
     await editCountdownResume(user, id, time);
 
     final resets = state!.sortedCopy();
     for (var i = 0; i < resets.length; i++) {
       final r = resets[i];
-      if (r.id == id) resets[i] = CountdownReset(id: r.id, resetTime: r.resetTime, resumeTime: time);
+      if (r.id == id) {
+        resets[i] =
+            CountdownReset(id: r.id, resetTime: r.resetTime, resumeTime: time);
+      }
     }
 
     emit(CountdownTimer(
@@ -200,18 +215,27 @@ Future<void> startNotifications(final AppLocalizations al) async {
   await unscheduleNotification(121);
   await unscheduleNotification(122);
 
-  await scheduleNotification(101, const Duration(hours: 1), al.notificationsTimerEvent, al.notificationsPass_1);
-  await scheduleNotification(102, const Duration(hours: 2), al.notificationsTimerEvent, al.notificationsPass_2);
-  await scheduleNotification(103, const Duration(hours: 24), al.notificationsTimerEvent, al.notificationsPass_24);
-  await scheduleNotification(104, const Duration(hours: 48), al.notificationsTimerEvent, al.notificationsPass_48);
-  await scheduleNotification(105, const Duration(hours: 72), al.notificationsTimerEvent, al.notificationsPass_72);
-  await scheduleNotification(106, const Duration(hours: 96), al.notificationsTimerEvent, al.notificationsPass_96);
-  await scheduleNotification(107, const Duration(hours: 168), al.notificationsTimerEvent, al.notificationsPass_168);
+  await scheduleNotification(101, const Duration(hours: 1),
+      al.notificationsTimerEvent, al.notificationsPass_1);
+  await scheduleNotification(102, const Duration(hours: 2),
+      al.notificationsTimerEvent, al.notificationsPass_2);
+  await scheduleNotification(103, const Duration(hours: 24),
+      al.notificationsTimerEvent, al.notificationsPass_24);
+  await scheduleNotification(104, const Duration(hours: 48),
+      al.notificationsTimerEvent, al.notificationsPass_48);
+  await scheduleNotification(105, const Duration(hours: 72),
+      al.notificationsTimerEvent, al.notificationsPass_72);
+  await scheduleNotification(106, const Duration(hours: 96),
+      al.notificationsTimerEvent, al.notificationsPass_96);
+  await scheduleNotification(107, const Duration(hours: 168),
+      al.notificationsTimerEvent, al.notificationsPass_168);
 }
 
 Future<void> stopNotifications(final AppLocalizations al) async {
-  await scheduleNotification(121, const Duration(hours: 1), al.notificationsTimerEvent, al.notificationsHourPassReset);
-  await scheduleNotification(122, const Duration(hours: 24), al.notificationsTimerEvent, al.notificationsDayPassReset);
+  await scheduleNotification(121, const Duration(hours: 1),
+      al.notificationsTimerEvent, al.notificationsHourPassReset);
+  await scheduleNotification(122, const Duration(hours: 24),
+      al.notificationsTimerEvent, al.notificationsDayPassReset);
 
   for (var i = 100; i < 110; i++) {
     await unscheduleNotification(i);

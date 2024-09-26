@@ -4,7 +4,9 @@ import 'package:dependencecoping/tools/maybe_map.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<List<Goal>> getStaticGoals(final User user) async {
-  final data = await query('goal_templates').select<PostgrestList>().eq('related_addiction', 'smoking');
+  final data = await query('goal_templates')
+      .select<PostgrestList>()
+      .eq('related_addiction', 'smoking');
 
   if (data.isEmpty) {
     return [];
@@ -34,7 +36,9 @@ Future<List<Goal>> getStaticGoals(final User user) async {
 }
 
 Future<List<Trigger>> getStaticTriggers(final User user) async {
-  final data = await query('trigger_templates').select<PostgrestList>().eq('related_addiction', 'smoking');
+  final data = await query('trigger_templates')
+      .select<PostgrestList>()
+      .eq('related_addiction', 'smoking');
 
   if (data.isEmpty) {
     return [];
@@ -58,4 +62,5 @@ Future<List<Trigger>> getStaticTriggers(final User user) async {
   return ts;
 }
 
-SupabaseQueryBuilder query(final String name) => Supabase.instance.client.from('static_$name');
+SupabaseQueryBuilder query(final String name) =>
+    Supabase.instance.client.from('static_$name');

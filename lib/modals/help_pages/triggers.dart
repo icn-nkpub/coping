@@ -167,8 +167,8 @@ class TriggersHelpPage extends StatelessWidget {
         IconButton.filledTonal(
           style: const ButtonStyle(
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            padding: WidgetStatePropertyAll(
-                EdgeInsets.symmetric(horizontal: 8 * 2)),
+            padding:
+                WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: 8 * 2)),
           ),
           onPressed: () {},
           icon: SvgIcon(Assets.icons.add),

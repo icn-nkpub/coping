@@ -2,7 +2,9 @@ import 'dart:convert';
 
 Map<String, String> maybeLocalized(final dynamic d) {
   if (d.runtimeType == String) {
-    if (d.toString().startsWith('{')) return Map<String, String>.from(jsonDecode(d));
+    if (d.toString().startsWith('{')) {
+      return Map<String, String>.from(jsonDecode(d));
+    }
     return {'en': d.toString()};
   }
 

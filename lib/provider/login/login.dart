@@ -90,7 +90,8 @@ class LoginCubit extends Cubit<Profile?> {
     ));
   }
 
-  Future<void> setTheme(final String color, {final bool isLight = false}) async {
+  Future<void> setTheme(final String color,
+      {final bool isLight = false}) async {
     if (state == null) {
       return;
     }

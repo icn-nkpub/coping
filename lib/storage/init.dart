@@ -40,7 +40,8 @@ mixin AssetsInitializer<T extends StatefulWidget> on State<T> {
     super.initState();
   }
 
-  Future<String> localText(final String name) => DefaultAssetBundle.of(context).loadString(name);
+  Future<String> localText(final String name) =>
+      DefaultAssetBundle.of(context).loadString(name);
 
   bool tryLock() {
     log('trying to lock: state $loadingState', name: 'tools.Assets');
@@ -148,7 +149,8 @@ mixin AssetsInitializer<T extends StatefulWidget> on State<T> {
       triggers = vTriggers;
       triggersLog = vTriggersLog;
       lockerStart = vLockerSet?.start;
-      lockerDuration = vLockerSet?.end.difference(vLockerSet.start) ?? Duration.zero;
+      lockerDuration =
+          vLockerSet?.end.difference(vLockerSet.start) ?? Duration.zero;
 
       loadingState = LoadingProgress.done;
     });

@@ -16,7 +16,9 @@ class IntroHelpPage extends StatelessWidget {
   Widget build(final BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Guy(text: AppLocalizations.of(context)!.helpIntro, face: Assets.guy.neutral),
+          Guy(
+              text: AppLocalizations.of(context)!.helpIntro,
+              face: Assets.guy.neutral),
           Expanded(
             child: ListView(
               children: [

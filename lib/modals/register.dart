@@ -27,9 +27,16 @@ class _RegisterModalState extends State<RegisterModal> {
             child: Form(
               child: Column(
                 children: [
-                  Input(title: AppLocalizations.of(context)!.registerEmail, ctrl: cEmail, autocorrect: false),
+                  Input(
+                      title: AppLocalizations.of(context)!.registerEmail,
+                      ctrl: cEmail,
+                      autocorrect: false),
                   const SizedBox(height: 8),
-                  Input(title: AppLocalizations.of(context)!.registerPassword, ctrl: cPwd, autocorrect: false, obscureText: true),
+                  Input(
+                      title: AppLocalizations.of(context)!.registerPassword,
+                      ctrl: cPwd,
+                      autocorrect: false,
+                      obscureText: true),
                   Flexible(child: ListView()),
                   FilledButton(
                     onPressed: () async {
@@ -37,7 +44,9 @@ class _RegisterModalState extends State<RegisterModal> {
 
                       try {
                         if (n.canPop()) {
-                          await context.read<LoginCubit>().signUp(cEmail.text, cPwd.text);
+                          await context
+                              .read<LoginCubit>()
+                              .signUp(cEmail.text, cPwd.text);
                           n.pop();
                         }
                       } on AuthException catch (error) {
@@ -48,7 +57,8 @@ class _RegisterModalState extends State<RegisterModal> {
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(AppLocalizations.of(context)!.registerRegister),
+                      child:
+                          Text(AppLocalizations.of(context)!.registerRegister),
                     ),
                   ),
                 ],

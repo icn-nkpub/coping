@@ -47,7 +47,8 @@ Future<void> syncGoals(final User user, final List<Goal> goals) async {
       'rate_seconds': g.rate.inSeconds,
     };
 
-    final existant = data.where((final element) => element['meta_id'] == g.id).firstOrNull;
+    final existant =
+        data.where((final element) => element['meta_id'] == g.id).firstOrNull;
 
     if (existant != null) {
       await query().update(rec).eq('user_id', user.id).eq('meta_id', g.id);
@@ -60,14 +61,19 @@ Future<void> syncGoals(final User user, final List<Goal> goals) async {
     await query().insert(rec);
   }
 
-  final nonExistant = data.where((final src) => goals.where((final g) => src['meta_id'] == g.id).firstOrNull == null);
+  final nonExistant = data.where((final src) =>
+      goals.where((final g) => src['meta_id'] == g.id).firstOrNull == null);
   for (final element in nonExistant) {
-    await query().delete().eq('user_id', user.id).eq('meta_id', element['meta_id']);
+    await query()
+        .delete()
+        .eq('user_id', user.id)
+        .eq('meta_id', element['meta_id']);
   }
 }
 
 Future<List<Goal>> getGoals(final User user) async {
-  final data = await query().select<PostgrestList>().eq('related_addiction', 'smoking');
+  final data =
+      await query().select<PostgrestList>().eq('related_addiction', 'smoking');
 
   if (data.isEmpty) {
     return [];

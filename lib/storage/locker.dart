@@ -18,7 +18,10 @@ class LockerSet {
 }
 
 Future<List<LockerSet>> getLockerSets(final User user) async {
-  final data = await query().select<PostgrestList>().eq('user_id', user.id).order('start_at');
+  final data = await query()
+      .select<PostgrestList>()
+      .eq('user_id', user.id)
+      .order('start_at');
 
   if (data.isEmpty) {
     return [];

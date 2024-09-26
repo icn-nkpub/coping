@@ -38,7 +38,8 @@ Future<ProfileRecord?> getProfile(final User user) async {
   }
 
   final record = data[0];
-  var breathingTime = double.parse((record['breathing_time'] ?? '6').toString());
+  var breathingTime =
+      double.parse((record['breathing_time'] ?? '6').toString());
   if (breathingTime < 3 || breathingTime > 32) breathingTime = 6;
 
   final Map<String, dynamic> themeData = jsonDecode(record['theme'] ?? '{}');
@@ -77,7 +78,8 @@ Future<void> syncProfile(final User user, final ProfileRecord p) async {
   }).eq('user_id', user.id);
 }
 
-Future<void> syncProfileBreathingTime(final User user, final double breathingTime) async {
+Future<void> syncProfileBreathingTime(
+    final User user, final double breathingTime) async {
   final data = await query().select<PostgrestList>().eq(
         'user_id',
         user.id,
@@ -97,7 +99,8 @@ Future<void> syncProfileBreathingTime(final User user, final double breathingTim
   }).eq('user_id', user.id);
 }
 
-Future<void> syncProfileTheme(final User user, final String color, {final bool isLight = false}) async {
+Future<void> syncProfileTheme(final User user, final String color,
+    {final bool isLight = false}) async {
   final data = await query().select<PostgrestList>().eq(
         'user_id',
         user.id,
