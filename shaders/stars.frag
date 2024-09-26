@@ -3,6 +3,7 @@
 uniform float iTime;
 uniform vec3 iResolution; // x, y, z: resolution in pixels
 uniform float slide;
+uniform float layer;
 
 out vec4 fragColor;
 
@@ -19,27 +20,27 @@ void main() {
     vec2 p = uv - 0.5;
     p.x *= iResolution.x / iResolution.y;  // Correct aspect ratio
 	
-	// Apply rotation based on time
-    float rotationAngle = iTime * 0.5;  // Rotation speed; adjust multiplier for faster/slower rotation
+    // Set the rotation angle based on the `layer` uniform value.
+    // If layer == 1, angle = 0 radians; if layer == 2, angle = 45 degrees (π/4 radians).
+    float rotationAngle = (layer == 1.0) ? 0.0 : 0.785398; // 45 degrees in radians
+    
+    // Create the rotation matrix using the calculated rotation angle.
     mat2 rotationMatrix = mat2(cos(rotationAngle), -sin(rotationAngle),
                                sin(rotationAngle),  cos(rotationAngle));
+    
+    // Apply the rotation to the coordinates.
     p = rotationMatrix * p;  // Rotate the coordinates
     
     vec3 color = vec3(0.0);
     float intensity, zoom = iTime;
-
-    // Modify the number of directions for the starburst effect
-    // We'll use 8 directions by modifying the sine wave in a circular pattern.
-    const float numDirections = 8.0;  // Change to 6.0 for 6 directions
     
-        zoom += 0.07;
-        float distance = length(p);
-        
-        // Use polar coordinates to create a starburst pattern
-        float angle = atan(p.y, p.x);  // Calculate the angle of the current point
+    float distance = length(p);
+    
+    // Use polar coordinates to create a starburst pattern
+    float angle = atan(p.y, p.x);  // Calculate the angle of the current point
 
-        // Modulate the UV based on the angle and distance to create multiple directions
-        uv += p / distance * (sin(numDirections * angle + zoom) + 1.0) * abs(sin(distance * 9.0 - zoom - zoom));
+    // Modulate the UV based on the angle and distance to create multiple directions
+    uv += p / distance * (sin(0 * angle + zoom) + 1.0) * abs(sin(distance * 9.0 - zoom - zoom));
         
     for (int i = 0; i < 3; i++) {
         // Calculate color for each channel
@@ -48,8 +49,8 @@ void main() {
 
 	// Clamp the final color to a maximum of 50% white (grey)	
 	color = color / length(p*4);
-	color = min(color, vec3(0.75));
+	color = min(color, vec3(5));
 
     // Output the final fragment color, using iTime as alpha
-    fragColor = vec4(color, iTime);
+    fragColor = vec4(color, color.x);
 }

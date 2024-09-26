@@ -52,8 +52,9 @@ class CanvasDrawer extends Funvas {
       cycle = max(0, cycle - (t - windDownTime));
       final slide = slideDist * pt - (cycle * (slideDist * pt));
 
-      _drawCircle(primary, pt, w, h, slide);
+      if (!muted) _drawGuideLine(primary, pt, w, h);
       _drawParticles(pt, w, h, cycle, t, slide);
+      _drawCircle(primary, pt, w, h, slide);
 
       return;
     }
@@ -64,76 +65,37 @@ class CanvasDrawer extends Funvas {
     final double cycle = graph(t);
     final slide = slideDist * pt - (cycle * (slideDist * pt));
 
-    shader.setFloat(0, 1.5+(cycle*2));
-    shader.setFloat(1, x.width);
-    shader.setFloat(2, x.height);
-    shader.setFloat(4, -slide);
-
-    c.drawRect(
-      Rect.fromLTWH(0, 0, x.width, x.height),
-      Paint()
-        ..shader = shader
-        ..colorFilter = ColorFilter.mode(
-          primary.toColor(),
-          BlendMode.modulate,
-        )
-    );
-    shader.setFloat(0, 0.25 + (cycle * 2));
-    c.drawRect(
-      Rect.fromLTWH(0, 0, x.width, x.height),
-      Paint()
-        ..shader = shader
-        ..colorFilter = ColorFilter.mode(
-          secondary.toColor(),
-          BlendMode.modulate,
-        )
-    );
-
-    // _drawParticles(pt, w, h, cycle, t, slide);
+    _drawParticles(pt, w, h, cycle, t, slide);
     if (!muted) _drawGuideLine(primary, pt, w, h);
     if (!muted) _drawCircle(secondary, pt, w, h, slide);
   }
 
   void _drawParticles(final double pt, final double w, final double h,
       final double cycle, final double t, final double slide) {
-    for (int round = 0; round < rounds; round++) {
-      final rCycle = round / rounds;
-      final r = (4 * pt) +
-          ((((muted ? 0 : cycle) * 3.85) + 1) * rCycle * 16 * pt) / 3;
+    shader.setFloat(1, x.width);
+    shader.setFloat(2, x.height);
+    shader.setFloat(4, -slide);
 
-      final angleSkew = (13.1 + (t / 31)) * ((round + 1) * 14);
-
-      double alpha = max(
-          0,
-          (min(max((t / fullCycleDuration) - .25, 0), round / rounds) / 2) -
-              0.05);
-
-      if (windDownTime > -1) {
-        alpha = max(0, alpha - (t - windDownTime));
-      }
-
-      for (double i = 0; i < 360; i += 360 / (rounds + (round * 4))) {
-        final iCycle = (1 + sin((pow(i + 1, 2) * (round + 1)) + t * 2)) / 2;
-        final v = iCycle * pt / 2;
-
-        final angle = (i + 1) * (pi / 2) + angleSkew;
-
-        final lr = r + (v * 8);
-
-        final x1 = lr * cos(angle * pi / 180);
-        var y1 = lr * sin(angle * pi / 180);
-        y1 = y1 - slide;
-
-        final col =
-            (i % 5 != 0 ? primary : secondary).withAlpha(alpha).toColor();
-
-        c.drawCircle(
-          Offset(w + x1, h - y1),
-          v,
-          Paint()..color = Color.alphaBlend(col, backdrop),
-        );
-      }
-    }
+    shader.setFloat(5, 1);
+    shader.setFloat(0, 13 + (cycle * 1.6));
+    c.drawRect(
+        Rect.fromLTWH(0, 0, x.width, x.height),
+        Paint()
+          ..shader = shader
+          ..colorFilter = ColorFilter.mode(
+            secondary.toColor(),
+            BlendMode.modulate,
+          ));
+    shader.setFloat(5, 2);
+    shader.setFloat(0, 12 + (cycle * 1.4));
+    c.drawRect(
+        Rect.fromLTWH(0, 0, x.width, x.height),
+        Paint()
+          ..shader = shader
+          ..colorFilter = ColorFilter.mode(
+            primary.toColor(),
+            BlendMode.modulate,
+          ));
   }
 
   void _drawGuideLine(
@@ -152,7 +114,7 @@ class CanvasDrawer extends Funvas {
   void _drawCircle(final HSLColor color, final double pt, final double w,
       final double h, final double slide) {
     final circlePaint = Paint();
-    circlePaint.color = color.toColor();
+    circlePaint.color = color.toColor().withAlpha(55);
     circlePaint.strokeCap = StrokeCap.round;
     circlePaint.strokeWidth = pt / 4;
     c.drawCircle(
