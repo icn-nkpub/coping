@@ -1,50 +1,55 @@
 #include <flutter/runtime_effect.glsl>
 
 uniform float iTime;
-uniform vec3 iResolution;
+uniform vec3 iResolution; // x, y, z: resolution in pixels
 uniform float slide;
 
 out vec4 fragColor;
 
 vec2 fragCoord = FlutterFragCoord().xy;
-float PI = 3.14159265359;
-
-vec2 rotate(vec2 v, float angle) {
-    float cosAngle = cos(angle);
-    float sinAngle = sin(angle);
-    return vec2(
-        v.x * cosAngle - v.y * sinAngle,
-        v.x * sinAngle + v.y * cosAngle
-    );
-}
 
 void main() {
-    fragCoord.y = fragCoord.y + slide;
+    // Adjust fragCoord.y based on slide (animation)
+    fragCoord.y += slide;
 
-    vec2 uv = (fragCoord * 2 - iResolution.xy) / iResolution.y;
-    float l = length(uv);
+    // Normalize fragCoord (divide by iResolution.xy to get 0-1 range)
+    vec2 uv = fragCoord.xy / iResolution.xy;
 
-    // Reduce sqrt layers to keep the details sharper
-    float s = sqrt(l) + (iTime / 10);
-    float count = 20 * 2;
-    float d = s;
-    d = sin(d * PI * count);
-
-    float count2 = ((floor((s * count)) / count) - 0.1) * count;
-    float t = PI / (count / count2) + atan(uv.y, uv.x);
-    t = t + (((count) / count2 * 20) * iTime / 40);
-    t = (t + PI) / (2 * PI);
+    // Adjust aspect ratio (preserve shape distortion due to screen aspect ratio)
+    vec2 p = uv - 0.5;
+    p.x *= iResolution.x / iResolution.y;  // Correct aspect ratio
+	
+	// Apply rotation based on time
+    float rotationAngle = iTime * 0.5;  // Rotation speed; adjust multiplier for faster/slower rotation
+    mat2 rotationMatrix = mat2(cos(rotationAngle), -sin(rotationAngle),
+                               sin(rotationAngle),  cos(rotationAngle));
+    p = rotationMatrix * p;  // Rotate the coordinates
     
-    // Reduce the frequency of sin usage for sharper details
-    t = sin(t * PI * (14 - (count2 * 2)));
+    vec3 color = vec3(0.0);
+    float intensity, zoom = iTime;
 
-    // Use step instead of smoothstep for harder edges
-    float c = smoothstep(1.97, 2, d + t);
+    // Modify the number of directions for the starburst effect
+    // We'll use 8 directions by modifying the sine wave in a circular pattern.
+    const float numDirections = 8.0;  // Change to 6.0 for 6 directions
+    
+        zoom += 0.07;
+        float distance = length(p);
+        
+        // Use polar coordinates to create a starburst pattern
+        float angle = atan(p.y, p.x);  // Calculate the angle of the current point
 
-    // Keep sharpness in the center and avoid blur transitions
-    if (s < 1) {
-        fragColor = vec4(c, c, c, c - 0.2);
-    } else {
-        fragColor = vec4(0, 0, 0, 0);
+        // Modulate the UV based on the angle and distance to create multiple directions
+        uv += p / distance * (sin(numDirections * angle + zoom) + 1.0) * abs(sin(distance * 9.0 - zoom - zoom));
+        
+    for (int i = 0; i < 3; i++) {
+        // Calculate color for each channel
+        color[i] = 0.01 / length(mod(uv, 1.0) - 0.5);
     }
+
+	// Clamp the final color to a maximum of 50% white (grey)	
+	color = color / length(p*4);
+	color = min(color, vec3(0.75));
+
+    // Output the final fragment color, using iTime as alpha
+    fragColor = vec4(color, iTime);
 }
