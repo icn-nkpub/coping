@@ -23,3 +23,9 @@ samples, guidance on mobile development, and a full API reference.
 - flutter gen-l10n
 - zsh -c "cd assets/icons ; dart run ./_load.dart"
 - flutter packages pub run build_runner build
+
+## Solana
+
+1. install solana's toolset https://solana.com/docs/intro/installation#install-dependencies
+2. run solana locally `solana-test-validator`
+3. airdrop your self `solana airdrop 50 -ul DVEqKrqiNPB8XLN9UmgLuEjEbdEovS9qKiLfcENTo23F`
