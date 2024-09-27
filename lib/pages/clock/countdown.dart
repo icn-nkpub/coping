@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/pages/clock/locker.dart';
 import 'package:dependencecoping/pages/clock/modals/time_manager.dart';
-import 'package:dependencecoping/pages/copingdao/copingdao.dart';
 import 'package:dependencecoping/pages/copingdao/data.dart' as aidata;
 import 'package:dependencecoping/provider/countdown/countdown.dart';
 import 'package:dependencecoping/provider/login/login.dart';
@@ -544,4 +543,55 @@ class _ClockHandState extends State<ClockHand> {
       setState(() {});
     });
   }
+}
+
+class Typer extends StatefulWidget {
+  const Typer(
+    this.data, {
+    super.key,
+    this.textAlign,
+    this.style,
+  });
+
+  final String data;
+  final TextAlign? textAlign;
+  final TextStyle? style;
+
+  @override
+  State<Typer> createState() => _TyperState();
+}
+
+class _TyperState extends State<Typer> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    _controller = AnimationController(
+      duration: Duration(milliseconds: widget.data.length * 33),
+      vsync: this,
+    );
+    _controller.forward();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(final BuildContext context) => AnimatedBuilder(
+      animation: _controller,
+      builder: (final BuildContext context, final Widget? child) => RichText(
+            textAlign: widget.textAlign ?? TextAlign.start,
+            text: TextSpan(
+              style: widget.style,
+              text: widget.data.substring(
+                0,
+                (widget.data.length * _controller.value).round(),
+              ),
+              children: [if (_controller.value < 1) const TextSpan(text: '')],
+            ),
+          ));
 }

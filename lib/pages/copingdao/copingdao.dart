@@ -1,12 +1,7 @@
-import 'dart:math';
-import 'package:dependencecoping/gen/assets.gen.dart';
-import 'package:dependencecoping/pages/copingdao/data.dart';
-import 'package:dependencecoping/tokens/icons.dart';
 import 'package:dependencecoping/tokens/topbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-final _random = Random(DateTime.now().microsecondsSinceEpoch);
+import 'package:solana/solana.dart';
 
 class CopeScreen extends StatelessWidget {
   const CopeScreen({
@@ -16,172 +11,90 @@ class CopeScreen extends StatelessWidget {
 
   final void Function(int) setPage;
 
-  @override
-  Widget build(final BuildContext context) {
-    final Map<String, List<String>> b = {};
-    final lc = Localizations.localeOf(context).languageCode;
-    b[Assets.guy.smart] = nos[lc] ?? [];
-    b[Assets.guy.positive] = cheers[lc] ?? [];
+  Future<String> wall() async {
+    final sc = SolanaClient(
+        rpcUrl: Uri.parse('http://127.0.0.1:8899'),
+        websocketUrl: Uri.parse('ws://127.0.0.1:8900'));
+    print(sc);
 
-    return Column(
-      children: [
-        TopBar(
-          setPage: setPage,
-          subTitle: AppLocalizations.of(context)!.screenAssistant,
-        ),
-        Expanded(
-          child: Messanger(b: b),
-        ),
-      ],
-    );
-  }
-}
+    late final Wallet w;
+    late final double balance;
+    try {
+      final sbt = [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32
+      ];
 
-class Message {
-  String prompt = '';
-  String message = '';
-}
-
-class Messanger extends StatefulWidget {
-  const Messanger({
-    required this.b,
-    super.key,
-  });
-
-  final Map<String, List<String>> b;
-
-  @override
-  State<Messanger> createState() => _MessangerState();
-}
-
-class _MessangerState extends State<Messanger> {
-  var scroll = ScrollController();
-  List<Message> messages = [];
-  late final Random r;
-
-  @override
-  void initState() {
-    r = Random(_random.nextInt(1 << 32));
-    super.initState();
-  }
-
-  @override
-  Widget build(final BuildContext context) {
-    final List<Widget> children = [];
-
-    for (final e in widget.b.entries) {
-      children.add(
-        IconButton.outlined(
-          onPressed: () {
-            setState(() {
-              messages.add(Message()
-                ..prompt = e.key
-                ..message = e.value[r.nextInt(e.value.length)]);
-            });
-          },
-          icon: SvgIcon(
-            e.key,
-            sizeOffset: -22,
-          ),
-        ),
+      // Finally, create a new wallet
+      w = await Ed25519HDKeyPair.fromSeedWithHdPath(
+        seed: sbt,
+        hdPath: "m/44'/501'/0'/0'",
       );
+      print(w.address);
+      final bal = await sc.rpcClient.getBalance(w.publicKey.toString());
+      balance = bal.value.toDouble() / 1000000000;
+    } catch (e) {
+      print(e);
     }
 
-    return Column(
-      children: [
-        Expanded(
-          child: ListView(
-            reverse: true,
-            controller: scroll,
-            children: messages.reversed
-                .map(
-                  (final e) => Card(
-                    key: Key(e.hashCode.toString()),
-                    margin: const EdgeInsets.all(16),
-                    elevation: 2,
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      width: double.infinity,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Opacity(
-                            opacity: .5,
-                            child: SvgIcon(
-                              e.prompt,
-                              sizeOffset: -22,
-                            ),
-                          ),
-                          Typer(e.message),
-                        ],
-                      ),
-                    ),
-                  ),
-                )
-                .toList(),
+    return '${w.address.substring(0, 4)}...${w.address.substring(w.address.length - 5, w.address.length - 1)}, $balance SOL';
+  }
+
+  @override
+  Widget build(final BuildContext context) => Column(
+        children: [
+          TopBar(
+            setPage: setPage,
+            subTitle: AppLocalizations.of(context)!.screenAssistant,
           ),
-        ),
-        Container(
-          padding: const EdgeInsets.all(16),
-          width: double.infinity,
-          alignment: Alignment.centerLeft,
-          child: Wrap(
-            spacing: 8,
-            children: children,
-          ),
-        ),
-      ],
-    );
-  }
-}
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  // ignore: discarded_futures
+                  FutureBuilder(
+                      future: wall(),
+                      builder: (final context, final snapshot) {
+                        if (!snapshot.hasData) {
+                          return const Text('...');
+                        }
 
-class Typer extends StatefulWidget {
-  const Typer(
-    this.data, {
-    super.key,
-    this.textAlign,
-    this.style,
-  });
-
-  final String data;
-  final TextAlign? textAlign;
-  final TextStyle? style;
-
-  @override
-  State<Typer> createState() => _TyperState();
-}
-
-class _TyperState extends State<Typer> with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    _controller = AnimationController(
-      duration: Duration(milliseconds: widget.data.length * 33),
-      vsync: this,
-    );
-    _controller.forward();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(final BuildContext context) => AnimatedBuilder(
-      animation: _controller,
-      builder: (final BuildContext context, final Widget? child) => RichText(
-            textAlign: widget.textAlign ?? TextAlign.start,
-            text: TextSpan(
-              style: widget.style,
-              text: widget.data.substring(
-                0,
-                (widget.data.length * _controller.value).round(),
+                        return Text(snapshot.requireData);
+                      })
+                ],
               ),
-              children: [if (_controller.value < 1) const TextSpan(text: '')],
             ),
-          ));
+          ),
+        ],
+      );
 }

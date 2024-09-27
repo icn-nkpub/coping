@@ -56,7 +56,9 @@ class CanvasDrawer extends Funvas {
 
       _drawParticles(pt, w, h, cycle, t, slide);
       if (!muted) _drawGuideLine(primary, pt, w, h);
-      if (!muted) _drawCircle(HSLColor.fromColor(backdrop), pt * 1.2, w, h, slide);
+      if (!muted) {
+        _drawCircle(HSLColor.fromColor(backdrop), pt * 1.2, w, h, slide);
+      }
       if (!muted) _drawCircle(secondary, pt, w, h, slide);
 
       return;
@@ -70,7 +72,9 @@ class CanvasDrawer extends Funvas {
 
     _drawParticles(pt, w, h, cycle, t, slide);
     if (!muted) _drawGuideLine(primary, pt, w, h);
-    if (!muted) _drawCircle(HSLColor.fromColor(backdrop), pt * 1.2, w, h, slide);
+    if (!muted) {
+      _drawCircle(HSLColor.fromColor(backdrop), pt * 1.2, w, h, slide);
+    }
     if (!muted) _drawCircle(secondary, pt, w, h, slide);
   }
 
