@@ -22,6 +22,7 @@ class CanvasDrawer extends Funvas {
     required this.scale,
     required this.slideDist,
     required this.rounds,
+    required this.seed,
     required this.shader,
     this.muted = false,
   });
@@ -32,6 +33,7 @@ class CanvasDrawer extends Funvas {
   final double scale;
   final double slideDist;
   final int rounds;
+  double seed;
   bool windDown = false;
   double windDownTime = -1;
   FragmentShader shader;
@@ -52,9 +54,10 @@ class CanvasDrawer extends Funvas {
       cycle = max(0, cycle - (t - windDownTime));
       final slide = slideDist * pt - (cycle * (slideDist * pt));
 
-      if (!muted) _drawGuideLine(primary, pt, w, h);
       _drawParticles(pt, w, h, cycle, t, slide);
-      _drawCircle(primary, pt, w, h, slide);
+      if (!muted) _drawGuideLine(primary, pt, w, h);
+      if (!muted) _drawCircle(HSLColor.fromColor(backdrop), pt * 1.2, w, h, slide);
+      if (!muted) _drawCircle(secondary, pt, w, h, slide);
 
       return;
     }
@@ -67,6 +70,7 @@ class CanvasDrawer extends Funvas {
 
     _drawParticles(pt, w, h, cycle, t, slide);
     if (!muted) _drawGuideLine(primary, pt, w, h);
+    if (!muted) _drawCircle(HSLColor.fromColor(backdrop), pt * 1.2, w, h, slide);
     if (!muted) _drawCircle(secondary, pt, w, h, slide);
   }
 
@@ -75,9 +79,10 @@ class CanvasDrawer extends Funvas {
     shader.setFloat(1, x.width);
     shader.setFloat(2, x.height);
     shader.setFloat(4, -slide);
+    shader.setFloat(6, seed);
 
     shader.setFloat(5, 1);
-    shader.setFloat(0, 13 + (cycle * 1.6));
+    shader.setFloat(0, cycle);
     c.drawRect(
         Rect.fromLTWH(0, 0, x.width, x.height),
         Paint()
@@ -87,7 +92,7 @@ class CanvasDrawer extends Funvas {
             BlendMode.modulate,
           ));
     shader.setFloat(5, 2);
-    shader.setFloat(0, 12 + (cycle * 1.4));
+    shader.setFloat(0, cycle);
     c.drawRect(
         Rect.fromLTWH(0, 0, x.width, x.height),
         Paint()
@@ -114,7 +119,7 @@ class CanvasDrawer extends Funvas {
   void _drawCircle(final HSLColor color, final double pt, final double w,
       final double h, final double slide) {
     final circlePaint = Paint();
-    circlePaint.color = color.toColor().withAlpha(55);
+    circlePaint.color = color.toColor();
     circlePaint.strokeCap = StrokeCap.round;
     circlePaint.strokeWidth = pt / 4;
     c.drawCircle(
@@ -169,10 +174,11 @@ class MeditationScreen extends StatelessWidget {
                 secondary:
                     HSLColor.fromColor(Theme.of(context).colorScheme.tertiary),
                 fullCycleDuration: breathingTime,
-                scale: 1.3,
+                scale: 2,
                 rounds: 12,
                 slideDist: 12,
                 shader: snapshot.requireData,
+                seed: 11.95,
               );
 
               return Stack(
