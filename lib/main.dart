@@ -24,7 +24,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
-final WidgetsBinding widgetsBinding =
+  final WidgetsBinding widgetsBinding =
       WidgetsFlutterBinding.ensureInitialized();
 
   await Supabase.initialize(
