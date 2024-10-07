@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 import 'package:bip39/bip39.dart' as bip39;
-import 'package:dependencecoping/pages/copingdao/solprice.dart';
+import 'package:dependencecoping/pages/dao/solprice.dart';
 import 'package:dependencecoping/tokens/topbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

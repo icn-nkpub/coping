@@ -181,7 +181,7 @@ class MeditationScreen extends StatelessWidget {
                 rounds: 12,
                 slideDist: 12,
                 shader: snapshot.requireData,
-                seed: 11.95,
+                seed: 11.95 + 0.34,
               );
 
               return Stack(
