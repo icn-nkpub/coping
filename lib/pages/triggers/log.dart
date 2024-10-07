@@ -1,3 +1,4 @@
+import 'package:dependencecoping/gen/fonts.gen.dart';
 import 'package:dependencecoping/pages/triggers/modals/log_event.dart';
 import 'package:dependencecoping/storage/trigger_log.dart';
 import 'package:dependencecoping/tokens/modal.dart';
@@ -75,7 +76,7 @@ class TriggerLogCard extends StatelessWidget {
                         .format(tl.time)
                         .replaceAll('0', 'O'),
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          fontFamily: 'FiraMono',
+                          fontFamily: FontFamily.spaceMono,
                         ),
                   ),
                 ),

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/modals/help.dart';
 import 'package:dependencecoping/provider/login/login.dart';
 import 'package:dependencecoping/provider/theme/colors.dart';
@@ -90,25 +89,8 @@ class _TopBarState extends State<TopBar> {
                       const HelpModal(),
                     );
                   },
-                  icon: SvgIcon(Assets.icons.liveHelp),
+                  icon: Icon(Icons.live_help, size: computeSizeFromOffset(0)),
                 ),
-                // FutureBuilder(
-                //   // ignore: discarded_futures
-                //   future: discordObtainInvite(),
-                //   builder: (final context, final snapshot) => Badge(
-                //     alignment: Alignment.topRight,
-                //     offset: const Offset(-4, 6),
-                //     largeSize: 8,
-                //     padding: EdgeInsets.zero,
-                //     label: const SizedBox.square(dimension: 8),
-                //     child: IconButton(
-                //       onPressed: () {
-                //         unawaited(launchUrlString(snapshot.data.toString()));
-                //       },
-                //       icon: SvgIcon( Assets.icons.diversity1),
-                //     ),
-                //   ),
-                // ),
               ],
             ),
             Padding(
@@ -135,13 +117,6 @@ class _TopBarState extends State<TopBar> {
             ),
             Row(
               children: [
-                // Opacity(
-                //   opacity: 0,
-                //   child: IconButton(
-                //     onPressed: () {},
-                //     icon: SvgIcon( Assets.icons.bolt),
-                //   ),
-                // ),
                 IconButton(
                   onPressed: () {
                     setState(() {
@@ -151,7 +126,7 @@ class _TopBarState extends State<TopBar> {
                   icon: AnimatedRotation(
                     duration: const Duration(milliseconds: 100),
                     turns: expandMenu ? 0.5 : 0,
-                    child: SvgIcon(Assets.icons.expandMore),
+                    child: Icon(Icons.expand_more, size: computeSizeFromOffset(0)),
                   ),
                 ),
               ],
@@ -230,11 +205,9 @@ class ThemeChanger extends StatelessWidget {
                     .setTheme(t.color.name, isLight: !t.isLightMode()));
                 unawaited(context.read<ThemeCubit>().flipBrightness());
               },
-              child: SvgIcon(
-                t.isLightMode()
-                    ? Assets.icons.lightMode
-                    : Assets.icons.darkMode,
-              ),
+              child: t.isLightMode()
+                  ? Icon(Icons.light_mode, size: computeSizeFromOffset(0))
+                  : Icon(Icons.dark_mode, size: computeSizeFromOffset(0)),
             ),
             Flexible(
               child: Container(
@@ -256,7 +229,7 @@ class ThemeChanger extends StatelessWidget {
                     .read<LoginCubit>()
                     .setTheme(selected.name, isLight: t.isLightMode()));
               },
-              child: SvgIcon(Assets.icons.palette),
+              child: Icon(Icons.palette, size: computeSizeFromOffset(0)),
             ),
           ],
         ),

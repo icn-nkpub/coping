@@ -95,24 +95,15 @@ class ControlButtonsHelpPage extends StatelessWidget {
             paused
                 ? IconButton.filledTonal(
                     onPressed: () {},
-                    icon: SvgIcon(
-                      Assets.icons.playCircle,
-                      color: Theme.of(context).colorScheme.onPrimaryContainer,
-                    ),
+                    icon: Icon(Icons.play_circle, size: computeSizeFromOffset(0),),
                   )
                 : IconButton.filledTonal(
                     onPressed: () {},
-                    icon: SvgIcon(
-                      Assets.icons.stopCircle,
-                      color: Theme.of(context).colorScheme.onPrimaryContainer,
-                    ),
+                    icon: Icon(Icons.stop_circle, size: computeSizeFromOffset(0)),
                   ),
             IconButton.filledTonal(
               onPressed: () {},
-              icon: SvgIcon(
-                Assets.icons.history,
-                color: Theme.of(context).colorScheme.onPrimaryContainer,
-              ),
+              icon: Icon(Icons.history, size: computeSizeFromOffset(0)),
             ),
           ],
         ),

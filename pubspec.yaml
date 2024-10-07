@@ -110,18 +110,16 @@ flutter:
   # https://flutter.dev/assets-and-images/#from-packages
 
   fonts:
-    - family: FiraMono
+    - family: SpaceGrotesk
       fonts:
-        - asset: fonts/Fira_Mono/FiraMono-Regular.ttf
-        - asset: fonts/Fira_Mono/FiraMono-Medium.ttf
+        - asset: fonts/Space_Grotesk/SpaceGrotesk-VariableFont_wght.ttf
+    - family: SpaceMono
+      fonts:
+        - asset: fonts/Space_Mono/SpaceMono-Regular.ttf
+        - asset: fonts/Space_Mono/SpaceMono-Bold.ttf
           weight: 500
-        - asset: fonts/Fira_Mono/FiraMono-Bold.ttf
+        - asset: fonts/Space_Mono/SpaceMono-Bold.ttf
           weight: 700
-    - family: Jost
-      fonts:
-        - asset: fonts/Jost/Jost-VariableFont_wght.ttf
-        - asset: fonts/Jost/Jost-Italic-VariableFont_wght.ttf
-          style: italic
 
   shaders:
     - shaders/stars.frag

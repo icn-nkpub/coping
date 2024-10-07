@@ -36,11 +36,11 @@ class _HomeState extends State<Home> {
           },
           destinations: [
             NavigationDestination(
-              icon: SvgIcon(Assets.icons.timer),
+              icon: const SvgIcon(Assets.guyhead),
               label: AppLocalizations.of(context)!.screenClock,
             ),
             NavigationDestination(
-              icon: SvgIcon(Assets.icons.mindfulness),
+              icon: const SvgIcon(Assets.guyhead),
               label: AppLocalizations.of(context)!.screenTriggers,
             ),
             NavigationDestination(
@@ -48,7 +48,7 @@ class _HomeState extends State<Home> {
               label: AppLocalizations.of(context)!.screenAssistant,
             ),
             NavigationDestination(
-              icon: SvgIcon(Assets.icons.relax),
+              icon: const SvgIcon(Assets.guyhead),
               label: AppLocalizations.of(context)!.screenMeditation,
             ),
           ],

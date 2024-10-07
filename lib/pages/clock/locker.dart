@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:developer' as dev;
 import 'dart:math';
 
-import 'package:dependencecoping/gen/assets.gen.dart';
+import 'package:dependencecoping/gen/fonts.gen.dart';
 import 'package:dependencecoping/provider/countdown/countdown.dart';
 import 'package:dependencecoping/provider/locker/locker.dart';
 import 'package:dependencecoping/provider/login/login.dart';
@@ -74,11 +74,7 @@ class _LockerCardState extends State<LockerCard> {
                 ? Badge(
                     backgroundColor:
                         Theme.of(context).colorScheme.tertiaryContainer,
-                    label: SvgIcon(
-                      Assets.icons.done,
-                      sizeOffset: 8,
-                      color: Theme.of(context).colorScheme.onTertiaryContainer,
-                    ),
+                    label: Icon(Icons.abc, size: computeSizeFromOffset(8)),
                     child: w,
                   )
                 : w,
@@ -119,7 +115,7 @@ class _LockerCardState extends State<LockerCard> {
                 unawaited(ctc.resume(p.auth, al, dt));
               }
             },
-            icon: SvgIcon(Assets.icons.lockOpen),
+            icon: Icon(Icons.lock_open, size: computeSizeFromOffset(0)),
           ),
         ),
       ];
@@ -156,7 +152,7 @@ class _LockerCardState extends State<LockerCard> {
                 ),
               );
             },
-            icon: SvgIcon(Assets.icons.lock),
+            icon: Icon(Icons.lock, size: computeSizeFromOffset(0)),
           ),
         ),
       ];
@@ -245,8 +241,7 @@ class _LockpickingState extends State<Lockpicking>
                   ),
                   Opacity(
                     opacity: v,
-                    child: SvgIcon(
-                        v == 1 ? Assets.icons.lockOpen : Assets.icons.lock),
+                    child: Icon(v == 1 ? Icons.lock_open : Icons.lock, size: computeSizeFromOffset(0)),
                   ),
                 ],
               );
@@ -443,7 +438,7 @@ class Number extends StatelessWidget {
                       .textTheme
                       .displaySmall!
                       .copyWith(
-                        fontFamily: 'FiraMono',
+                        fontFamily: FontFamily.spaceMono,
                         fontWeight: FontWeight.w400,
                         color: alternate
                             ? Theme.of(context).colorScheme.onTertiaryContainer

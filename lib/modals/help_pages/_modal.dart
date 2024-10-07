@@ -1,4 +1,3 @@
-import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/modals/help_pages/_handed.dart';
 import 'package:dependencecoping/tokens/icons.dart';
 import 'package:flutter/material.dart';
@@ -19,10 +18,7 @@ class ModalDecoration extends StatelessWidget {
           children: [
             IconButton(
               onPressed: () {},
-              icon: SvgIcon(
-                Assets.icons.arrowBack,
-                sizeOffset: 4,
-              ),
+              icon:  Icon(Icons.arrow_back, size: computeSizeFromOffset(4),),
             ),
             Text(
               title,
@@ -35,10 +31,7 @@ class ModalDecoration extends StatelessWidget {
               opacity: 0,
               child: IconButton(
                 onPressed: () {},
-                icon: SvgIcon(
-                  Assets.icons.arrowBack,
-                  sizeOffset: 4,
-                ),
+                icon: Icon(Icons.arrow_back, size: computeSizeFromOffset(4),),
               ),
             ),
           ],

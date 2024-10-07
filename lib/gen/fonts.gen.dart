@@ -10,9 +10,9 @@
 class FontFamily {
   FontFamily._();
 
-  /// Font family: FiraMono
-  static const String firaMono = 'FiraMono';
+  /// Font family: SpaceGrotesk
+  static const String spaceGrotesk = 'SpaceGrotesk';
 
-  /// Font family: Jost
-  static const String jost = 'Jost';
+  /// Font family: SpaceMono
+  static const String spaceMono = 'SpaceMono';
 }

@@ -30,12 +30,15 @@ class CopeScreen extends StatelessWidget {
 
   Future<Wallet> wall() async {
     final box = await Hive.openBox(walletBox);
-    await box.put(seedPhraseKey,
-        'crystal scout antique seek shell engage comfort bounce win rally napkin juice');
 
+    const local = true;
     final sc = SolanaClient(
-        rpcUrl: Uri.parse('http://127.0.0.1:8899'),
-        websocketUrl: Uri.parse('ws://127.0.0.1:8900'));
+        rpcUrl: local
+            ? Uri.parse('http://127.0.0.1:8899')
+            : Uri.parse('https://api.devnet.solana.com:8899'),
+        websocketUrl: local
+            ? Uri.parse('ws://127.0.0.1:8900')
+            : Uri.parse('https://api.devnet.solana.com:8900'));
 
     String? m = box.get(seedPhraseKey) as String?;
 
@@ -147,8 +150,11 @@ class CopyButtonState extends State<CopyButton> {
     if (!mounted) return;
 
     ScaffoldMessenger.of(context).showSnackBar(
-       SnackBar(
-        content: Text('Address copied to clipboard', style: Theme.of(context).textTheme.bodyMedium,),
+      SnackBar(
+        content: Text(
+          'Address copied to clipboard',
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
         duration: const Duration(seconds: 2),
         behavior: SnackBarBehavior.floating,
       ),

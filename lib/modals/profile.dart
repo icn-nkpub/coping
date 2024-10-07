@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/provider/login/login.dart';
 import 'package:dependencecoping/storage/local.dart';
 import 'package:dependencecoping/tokens/icons.dart';
@@ -197,13 +196,9 @@ class Copier extends StatelessWidget {
           icon: Text(
             title,
           ),
-          label: Opacity(
+          label:  Opacity(
             opacity: .5,
-            child: SvgIcon(
-              Assets.icons.contentCopy,
-              sizeOffset: 8,
-              color: Theme.of(context).colorScheme.primary,
-            ),
+            child: Icon(Icons.content_copy, size: computeSizeFromOffset(8)),
           ),
         ),
       );

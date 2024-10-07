@@ -1,36 +1,22 @@
-Jost Variable Font
-==================
+Space Grotesk Variable Font
+===========================
 
-This download contains Jost as both variable fonts and static fonts.
+This download contains Space Grotesk as both a variable font and static fonts.
 
-Jost is a variable font with this axis:
+Space Grotesk is a variable font with this axis:
   wght
 
-This means all the styles are contained in these files:
-  Jost-VariableFont_wght.ttf
-  Jost-Italic-VariableFont_wght.ttf
+This means all the styles are contained in a single file:
+  Space_Grotesk/SpaceGrotesk-VariableFont_wght.ttf
 
 If your app fully supports variable fonts, you can now pick intermediate styles
 that aren’t available as static fonts. Not all apps support variable fonts, and
-in those cases you can use the static font files for Jost:
-  static/Jost-Thin.ttf
-  static/Jost-ExtraLight.ttf
-  static/Jost-Light.ttf
-  static/Jost-Regular.ttf
-  static/Jost-Medium.ttf
-  static/Jost-SemiBold.ttf
-  static/Jost-Bold.ttf
-  static/Jost-ExtraBold.ttf
-  static/Jost-Black.ttf
-  static/Jost-ThinItalic.ttf
-  static/Jost-ExtraLightItalic.ttf
-  static/Jost-LightItalic.ttf
-  static/Jost-Italic.ttf
-  static/Jost-MediumItalic.ttf
-  static/Jost-SemiBoldItalic.ttf
-  static/Jost-BoldItalic.ttf
-  static/Jost-ExtraBoldItalic.ttf
-  static/Jost-BlackItalic.ttf
+in those cases you can use the static font files for Space Grotesk:
+  Space_Grotesk/static/SpaceGrotesk-Light.ttf
+  Space_Grotesk/static/SpaceGrotesk-Regular.ttf
+  Space_Grotesk/static/SpaceGrotesk-Medium.ttf
+  Space_Grotesk/static/SpaceGrotesk-SemiBold.ttf
+  Space_Grotesk/static/SpaceGrotesk-Bold.ttf
 
 Get started
 -----------

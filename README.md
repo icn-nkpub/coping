@@ -21,7 +21,6 @@ samples, guidance on mobile development, and a full API reference.
 - flutter pub run flutter_launcher_icons
 - flutter pub run flutter_native_splash:create
 - flutter gen-l10n
-- zsh -c "cd assets/icons ; dart run ./_load.dart"
 - flutter packages pub run build_runner build
 
 ## Solana

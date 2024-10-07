@@ -9,6 +9,8 @@ import 'package:flutter_svg/svg.dart';
 
 Map<String, Image> _imageCache = {};
 
+double computeSizeFromOffset(final double offset)=> 22 - offset;
+
 class SvgIcon extends StatelessWidget {
   const SvgIcon(
     this.assetPath, {
@@ -23,8 +25,8 @@ class SvgIcon extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) => SizedBox(
-        width: 22 - sizeOffset,
-        height: 22 - sizeOffset,
+        width: computeSizeFromOffset(sizeOffset),
+        height: computeSizeFromOffset(sizeOffset),
         child: FittedBox(
           fit: BoxFit.fill,
           child: SizedBox(

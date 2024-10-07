@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:dependencecoping/gen/assets.gen.dart';
+import 'package:dependencecoping/gen/fonts.gen.dart';
 import 'package:dependencecoping/pages/clock/locker.dart';
 import 'package:dependencecoping/pages/clock/modals/time_manager.dart';
 import 'package:dependencecoping/pages/copingdao/data.dart' as aidata;
@@ -138,29 +138,29 @@ class CountdownDisplay extends StatelessWidget {
           final s = ct?.splits().score ?? 0;
 
           if (s > 1000) {
-            return Badge(
-              icon: Assets.icons.trophy,
+            return  Badge(
+              icon: Icon(Icons.wine_bar, size: computeSizeFromOffset(0)),
               label: 'Top 50%',
             );
           }
 
           if (s > 2000) {
-            return Badge(
-              icon: Assets.icons.trophy,
+            return  Badge(
+              icon: Icon(Icons.wine_bar, size: computeSizeFromOffset(0)),
               label: 'Top 35%',
             );
           }
 
           if (s > 5000) {
-            return Badge(
-              icon: Assets.icons.trophy,
+            return  Badge(
+              icon: Icon(Icons.wine_bar, size: computeSizeFromOffset(0)),
               label: 'Top 5%',
             );
           }
 
           if (s > 20000) {
-            return Badge(
-              icon: Assets.icons.trophy,
+            return  Badge(
+              icon: Icon(Icons.wine_bar, size: computeSizeFromOffset(0)),
               label: 'Top 1%',
             );
           }
@@ -181,11 +181,7 @@ class CountdownDisplay extends StatelessWidget {
                       .read<CountdownTimerCubit>()
                       .resume(auth, al, DateTime.now());
                 },
-                icon: SvgIcon(
-                  Assets.icons.playCircle,
-                  color: Theme.of(context).colorScheme.onPrimaryContainer,
-                ),
-              )
+                icon: Icon(Icons.play_circle, size: computeSizeFromOffset(0)))
             : IconButton.filledTonal(
                 onPressed: () async {
                   final al = AppLocalizations.of(context);
@@ -194,25 +190,9 @@ class CountdownDisplay extends StatelessWidget {
                       .read<CountdownTimerCubit>()
                       .pause(auth, al, DateTime.now());
                 },
-                icon: SvgIcon(
-                  Assets.icons.stopCircle,
-                  color: Theme.of(context).colorScheme.onPrimaryContainer,
-                ),
-              ),
+                icon: Icon(Icons.stop_circle, size: computeSizeFromOffset(0))),
         IconButton.filledTonal(
-          onPressed: _gotoTime(context),
-          icon: SvgIcon(
-            Assets.icons.history,
-            color: Theme.of(context).colorScheme.onPrimaryContainer,
-          ),
-        ),
-        // IconButton.filledTonal(
-        //   onPressed: _gotoShop(context),
-        //   icon: SvgIcon(
-        //      Assets.icons.checklist,
-        //     color: Theme.of(context).colorScheme.onPrimaryContainer,
-        //   ),
-        // ),
+            onPressed: _gotoTime(context), icon: Icon(Icons.history, size: computeSizeFromOffset(0))),
       ];
 
   void Function() _gotoTime(final BuildContext context) => () => openModal(
@@ -284,7 +264,7 @@ class Badge extends StatelessWidget {
     super.key,
   });
 
-  final String icon;
+  final Widget icon;
   final String label;
 
   @override
@@ -297,10 +277,7 @@ class Badge extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SvgIcon(
-              icon,
-              color: Theme.of(context).colorScheme.primaryContainer,
-            ),
+            icon,
             const SizedBox(width: 8),
             Text(
               label,
@@ -328,14 +305,8 @@ class ScoreCard extends StatelessWidget {
         elevation: 3,
         child: Row(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 14),
-              child: SvgIcon(
-                Assets.icons.bolt,
-                color: Theme.of(context).colorScheme.onTertiaryContainer,
-                sizeOffset: 6,
-              ),
-            ),
+             Padding(
+                padding: EdgeInsets.only(left: 14), child: Icon(Icons.bolt, size: computeSizeFromOffset(6))),
             Container(
               clipBehavior: Clip.antiAlias,
               decoration: const BoxDecoration(),
@@ -346,7 +317,7 @@ class ScoreCard extends StatelessWidget {
                   score,
                   key: ValueKey(score),
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        fontFamily: 'FiraMono',
+                        fontFamily: FontFamily.spaceMono,
                         color:
                             Theme.of(context).colorScheme.onTertiaryContainer,
                       ),
@@ -376,7 +347,7 @@ class Stopwatch extends StatelessWidget {
             ? Theme.of(context).textTheme.titleMedium
             : Theme.of(context).textTheme.displaySmall)!
         .copyWith(
-      fontFamily: 'FiraMono',
+      fontFamily: FontFamily.spaceMono,
       fontWeight: FontWeight.w500,
       color: Theme.of(context).colorScheme.onSecondaryContainer,
     );

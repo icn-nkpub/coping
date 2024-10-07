@@ -1,4 +1,3 @@
-import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/provider/countdown/countdown.dart';
 import 'package:dependencecoping/provider/goal/goal.dart';
 import 'package:dependencecoping/tokens/icons.dart';
@@ -163,16 +162,12 @@ class _GoalCardState extends State<GoalCard> {
                   Padding(
                     padding: const EdgeInsets.only(right: 8),
                     child: Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(800),
-                        color: c,
-                      ),
-                      child: SvgIcon(
-                        Assets.icons.done,
-                        sizeOffset: 8,
-                      ),
-                    ),
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(800),
+                          color: c,
+                        ),
+                        child: Icon(Icons.done, size: computeSizeFromOffset(8)),
                   ),
                 if (finished)
                   Padding(
@@ -197,7 +192,7 @@ class _GoalCardState extends State<GoalCard> {
                 AnimatedRotation(
                   duration: const Duration(milliseconds: 100),
                   turns: expanded ? 0.5 : 0,
-                  child: SvgIcon(Assets.icons.expandMore),
+                  child: Icon(Icons.expand_more, size: computeSizeFromOffset(0)),
                 )
               ],
             ),

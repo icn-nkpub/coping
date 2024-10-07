@@ -45,7 +45,7 @@ class ThemeState {
         shadowColor: shadow,
       ),
       snackBarTheme: data.snackBarTheme.copyWith(
-        backgroundColor:  ElevationOverlay.applySurfaceTint(bc, pc, 4),
+        backgroundColor: ElevationOverlay.applySurfaceTint(bc, pc, 4),
       ),
     );
   }

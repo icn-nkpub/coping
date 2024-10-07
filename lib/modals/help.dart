@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/modals/help_pages/buttons.dart';
 import 'package:dependencecoping/modals/help_pages/intro.dart';
 import 'package:dependencecoping/modals/help_pages/locker.dart';
@@ -93,16 +92,12 @@ class _HelpModalState extends State<HelpModal> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
-                      onPressed: () {
-                        if (Navigator.of(context).canPop()) {
-                          Navigator.of(context).pop();
-                        }
-                      },
-                      icon: SvgIcon(
-                        Assets.icons.arrowBack,
-                        color: Theme.of(context).colorScheme.onSurface,
-                      ),
-                    ),
+                        onPressed: () {
+                          if (Navigator.of(context).canPop()) {
+                            Navigator.of(context).pop();
+                          }
+                        },
+                        icon: Icon(Icons.arrow_back, size: computeSizeFromOffset(0))),
                     Text(
                       AppLocalizations.of(context)!.helpSwipeAction,
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
@@ -118,7 +113,7 @@ class _HelpModalState extends State<HelpModal> {
                             Navigator.of(context).pop();
                           }
                         },
-                        icon: SvgIcon(Assets.icons.arrowBack),
+                        icon: Icon(Icons.arrow_back, size: computeSizeFromOffset(0)),
                       ),
                     ),
                   ],

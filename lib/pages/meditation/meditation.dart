@@ -2,7 +2,6 @@ import 'dart:core';
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/provider/login/login.dart';
 import 'package:dependencecoping/shaders/shaders.dart';
 import 'package:dependencecoping/tokens/icons.dart';
@@ -258,9 +257,7 @@ class _InfoCardState extends State<InfoCard> {
                   _expandInfo = !_expandInfo;
                 });
               },
-              icon: _expandInfo
-                  ? SvgIcon(Assets.icons.close)
-                  : SvgIcon(Assets.icons.expandMore),
+              icon: _expandInfo ? Icon(Icons.close, size: computeSizeFromOffset(0)) : Icon(Icons.expand_more, size: computeSizeFromOffset(0)),
             ),
           ),
           Shrinkable(

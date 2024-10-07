@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/tokens/icons.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +30,7 @@ class Modal extends StatelessWidget {
                       Navigator.of(context).pop();
                     }
                   },
-                  icon: SvgIcon(Assets.icons.arrowBack),
+                  icon: Icon(Icons.arrow_back, size: computeSizeFromOffset(0)),
                 ),
                 Text(
                   title,
@@ -48,7 +47,7 @@ class Modal extends StatelessWidget {
                         Navigator.of(context).pop();
                       }
                     },
-                    icon: SvgIcon(Assets.icons.arrowBack),
+                    icon: Icon(Icons.arrow_back, size: computeSizeFromOffset(0)),
                   ),
                 ),
               ],

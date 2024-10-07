@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:dependencecoping/gen/assets.gen.dart';
+import 'package:dependencecoping/gen/fonts.gen.dart';
 import 'package:dependencecoping/pages/triggers/impulse.dart';
 import 'package:dependencecoping/pages/triggers/modals/personal.dart';
 import 'package:dependencecoping/provider/login/login.dart';
@@ -93,8 +93,8 @@ class _TriggerListState extends State<TriggerList> {
                                 child: const PersonalTriggerFormModal()),
                           );
                         },
-                        icon: SvgIcon(
-                          Assets.icons.add,
+                        icon:  Icon(
+                          Icons.add, size: computeSizeFromOffset(0)
                         ),
                       ),
                     );
@@ -189,7 +189,7 @@ class _HighTextState extends State<HighText> with TickerProviderStateMixin {
             child: Text(
               widget.text,
               style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                    fontFamily: 'FiraMono',
+                    fontFamily: FontFamily.spaceMono,
                     fontWeight: FontWeight.w700,
                   ),
               textAlign: TextAlign.center,

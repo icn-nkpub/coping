@@ -1,4 +1,4 @@
-import 'package:dependencecoping/gen/assets.gen.dart';
+import 'package:dependencecoping/gen/fonts.gen.dart';
 import 'package:dependencecoping/provider/countdown/countdown.dart';
 import 'package:dependencecoping/provider/static/static.dart';
 import 'package:dependencecoping/tokens/icons.dart';
@@ -99,7 +99,7 @@ class TimerJournalCard extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     final tsm = Theme.of(context).textTheme.titleSmall!.copyWith(
-          fontFamily: 'FiraMono',
+          fontFamily: FontFamily.spaceMono,
           color: resume
               ? Theme.of(context).colorScheme.onPrimaryContainer
               : Theme.of(context).colorScheme.onTertiaryContainer,
@@ -116,15 +116,11 @@ class TimerJournalCard extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 8),
                   child: resume
-                      ? SvgIcon(
-                          Assets.icons.playArrow,
-                          color:
-                              Theme.of(context).colorScheme.onPrimaryContainer,
+                      ?  Icon(
+                          Icons.play_arrow, size: computeSizeFromOffset(0)
                         )
-                      : SvgIcon(
-                          Assets.icons.stop,
-                          color:
-                              Theme.of(context).colorScheme.onTertiaryContainer,
+                      :  Icon(
+                          Icons.stop, size: computeSizeFromOffset(0)
                         ),
                 )),
             Flexible(
@@ -142,8 +138,8 @@ class TimerJournalCard extends StatelessWidget {
                 flex: 0,
                 child: IconButton(
                   onPressed: onEditPressed,
-                  icon: SvgIcon(
-                    Assets.icons.edit,
+                  icon: Icon(
+                    Icons.edit, size: computeSizeFromOffset(0),
                     color: resume
                         ? Theme.of(context).colorScheme.onPrimaryContainer
                         : Theme.of(context).colorScheme.onTertiaryContainer,

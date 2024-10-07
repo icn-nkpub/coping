@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/pages/triggers/list.dart';
 import 'package:dependencecoping/pages/triggers/log.dart';
 import 'package:dependencecoping/provider/login/login.dart';
@@ -73,7 +72,7 @@ class _TriggersScreenState extends State<TriggersScreen> {
                           AnimatedRotation(
                             duration: const Duration(milliseconds: 100),
                             turns: expandDiscovery ? 0.5 : 0,
-                            child: SvgIcon(Assets.icons.expandMore),
+                            child: Icon(Icons.expand_more, size: computeSizeFromOffset(0)),
                           ),
                         ],
                       ),

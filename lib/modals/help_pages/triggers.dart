@@ -106,9 +106,7 @@ class TriggersHelpPage extends StatelessWidget {
                               EdgeInsets.symmetric(horizontal: 8 * 2)),
                         ),
                         onPressed: () {},
-                        icon: SvgIcon(
-                          Assets.icons.add,
-                        ),
+                        icon: Icon(Icons.add, size: computeSizeFromOffset(0)),
                       ),
                     ),
                   ],
@@ -171,7 +169,7 @@ class TriggersHelpPage extends StatelessWidget {
                 WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: 8 * 2)),
           ),
           onPressed: () {},
-          icon: SvgIcon(Assets.icons.add),
+          icon: Icon(Icons.add, size: computeSizeFromOffset(0)),
         ),
       );
     }

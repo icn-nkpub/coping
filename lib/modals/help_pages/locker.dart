@@ -295,11 +295,7 @@ class LockerCardMock extends StatelessWidget {
       child: state.positive
           ? Badge(
               backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
-              label: SvgIcon(
-                Assets.icons.done,
-                sizeOffset: 8,
-                color: Theme.of(context).colorScheme.onTertiaryContainer,
-              ),
+              label: Icon(Icons.done, size: computeSizeFromOffset(8)),
               child: w,
             )
           : w,
@@ -316,7 +312,7 @@ class LockerCardMock extends StatelessWidget {
         ),
         IconButton(
           onPressed: () {},
-          icon: SvgIcon(Assets.icons.lockOpen),
+          icon: Icon(Icons.lock_open, size: computeSizeFromOffset(0)),
         ),
       ];
 
@@ -324,7 +320,7 @@ class LockerCardMock extends StatelessWidget {
         TimerClock(start: state.start!, duration: state.duration),
         IconButton(
           onPressed: () {},
-          icon: SvgIcon(Assets.icons.lock),
+          icon: Icon(Icons.lock, size: computeSizeFromOffset(0)),
         ),
       ];
 }
