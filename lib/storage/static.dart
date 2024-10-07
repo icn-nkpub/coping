@@ -1,7 +1,7 @@
 import 'package:dependencecoping/storage/goal.dart';
 import 'package:dependencecoping/storage/trigger.dart';
 import 'package:dependencecoping/tools/maybe_map.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+
 
 Future<List<Goal>> getStaticGoals(final User user) async {
   final data = await query('goal_templates')

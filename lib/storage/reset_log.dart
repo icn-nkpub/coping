@@ -1,4 +1,6 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
+
+
+import 'package:dependencecoping/user/user.dart';
 
 class CountdownReset {
   const CountdownReset({

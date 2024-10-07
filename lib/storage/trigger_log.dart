@@ -1,6 +1,7 @@
 import 'package:dependencecoping/storage/trigger.dart';
 import 'package:dependencecoping/tools/maybe_map.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:dependencecoping/user/user.dart';
+
 
 class TriggerLog {
   const TriggerLog({

@@ -1,6 +1,7 @@
 import 'package:dependencecoping/storage/locker.dart';
+import 'package:dependencecoping/user/user.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+
 
 class Locker {
   const Locker({

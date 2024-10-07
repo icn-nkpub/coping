@@ -1,8 +1,9 @@
 import 'package:dependencecoping/notifications.dart';
 import 'package:dependencecoping/storage/reset_log.dart';
+import 'package:dependencecoping/user/user.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+
 
 class CountdownTimer {
   CountdownTimer({

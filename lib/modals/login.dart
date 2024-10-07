@@ -3,7 +3,6 @@ import 'package:dependencecoping/tokens/input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LoginModal extends StatefulWidget {
   const LoginModal({
@@ -58,9 +57,10 @@ class _LoginModalState extends State<LoginModal> {
                               .signIn(cEmail.text, cPwd.text);
                           n.pop();
                         }
-                      } on AuthException catch (error) {
+                      // ignore: avoid_catches_without_on_clauses
+                      } catch (error) {
                         setState(() {
-                          errorText = error.message;
+                          errorText = error.toString();
                         });
                       }
                     },

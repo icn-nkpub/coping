@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:dependencecoping/auth/auth.dart';
 import 'package:dependencecoping/notifications.dart';
 import 'package:dependencecoping/storage/local.dart';
 import 'package:dependencecoping/storage/profiles.dart';
+import 'package:dependencecoping/user/user.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+
 
 class Profile {
   Profile({
@@ -37,7 +37,7 @@ class LoginCubit extends Cubit<Profile?> {
 
     emit(Profile(
       id: auth.id,
-      email: auth.email ?? '',
+      email: auth.email,
       auth: auth,
       profile: p,
     ));
@@ -84,7 +84,7 @@ class LoginCubit extends Cubit<Profile?> {
 
     emit(Profile(
       id: auth.id,
-      email: auth.email ?? '',
+      email: auth.email,
       auth: auth,
       profile: p,
     ));
@@ -115,7 +115,7 @@ class LoginCubit extends Cubit<Profile?> {
 
     emit(Profile(
       id: auth.id,
-      email: auth.email ?? '',
+      email: auth.email,
       auth: auth,
       profile: p,
     ));
@@ -149,7 +149,7 @@ class LoginCubit extends Cubit<Profile?> {
 
     emit(Profile(
       id: auth.id,
-      email: auth.email ?? '',
+      email: auth.email,
       auth: auth,
       profile: p,
     ));
@@ -161,7 +161,7 @@ class LoginCubit extends Cubit<Profile?> {
   ) {
     emit(Profile(
       id: auth.id,
-      email: auth.email ?? '',
+      email: auth.email,
       auth: auth,
       profile: profile,
     ));

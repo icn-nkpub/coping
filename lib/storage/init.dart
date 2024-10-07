@@ -2,9 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:dependencecoping/auth/auth.dart';
 import 'package:dependencecoping/provider/static/static.dart';
-import 'package:dependencecoping/storage/goal.dart';
 import 'package:dependencecoping/storage/local.dart';
 import 'package:dependencecoping/storage/locker.dart';
 import 'package:dependencecoping/storage/profiles.dart';
@@ -12,8 +10,9 @@ import 'package:dependencecoping/storage/reset_log.dart';
 import 'package:dependencecoping/storage/static.dart';
 import 'package:dependencecoping/storage/trigger.dart';
 import 'package:dependencecoping/storage/trigger_log.dart';
+import 'package:dependencecoping/user/user.dart';
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+
 import 'package:xid/xid.dart';
 
 enum LoadingProgress { notStarted, started, done }
@@ -27,11 +26,9 @@ mixin AssetsInitializer<T extends StatefulWidget> on State<T> {
   List<CountdownReset>? resets;
   DateTime? lockerStart;
   Duration? lockerDuration;
-  List<Goal>? goals;
   List<Trigger>? triggers;
   List<TriggerLog>? triggersLog;
   StaticRecords statics = StaticRecords(
-    goals: [],
     triggers: [],
   );
 
@@ -102,20 +99,17 @@ mixin AssetsInitializer<T extends StatefulWidget> on State<T> {
 
     final List<Future> waitGroup = [];
 
-    final profileFuture = getProfile(user!);
+    final profileFuture = getProfile(user);
     waitGroup.add(profileFuture);
 
-    final staticGoalsFuture = getStaticGoals(user!);
+    final staticGoalsFuture = getStaticGoals(user);
     waitGroup.add(staticGoalsFuture);
 
-    final staticTriggersFuture = getStaticTriggers(user!);
+    final staticTriggersFuture = getStaticTriggers(user);
     waitGroup.add(staticTriggersFuture);
 
-    final resetsFuture = getCountdownResets(user!, 'smoking');
+    final resetsFuture = getCountdownResets(user, 'smoking');
     waitGroup.add(resetsFuture);
-
-    final goalsFuture = getGoals(user!);
-    waitGroup.add(goalsFuture);
 
     final triggersFuture = getTriggers(user!);
     waitGroup.add(triggersFuture);
@@ -123,16 +117,14 @@ mixin AssetsInitializer<T extends StatefulWidget> on State<T> {
     final triggersLogFuture = getTriggersLog(user!, 'smoking');
     waitGroup.add(triggersLogFuture);
 
-    final lockerSets = getLockerSets(user!);
+    final lockerSets = getLockerSets(user);
     waitGroup.add(lockerSets);
 
     await Future.wait(waitGroup, eagerError: true);
 
     final vProfile = await profileFuture;
-    final vStaticsGoals = await staticGoalsFuture;
     final vStaticsTriggers = await staticTriggersFuture;
     final vResets = await resetsFuture;
-    final vGoals = await goalsFuture;
     final vTriggers = await triggersFuture;
     final vTriggersLog = await triggersLogFuture;
 
@@ -142,10 +134,8 @@ mixin AssetsInitializer<T extends StatefulWidget> on State<T> {
 
     setState(() {
       profile = vProfile;
-      statics.goals = vStaticsGoals;
       statics.triggers = vStaticsTriggers;
       resets = vResets;
-      goals = vGoals;
       triggers = vTriggers;
       triggersLog = vTriggersLog;
       lockerStart = vLockerSet?.start;

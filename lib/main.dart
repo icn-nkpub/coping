@@ -5,7 +5,6 @@ import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/home.dart';
 import 'package:dependencecoping/notifications.dart';
 import 'package:dependencecoping/provider/countdown/countdown.dart';
-import 'package:dependencecoping/provider/goal/goal.dart';
 import 'package:dependencecoping/provider/locker/locker.dart';
 import 'package:dependencecoping/provider/login/login.dart';
 import 'package:dependencecoping/provider/static/static.dart';
@@ -21,17 +20,10 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
   final WidgetsBinding widgetsBinding =
       WidgetsFlutterBinding.ensureInitialized();
-
-  await Supabase.initialize(
-    url: 'https://tcqkyokyndgebhcybfhx.supabase.co',
-    anonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRjcWt5b2t5bmRnZWJoY3liZmh4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODU0NjUxOTMsImV4cCI6MjAwMTA0MTE5M30.Nd9M8OSPkIW2zjj_wJjPCBJi8NEApMise-W8nYso1Tw',
-  );
 
   await notifications();
 
@@ -155,11 +147,6 @@ class _AppState extends State<App>
                     countdownTimerCubit.overwrite(resets!);
                   }
 
-                  final goalsCubit = GoalsCubit();
-                  if (goals != null) {
-                    goalsCubit.overwrite(Goals(goals!));
-                  }
-
                   final triggersCubit = TriggersCubit();
                   if (triggers != null) {
                     if (triggersLog == null) {
@@ -182,7 +169,6 @@ class _AppState extends State<App>
                       BlocProvider(create: (final _) => staticCubit),
                       BlocProvider(create: (final _) => themeCubit),
                       BlocProvider(create: (final _) => countdownTimerCubit),
-                      BlocProvider(create: (final _) => goalsCubit),
                       BlocProvider(create: (final _) => triggersCubit),
                       BlocProvider(create: (final _) => lockerCubit),
                     ],

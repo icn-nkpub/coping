@@ -2,11 +2,11 @@ import 'package:dependencecoping/gen/fonts.gen.dart';
 import 'package:dependencecoping/provider/countdown/countdown.dart';
 import 'package:dependencecoping/provider/static/static.dart';
 import 'package:dependencecoping/tokens/icons.dart';
+import 'package:dependencecoping/user/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 const enableEdit = false;
 

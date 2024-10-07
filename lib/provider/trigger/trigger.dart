@@ -1,7 +1,8 @@
 import 'package:dependencecoping/storage/trigger.dart';
 import 'package:dependencecoping/storage/trigger_log.dart';
+import 'package:dependencecoping/user/user.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+
 
 class Triggers {
   Triggers(this.templates, this.triggerLog);

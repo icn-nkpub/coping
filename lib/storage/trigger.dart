@@ -1,5 +1,6 @@
 import 'package:dependencecoping/tools/maybe_map.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:dependencecoping/user/user.dart';
+
 
 class Trigger {
   Trigger({
