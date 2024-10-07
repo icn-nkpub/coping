@@ -44,6 +44,9 @@ class ThemeState {
       cardTheme: data.cardTheme.copyWith(
         shadowColor: shadow,
       ),
+      snackBarTheme: data.snackBarTheme.copyWith(
+        backgroundColor:  ElevationOverlay.applySurfaceTint(bc, pc, 4),
+      ),
     );
   }
 

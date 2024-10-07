@@ -141,22 +141,24 @@ class CopyButton extends StatefulWidget {
 }
 
 class CopyButtonState extends State<CopyButton> {
-  final GlobalKey<TooltipState> tooltipKey = GlobalKey<TooltipState>();
-
   Future<void> _copyToClipboard() async {
     await Clipboard.setData(ClipboardData(text: widget.addr));
-    tooltipKey.currentState?.ensureTooltipVisible();
+
+    if (!mounted) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+       SnackBar(
+        content: Text('Address copied to clipboard', style: Theme.of(context).textTheme.bodyMedium,),
+        duration: const Duration(seconds: 2),
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
     log('Copied: ${widget.addr}');
   }
 
   @override
-  Widget build(final BuildContext context) => Tooltip(
-        key: tooltipKey,
-        message: 'Copied',
-        triggerMode: TooltipTriggerMode.manual,
-        child: TextButton(
-          onPressed: _copyToClipboard,
-          child: const Text('Copy'),
-        ),
+  Widget build(final BuildContext context) => TextButton(
+        onPressed: _copyToClipboard,
+        child: const Text('Copy'),
       );
 }
