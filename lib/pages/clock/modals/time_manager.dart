@@ -116,12 +116,8 @@ class TimerJournalCard extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 8),
                   child: resume
-                      ?  Icon(
-                          Icons.play_arrow, size: computeSizeFromOffset(0)
-                        )
-                      :  Icon(
-                          Icons.stop, size: computeSizeFromOffset(0)
-                        ),
+                      ? Icon(Icons.play_arrow, size: computeSizeFromOffset(0))
+                      : Icon(Icons.stop, size: computeSizeFromOffset(0)),
                 )),
             Flexible(
               child: Align(
@@ -139,7 +135,8 @@ class TimerJournalCard extends StatelessWidget {
                 child: IconButton(
                   onPressed: onEditPressed,
                   icon: Icon(
-                    Icons.edit, size: computeSizeFromOffset(0),
+                    Icons.edit,
+                    size: computeSizeFromOffset(0),
                     color: resume
                         ? Theme.of(context).colorScheme.onPrimaryContainer
                         : Theme.of(context).colorScheme.onTertiaryContainer,

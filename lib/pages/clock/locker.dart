@@ -241,7 +241,8 @@ class _LockpickingState extends State<Lockpicking>
                   ),
                   Opacity(
                     opacity: v,
-                    child: Icon(v == 1 ? Icons.lock_open : Icons.lock, size: computeSizeFromOffset(0)),
+                    child: Icon(v == 1 ? Icons.lock_open : Icons.lock,
+                        size: computeSizeFromOffset(0)),
                   ),
                 ],
               );

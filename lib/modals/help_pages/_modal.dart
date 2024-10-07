@@ -18,7 +18,10 @@ class ModalDecoration extends StatelessWidget {
           children: [
             IconButton(
               onPressed: () {},
-              icon:  Icon(Icons.arrow_back, size: computeSizeFromOffset(4),),
+              icon: Icon(
+                Icons.arrow_back,
+                size: computeSizeFromOffset(4),
+              ),
             ),
             Text(
               title,
@@ -31,7 +34,10 @@ class ModalDecoration extends StatelessWidget {
               opacity: 0,
               child: IconButton(
                 onPressed: () {},
-                icon: Icon(Icons.arrow_back, size: computeSizeFromOffset(4),),
+                icon: Icon(
+                  Icons.arrow_back,
+                  size: computeSizeFromOffset(4),
+                ),
               ),
             ),
           ],

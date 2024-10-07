@@ -9,7 +9,7 @@ import 'package:flutter_svg/svg.dart';
 
 Map<String, Image> _imageCache = {};
 
-double computeSizeFromOffset(final double offset)=> 22 - offset;
+double computeSizeFromOffset(final double offset) => 22 - offset;
 
 class SvgIcon extends StatelessWidget {
   const SvgIcon(

@@ -97,7 +97,8 @@ class _HelpModalState extends State<HelpModal> {
                             Navigator.of(context).pop();
                           }
                         },
-                        icon: Icon(Icons.arrow_back, size: computeSizeFromOffset(0))),
+                        icon: Icon(Icons.arrow_back,
+                            size: computeSizeFromOffset(0))),
                     Text(
                       AppLocalizations.of(context)!.helpSwipeAction,
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
@@ -113,7 +114,8 @@ class _HelpModalState extends State<HelpModal> {
                             Navigator.of(context).pop();
                           }
                         },
-                        icon: Icon(Icons.arrow_back, size: computeSizeFromOffset(0)),
+                        icon: Icon(Icons.arrow_back,
+                            size: computeSizeFromOffset(0)),
                       ),
                     ),
                   ],

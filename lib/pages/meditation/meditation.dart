@@ -257,7 +257,9 @@ class _InfoCardState extends State<InfoCard> {
                   _expandInfo = !_expandInfo;
                 });
               },
-              icon: _expandInfo ? Icon(Icons.close, size: computeSizeFromOffset(0)) : Icon(Icons.expand_more, size: computeSizeFromOffset(0)),
+              icon: _expandInfo
+                  ? Icon(Icons.close, size: computeSizeFromOffset(0))
+                  : Icon(Icons.expand_more, size: computeSizeFromOffset(0)),
             ),
           ),
           Shrinkable(

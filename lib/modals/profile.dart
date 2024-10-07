@@ -196,7 +196,7 @@ class Copier extends StatelessWidget {
           icon: Text(
             title,
           ),
-          label:  Opacity(
+          label: Opacity(
             opacity: .5,
             child: Icon(Icons.content_copy, size: computeSizeFromOffset(8)),
           ),

@@ -93,9 +93,7 @@ class _TriggerListState extends State<TriggerList> {
                                 child: const PersonalTriggerFormModal()),
                           );
                         },
-                        icon:  Icon(
-                          Icons.add, size: computeSizeFromOffset(0)
-                        ),
+                        icon: Icon(Icons.add, size: computeSizeFromOffset(0)),
                       ),
                     );
 

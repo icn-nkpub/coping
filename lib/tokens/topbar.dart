@@ -126,7 +126,8 @@ class _TopBarState extends State<TopBar> {
                   icon: AnimatedRotation(
                     duration: const Duration(milliseconds: 100),
                     turns: expandMenu ? 0.5 : 0,
-                    child: Icon(Icons.expand_more, size: computeSizeFromOffset(0)),
+                    child:
+                        Icon(Icons.expand_more, size: computeSizeFromOffset(0)),
                   ),
                 ),
               ],

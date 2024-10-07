@@ -47,7 +47,8 @@ class Modal extends StatelessWidget {
                         Navigator.of(context).pop();
                       }
                     },
-                    icon: Icon(Icons.arrow_back, size: computeSizeFromOffset(0)),
+                    icon:
+                        Icon(Icons.arrow_back, size: computeSizeFromOffset(0)),
                   ),
                 ),
               ],

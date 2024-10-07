@@ -138,28 +138,28 @@ class CountdownDisplay extends StatelessWidget {
           final s = ct?.splits().score ?? 0;
 
           if (s > 1000) {
-            return  Badge(
+            return Badge(
               icon: Icon(Icons.wine_bar, size: computeSizeFromOffset(0)),
               label: 'Top 50%',
             );
           }
 
           if (s > 2000) {
-            return  Badge(
+            return Badge(
               icon: Icon(Icons.wine_bar, size: computeSizeFromOffset(0)),
               label: 'Top 35%',
             );
           }
 
           if (s > 5000) {
-            return  Badge(
+            return Badge(
               icon: Icon(Icons.wine_bar, size: computeSizeFromOffset(0)),
               label: 'Top 5%',
             );
           }
 
           if (s > 20000) {
-            return  Badge(
+            return Badge(
               icon: Icon(Icons.wine_bar, size: computeSizeFromOffset(0)),
               label: 'Top 1%',
             );
@@ -192,7 +192,8 @@ class CountdownDisplay extends StatelessWidget {
                 },
                 icon: Icon(Icons.stop_circle, size: computeSizeFromOffset(0))),
         IconButton.filledTonal(
-            onPressed: _gotoTime(context), icon: Icon(Icons.history, size: computeSizeFromOffset(0))),
+            onPressed: _gotoTime(context),
+            icon: Icon(Icons.history, size: computeSizeFromOffset(0))),
       ];
 
   void Function() _gotoTime(final BuildContext context) => () => openModal(
@@ -305,8 +306,9 @@ class ScoreCard extends StatelessWidget {
         elevation: 3,
         child: Row(
           children: [
-             Padding(
-                padding: EdgeInsets.only(left: 14), child: Icon(Icons.bolt, size: computeSizeFromOffset(6))),
+            Padding(
+                padding: const EdgeInsets.only(left: 14),
+                child: Icon(Icons.bolt, size: computeSizeFromOffset(6))),
             Container(
               clipBehavior: Clip.antiAlias,
               decoration: const BoxDecoration(),
