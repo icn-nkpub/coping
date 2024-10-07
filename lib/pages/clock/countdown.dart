@@ -1,10 +1,8 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:dependencecoping/gen/fonts.gen.dart';
 import 'package:dependencecoping/pages/clock/locker.dart';
 import 'package:dependencecoping/pages/clock/modals/time_manager.dart';
-import 'package:dependencecoping/pages/copingdao/data.dart' as aidata;
 import 'package:dependencecoping/provider/countdown/countdown.dart';
 import 'package:dependencecoping/provider/login/login.dart';
 import 'package:dependencecoping/provider/theme/colors.dart';
@@ -83,9 +81,7 @@ class CountdownDisplay extends StatelessWidget {
                                         ],
                                       ),
                                     ),
-                                    const Row(
-                                      children: [Motivation()],
-                                    )
+                                    const Row()
                                   ],
                                 ),
                               ),
@@ -205,57 +201,6 @@ class CountdownDisplay extends StatelessWidget {
           ),
         ),
       );
-}
-
-class Motivation extends StatelessWidget {
-  const Motivation({
-    super.key,
-  });
-
-  @override
-  Widget build(final BuildContext context) {
-    final n = DateTime.now();
-    final r = Random(n.year + n.month + n.day + n.hour);
-
-    final lc = Localizations.localeOf(context).languageCode;
-    final List<String> messages = [];
-    messages.addAll(aidata.nos[lc] ?? []);
-    messages.addAll(aidata.cheers[lc] ?? []);
-
-    final t = messages[r.nextInt(messages.length)];
-
-    final theme = Theme.of(context);
-    return Container(
-      alignment: Alignment.bottomLeft,
-      width: MediaQuery.of(context).size.width * .65,
-      child: Typer(
-        t,
-        textAlign: TextAlign.left,
-        style: theme.textTheme.titleLarge!.copyWith(
-          color: theme.colorScheme.onSurface,
-          fontWeight: FontWeight.w900,
-        ),
-      ),
-    );
-  }
-
-  List<Shadow> outline(
-      final double offset, final double blur, final Color color) {
-    final List<Offset> offsets = [];
-    for (var x = -offset; x <= offset; x++) {
-      for (var y = -offset; y <= offset; y++) {
-        offsets.add(Offset(x, y));
-      }
-    }
-
-    return offsets
-        .map((final o) => Shadow(
-              color: color,
-              offset: o,
-              blurRadius: blur,
-            ))
-        .toList();
-  }
 }
 
 class Badge extends StatelessWidget {

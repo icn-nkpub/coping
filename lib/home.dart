@@ -1,6 +1,5 @@
-import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/pages/clock/main.dart';
-import 'package:dependencecoping/pages/copingdao/copingdao.dart';
+import 'package:dependencecoping/pages/dao/dao.dart';
 import 'package:dependencecoping/pages/meditation/meditation.dart';
 import 'package:dependencecoping/pages/triggers/triggers.dart';
 import 'package:dependencecoping/paginator.dart';
@@ -36,19 +35,31 @@ class _HomeState extends State<Home> {
           },
           destinations: [
             NavigationDestination(
-              icon: const SvgIcon(Assets.guyhead),
+              icon: Icon(
+                Icons.timer,
+                size: computeSizeFromOffset(0),
+              ),
               label: AppLocalizations.of(context)!.screenClock,
             ),
             NavigationDestination(
-              icon: const SvgIcon(Assets.guyhead),
+              icon: Icon(
+                Icons.psychology,
+                size: computeSizeFromOffset(0),
+              ),
               label: AppLocalizations.of(context)!.screenTriggers,
             ),
             NavigationDestination(
-              icon: const SvgIcon(Assets.guyhead),
+              icon: Icon(
+                Icons.group,
+                size: computeSizeFromOffset(0),
+              ),
               label: AppLocalizations.of(context)!.screenAssistant,
             ),
             NavigationDestination(
-              icon: const SvgIcon(Assets.guyhead),
+              icon: Icon(
+                Icons.spa,
+                size: computeSizeFromOffset(0),
+              ),
               label: AppLocalizations.of(context)!.screenMeditation,
             ),
           ],
