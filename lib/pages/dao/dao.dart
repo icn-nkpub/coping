@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:bip39/bip39.dart' as bip39;
 import 'package:dependencecoping/pages/dao/nft_gen.dart';
 import 'package:dependencecoping/pages/dao/solprice.dart';
+import 'package:dependencecoping/programs/locker_program/locker_instructions.dart';
 import 'package:dependencecoping/provider/theme/theme.dart';
 import 'package:dependencecoping/tokens/topbar.dart';
 import 'package:flutter/material.dart';
@@ -111,6 +112,16 @@ class CopeScreenState extends State<CopeScreen> {
     });
   }
 
+  Future<void> call() async {
+    if (client == null || wallet == null) {
+      return;
+    }
+
+    // todo: make it a useful lock
+    final li = LockerInstruction(signers: [wallet!.w.publicKey]);
+    log(li.toString());
+  }
+
   @override
   Widget build(final BuildContext context) {
     final theme = Theme.of(context);
@@ -186,6 +197,10 @@ class CopeScreenState extends State<CopeScreen> {
             child: Row(
               children: [
                 CopyButton(addr: wallet!.w.address),
+                TextButton(
+                  onPressed: call,
+                  child: const Text('Call'),
+                ),
                 TextButton(
                   onPressed: _requestAirdrop,
                   child: const Text('Airdrop'),

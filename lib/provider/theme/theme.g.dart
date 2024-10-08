@@ -11,7 +11,7 @@ class ThemeStateAdapter extends TypeAdapter<ThemeState> {
   final int typeId = 0;
 
   @override
-  ThemeState read(BinaryReader reader) {
+  ThemeState read(final BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
@@ -23,7 +23,7 @@ class ThemeStateAdapter extends TypeAdapter<ThemeState> {
   }
 
   @override
-  void write(BinaryWriter writer, ThemeState obj) {
+  void write(final BinaryWriter writer, final ThemeState obj) {
     writer
       ..writeByte(2)
       ..writeByte(0)
@@ -36,7 +36,7 @@ class ThemeStateAdapter extends TypeAdapter<ThemeState> {
   int get hashCode => typeId.hashCode;
 
   @override
-  bool operator ==(Object other) =>
+  bool operator ==(final Object other) =>
       identical(this, other) ||
       other is ThemeStateAdapter &&
           runtimeType == other.runtimeType &&
