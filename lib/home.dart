@@ -34,7 +34,7 @@ class _HomeState extends State<Home> {
           destinations: [
             NavigationDestination(
               icon: Icon(
-                Icons.group,
+                Icons.wallet,
                 size: computeSizeFromOffset(0),
               ),
               label: AppLocalizations.of(context)!.screenAssistant,

@@ -8,10 +8,9 @@ import 'package:dependencecoping/notifications.dart';
 import 'package:dependencecoping/provider/theme/theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
@@ -25,6 +24,8 @@ Future<void> main() async {
 
   final directory = await getApplicationDocumentsDirectory();
   Hive.init(directory.path);
+  Hive.registerAdapter(ThemeStateAdapter());
+  await Hive.openBox<ThemeState>('ThemeState');
 
   final app = App();
 
@@ -60,7 +61,6 @@ class _AppState extends State<App>
     duration: const Duration(seconds: 1),
   );
   bool _spinnerActive = true;
-  ThemeData? _themeData;
 
   @override
   void dispose() {
@@ -111,21 +111,14 @@ class _AppState extends State<App>
                     ),
                   ),
                 )
-              : Builder(builder: (final context) {
-                  final tcb = MediaQuery.of(context).platformBrightness ==
-                          Brightness.light
-                      ? ThemeMode.light
-                      : ThemeMode.dark;
-                  final themeCubit = ThemeCubit()..setBrightness(tcb);
-
-                  _themeData = themeCubit.state.data;
-
-                  return BlocListener<ThemeCubit, ThemeState>(
-                    listener: (final context, final state) => setState(() {
-                      _themeData = state.data;
-                    }),
-                    child: AnimatedTheme(
-                      data: _themeData!,
+              : ValueListenableBuilder<Box<ThemeState>>(
+                  valueListenable:
+                      Hive.box<ThemeState>('ThemeState').listenable(),
+                  builder: (final context, final box, final _) {
+                    final s = (box.length > 0 ? box.getAt(0) : null) ??
+                        defaultThemeState(context);
+                    return AnimatedTheme(
+                      data: s.data!,
                       curve: Curves.slowMiddle,
                       duration: const Duration(milliseconds: 100),
                       child: Navigator(
@@ -134,9 +127,8 @@ class _AppState extends State<App>
                           builder: (final context) => const Home(),
                         ),
                       ),
-                    ),
-                  );
-                }),
+                    );
+                  }),
         ),
       );
 }

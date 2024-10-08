@@ -1,103 +1,106 @@
+import 'package:dependencecoping/gen/fonts.gen.dart';
 import 'package:dependencecoping/provider/theme/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 
+part 'theme.g.dart';
+
+@HiveType(typeId: 0)
 class ThemeState {
   ThemeState({
-    required this.mode,
-    required this.data,
-    required this.color,
+    required this.isLightMode,
+    required this.colorIndex,
+    this.data,
   });
 
-  ThemeMode mode;
-  ThemeData data;
-  ColorValue color;
+  @HiveField(0)
+  bool isLightMode;
+  @HiveField(1)
+  int colorIndex;
+  ThemeData? data;
 
   void resetThemeData() {
-    data = ThemeData(
-      fontFamily: 'Jost',
+    final color = ColorValue.values[colorIndex];
+
+    var newData = ThemeData(
+      fontFamily: FontFamily.spaceGrotesk,
       colorScheme: ColorScheme.fromSeed(
         seedColor: color.primary,
-        brightness: isLightMode() ? Brightness.light : Brightness.dark,
+        brightness: isLightMode ? Brightness.light : Brightness.dark,
       ),
       useMaterial3: true,
-      brightness: isLightMode() ? Brightness.light : Brightness.dark,
+      brightness: isLightMode ? Brightness.light : Brightness.dark,
     );
 
-    final bc = data.colorScheme.surface;
-    final pc = data.colorScheme.surfaceTint;
+    final bc = newData.colorScheme.surface;
+    final pc = newData.colorScheme.surfaceTint;
 
     const shadow = Colors.transparent;
 
-    data = data.copyWith(
-      iconTheme: data.iconTheme.copyWith(
-        color: data.colorScheme.onPrimaryContainer,
+    newData = newData.copyWith(
+      iconTheme: newData.iconTheme.copyWith(
+        color: newData.colorScheme.onPrimaryContainer,
       ),
-      scaffoldBackgroundColor: isLightMode()
+      scaffoldBackgroundColor: isLightMode
           ? Colors.white
           : ElevationOverlay.applySurfaceTint(bc, pc, .5),
-      appBarTheme: data.appBarTheme.copyWith(
+      appBarTheme: newData.appBarTheme.copyWith(
         color: ElevationOverlay.applySurfaceTint(bc, pc, 4),
         shadowColor: shadow,
       ),
       shadowColor: shadow,
-      cardTheme: data.cardTheme.copyWith(
+      cardTheme: newData.cardTheme.copyWith(
         shadowColor: shadow,
       ),
-      snackBarTheme: data.snackBarTheme.copyWith(
+      snackBarTheme: newData.snackBarTheme.copyWith(
         backgroundColor: ElevationOverlay.applySurfaceTint(bc, pc, 4),
       ),
     );
-  }
 
-  bool isLightMode() => mode == ThemeMode.light;
+    data = newData;
+  }
 
   @override
   bool operator ==(final Object other) => false; // ignore: hash_and_equals
 }
 
-class ThemeCubit extends Cubit<ThemeState> {
-  ThemeCubit()
-      : super(ThemeState(
-          mode: ThemeMode.system,
-          color: ColorValue.midnight,
-          data: ThemeData(
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: ColorValue.midnight.primary,
-              brightness: ThemeMode.system == ThemeMode.light
-                  ? Brightness.light
-                  : Brightness.dark,
-            ),
-            useMaterial3: true,
-            brightness: ThemeMode.system == ThemeMode.light
-                ? Brightness.light
-                : Brightness.dark,
-          ),
-        ));
+void flipBrightness(final BuildContext context) async {
+  final themebox = Hive.box<ThemeState>('ThemeState');
+  final ThemeState state = (themebox.length > 0 ? themebox.getAt(0) : null) ??
+      defaultThemeState(context);
 
-  Future<void> flipBrightness() async {
-    if (state.isLightMode()) {
-      state.mode = ThemeMode.dark;
-    } else {
-      state.mode = ThemeMode.light;
-    }
+  state.isLightMode = !state.isLightMode;
 
-    state.resetThemeData();
-
-    emit(state);
+  state.resetThemeData();
+  if (themebox.length > 0) {
+    await themebox.putAt(0, state);
+  } else {
+    await themebox.add(state);
   }
+}
 
-  void setBrightness(final ThemeMode mode) {
-    state.mode = mode;
-    state.resetThemeData();
-    emit(state);
+void setColor(final BuildContext context, final ColorValue c) async {
+  final themebox = Hive.box<ThemeState>('ThemeState');
+  final ThemeState state = (themebox.length > 0 ? themebox.getAt(0) : null) ??
+      defaultThemeState(context);
+
+  state.colorIndex = ColorValue.values.indexOf(c);
+
+  state.resetThemeData();
+  if (themebox.length > 0) {
+    await themebox.putAt(0, state);
+  } else {
+    await themebox.add(state);
   }
+}
 
-  void setColor(final ColorValue c) {
-    state.color = c;
+ThemeState defaultThemeState(final BuildContext context) {
+  final data = ThemeState(
+    isLightMode: MediaQuery.of(context).platformBrightness == Brightness.light,
+    colorIndex: 0,
+    data: ThemeData(),
+  );
+  data.resetThemeData();
 
-    state.resetThemeData();
-
-    emit(state);
-  }
+  return data;
 }

@@ -1,12 +1,10 @@
-import 'dart:async';
-
 import 'package:dependencecoping/provider/theme/colors.dart';
 import 'package:dependencecoping/provider/theme/theme.dart';
 import 'package:dependencecoping/tokens/cardrope.dart';
 import 'package:dependencecoping/tokens/icons.dart';
 import 'package:dependencecoping/tokens/measurable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class NullTopBar extends StatelessWidget {
   const NullTopBar({
@@ -146,41 +144,43 @@ class ThemeChanger extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) =>
-      BlocBuilder<ThemeCubit, ThemeState>(
-        builder: (final context, final t) => Row(
-          children: [
-            FilledButton.tonal(
-              style: Theme.of(context).filledButtonTheme.style,
-              onPressed: () {
-                // '!' (NOT) because we just fliped but yet refreshed.
-                unawaited(context.read<ThemeCubit>().flipBrightness());
-              },
-              child: t.isLightMode()
-                  ? Icon(Icons.light_mode, size: computeSizeFromOffset(0))
-                  : Icon(Icons.dark_mode, size: computeSizeFromOffset(0)),
-            ),
-            Flexible(
-              child: Container(
-                width: double.infinity,
-                alignment: Alignment.center,
-                child: Text(
-                  t.color.name,
-                  style: Theme.of(context).textTheme.labelMedium,
+      ValueListenableBuilder<Box<ThemeState>>(
+          valueListenable: Hive.box<ThemeState>('ThemeState').listenable(),
+          builder: (final context, final box, final _) {
+            final s = (box.length > 0 ? box.getAt(0) : null) ??
+                defaultThemeState(context);
+
+            return Row(
+              children: [
+                FilledButton.tonal(
+                  style: Theme.of(context).filledButtonTheme.style,
+                  onPressed: () => flipBrightness(context),
+                  child: s.isLightMode
+                      ? Icon(Icons.light_mode, size: computeSizeFromOffset(0))
+                      : Icon(Icons.dark_mode, size: computeSizeFromOffset(0)),
                 ),
-              ),
-            ),
-            FilledButton.tonal(
-              onPressed: () {
-                final next = (ColorValue.values.indexOf(t.color) + 1) %
-                    (ColorValue.values.length);
-                final selected = ColorValue.values[next];
-                context.read<ThemeCubit>().setColor(selected);
-              },
-              child: Icon(Icons.palette, size: computeSizeFromOffset(0)),
-            ),
-          ],
-        ),
-      );
+                Flexible(
+                  child: Container(
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    child: Text(
+                      ColorValue.values[s.colorIndex].name,
+                      style: Theme.of(context).textTheme.labelMedium,
+                    ),
+                  ),
+                ),
+                FilledButton.tonal(
+                  onPressed: () {
+                    final next =
+                        (s.colorIndex + 1) % (ColorValue.values.length);
+                    final selected = ColorValue.values[next];
+                    setColor(context, selected);
+                  },
+                  child: Icon(Icons.palette, size: computeSizeFromOffset(0)),
+                ),
+              ],
+            );
+          });
 }
 
 class NavButton extends StatelessWidget {
