@@ -54,10 +54,10 @@ class CopeScreenState extends State<CopeScreen> {
       final box = await Hive.openBox(walletBox);
       final sc = client ??
           SolanaClient(
-            rpcUrl: Platform.isWindows
+            rpcUrl: Platform.isMacOS
                 ? Uri.parse('http://127.0.0.1:8899')
                 : Uri.parse('https://api.devnet.solana.com'),
-            websocketUrl: Platform.isWindows
+            websocketUrl: Platform.isMacOS
                 ? Uri.parse('ws://127.0.0.1:8900')
                 : Uri.parse('ws://api.devnet.solana.com'),
           );
