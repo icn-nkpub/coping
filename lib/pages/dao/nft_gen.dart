@@ -5,24 +5,24 @@ import 'package:flutter/material.dart';
 const _src = '''
 <svg version="1.1" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
  <g>
-  <circle display="none" id="body" cx="360" cy="600" r="160" fill="#00f" stop-color="#000000" stroke="#000080" stroke-linecap="round" stroke-linejoin="round" stroke-width="40"/>
+  <circle display="none" id="body" cx="360" cy="600" r="160" fill="#00f" stroke="#000080" stroke-linecap="round" stroke-linejoin="round" stroke-width="40"/>
   <path display="none" id="head" d="m290.7 140.16a160 100.01 0 0 0-70.697 13.23 160 100.01 0 0 0-80 86.613v120a160 160.01 0 0 0 80 138.57 160 160.01 0 0 0 160 0 160 160.01 0 0 0 80-138.57v-120a160 100.01 0 0 0-80-86.613 160 100.01 0 0 0-89.303-13.23z" fill="#00f" stroke="#000080" stroke-width="40"/>
   <g display="none" id="face">
    <g fill="#f00">
-    <path display="none" id="month-passive" d="m240 400v40h120v-40z" stop-color="#000000"/>
+    <path display="none" id="month-passive" d="m240 400v40h120v-40z"/>
     <path display="none" id="month-smile" d="m240 400s0 40 60 40 60-40 60-40zm0 0s0 40 60 40 60-40 60-40zm0 0s0 40 60 40 60-40 60-40zm0 0s0 40 60 40 60-40 60-40z"/>
     <path display="none" id="month-grin" d="m240 400v40h80a40 40 0 0 0 20-5.3594 40 40 0 0 0 20-34.641h-80z"/>
     <g display="none" id="month-zip">
-     <path d="m240 400v20h20v-20z" stop-color="#000000"/>
-     <path d="m260 420v20h20v-20z" stop-color="#000000"/>
-     <path d="m280 400v20h20v-20z" stop-color="#000000"/>
-     <path d="m300 420v20h20v-20z" stop-color="#000000"/>
-     <path d="m320 400v20h20v-20z" stop-color="#000000"/>
-     <path d="m340 420v20h20v-20z" stop-color="#000000"/>
+     <path d="m240 400v20h20v-20z"/>
+     <path d="m260 420v20h20v-20z"/>
+     <path d="m280 400v20h20v-20z"/>
+     <path d="m300 420v20h20v-20z"/>
+     <path d="m320 400v20h20v-20z"/>
+     <path d="m340 420v20h20v-20z"/>
     </g>
    </g>
-   <path display="none" id="month-bacon" d="m260 420c40 0 40 20 100 0" fill="none" stop-color="#000000" stroke="#f00" stroke-linecap="square" stroke-linejoin="round" stroke-width="40"/>
-   <path display="none" id="month-cringe" d="m260 420c60-20 60 20 140-20" fill="none" stop-color="#000000" stroke="#f00" stroke-linecap="square" stroke-linejoin="round" stroke-width="40"/>
+   <path display="none" id="month-bacon" d="m260 420c40 0 40 20 100 0" fill="none" stroke="#f00" stroke-linecap="square" stroke-linejoin="round" stroke-width="40"/>
+   <path display="none" id="month-cringe" d="m260 420c60-20 60 20 140-20" fill="none" stroke="#f00" stroke-linecap="square" stroke-linejoin="round" stroke-width="40"/>
    <path display="none" id="leye-back" d="m220 300a60 60 0 0 1-60 60 60 60 0 0 1-60-60 60 60 0 0 1 60-60 60 60 0 0 1 60 60z" fill="#ffb380"/>
    <path display="none" id="reye-back" d="m340 360a60 60 0 0 1-60-60 60 60 0 0 1 60-60 60 60 0 0 1 60 60 60 60 0 0 1-60 60z" fill="#ffb380"/>
    <g display="none" id="glasses-arm" fill="none" stroke="#f60" stroke-width="40">
@@ -46,12 +46,12 @@ const _src = '''
   </g>
  </g>
  <g display="none" id="cosmetics">
-  <path display="none" id="mask" d="m440 380s-20 120-140 120-140-120-140-120 27.023 3.0634 40 0c14.508-3.425 25.492-16.575 40-20 6.4883-1.5317 13.512-1.5317 20 0 14.508 3.425 25.492 16.575 40 20 45.418 10.722 140 0 140 0z" fill="#fff" stop-color="#000000"/>
-  <g display="none" id="square-glasses" fill="none" stroke="#000" stroke-linecap="square" stroke-width="40">
-   <rect x="100" y="240" width="120" height="120" stop-color="#000000"/>
-   <rect x="280" y="240" width="120" height="120" stop-color="#000000"/>
+  <path display="none" id="mask" d="m440 380s-20 120-140 120-140-120-140-120 27.023 3.0634 40 0c14.508-3.425 25.492-16.575 40-20 6.4883-1.5317 13.512-1.5317 20 0 14.508 3.425 25.492 16.575 40 20 45.418 10.722 140 0 140 0z" fill="#fff"/>
+  <g display="none" id="square-glasses" fill="none" stroke="#f60" stroke-linecap="square" stroke-width="40">
+   <rect x="100" y="240" width="120" height="120"/>
+   <rect x="280" y="240" width="120" height="120"/>
   </g>
-  <circle display="none" id="3rd-eye" cx="240" cy="200" r="60" fill="#ffb380" stop-color="#000000" stroke="#f60" stroke-linecap="square" stroke-linejoin="round" stroke-width="40"/>
+  <circle display="none" id="3rd-eye" cx="240" cy="200" r="60" fill="#ffb380" stroke="#f60" stroke-linecap="square" stroke-linejoin="round" stroke-width="40"/>
  </g>
 </svg>
 ''';
@@ -132,6 +132,7 @@ String nftGen(final String address, final Color key) {
     _feat_ee_r_upsidelid_id,
   ]));
 
+  // toggle(_feat_cosmetics_id);
   // toggle(addressatedGuess(address, 16, [
   //   _feat_mask_id,
   //   _feat_square_glasses_id,
@@ -139,7 +140,13 @@ String nftGen(final String address, final Color key) {
   //   ...base58.split(''), // to make cosmetics rare
   // ]));
 
-  toggle(_feat_cosmetics_id);
+  t = t.replaceAll('#000080', '#600'); // skin outline
+  t = t.replaceAll('#00f', '#500'); // skin fill
+  t = t.replaceAll('#f00', '#400'); // month
+  t = t.replaceAll('#f60', '#300'); // glasses frame
+  t = t.replaceAll('#f95', '#200'); // eye lid
+  t = t.replaceAll('#ffb380', '#100'); // eye back
+  // t = t.replaceAll('#fff', '#fff'); // face mask
 
   return t;
 }
