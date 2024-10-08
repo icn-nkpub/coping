@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 const _src = '''
 <svg version="1.1" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+   <rect width="600" height="600" ry="80" fill="#bacbac" stop-color="#000000"/>
  <g>
   <circle display="none" id="body" cx="360" cy="600" r="160" fill="#00f" stroke="#000080" stroke-linecap="round" stroke-linejoin="round" stroke-width="40"/>
   <path display="none" id="head" d="m290.7 140.16a160 100.01 0 0 0-70.697 13.23 160 100.01 0 0 0-80 86.613v120a160 160.01 0 0 0 80 138.57 160 160.01 0 0 0 160 0 160 160.01 0 0 0 80-138.57v-120a160 100.01 0 0 0-80-86.613 160 100.01 0 0 0-89.303-13.23z" fill="#00f" stroke="#000080" stroke-width="40"/>
@@ -94,7 +95,9 @@ String addressatedGuess(
             naiveBase58At(address, at + 2)) %
         choice.length];
 
-String nftGen(final String address, final Color key) {
+String cth(final Color c) => '#${c.value.toRadixString(16).substring(2)}';
+
+String nftGen(final String address) {
   String t = _src;
 
   void toggle(final String w) {
@@ -125,7 +128,7 @@ String nftGen(final String address, final Color key) {
     _feat_ee_l_sidelid_id,
     _feat_ee_l_upsidelid_id,
   ]));
-  toggle(addressatedGuess(address, 12, [
+  toggle(addressatedGuess(address, 8, [
     _feat_ee_r_uplid_id,
     _feat_ee_r_downlid_id,
     _feat_ee_r_sidelid_id,
@@ -140,13 +143,31 @@ String nftGen(final String address, final Color key) {
   //   ...base58.split(''), // to make cosmetics rare
   // ]));
 
-  t = t.replaceAll('#000080', '#600'); // skin outline
-  t = t.replaceAll('#00f', '#500'); // skin fill
-  t = t.replaceAll('#f00', '#400'); // month
-  t = t.replaceAll('#f60', '#300'); // glasses frame
-  t = t.replaceAll('#f95', '#200'); // eye lid
-  t = t.replaceAll('#ffb380', '#100'); // eye back
+  final HSLColor v = keyColor(address);
+  final av = v.withHue(
+      1 + ((naiveBase58At(address, 0) + naiveBase58At(address, 2)) / 2 % 360));
+  final bv = v.withHue(
+      2 + ((naiveBase58At(address, 1) + naiveBase58At(address, 3)) / 3 % 360));
+
+  t = t.replaceAll(
+      '#000080', cth(v.withLightness(.6).toColor())); // skin outline
+  t = t.replaceAll('#00f', cth(v.withLightness(.65).toColor())); // skin fill
+  t = t.replaceAll('#f00', cth(bv.withLightness(.5).toColor())); // month
+  t = t.replaceAll(
+      '#f60', cth(av.withLightness(.55).toColor())); // glasses frame
+  t = t.replaceAll('#f95', cth(av.withLightness(.7).toColor())); // eye lid
+  t = t.replaceAll('#ffb380', cth(bv.withLightness(.7).toColor())); // eye back
+  t = t.replaceAll('#bacbac', cth(v.withLightness(.8).toColor())); // bg
   // t = t.replaceAll('#fff', '#fff'); // face mask
 
   return t;
+}
+
+HSLColor keyColor(final String address) {
+  double key = 0;
+  for (var i = 0; i < address.length; i++) {
+    key += naiveBase58At(address, i);
+  }
+
+  return HSLColor.fromAHSL(1, key % 360, 1, .5);
 }

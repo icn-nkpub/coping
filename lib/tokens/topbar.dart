@@ -1,10 +1,5 @@
-import 'package:dependencecoping/provider/theme/colors.dart';
-import 'package:dependencecoping/provider/theme/theme.dart';
-import 'package:dependencecoping/tokens/cardrope.dart';
 import 'package:dependencecoping/tokens/icons.dart';
-import 'package:dependencecoping/tokens/measurable.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 class NullTopBar extends StatelessWidget {
   const NullTopBar({
@@ -46,7 +41,6 @@ class _TopBarState extends State<TopBar> {
         child: Column(
           verticalDirection: VerticalDirection.up,
           children: [
-            body(),
             head(context),
           ],
         ),
@@ -98,88 +92,27 @@ class _TopBarState extends State<TopBar> {
             ),
             Row(
               children: [
-                IconButton(
-                  onPressed: () {
-                    setState(() {
-                      expandMenu = !expandMenu;
-                    });
-                  },
-                  icon: AnimatedRotation(
-                    duration: const Duration(milliseconds: 100),
-                    turns: expandMenu ? 0.5 : 0,
-                    child:
-                        Icon(Icons.expand_more, size: computeSizeFromOffset(0)),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      );
-
-  Widget body() => Shrinkable(
-        expanded: expandMenu,
-        child: CardRope(
-          cards: [
-            RopedCard(
-              children: [
-                _themeSettings(),
-              ],
-            ),
-            const SizedBox(
-              height: 0,
-            ),
-          ],
-        ),
-      );
-
-  Widget _themeSettings() => const ThemeChanger();
-}
-
-class ThemeChanger extends StatelessWidget {
-  const ThemeChanger({
-    super.key,
-  });
-
-  @override
-  Widget build(final BuildContext context) =>
-      ValueListenableBuilder<Box<ThemeState>>(
-          valueListenable: Hive.box<ThemeState>('ThemeState').listenable(),
-          builder: (final context, final box, final _) {
-            final s = (box.length > 0 ? box.getAt(0) : null) ??
-                defaultThemeState(context);
-
-            return Row(
-              children: [
-                FilledButton.tonal(
-                  style: Theme.of(context).filledButtonTheme.style,
-                  onPressed: () => flipBrightness(context),
-                  child: s.isLightMode
-                      ? Icon(Icons.light_mode, size: computeSizeFromOffset(0))
-                      : Icon(Icons.dark_mode, size: computeSizeFromOffset(0)),
-                ),
-                Flexible(
-                  child: Container(
-                    width: double.infinity,
-                    alignment: Alignment.center,
-                    child: Text(
-                      ColorValue.values[s.colorIndex].name,
-                      style: Theme.of(context).textTheme.labelMedium,
+                Opacity(
+                  opacity: 0,
+                  child: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        expandMenu = !expandMenu;
+                      });
+                    },
+                    icon: AnimatedRotation(
+                      duration: const Duration(milliseconds: 100),
+                      turns: expandMenu ? 0.5 : 0,
+                      child: Icon(Icons.expand_more,
+                          size: computeSizeFromOffset(0)),
                     ),
                   ),
                 ),
-                FilledButton.tonal(
-                  onPressed: () {
-                    final next =
-                        (s.colorIndex + 1) % (ColorValue.values.length);
-                    final selected = ColorValue.values[next];
-                    setColor(context, selected);
-                  },
-                  child: Icon(Icons.palette, size: computeSizeFromOffset(0)),
-                ),
               ],
-            );
-          });
+            ),
+          ],
+        ),
+      );
 }
 
 class NavButton extends StatelessWidget {

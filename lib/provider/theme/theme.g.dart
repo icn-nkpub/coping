@@ -11,32 +11,32 @@ class ThemeStateAdapter extends TypeAdapter<ThemeState> {
   final int typeId = 0;
 
   @override
-  ThemeState read(final BinaryReader reader) {
+  ThemeState read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ThemeState(
       isLightMode: fields[0] as bool,
-      colorIndex: fields[1] as int,
+      color: fields[1] as Color,
     );
   }
 
   @override
-  void write(final BinaryWriter writer, final ThemeState obj) {
+  void write(BinaryWriter writer, ThemeState obj) {
     writer
       ..writeByte(2)
       ..writeByte(0)
       ..write(obj.isLightMode)
       ..writeByte(1)
-      ..write(obj.colorIndex);
+      ..write(obj.color);
   }
 
   @override
   int get hashCode => typeId.hashCode;
 
   @override
-  bool operator ==(final Object other) =>
+  bool operator ==(Object other) =>
       identical(this, other) ||
       other is ThemeStateAdapter &&
           runtimeType == other.runtimeType &&

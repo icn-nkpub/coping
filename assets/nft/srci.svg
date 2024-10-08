@@ -1,0 +1,62 @@
+<svg version="1.1" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <g opacity=".1">
+   <g stroke="#000" stroke-width="40">
+    <path d="m290.7 140.16a160 100.01 0 0 0-70.697 13.23 160 100.01 0 0 0-80 86.613v120a160 160.01 0 0 0 80 138.57 160 160.01 0 0 0 160 0 160 160.01 0 0 0 80-138.57v-120a160 100.01 0 0 0-80-86.613 160 100.01 0 0 0-89.303-13.23z" fill="none"/>
+    <circle cx="160" cy="300" r="60" fill="#fff" opacity="1" stop-color="#000000" stroke-linecap="square" stroke-linejoin="round"/>
+    <circle cx="340" cy="300" r="60" fill="#fff" stop-color="#000000" stroke-linecap="square" stroke-linejoin="round"/>
+   </g>
+   <rect x="240" y="400" width="120" height="40" opacity="1" stop-color="#000000"/>
+  </g>
+ </g>
+ <g display="none">
+  <circle cx="360" cy="600" r="160" fill="#00f" stop-color="#000000" stroke="#000080" stroke-linecap="round" stroke-linejoin="round" stroke-width="40"/>
+  <path d="m290.7 140.16a160 100.01 0 0 0-70.697 13.23 160 100.01 0 0 0-80 86.613v120a160 160.01 0 0 0 80 138.57 160 160.01 0 0 0 160 0 160 160.01 0 0 0 80-138.57v-120a160 100.01 0 0 0-80-86.613 160 100.01 0 0 0-89.303-13.23z" display="inline" fill="#00f" stroke="#000080" stroke-width="40"/>
+  <g display="inline">
+   <g fill="#f00">
+    <path d="m240 400v40h120v-40z" display="inline" stop-color="#000000"/>
+    <path d="m240 400s0 40 60 40 60-40 60-40zm0 0s0 40 60 40 60-40 60-40zm0 0s0 40 60 40 60-40 60-40zm0 0s0 40 60 40 60-40 60-40z" display="none"/>
+    <path d="m240 400v40h80a40 40 0 0 0 20-5.3594 40 40 0 0 0 20-34.641h-80z" display="none"/>
+    <g display="none">
+     <path d="m240 400v20h20v-20z" stop-color="#000000"/>
+     <path d="m260 420v20h20v-20z" stop-color="#000000"/>
+     <path d="m280 400v20h20v-20z" stop-color="#000000"/>
+     <path d="m300 420v20h20v-20z" stop-color="#000000"/>
+     <path d="m320 400v20h20v-20z" stop-color="#000000"/>
+     <path d="m340 420v20h20v-20z" stop-color="#000000"/>
+    </g>
+   </g>
+   <path d="m260 420c40 0 40 20 100 0" display="none" fill="none" stop-color="#000000" stroke="#f00" stroke-linecap="square" stroke-linejoin="round" stroke-width="40"/>
+   <path d="m260 420c60-20 60 20 140-20" display="none" fill="none" stop-color="#000000" stroke="#f00" stroke-linecap="square" stroke-linejoin="round" stroke-width="40"/>
+   <path d="m220 300a60 60 0 0 1-60 60 60 60 0 0 1-60-60 60 60 0 0 1 60-60 60 60 0 0 1 60 60z" display="inline" fill="#ffb380"/>
+   <path d="m340 360a60 60 0 0 1-60-60 60 60 0 0 1 60-60 60 60 0 0 1 60 60 60 60 0 0 1-60 60z" display="inline" fill="#ffb380"/>
+   <g display="none" fill="none" stroke="#f60" stroke-width="40">
+    <path d="m340 240h-180" display="inline"/>
+    <path d="m220 300h60" display="inline"/>
+   </g>
+   <g display="none" fill="#f95">
+    <rect x="120" y="240" width="80" height="40"/>
+    <rect x="300" y="240" width="80" height="40"/>
+    <rect x="120" y="320" width="80" height="40"/>
+    <rect x="300" y="320" width="80" height="40"/>
+    <rect transform="rotate(-30)" x="104.45" y="449.81" width="80" height="40"/>
+    <rect transform="matrix(-.86603 -.5 -.5 .86603 0 0)" x="-328.56" y="199.81" width="80" height="40" display="inline"/>
+   </g>
+   <g transform="matrix(1 0 0 -1 -4.641 611.96)" display="none" fill="#f95">
+    <rect transform="rotate(30)" x="414.45" y="117.85" width="80" height="40"/>
+    <rect transform="matrix(-.86603 .5 .5 .86603 0 0)" x="-26.603" y="372.49" width="80" height="40" display="inline"/>
+   </g>
+   <path d="m220 300a60 60 0 0 1-60 60 60 60 0 0 1-60-60 60 60 0 0 1 60-60 60 60 0 0 1 60 60z" display="inline" fill="none" stroke="#f60" stroke-width="40"/>
+   <path d="m340 360a60 60 0 0 1-60-60 60 60 0 0 1 60-60 60 60 0 0 1 60 60 60 60 0 0 1-60 60z" display="inline" fill="none" stroke="#f60" stroke-width="40"/>
+  </g>
+ </g>
+ <g>
+  <path d="m440 380s-20 120-140 120-140-120-140-120 27.023 3.0634 40 0c14.508-3.425 25.492-16.575 40-20 6.4883-1.5317 13.512-1.5317 20 0 14.508 3.425 25.492 16.575 40 20 45.418 10.722 140 0 140 0z" display="none" fill="#fff" stop-color="#000000"/>
+  <g display="none" fill="none" stroke="#000" stroke-linecap="square" stroke-width="40">
+   <rect x="100" y="240" width="120" height="120" stop-color="#000000"/>
+   <rect x="280" y="240" width="120" height="120" display="inline" stop-color="#000000"/>
+  </g>
+  <circle cx="240" cy="200" r="60" display="none" fill="#ffb380" stop-color="#000000" stroke="#f60" stroke-linecap="square" stroke-linejoin="round" stroke-width="40"/>
+  <rect width="600" height="600" ry="80" fill="#bacbac" stop-color="#000000"/>
+ </g>
+</svg>

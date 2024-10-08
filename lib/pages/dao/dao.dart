@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:bip39/bip39.dart' as bip39;
 import 'package:dependencecoping/pages/dao/nft_gen.dart';
 import 'package:dependencecoping/pages/dao/solprice.dart';
+import 'package:dependencecoping/provider/theme/theme.dart';
 import 'package:dependencecoping/tokens/topbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -69,6 +70,9 @@ class CopeScreenState extends State<CopeScreen> {
       }
 
       final w = await Ed25519HDKeyPair.fromMnemonic(m);
+      if (mounted) {
+        setColor(context, keyColor(w.address).toColor());
+      }
       final bal = await sc.rpcClient.getBalance(w.publicKey.toString());
       final balance = bal.value.toDouble() / 1000000000;
       final solPrice = await getSolanaPrice();
@@ -140,7 +144,7 @@ class CopeScreenState extends State<CopeScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SvgPicture.string(
-            nftGen(wallet!.address, Colors.red),
+            nftGen(wallet!.address),
             width: 100,
           ),
           Text(

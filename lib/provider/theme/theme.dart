@@ -1,5 +1,5 @@
 import 'package:dependencecoping/gen/fonts.gen.dart';
-import 'package:dependencecoping/provider/theme/colors.dart';
+import 'package:dependencecoping/pages/dao/nft_gen.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -9,23 +9,23 @@ part 'theme.g.dart';
 class ThemeState {
   ThemeState({
     required this.isLightMode,
-    required this.colorIndex,
+    required this.color,
     this.data,
   });
 
   @HiveField(0)
   bool isLightMode;
   @HiveField(1)
-  int colorIndex;
+  Color color;
   ThemeData? data;
 
   void resetThemeData() {
-    final color = ColorValue.values[colorIndex];
+    isLightMode = false;
 
     var newData = ThemeData(
       fontFamily: FontFamily.spaceGrotesk,
       colorScheme: ColorScheme.fromSeed(
-        seedColor: color.primary,
+        seedColor: color,
         brightness: isLightMode ? Brightness.light : Brightness.dark,
       ),
       useMaterial3: true,
@@ -79,12 +79,16 @@ void flipBrightness(final BuildContext context) async {
   }
 }
 
-void setColor(final BuildContext context, final ColorValue c) async {
+void setColor(final BuildContext context, final Color c) async {
   final themebox = Hive.box<ThemeState>('ThemeState');
   final ThemeState state = (themebox.length > 0 ? themebox.getAt(0) : null) ??
       defaultThemeState(context);
 
-  state.colorIndex = ColorValue.values.indexOf(c);
+  if (state.color == c) {
+    return;
+  }
+
+  state.color = c;
 
   state.resetThemeData();
   if (themebox.length > 0) {
@@ -97,7 +101,7 @@ void setColor(final BuildContext context, final ColorValue c) async {
 ThemeState defaultThemeState(final BuildContext context) {
   final data = ThemeState(
     isLightMode: MediaQuery.of(context).platformBrightness == Brightness.light,
-    colorIndex: 0,
+    color: keyColor('DVEqKrqiNPB8XLN9UmgLuEjEbdEovS9qKiLfcENTo23F').toColor(),
     data: ThemeData(),
   );
   if (data.data == null) {
