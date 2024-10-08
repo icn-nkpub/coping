@@ -144,12 +144,8 @@ String nftGen(final String address) {
   // ]));
 
   final HSLColor av = keyColor(address);
-  final bv = av.withHue(
-      (av.hue + naiveBase58At(address, 0)) %
-          360);
-  final cv = av.withHue(
-      (av.hue - naiveBase58At(address, 1)) %
-          360);
+  final bv = av.withHue((av.hue + naiveBase58At(address, 0)) % 360);
+  final cv = av.withHue((av.hue - naiveBase58At(address, 1)) % 360);
 
   t = t.replaceAll(
       '#000080', // skin outline

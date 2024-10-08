@@ -164,7 +164,7 @@ class CopeScreenState extends State<CopeScreen> {
         children: [
           SvgPicture.string(
             nftGen(wallet!.w.address),
-            width: 100,
+            width: MediaQuery.sizeOf(context).width,
           ),
           Text(
             '${wallet!.balance.toStringAsFixed(6)} SOL',
@@ -188,7 +188,7 @@ class CopeScreenState extends State<CopeScreen> {
                 CopyButton(addr: wallet!.w.address),
                 TextButton(
                   onPressed: _requestAirdrop,
-                  child: const Text('Request Airdrop'),
+                  child: const Text('Airdrop'),
                 ),
                 TextButton(
                   onPressed: () async {
@@ -197,7 +197,7 @@ class CopeScreenState extends State<CopeScreen> {
                     await box.put(seedPhraseKey, m);
                     await _loadWalletData();
                   },
-                  child: const Text('New wallet'),
+                  child: const Text('Regenerate'),
                 ),
               ],
             ),
