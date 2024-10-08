@@ -143,21 +143,35 @@ String nftGen(final String address) {
   //   ...base58.split(''), // to make cosmetics rare
   // ]));
 
-  final HSLColor v = keyColor(address);
-  final av = v.withHue(
-      1 + ((naiveBase58At(address, 0) + naiveBase58At(address, 2)) / 2 % 360));
-  final bv = v.withHue(
-      2 + ((naiveBase58At(address, 1) + naiveBase58At(address, 3)) / 3 % 360));
+  final HSLColor av = keyColor(address);
+  final bv = av.withHue(
+      (av.hue + naiveBase58At(address, 0)) %
+          360);
+  final cv = av.withHue(
+      (av.hue - naiveBase58At(address, 1)) %
+          360);
 
   t = t.replaceAll(
-      '#000080', cth(v.withLightness(.6).toColor())); // skin outline
-  t = t.replaceAll('#00f', cth(v.withLightness(.65).toColor())); // skin fill
-  t = t.replaceAll('#f00', cth(bv.withLightness(.5).toColor())); // month
+      '#000080', // skin outline
+      cth(av.withLightness(.6).toColor()));
   t = t.replaceAll(
-      '#f60', cth(av.withLightness(.55).toColor())); // glasses frame
-  t = t.replaceAll('#f95', cth(av.withLightness(.7).toColor())); // eye lid
-  t = t.replaceAll('#ffb380', cth(bv.withLightness(.7).toColor())); // eye back
-  t = t.replaceAll('#bacbac', cth(v.withLightness(.8).toColor())); // bg
+      '#00f', // skin fill
+      cth(av.withLightness(.65).toColor()));
+  t = t.replaceAll(
+      '#f00', // month
+      cth(bv.withLightness(.5).toColor()));
+  t = t.replaceAll(
+      '#f60', // glasses frame
+      cth(cv.withLightness(.55).toColor()));
+  t = t.replaceAll(
+      '#f95', // eye lid
+      cth(cv.withLightness(.6).toColor()));
+  t = t.replaceAll(
+      '#ffb380', // eye back
+      cth(cv.withLightness(.7).toColor()));
+  t = t.replaceAll(
+      '#bacbac', // bg
+      cth(bv.withLightness(.8).toColor()));
   // t = t.replaceAll('#fff', '#fff'); // face mask
 
   return t;
@@ -169,5 +183,5 @@ HSLColor keyColor(final String address) {
     key += naiveBase58At(address, i);
   }
 
-  return HSLColor.fromAHSL(1, key % 360, 1, .5);
+  return HSLColor.fromAHSL(1, key % 360, .5, .5);
 }

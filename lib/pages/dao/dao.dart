@@ -17,9 +17,8 @@ const String walletBox = 'walletBox';
 const String seedPhraseKey = 'seedPhrase';
 
 class Wallet {
-  Wallet(
-      {required this.address, required this.balance, required this.solPrice});
-  final String address;
+  Wallet({required this.w, required this.balance, required this.solPrice});
+  final Ed25519HDKeyPair w;
   final double balance;
   final SolanaPrice? solPrice;
 }
@@ -37,6 +36,7 @@ class CopeScreenState extends State<CopeScreen> {
   Wallet? wallet;
   bool isLoading = true;
   bool hasError = false;
+  SolanaClient? client;
 
   @override
   void initState() {
@@ -52,14 +52,15 @@ class CopeScreenState extends State<CopeScreen> {
 
     try {
       final box = await Hive.openBox(walletBox);
-      final sc = SolanaClient(
-        rpcUrl: Platform.isWindows
-            ? Uri.parse('http://127.0.0.1:8899')
-            : Uri.parse('https://api.devnet.solana.com'),
-        websocketUrl: Platform.isWindows
-            ? Uri.parse('ws://127.0.0.1:8900')
-            : Uri.parse('ws://api.devnet.solana.com'),
-      );
+      final sc = client ??
+          SolanaClient(
+            rpcUrl: Platform.isWindows
+                ? Uri.parse('http://127.0.0.1:8899')
+                : Uri.parse('https://api.devnet.solana.com'),
+            websocketUrl: Platform.isWindows
+                ? Uri.parse('ws://127.0.0.1:8900')
+                : Uri.parse('ws://api.devnet.solana.com'),
+          );
 
       String? m = box.get(seedPhraseKey) as String?;
       if (m == null || m == '') {
@@ -78,8 +79,8 @@ class CopeScreenState extends State<CopeScreen> {
       final solPrice = await getSolanaPrice();
 
       setState(() {
-        wallet =
-            Wallet(address: w.address, balance: balance, solPrice: solPrice);
+        client = sc;
+        wallet = Wallet(w: w, balance: balance, solPrice: solPrice);
         isLoading = false;
       });
       // ignore: avoid_catches_without_on_clauses
@@ -90,6 +91,24 @@ class CopeScreenState extends State<CopeScreen> {
         hasError = true;
       });
     }
+  }
+
+  Future<void> _requestAirdrop() async {
+    if (client == null || wallet == null) {
+      return;
+    }
+
+    await client!
+        .requestAirdrop(address: wallet!.w.publicKey, lamports: 1000000000);
+
+    final bal =
+        await client!.rpcClient.getBalance(wallet!.w.publicKey.toString());
+    final balance = bal.value.toDouble() / 1000000000;
+    final solPrice = await getSolanaPrice();
+
+    setState(() {
+      wallet = Wallet(w: wallet!.w, balance: balance, solPrice: solPrice);
+    });
   }
 
   @override
@@ -144,7 +163,7 @@ class CopeScreenState extends State<CopeScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SvgPicture.string(
-            nftGen(wallet!.address),
+            nftGen(wallet!.w.address),
             width: 100,
           ),
           Text(
@@ -159,14 +178,27 @@ class CopeScreenState extends State<CopeScreen> {
                 )
               : const Text('can\'t retrieve price'),
           Text(
-            '${wallet!.address.substring(0, 4)}...${wallet!.address.substring(wallet!.address.length - 4, wallet!.address.length)}',
+            '${wallet!.w.address.substring(0, 4)}...${wallet!.w.address.substring(wallet!.w.address.length - 4, wallet!.w.address.length)}',
             style: theme.textTheme.bodyMedium,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: Row(
               children: [
-                CopyButton(addr: wallet!.address),
+                CopyButton(addr: wallet!.w.address),
+                TextButton(
+                  onPressed: _requestAirdrop,
+                  child: const Text('Request Airdrop'),
+                ),
+                TextButton(
+                  onPressed: () async {
+                    final box = await Hive.openBox(walletBox);
+                    final m = bip39.generateMnemonic();
+                    await box.put(seedPhraseKey, m);
+                    await _loadWalletData();
+                  },
+                  child: const Text('New wallet'),
+                ),
               ],
             ),
           ),

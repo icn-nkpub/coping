@@ -16,7 +16,7 @@ class ThemeState {
   @HiveField(0)
   bool isLightMode;
   @HiveField(1)
-  Color color;
+  int color;
   ThemeData? data;
 
   void resetThemeData() {
@@ -25,7 +25,7 @@ class ThemeState {
     var newData = ThemeData(
       fontFamily: FontFamily.spaceGrotesk,
       colorScheme: ColorScheme.fromSeed(
-        seedColor: color,
+        seedColor: Color(color),
         brightness: isLightMode ? Brightness.light : Brightness.dark,
       ),
       useMaterial3: true,
@@ -84,11 +84,11 @@ void setColor(final BuildContext context, final Color c) async {
   final ThemeState state = (themebox.length > 0 ? themebox.getAt(0) : null) ??
       defaultThemeState(context);
 
-  if (state.color == c) {
+  if (state.color == c.value) {
     return;
   }
 
-  state.color = c;
+  state.color = c.value;
 
   state.resetThemeData();
   if (themebox.length > 0) {
@@ -101,7 +101,9 @@ void setColor(final BuildContext context, final Color c) async {
 ThemeState defaultThemeState(final BuildContext context) {
   final data = ThemeState(
     isLightMode: MediaQuery.of(context).platformBrightness == Brightness.light,
-    color: keyColor('DVEqKrqiNPB8XLN9UmgLuEjEbdEovS9qKiLfcENTo23F').toColor(),
+    color: keyColor('DVEqKrqiNPB8XLN9UmgLuEjEbdEovS9qKiLfcENTo23F')
+        .toColor()
+        .value,
     data: ThemeData(),
   );
   if (data.data == null) {

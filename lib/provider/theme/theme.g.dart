@@ -18,7 +18,7 @@ class ThemeStateAdapter extends TypeAdapter<ThemeState> {
     };
     return ThemeState(
       isLightMode: fields[0] as bool,
-      color: fields[1] as Color,
+      color: fields[1] as int,
     );
   }
 
