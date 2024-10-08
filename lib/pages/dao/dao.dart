@@ -140,7 +140,7 @@ class CopeScreenState extends State<CopeScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SvgPicture.string(
-            nftGen(Colors.red),
+            nftGen(wallet!.address, Colors.red),
             width: 100,
           ),
           Text(

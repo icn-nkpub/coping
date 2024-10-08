@@ -34,8 +34,8 @@ const _src = '''
     <rect display="none" id="ee-r-uplid" x="300" y="240" width="80" height="40"/>
     <rect display="none" id="ee-l-downlid" x="120" y="320" width="80" height="40"/>
     <rect display="none" id="ee-r-downlid" x="300" y="320" width="80" height="40"/>
-    <rect display="none" id="ee-l-sidelid" transform="rotate(-30)" x="104.45" y="449.81" width="80" height="40"/>
-    <rect display="none" id="ee-r-sidelid" transform="matrix(-.86603 -.5 -.5 .86603 0 0)" x="-328.56" y="199.81" width="80" height="40"/>
+    <rect display="none" id="ee-r-sidelid" transform="rotate(-30)" x="104.45" y="449.81" width="80" height="40"/>
+    <rect display="none" id="ee-l-sidelid" transform="matrix(-.86603 -.5 -.5 .86603 0 0)" x="-328.56" y="199.81" width="80" height="40"/>
    </g>
    <g transform="matrix(1 0 0 -1 -4.641 611.96)" fill="#f95">
     <rect display="none" id="ee-r-upsidelid" transform="rotate(30)" x="414.45" y="117.85" width="80" height="40"/>
@@ -84,30 +84,62 @@ const _feat_mask_id = 'mask';
 const _feat_square_glasses_id = 'square-glasses';
 const _feat_3rd_eye_id = '3rd-eye';
 
-const idPattern = '';
+const base58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+int naiveBase58At(final String address, final int at) =>
+    base58.indexOf(address[at]);
+String addressatedGuess(
+        final String address, final int at, final List<String> choice) =>
+    choice[(naiveBase58At(address, at) +
+            naiveBase58At(address, at + 1) +
+            naiveBase58At(address, at + 2)) %
+        choice.length];
 
-String nftGen(final Color key) {
+String nftGen(final String address, final Color key) {
   String t = _src;
 
   void toggle(final String w) {
-    t= t.replaceAll('display="none" id="$w', 'id="$w');
+    t = t.replaceAll('display="none" id="$w', 'id="$w');
   }
 
- toggle(_feat_body_id);
- toggle(_feat_head_id);
- toggle(_feat_face_id);
- toggle([
-  _feat_month_passive_id,
- _feat_month_smile_id,
- _feat_month_grin_id,
- _feat_month_zip_id,
- _feat_month_bacon_id,
- _feat_month_cringe_id,
- ][2]);
- toggle(_feat_eyeoutline_l_id);
- toggle(_feat_eyeoutline_r_id);
- toggle(_feat_leye_back_id);
- toggle(_feat_reye_back_id);
+  toggle(_feat_body_id);
+  toggle(_feat_head_id);
+  toggle(_feat_face_id);
+  toggle(addressatedGuess(address, 4, [
+    _feat_month_passive_id,
+    _feat_month_smile_id,
+    _feat_month_grin_id,
+    _feat_month_zip_id,
+    _feat_month_bacon_id,
+    _feat_month_cringe_id,
+  ]));
+
+  toggle(_feat_eyeoutline_l_id);
+  toggle(_feat_eyeoutline_r_id);
+  toggle(_feat_leye_back_id);
+  toggle(_feat_reye_back_id);
+
+  toggle(_feat_eye_emotions_id);
+  toggle(addressatedGuess(address, 8, [
+    _feat_ee_l_uplid_id,
+    _feat_ee_l_downlid_id,
+    _feat_ee_l_sidelid_id,
+    _feat_ee_l_upsidelid_id,
+  ]));
+  toggle(addressatedGuess(address, 12, [
+    _feat_ee_r_uplid_id,
+    _feat_ee_r_downlid_id,
+    _feat_ee_r_sidelid_id,
+    _feat_ee_r_upsidelid_id,
+  ]));
+
+  // toggle(addressatedGuess(address, 16, [
+  //   _feat_mask_id,
+  //   _feat_square_glasses_id,
+  //   _feat_3rd_eye_id,
+  //   ...base58.split(''), // to make cosmetics rare
+  // ]));
+
+  toggle(_feat_cosmetics_id);
 
   return t;
 }
