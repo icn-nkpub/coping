@@ -3,15 +3,9 @@ import 'dart:core';
 
 import 'package:dependencecoping/gen/assets.gen.dart';
 import 'package:dependencecoping/home.dart';
+import 'package:dependencecoping/init.dart';
 import 'package:dependencecoping/notifications.dart';
-import 'package:dependencecoping/provider/countdown/countdown.dart';
-import 'package:dependencecoping/provider/locker/locker.dart';
-import 'package:dependencecoping/provider/login/login.dart';
-import 'package:dependencecoping/provider/static/static.dart';
-import 'package:dependencecoping/provider/theme/colors.dart';
 import 'package:dependencecoping/provider/theme/theme.dart';
-import 'package:dependencecoping/provider/trigger/trigger.dart';
-import 'package:dependencecoping/storage/init.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -118,98 +112,26 @@ class _AppState extends State<App>
                   ),
                 )
               : Builder(builder: (final context) {
-                  final loginCubit = LoginCubit();
-                  if (user != null) {
-                    loginCubit.overwrite(user!, profile);
-                  }
-
-                  final staticCubit = StaticCubit();
-                  if (!statics.isEmpty) {
-                    staticCubit.overwrite(statics);
-                  }
-
                   final tcb = MediaQuery.of(context).platformBrightness ==
                           Brightness.light
                       ? ThemeMode.light
                       : ThemeMode.dark;
                   final themeCubit = ThemeCubit()..setBrightness(tcb);
-                  if (profile != null && profile!.isLight != null) {
-                    themeCubit.setBrightness(
-                        profile!.isLight! ? ThemeMode.light : ThemeMode.dark);
-                  }
-                  if (profile != null && profile!.color != null) {
-                    themeCubit.setColor(findThemeColor(profile!.color!));
-                  }
+
                   _themeData = themeCubit.state.data;
 
-                  final countdownTimerCubit = CountdownTimerCubit();
-                  if (resets != null) {
-                    countdownTimerCubit.overwrite(resets!);
-                  }
-
-                  final triggersCubit = TriggersCubit();
-                  if (triggers != null) {
-                    if (triggersLog == null) {
-                      triggersCubit.overwrite(Triggers(triggers!, []));
-                    } else {
-                      triggersCubit
-                          .overwrite(Triggers(triggers!, triggersLog!));
-                    }
-                  }
-
-                  final lockerCubit = LockerCubit();
-                  if (lockerDuration != null) {
-                    lockerCubit.overwrite(
-                        lockerStart ?? DateTime.now(), lockerDuration!);
-                  }
-
-                  return MultiBlocProvider(
-                    providers: [
-                      BlocProvider(create: (final _) => loginCubit),
-                      BlocProvider(create: (final _) => staticCubit),
-                      BlocProvider(create: (final _) => themeCubit),
-                      BlocProvider(create: (final _) => countdownTimerCubit),
-                      BlocProvider(create: (final _) => triggersCubit),
-                      BlocProvider(create: (final _) => lockerCubit),
-                    ],
-                    child: BlocListener<LoginCubit, Profile?>(
-                      listenWhen: (final p, final c) =>
-                          p?.auth.id != c?.auth.id,
-                      listener: (final context, final state) {
-                        _spinnerController.reset();
-                        setState(() {
-                          _spinnerActive = true;
-                        });
-                        _spinnerController.repeat();
-
-                        Timer(const Duration(seconds: 1), () {
-                          unawaited(reset(() {
-                            _spinnerController.repeat();
-                            setState(() {
-                              _spinnerActive = false;
-                            });
-                          }));
-                        });
-                      },
-                      child: BlocListener<ThemeCubit, ThemeState>(
-                        listener: (final context, final state) => setState(() {
-                          _themeData = state.data;
-                        }),
-                        child: BlocBuilder<LoginCubit, Profile?>(
-                          builder: (final context, final u) => AnimatedTheme(
-                            data: _themeData!,
-                            curve: Curves.slowMiddle,
-                            duration: const Duration(milliseconds: 100),
-                            child: Navigator(
-                              onGenerateRoute: (final settings) =>
-                                  MaterialPageRoute(
-                                settings: settings,
-                                builder: (final context) => u == null
-                                    ? const Placeholder()
-                                    : const Home(),
-                              ),
-                            ),
-                          ),
+                  return BlocListener<ThemeCubit, ThemeState>(
+                    listener: (final context, final state) => setState(() {
+                      _themeData = state.data;
+                    }),
+                    child: AnimatedTheme(
+                      data: _themeData!,
+                      curve: Curves.slowMiddle,
+                      duration: const Duration(milliseconds: 100),
+                      child: Navigator(
+                        onGenerateRoute: (final settings) => MaterialPageRoute(
+                          settings: settings,
+                          builder: (final context) => const Home(),
                         ),
                       ),
                     ),

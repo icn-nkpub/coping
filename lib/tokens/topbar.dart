@@ -1,16 +1,12 @@
 import 'dart:async';
 
-import 'package:dependencecoping/modals/help.dart';
-import 'package:dependencecoping/provider/login/login.dart';
 import 'package:dependencecoping/provider/theme/colors.dart';
 import 'package:dependencecoping/provider/theme/theme.dart';
 import 'package:dependencecoping/tokens/cardrope.dart';
 import 'package:dependencecoping/tokens/icons.dart';
 import 'package:dependencecoping/tokens/measurable.dart';
-import 'package:dependencecoping/tokens/modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NullTopBar extends StatelessWidget {
   const NullTopBar({
@@ -65,32 +61,20 @@ class _TopBarState extends State<TopBar> {
         });
       };
 
-  BlocBuilder<LoginCubit, Profile?> head(final BuildContext context) =>
-      BlocBuilder<LoginCubit, Profile?>(
-        builder: (final _, final u) => Material(
-          color: Theme.of(context).appBarTheme.backgroundColor,
-          shadowColor: Theme.of(context).appBarTheme.shadowColor,
-          elevation: 2,
-          child: headContent(context),
-        ),
-      );
-
-  Widget headContent(final BuildContext context) => Container(
+  Widget head(final BuildContext context) => Container(
         padding: const EdgeInsets.all(8.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               children: [
-                IconButton(
-                  onPressed: () {
-                    openModal(
-                      context,
-                      const HelpModal(),
-                    );
-                  },
-                  icon: Icon(Icons.live_help, size: computeSizeFromOffset(0)),
-                ),
+                Opacity(
+                  opacity: 0,
+                  child: IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.live_help, size: computeSizeFromOffset(0)),
+                  ),
+                )
               ],
             ),
             Padding(
@@ -142,38 +126,6 @@ class _TopBarState extends State<TopBar> {
           cards: [
             RopedCard(
               children: [
-                BlocBuilder<LoginCubit, Profile?>(
-                    builder: (final context, final u) {
-                  final List<Widget> children = [];
-
-                  if (u == null) {
-                    children.add(NavButton(
-                        AppLocalizations.of(context)!.screenLogin,
-                        onPressed: goTo(0)));
-                    children.add(NavButton(
-                        AppLocalizations.of(context)!.screenRegister,
-                        onPressed: goTo(1)));
-                  } else {
-                    children.add(NavButton(
-                        AppLocalizations.of(context)!.screenProfile,
-                        onPressed: goTo(2)));
-                    children.add(NavButton(
-                        AppLocalizations.of(context)!.screenLogin,
-                        onPressed: goTo(0)));
-                    children.add(NavButton(
-                        AppLocalizations.of(context)!.screenLogout,
-                        onPressed: goTo(3)));
-                  }
-
-                  return Wrap(
-                    runSpacing: 8,
-                    children: children,
-                  );
-                }),
-              ],
-            ),
-            RopedCard(
-              children: [
                 _themeSettings(),
               ],
             ),
@@ -201,9 +153,6 @@ class ThemeChanger extends StatelessWidget {
               style: Theme.of(context).filledButtonTheme.style,
               onPressed: () {
                 // '!' (NOT) because we just fliped but yet refreshed.
-                unawaited(context
-                    .read<LoginCubit>()
-                    .setTheme(t.color.name, isLight: !t.isLightMode()));
                 unawaited(context.read<ThemeCubit>().flipBrightness());
               },
               child: t.isLightMode()
@@ -226,9 +175,6 @@ class ThemeChanger extends StatelessWidget {
                     (ColorValue.values.length);
                 final selected = ColorValue.values[next];
                 context.read<ThemeCubit>().setColor(selected);
-                unawaited(context
-                    .read<LoginCubit>()
-                    .setTheme(selected.name, isLight: t.isLightMode()));
               },
               child: Icon(Icons.palette, size: computeSizeFromOffset(0)),
             ),

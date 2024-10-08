@@ -2,13 +2,11 @@ import 'dart:core';
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:dependencecoping/provider/login/login.dart';
 import 'package:dependencecoping/shaders/shaders.dart';
 import 'package:dependencecoping/tokens/icons.dart';
 import 'package:dependencecoping/tokens/measurable.dart';
 import 'package:dependencecoping/tokens/topbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:funvas/funvas.dart';
 
@@ -166,9 +164,9 @@ class MeditationScreen extends StatelessWidget {
             );
           }
 
-          return BlocBuilder<LoginCubit, Profile?>(
-            builder: (final context, final u) {
-              final breathingTime = u?.profile?.breathingTime ?? 6.0;
+          return Builder(
+            builder: (final context) {
+              const breathingTime = 6.0; // todo: add proper breating time
 
               final cd = CanvasDrawer(
                 backdrop: Theme.of(context).scaffoldBackgroundColor,
@@ -200,10 +198,7 @@ class MeditationScreen extends StatelessWidget {
                     child: InfoCard(
                       speed: breathingTime,
                       setSpeed: (final s) {
-                        final lc = context.read<LoginCubit>();
-                        Future.delayed(const Duration(seconds: 1), () async {
-                          await lc.setBreathingTime(s);
-                        });
+                        // todo: persist breating time
                       },
                       changingSpeed: () {
                         cd.windDown = true;

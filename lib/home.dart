@@ -1,7 +1,5 @@
-import 'package:dependencecoping/pages/clock/main.dart';
 import 'package:dependencecoping/pages/dao/dao.dart';
 import 'package:dependencecoping/pages/meditation/meditation.dart';
-import 'package:dependencecoping/pages/triggers/triggers.dart';
 import 'package:dependencecoping/paginator.dart';
 import 'package:dependencecoping/tokens/icons.dart';
 import 'package:flutter/material.dart';
@@ -36,20 +34,6 @@ class _HomeState extends State<Home> {
           destinations: [
             NavigationDestination(
               icon: Icon(
-                Icons.timer,
-                size: computeSizeFromOffset(0),
-              ),
-              label: AppLocalizations.of(context)!.screenClock,
-            ),
-            NavigationDestination(
-              icon: Icon(
-                Icons.psychology,
-                size: computeSizeFromOffset(0),
-              ),
-              label: AppLocalizations.of(context)!.screenTriggers,
-            ),
-            NavigationDestination(
-              icon: Icon(
                 Icons.group,
                 size: computeSizeFromOffset(0),
               ),
@@ -65,8 +49,6 @@ class _HomeState extends State<Home> {
           ],
         ),
         body: [
-          ClockScreen(setPage: pagginator(context)),
-          TriggersScreen(setPage: pagginator(context)),
           CopeScreen(setPage: pagginator(context)),
           const MeditationScreen(),
         ][currentPageIndex],
