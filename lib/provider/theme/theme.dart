@@ -100,7 +100,9 @@ ThemeState defaultThemeState(final BuildContext context) {
     colorIndex: 0,
     data: ThemeData(),
   );
-  data.resetThemeData();
+  if (data.data == null) {
+    data.resetThemeData();
+  }
 
   return data;
 }

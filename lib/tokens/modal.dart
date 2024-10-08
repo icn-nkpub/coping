@@ -34,10 +34,8 @@ class Modal extends StatelessWidget {
                 ),
                 Text(
                   title,
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleMedium!
-                      .copyWith(fontVariations: [const FontVariation('wght', 600.0)]),
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      fontVariations: [const FontVariation('wght', 600.0)]),
                 ),
                 Opacity(
                   opacity: 0,

@@ -117,6 +117,9 @@ class _AppState extends State<App>
                   builder: (final context, final box, final _) {
                     final s = (box.length > 0 ? box.getAt(0) : null) ??
                         defaultThemeState(context);
+                    if (s.data == null) {
+                      s.resetThemeData();
+                    }
                     return AnimatedTheme(
                       data: s.data!,
                       curve: Curves.slowMiddle,

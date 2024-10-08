@@ -2,11 +2,13 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 import 'package:bip39/bip39.dart' as bip39;
+import 'package:dependencecoping/pages/dao/nft_gen.dart';
 import 'package:dependencecoping/pages/dao/solprice.dart';
 import 'package:dependencecoping/tokens/topbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive/hive.dart';
 import 'package:solana/solana.dart';
 
@@ -50,12 +52,12 @@ class CopeScreenState extends State<CopeScreen> {
     try {
       final box = await Hive.openBox(walletBox);
       final sc = SolanaClient(
-        rpcUrl: Platform.isMacOS
+        rpcUrl: Platform.isWindows
             ? Uri.parse('http://127.0.0.1:8899')
-            : Uri.parse('https://api.devnet.solana.com:8899'),
-        websocketUrl: Platform.isMacOS
+            : Uri.parse('https://api.devnet.solana.com'),
+        websocketUrl: Platform.isWindows
             ? Uri.parse('ws://127.0.0.1:8900')
-            : Uri.parse('https://api.devnet.solana.com:8900'),
+            : Uri.parse('ws://api.devnet.solana.com'),
       );
 
       String? m = box.get(seedPhraseKey) as String?;
@@ -115,6 +117,10 @@ class CopeScreenState extends State<CopeScreen> {
   }
 
   Widget _buildWalletInfo(final ThemeData theme) {
+    if (wallet == null) {
+      return const Text('Wallet is not connected');
+    }
+
     final solPrice = wallet!.solPrice ?? SolanaPrice(price: 0, change1h: 0);
     final usd = wallet!.balance * solPrice.price;
 
@@ -133,7 +139,15 @@ class CopeScreenState extends State<CopeScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('${wallet!.balance.toStringAsFixed(6)} SOL', style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontVariations: [const FontVariation('wght', 1000.0)]),),
+          SvgPicture.string(
+            nftGen(Colors.red),
+            width: 100,
+          ),
+          Text(
+            '${wallet!.balance.toStringAsFixed(6)} SOL',
+            style: theme.textTheme.bodyLarge?.copyWith(
+                fontVariations: [const FontVariation('wght', 1000.0)]),
+          ),
           solPrice.price > 0
               ? Text(
                   '${usd.toStringAsFixed(2)}\$ $upordown% ${isup ? '↑' : '↓'}',
