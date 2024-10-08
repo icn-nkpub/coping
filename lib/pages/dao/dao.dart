@@ -133,7 +133,7 @@ class CopeScreenState extends State<CopeScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('${wallet!.balance.toStringAsFixed(6)} SOL', style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),),
+          Text('${wallet!.balance.toStringAsFixed(6)} SOL', style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontVariations: [const FontVariation('wght', 1000.0)]),),
           solPrice.price > 0
               ? Text(
                   '${usd.toStringAsFixed(2)}\$ $upordown% ${isup ? '↑' : '↓'}',

@@ -82,7 +82,7 @@ class _TopBarState extends State<TopBar> {
                   Text(
                     'Coping ',
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                          fontWeight: FontWeight.w700,
+                          fontVariations: [const FontVariation('wght', 700.0)],
                         ),
                   ),
                   Opacity(
@@ -90,7 +90,7 @@ class _TopBarState extends State<TopBar> {
                     child: Text(
                       widget.subTitle,
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                            fontWeight: FontWeight.w300,
+                            fontVariations: [const FontVariation('wght', 300.0)]
                           ),
                     ),
                   ),
