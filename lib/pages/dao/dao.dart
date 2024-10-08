@@ -128,29 +128,32 @@ class CopeScreenState extends State<CopeScreen> {
     final color =
         isup ? theme.colorScheme.primary : theme.colorScheme.secondary;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          '${wallet!.address.substring(0, 4)}...${wallet!.address.substring(wallet!.address.length - 4, wallet!.address.length)}',
-          style: theme.textTheme.bodyMedium,
-        ),
-        Text('${wallet!.balance.toStringAsFixed(6)} SOL'),
-        solPrice.price > 0
-            ? Text(
-                '${usd.toStringAsFixed(2)}\$ $upordown% ${isup ? '↑' : '↓'}',
-                style: theme.textTheme.labelSmall?.copyWith(color: color),
-              )
-            : const Text('can\'t retrieve price'),
-        Padding(
-          padding: const EdgeInsets.all(8),
-          child: Row(
-            children: [
-              CopyButton(addr: wallet!.address),
-            ],
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('${wallet!.balance.toStringAsFixed(6)} SOL', style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),),
+          solPrice.price > 0
+              ? Text(
+                  '${usd.toStringAsFixed(2)}\$ $upordown% ${isup ? '↑' : '↓'}',
+                  style: theme.textTheme.labelSmall?.copyWith(color: color),
+                )
+              : const Text('can\'t retrieve price'),
+          Text(
+            '${wallet!.address.substring(0, 4)}...${wallet!.address.substring(wallet!.address.length - 4, wallet!.address.length)}',
+            style: theme.textTheme.bodyMedium,
           ),
-        ),
-      ],
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Row(
+              children: [
+                CopyButton(addr: wallet!.address),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
