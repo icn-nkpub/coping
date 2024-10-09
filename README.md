@@ -1,6 +1,9 @@
 # dependencecoping
 
-A new Flutter project.
+Coping Solana mobile app
+
+![Screenshot](Screenshot.png)
+
 
 ## Getting Started
 
